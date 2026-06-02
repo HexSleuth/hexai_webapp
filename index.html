@@ -2839,7 +2839,7 @@
                     this.updateAttachmentUI();
                     e.target.value = '';
                     if (this.pendingAttachments.length) this.showRainbowToast(
-                        `📎 ${this.pendingAttachments.length} attachment(s)`, 'fa-paperclip', 2000);
+                        `${this.pendingAttachments.length} attachment(s)`, 'fa-paperclip', 2000);
                 };
                 document.getElementById("emojiBtn").onclick = () => {
                     document.getElementById("emojiPicker3D").classList.toggle("open");
