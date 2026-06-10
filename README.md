@@ -1,11 +1,11 @@
 # HEX-AI
 👋 **HEX AI ready!** Setup API KEYS In Settings,Long press to copy text,🎶 When you open HEX AI Studio, a song will play in the background, Upload images/PDFs , 🌍 Multi Languages, Free AI Models,🫵😎 Animated Emojis, Free image gen,💃 Integrated Audio Player,🪩 Voice Input,🌈 Rainbow Liquid UX🫟.
 
-# Get API key 🗝️ 🔐 
+# 📎Get API key 🗝️ 🔐 
 
 1. 👉 https://openrouter.ai/
    
-2. https://aistudio.google.com/app/api-keys
+2. 👉https://aistudio.google.com/app/api-keys
 
  # Follow these steps:-
 
@@ -23,6 +23,7 @@ Copy the Key: Make sure to copy the key immediately! It will only be shown to yo
 # You can get a Gemini API key for free by creating a project in Google AI Studio. 
 
 # Follow these steps:
+
 1.Go to ⁠Google AI Studio and sign in with your Google Account.
 
 2.Accept the terms of service and confirm your location if prompted.
