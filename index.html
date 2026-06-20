@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>HEX AI – Models Online</title>
+    <title>HEX AI – Models Online + YT Music</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1.21.0/index.js"></script>
 
     <style>
@@ -868,220 +870,663 @@
             }
         }
 
-        #panel-music {
-            position: relative;
-            overflow: hidden;
-            background: #0a0a16;
+        /* ============ YT MUSIC PANEL STYLES ============ */
+        #panel-ytmusic {
+            background: var(--md-sys-color-surface);
+            overflow-y: auto;
+            padding: 8px 12px 12px;
+            gap: 10px;
         }
-        #audioCanvas {
-            position: absolute;
-            inset: 0;
+        #panel-ytmusic .ytmusic-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+        }
+        #panel-ytmusic .ytmusic-row {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        #panel-ytmusic .ytmusic-col {
+            flex: 1;
+            min-width: 280px;
+        }
+        #panel-ytmusic .ytmusic-card {
+            background: var(--md-sys-color-surface-container);
+            border-radius: var(--border-radius-md);
+            padding: 14px 16px;
+            box-shadow: var(--md-sys-elevation-1);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            transition: all var(--transition-medium);
+            height: 100%;
+        }
+        #panel-ytmusic .ytmusic-card .card-title {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #panel-ytmusic .album-art-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 8px;
+            width: 100%;
+            max-width: 200px;
+            aspect-ratio: 1/1;
+            position: relative;
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            box-shadow: var(--md-sys-elevation-2);
+        }
+        #panel-ytmusic .album-art-container img {
             width: 100%;
             height: 100%;
-            z-index: 0;
+            object-fit: cover;
+            border-radius: var(--border-radius-md);
+            transition: opacity 0.5s;
         }
-        .audio-player-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.85) 30%, rgba(0, 0, 0, 0.95));
-            padding: 40px 20px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
+        #panel-ytmusic .album-art-container .rotate {
+            animation: spinAlbum 8s linear infinite;
         }
-        .audio-status-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            justify-content: center;
+        #panel-ytmusic .album-art-container .rotate-paused {
+            animation-play-state: paused;
         }
-        .audio-status-dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            transition: all 0.4s ease;
-            flex-shrink: 0;
-        }
-        .audio-status-dot.idle {
-            background: #666;
-            box-shadow: 0 0 6px #666;
-        }
-        .audio-status-dot.file {
-            background: #feca57;
-            box-shadow: 0 0 10px #feca57;
-        }
-        .audio-status-dot.playing {
-            background: #5CDF7C;
-            box-shadow: 0 0 14px #5CDF7C;
-            animation: dotBlink 1.2s ease-in-out infinite;
-        }
-        .audio-status-text {
-            font-size: 12px;
-            color: #ccc;
-            font-weight: 500;
-            letter-spacing: 0.4px;
-        }
-        .audio-controls-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            justify-content: center;
-        }
-        .audio-play-btn {
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
-            cursor: pointer;
-            font-size: 18px;
-            transition: all var(--transition-fast);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            backdrop-filter: blur(8px);
-        }
-        .audio-play-btn:hover {
-            background: rgba(255, 255, 255, 0.18);
-            border-color: #fff;
-            box-shadow: 0 0 24px rgba(255, 255, 255, 0.2);
-            transform: scale(1.06);
-        }
-        .audio-repeat-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-            color: #ccc;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all var(--transition-fast);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(4px);
-        }
-        .audio-repeat-btn:hover {
-            background: rgba(255, 255, 255, 0.12);
-            color: #fff;
-        }
-        .audio-repeat-btn.active {
-            color: #D0BCFF;
-            border-color: #D0BCFF;
-            background: rgba(208, 188, 255, 0.1);
-            box-shadow: 0 0 10px rgba(208, 188, 255, 0.2);
-        }
-        .audio-progress-wrap {
-            flex: 1;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.12);
-            border-radius: 3px;
-            cursor: pointer;
-            position: relative;
-            min-width: 60px;
-        }
-        .audio-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #D0BCFF, #EFB8C8);
-            border-radius: 3px;
-            width: 0%;
-            transition: width 0.15s linear;
-            box-shadow: 0 0 8px rgba(208, 188, 255, 0.5);
-        }
-        .audio-time-display {
-            font-size: 11px;
-            color: #bbb;
-            font-variant-numeric: tabular-nums;
-            font-family: 'Roboto Mono', monospace;
-            min-width: 70px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-        .audio-volume-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            justify-content: center;
-        }
-        .audio-volume-icon {
-            color: #ccc;
-            cursor: pointer;
-            font-size: 16px;
-            transition: color var(--transition-fast);
-        }
-        .audio-volume-slider {
-            -webkit-appearance: none;
-            width: 120px;
-            height: 5px;
-            border-radius: 3px;
-            background: rgba(255, 255, 255, 0.2);
-            outline: none;
-            cursor: pointer;
-        }
-        .audio-volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #fff;
-            cursor: pointer;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-        }
-        .audio-upload-hint {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 11px;
-            color: #888;
-            margin-top: 10px;
-            gap: 8px;
-        }
-        #audioFileInput,
-        #musicUpload {
-            display: none;
-        }
-
-        .refresh-spinner {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2px solid transparent;
-            border-top-color: currentColor;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-        }
-        @keyframes spin {
+        @keyframes spinAlbum {
+            from {
+                transform: rotate(0deg);
+            }
             to {
                 transform: rotate(360deg);
             }
         }
-
-        .markdown-content p {
-            margin: 0 0 6px;
+        #panel-ytmusic .ytmusic-nowplaying {
+            text-align: center;
+            margin: 4px 0 6px;
         }
-        .markdown-content pre {
-            background: rgba(0, 0, 0, 0.15);
-            border-radius: 8px;
-            padding: 10px;
-            overflow-x: auto;
+        #panel-ytmusic .ytmusic-nowplaying .song-title {
+            font-size: 15px;
+            font-weight: 600;
+            display: block;
+            color: var(--md-sys-color-on-surface);
+            line-height: 1.3;
+        }
+        #panel-ytmusic .ytmusic-nowplaying .author-name {
             font-size: 12px;
+            color: var(--md-sys-color-on-surface-variant);
+            display: block;
+        }
+        #panel-ytmusic .ytmusic-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
             margin: 6px 0;
         }
-        .markdown-content code {
+        #panel-ytmusic .ytmusic-controls button {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: none;
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            font-size: 16px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--md-sys-elevation-1);
+        }
+        #panel-ytmusic .ytmusic-controls button:hover {
+            transform: scale(1.06);
+            box-shadow: var(--md-sys-elevation-2);
+        }
+        #panel-ytmusic .ytmusic-controls button:active {
+            transform: scale(0.92);
+        }
+        #panel-ytmusic .ytmusic-controls button.play-btn {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+        }
+        #panel-ytmusic .ytmusic-progress {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 4px 0;
+        }
+        #panel-ytmusic .ytmusic-progress .progress-track {
+            flex: 1;
+            height: 5px;
+            background: var(--md-sys-color-outline-variant);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            min-height: 14px;
+            display: flex;
+            align-items: center;
+        }
+        #panel-ytmusic .ytmusic-progress .progress-track .progress-fill {
+            height: 100%;
+            background: var(--md-sys-color-primary);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.15s linear;
+        }
+        #panel-ytmusic .ytmusic-progress .time-label {
+            font-size: 10px;
+            font-variant-numeric: tabular-nums;
+            color: var(--md-sys-color-on-surface-variant);
+            min-width: 36px;
+            text-align: center;
+        }
+        #panel-ytmusic .ytmusic-volume {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 4px;
+        }
+        #panel-ytmusic .ytmusic-volume .vol-icon {
+            font-size: 14px;
+            color: var(--md-sys-color-on-surface-variant);
+            cursor: pointer;
+            min-width: 20px;
+        }
+        #panel-ytmusic .ytmusic-volume input[type="range"] {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--md-sys-color-outline-variant);
+            outline: none;
+            cursor: pointer;
+            min-width: 40px;
+        }
+        #panel-ytmusic .ytmusic-volume input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--md-sys-color-primary);
+            cursor: pointer;
+        }
+        #panel-ytmusic .ytmusic-volume input[type="range"]::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--md-sys-color-primary);
+            cursor: pointer;
+            border: none;
+        }
+        #panel-ytmusic .ytmusic-extra-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            margin: 2px 0 6px;
+            flex-wrap: wrap;
+        }
+        #panel-ytmusic .ytmusic-extra-controls .toggle-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            color: var(--md-sys-color-on-surface-variant);
+            cursor: pointer;
+        }
+        #panel-ytmusic .ytmusic-extra-controls .toggle-item.active {
+            color: var(--md-sys-color-primary);
+        }
+        #panel-ytmusic .ytmusic-extra-controls .toggle-item .bx {
+            font-size: 18px;
+        }
+        #panel-ytmusic .ytmusic-playlist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        #panel-ytmusic .ytmusic-playlist-header .search-wrap {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+            min-width: 120px;
+            background: var(--md-sys-color-surface-container-high);
+            border-radius: var(--border-radius-full);
+            padding: 0 8px;
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+        #panel-ytmusic .ytmusic-playlist-header .search-wrap input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 4px 4px;
+            font-size: 11px;
+            color: var(--md-sys-color-on-surface);
+            outline: none;
+            min-width: 60px;
+        }
+        #panel-ytmusic .ytmusic-playlist-header .search-wrap button {
+            background: none;
+            border: none;
+            color: var(--md-sys-color-on-surface-variant);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 2px;
+        }
+        #panel-ytmusic .ytmusic-playlist-header .search-wrap button:hover {
+            color: var(--md-sys-color-primary);
+        }
+        #panel-ytmusic .ytmusic-playlist {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 280px;
+            overflow-y: auto;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            background: var(--md-sys-color-surface-container-low);
+        }
+        #panel-ytmusic .ytmusic-playlist li {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            cursor: pointer;
+            transition: background var(--transition-fast);
             font-size: 12px;
         }
-        .markdown-content ul,
-        .markdown-content ol {
-            padding-left: 18px;
-            margin: 4px 0;
+        #panel-ytmusic .ytmusic-playlist li:last-child {
+            border-bottom: none;
+        }
+        #panel-ytmusic .ytmusic-playlist li:hover {
+            background: var(--md-sys-color-surface-container-high);
+        }
+        #panel-ytmusic .ytmusic-playlist li.selected {
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+        }
+        #panel-ytmusic .ytmusic-playlist li .num {
+            width: 24px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 10px;
+            color: var(--md-sys-color-on-surface-variant);
+            flex-shrink: 0;
+        }
+        #panel-ytmusic .ytmusic-playlist li .name {
+            flex: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+        #panel-ytmusic .ytmusic-playlist li .artist {
+            flex: 1.2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 10px;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+        #panel-ytmusic .ytmusic-playlist li .action {
+            width: 28px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        #panel-ytmusic .ytmusic-playlist li .action button {
+            background: none;
+            border: none;
+            color: var(--md-sys-color-error);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0;
+            opacity: 0.5;
+            transition: opacity var(--transition-fast);
+        }
+        #panel-ytmusic .ytmusic-playlist li .action button:hover {
+            opacity: 1;
+        }
+        #panel-ytmusic .ytmusic-playlist li .drag-handle {
+            cursor: grab;
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 14px;
+            flex-shrink: 0;
+            width: 20px;
+            text-align: center;
+        }
+        #panel-ytmusic .ytmusic-playlist li .drag-handle:hover {
+            color: var(--md-sys-color-primary);
+        }
+        #panel-ytmusic .ytmusic-playlist li.dragging {
+            opacity: 0.5;
+            transform: scale(0.98);
+        }
+        #panel-ytmusic .ytmusic-playlist li.drag-over-top {
+            border-top: 2px solid var(--md-sys-color-primary);
+        }
+        #panel-ytmusic .ytmusic-playlist li.drag-over-bottom {
+            border-bottom: 2px solid var(--md-sys-color-primary);
+        }
+        #panel-ytmusic .ytmusic-search-section .search-row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+        #panel-ytmusic .ytmusic-search-section .search-row input {
+            flex: 1;
+            padding: 6px 10px;
+            border-radius: var(--border-radius-full);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            background: var(--md-sys-color-surface-container-high);
+            color: var(--md-sys-color-on-surface);
+            font-size: 11px;
+            outline: none;
+            min-width: 80px;
+        }
+        #panel-ytmusic .ytmusic-search-section .search-row input:focus {
+            border-color: var(--md-sys-color-primary);
+        }
+        #panel-ytmusic .ytmusic-search-section .search-row button {
+            padding: 6px 14px;
+            border-radius: var(--border-radius-full);
+            border: none;
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+        }
+        #panel-ytmusic .ytmusic-search-section .search-row button:hover {
+            filter: brightness(1.05);
+        }
+        #panel-ytmusic .ytmusic-search-results {
+            max-height: 160px;
+            overflow-y: auto;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            background: var(--md-sys-color-surface-container-low);
+            padding: 4px;
+        }
+        #panel-ytmusic .ytmusic-search-results .result-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 8px;
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            cursor: pointer;
+            transition: background var(--transition-fast);
+            font-size: 11px;
+        }
+        #panel-ytmusic .ytmusic-search-results .result-item:last-child {
+            border-bottom: none;
+        }
+        #panel-ytmusic .ytmusic-search-results .result-item:hover {
+            background: var(--md-sys-color-surface-container-high);
+        }
+        #panel-ytmusic .ytmusic-search-results .result-item img {
+            width: 36px;
+            height: 24px;
+            object-fit: cover;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        #panel-ytmusic .ytmusic-search-results .result-item .info {
+            flex: 1;
+            overflow: hidden;
+        }
+        #panel-ytmusic .ytmusic-search-results .result-item .info .title {
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #panel-ytmusic .ytmusic-search-results .result-item .info .channel {
+            font-size: 9px;
+            color: var(--md-sys-color-on-surface-variant);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #panel-ytmusic .ytmusic-search-results .result-item .add-btn {
+            padding: 2px 10px;
+            border-radius: var(--border-radius-full);
+            border: none;
+            background: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            flex-shrink: 0;
+        }
+        #panel-ytmusic .ytmusic-search-results .result-item .add-btn:hover {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+        #panel-ytmusic .ytmusic-search-results .empty-msg {
+            text-align: center;
+            padding: 12px;
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 11px;
+        }
+        #panel-ytmusic .ytmusic-lyrics-section {
+            margin-top: 4px;
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-header .lyrics-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--md-sys-color-primary);
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-header .lyrics-meta {
+            font-size: 10px;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-header .lyrics-controls {
+            display: flex;
+            gap: 4px;
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-header .lyrics-controls button {
+            padding: 2px 8px;
+            border-radius: var(--border-radius-full);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            background: transparent;
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 9px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-header .lyrics-controls button:hover {
+            background: var(--md-sys-color-surface-container-high);
+            border-color: var(--md-sys-color-primary);
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-text {
+            max-height: 120px;
+            overflow-y: auto;
+            padding: 6px 8px;
+            border-radius: var(--border-radius-sm);
+            background: var(--md-sys-color-surface-container-low);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--md-sys-color-on-surface);
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-text .lrc-line {
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-text .lrc-line .lrc-time {
+            font-size: 10px;
+            color: var(--md-sys-color-on-surface-variant);
+            width: 32px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-text .lrc-line.highlight {
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-text .lrc-line.highlight .lrc-time {
+            color: var(--md-sys-color-on-primary-container);
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-text .plain-line {
+            padding: 1px 4px;
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-text .lyrics-pair {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            width: 100%;
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-text .lyrics-pair .original-lyric::before,
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-text .lyrics-pair .translated-lyric::before {
+            content: attr(data-label);
+            font-size: 8px;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface-variant);
+            background: var(--md-sys-color-surface-container-high);
+            padding: 0 4px;
+            border-radius: 2px;
+            margin-right: 4px;
+        }
+        #panel-ytmusic .ytmusic-lyrics-section .lyrics-text .lyrics-pair .translated-lyric {
+            color: var(--md-sys-color-on-surface-variant);
+            font-style: italic;
+            border-left: 2px solid var(--md-sys-color-outline-variant);
+            padding-left: 6px;
+        }
+        #panel-ytmusic .ytmusic-error {
+            color: var(--md-sys-color-error);
+            font-size: 11px;
+            text-align: center;
+            padding: 4px;
+        }
+        #panel-ytmusic .ytmusic-loading {
+            text-align: center;
+            padding: 8px;
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 11px;
+        }
+        .ytmusic-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .ytmusic-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .ytmusic-scroll::-webkit-scrollbar-thumb {
+            background: var(--md-sys-color-outline-variant);
+            border-radius: 4px;
+        }
+
+        /* Responsive YT Music */
+        @media (max-width: 700px) {
+            #panel-ytmusic .ytmusic-row {
+                flex-direction: column;
+            }
+            #panel-ytmusic .ytmusic-col {
+                min-width: unset;
+            }
+            #panel-ytmusic .album-art-container {
+                max-width: 140px;
+            }
+            #panel-ytmusic .ytmusic-controls button {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+            #panel-ytmusic .ytmusic-controls button.play-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+        }
+        @media (max-width: 480px) {
+            #panel-ytmusic {
+                padding: 4px 6px;
+            }
+            #panel-ytmusic .ytmusic-card {
+                padding: 10px 12px;
+            }
+            #panel-ytmusic .ytmusic-playlist li {
+                padding: 4px 6px;
+                font-size: 10px;
+            }
+            #panel-ytmusic .ytmusic-playlist li .num {
+                width: 18px;
+                font-size: 9px;
+            }
+            #panel-ytmusic .ytmusic-playlist li .action button {
+                font-size: 12px;
+            }
+            #panel-ytmusic .ytmusic-search-results .result-item {
+                padding: 4px 6px;
+                font-size: 10px;
+            }
+        }
+
+        /* Scrollbar overrides */
+        .ytmusic-scroll::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        .ytmusic-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .ytmusic-scroll::-webkit-scrollbar-thumb {
+            background: var(--md-sys-color-outline-variant);
+            border-radius: 4px;
+        }
+
+        #playerContainer {
+            display: none;
+        }
+        #playerContainer iframe {
+            width: 0;
+            height: 0;
+            border: none;
+        }
+
+        /* Reuse boxicons colors in dark mode */
+        [data-theme="dark"] #panel-ytmusic .bx {
+            color: inherit;
+        }
+        [data-theme="dark"] #panel-ytmusic .ytmusic-card {
+            border-color: var(--md-sys-color-outline-variant);
+        }
+        [data-theme="dark"] #panel-ytmusic .ytmusic-playlist li {
+            border-color: var(--md-sys-color-outline-variant);
+        }
+        [data-theme="dark"] #panel-ytmusic .ytmusic-search-results .result-item {
+            border-color: var(--md-sys-color-outline-variant);
         }
     </style>
 </head>
@@ -1113,6 +1558,7 @@
             <button class="menu-tab" data-panel="image"><i class="fas fa-image"></i> Image</button>
             <button class="menu-tab" data-panel="video"><i class="fas fa-video"></i> Video</button>
             <button class="menu-tab" data-panel="music"><i class="fas fa-music"></i> Music</button>
+            <button class="menu-tab" data-panel="ytmusic"><i class="fab fa-youtube"></i> YT Music</button>
         </div>
 
         <div class="main-content">
@@ -1205,6 +1651,95 @@
                     <input type="file" id="musicUpload" accept="audio/mp3,audio/mpeg,audio/*" style="display:none;">
                 </div>
             </div>
+
+            <!-- ============ YT MUSIC PANEL ============ -->
+            <div class="panel" id="panel-ytmusic">
+                <div class="ytmusic-layout">
+                    <div class="ytmusic-row">
+                        <div class="ytmusic-col" style="flex:1.2;">
+                            <div class="ytmusic-card">
+                                <div class="card-title"><i class='bx bxs-music'></i> Player</div>
+                                <div class="album-art-container" id="ytAlbumArtWrap">
+                                    <img id="ytAlbumArt" src="https://via.placeholder.com/200" alt="Album Art" draggable="false" style="border-radius:var(--border-radius-md);">
+                                </div>
+                                <div class="ytmusic-nowplaying">
+                                    <span class="song-title" id="ytSongTitle">No Song</span>
+                                    <span class="author-name" id="ytAuthorName"></span>
+                                </div>
+                                <div class="ytmusic-controls">
+                                    <button id="ytPrevBtn" title="Previous"><i class='bx bx-skip-previous'></i></button>
+                                    <button class="play-btn" id="ytPlayPauseBtn" title="Play/Pause"><i class='bx bx-play'></i></button>
+                                    <button id="ytNextBtn" title="Next"><i class='bx bx-skip-next'></i></button>
+                                </div>
+                                <div class="ytmusic-progress">
+                                    <span class="time-label" id="ytCurrentTime">0:00</span>
+                                    <div class="progress-track" id="ytProgressBar">
+                                        <div class="progress-fill" id="ytProgressFill"></div>
+                                    </div>
+                                    <span class="time-label" id="ytTotalTime">0:00</span>
+                                </div>
+                                <div class="ytmusic-volume">
+                                    <span class="vol-icon" id="ytVolIcon"><i class='bx bx-volume-low'></i></span>
+                                    <input type="range" id="ytVolumeControl" min="0" max="100" value="80">
+                                    <span class="vol-icon"><i class='bx bx-volume-full'></i></span>
+                                </div>
+                                <div class="ytmusic-extra-controls">
+                                    <span class="toggle-item" id="ytAutoPlayToggle" title="Auto-Play">
+                                        <i class='bx bx-play-circle'></i> <span>Auto</span>
+                                    </span>
+                                    <span class="toggle-item" id="ytRepeatToggle" title="Repeat">
+                                        <i class='bx bx-repeat'></i> <span>Repeat</span>
+                                    </span>
+                                    <span class="toggle-item" id="ytLyricsToggle" title="Show Lyrics">
+                                        <i class='bx bx-music'></i> <span>Lyrics</span>
+                                    </span>
+                                </div>
+                                <div id="ytErrorMessage" class="ytmusic-error" style="display:none;"></div>
+                            </div>
+                        </div>
+                        <div class="ytmusic-col" style="flex:2;">
+                            <div class="ytmusic-card" style="height:auto;">
+                                <div class="card-title"><i class='bx bxs-playlist'></i> Playlist</div>
+                                <div class="ytmusic-playlist-header">
+                                    <div class="search-wrap">
+                                        <input type="text" id="ytPlaylistSearch" placeholder="Search playlist...">
+                                        <button id="ytClearPlaylistSearch"><i class='bx bx-x'></i></button>
+                                    </div>
+                                    <span style="font-size:10px;color:var(--md-sys-color-on-surface-variant);" id="ytPlaylistCount">0 songs</span>
+                                </div>
+                                <ul class="ytmusic-playlist ytmusic-scroll" id="ytPlaylist"></ul>
+                            </div>
+                            <div class="ytmusic-card ytmusic-search-section" style="margin-top:8px;height:auto;">
+                                <div class="card-title"><i class='bx bx-search'></i> YouTube Search</div>
+                                <div class="search-row">
+                                    <input type="text" id="ytSearchInput" placeholder="Search YouTube...">
+                                    <button id="ytSearchBtn"><i class='bx bx-search'></i> Search</button>
+                                </div>
+                                <div id="ytSearchResults" class="ytmusic-search-results ytmusic-scroll">
+                                    <div class="empty-msg">Search for songs to add</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ytmusic-row">
+                        <div class="ytmusic-col" style="flex:1;">
+                            <div class="ytmusic-card ytmusic-lyrics-section" id="ytLyricsCard" style="height:auto;">
+                                <div class="lyrics-header">
+                                    <span class="lyrics-title"><i class='bx bx-music'></i> Lyrics</span>
+                                    <span class="lyrics-meta" id="ytLyricsMeta">No lyrics loaded</span>
+                                    <div class="lyrics-controls">
+                                        <button id="ytToggleSyncBtn">Sync</button>
+                                        <button id="ytRefreshLyricsBtn"><i class='bx bx-refresh'></i></button>
+                                    </div>
+                                </div>
+                                <div class="lyrics-text ytmusic-scroll" id="ytLyricsText">No lyrics loaded.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="playerContainer" style="display:none;"><div id="player"></div></div>
+            </div>
+            <!-- ============ END YT MUSIC PANEL ============ -->
         </div>
 
         <div class="app-footer text-center p-2 border-top">
@@ -1286,6 +1821,8 @@
     <script src="https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js">
+    </script>
+    <script src="https://www.youtube.com/iframe_api">
     </script>
 
     <script>
@@ -1438,32 +1975,32 @@
                     "🐸", "🐵", "🐒", "🐔", "🐧", "🐦", "🐤", "🐣", "🐥", "🦆", "🦅", "🦉", "🦇", "🐺", "🐗", "🐴", "🦄",
                     "🐝", "🐛", "🦋", "🐌", "🐞", "🐜", "🕷️", "🕸️", "🦂", "🐢", "🐍", "🦎", "🦖", "🦕", "🐙", "🦑",
                     "🦐", "🦞", "🦀", "🐡", "🐠", "🐟", "🐬", "🐳", "🐋", "🦈", "🐊", "🐅", "🐆", "🦓", "🦍", "🦧", "🐘",
-                    "🦛", "🦏", "🐪", "🐫", "🦒", "🦘", "🐃", "🐂", "🐄", "🐎", "🐖", "🐏", "🐑", "🦙", "🐐", "🦌", "🐕",
-                    "🐩", "🦮", "🐈", "🐓", "🦃", "🦚", "🦜", "🦢", "🦩", "🕊️", "🐇", "🦝", "🦨", "🦡", "🦫", "🦦", "🦥",
-                    "🐁", "🐀", "🐿️", "🦔", "🐾", "🐉", "🐲", "🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️", "🍀", "🎍",
-                    "🎋", "🍃", "🍂", "🍁", "🍄", "🐚", "🌾", "💐", "🌷", "🌹", "🥀", "🌺", "🌸", "🌼", "🌻", "🌞", "🌝",
-                    "🌛", "🌜", "🌚", "🌕", "🌖", "🌗", "🌘", "🌑", "🌒", "🌓", "🌔", "🌙", "🌎", "🌍", "🌏", "🪐", "💫",
-                    "⭐", "🌟", "✨", "⚡", "☄️", "💥", "🔥", "🌪️", "🌈", "☀️", "🌤️", "⛅", "🌥️", "☁️", "🌦️", "🌧️",
-                    "⛈️", "🌩️", "🌨️", "❄️", "☃️", "⛄", "🌬️", "💨", "💧", "💦", "☔", "☂️", "🌊", "🌫️", "🍏", "🍎",
-                    "🍐", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🫐", "🍈", "🍒", "🍑", "🥭", "🍍", "🥥", "🥝", "🍅", "🍆",
-                    "🥑", "🥦", "🥬", "🥒", "🌶️", "🌽", "🥕", "🧄", "🧅", "🥔", "🍠", "🥐", "🍞", "🥖", "🥨", "🧀", "🥚",
-                    "🍳", "🧈", "🥞", "🧇", "🥓", "🥩", "🍗", "🍖", "🌭", "🍔", "🍟", "🍕", "🥪", "🥙", "🌮", "🌯", "🥗",
-                    "🥘", "🍝", "🍜", "🍲", "🍛", "🍣", "🍱", "🥟", "🦪", "🍤", "🍙", "🍚", "🍘", "🍥", "🍢", "🍡", "🍧",
-                    "🍨", "🍦", "🥧", "🧁", "🍰", "🎂", "🍮", "🍭", "🍬", "🍫", "🍿", "🍩", "🍪", "🌰", "🥜", "🍯", "🥛",
-                    "🍼", "☕", "🍵", "🍶", "🍾", "🍷", "🍸", "🍹", "🍺", "🍻", "🥂", "🥃", "🥤", "🧋", "🧃", "🧊", "🥢",
-                    "🍽️", "🍴", "🥄", "🔪", "🏺", "🎃", "🎄", "🎆", "🎇", "🧨", "✨", "🎈", "🎉", "🎊", "🎋", "🎍", "🎎",
-                    "🎏", "🎐", "🎑", "🧧", "🎀", "🎁", "🎗️", "🎟️", "🎫", "🎖️", "🏆", "🏅", "🥇", "🥈", "🥉", "⚽", "⚾",
-                    "🥎", "🏀", "🏐", "🏈", "🏉", "🎾", "🥏", "🎳", "🏏", "🏑", "🏒", "🥍", "🏓", "🏸", "🥊", "🥋", "🥅",
-                    "⛳", "⛸️", "🎣", "🤿", "🎽", "🎿", "🛷", "🥌", "🎯", "🪀", "🪁", "🎱", "🔮", "🧿", "🎮", "🕹️", "🎰",
-                    "🎲", "🧩", "🧸", "♟️", "🃏", "🀄", "🎴", "🎭", "🖼️", "🎨", "🧵", "🧶", "🎵", "🎶", "🎙️", "🎚️",
-                    "🎛️", "🎤", "🎧", "📻", "🎷", "🎸", "🎹", "🎺", "🎻", "🥁", "📱", "📲", "☎️", "📞", "📟", "📠", "🔋",
-                    "🔌", "💻", "🖥️", "🖨️", "⌨️", "🖱️", "🖲️", "💽", "💾", "💿", "📀", "🧮", "🎥", "🎞️", "📽️", "🎬",
-                    "📺", "📷", "📸", "📹", "📼", "🔍", "🔎", "🕯️", "💡", "🔦", "🏮", "🔒", "🔓", "🔏", "🔐", "🔑", "🗝️",
-                    "🔨", "🪓", "⛏️", "⚒️", "🛠️", "🗡️", "⚔️", "🔫", "🏹", "🛡️", "🔧", "🔩", "⚙️", "🗜️", "⚖️", "🦯",
-                    "🔗", "⛓️", "🧰", "🧲", "⚗️", "🧪", "🧫", "🧬", "🔬", "🔭", "📡", "💉", "🩸", "💊", "🩹", "🚀", "🛸",
-                    "🗿", "⚠️", "🚸", "⛔", "🚫", "✅", "❌", "❓", "❗", "💱", "💲", "♻️", "🔱", "📛", "🔰", "⭕", "🟢",
-                    "🔵", "🟣", "🟡", "🟠", "🔴", "⚫", "⚪", "⬛", "⬜", "🔶", "🔷", "🔸", "🔹", "🔺", "🔻", "💠", "🔘",
-                    "🔲", "🔳", "🏁", "🚩", "🎌", "🏴", "🏳️", "🏳️‍🌈", "🏴‍☠️"
+                    "🦛", "🦏", "🐪", "🐂", "🐄", "🐎", "🐖", "🐏", "🐑", "🦙", "🐐", "🦌", "🐕", "🐩", "🦮", "🐈", "🐓",
+                    "🦃", "🦚", "🦜", "🦢", "🦩", "🕊️", "🐇", "🦝", "🦨", "🦡", "🦫", "🦦", "🦥", "🐁", "🐀", "🐿️",
+                    "🦔", "🐾", "🐉", "🐲", "🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️", "🍀", "🎍", "🎋", "🍃", "🍂",
+                    "🍁", "🍄", "🐚", "🌾", "💐", "🌷", "🌹", "🥀", "🌺", "🌸", "🌼", "🌻", "🌞", "🌝", "🌛", "🌜", "🌚",
+                    "🌕", "🌖", "🌗", "🌘", "🌑", "🌒", "🌓", "🌔", "🌙", "🌎", "🌍", "🌏", "🪐", "💫", "⭐", "🌟", "✨",
+                    "⚡", "☄️", "💥", "🔥", "🌪️", "🌈", "☀️", "🌤️", "⛅", "🌥️", "☁️", "🌦️", "🌧️", "⛈️", "🌩️", "🌨️",
+                    "❄️", "☃️", "⛄", "🌬️", "💨", "💧", "💦", "☔", "☂️", "🌊", "🌫️", "🍏", "🍎", "🍐", "🍊", "🍋",
+                    "🍌", "🍉", "🍇", "🍓", "🫐", "🍈", "🍒", "🍑", "🥭", "🍍", "🥥", "🥝", "🍅", "🍆", "🥑", "🥦", "🥬",
+                    "🥒", "🌶️", "🌽", "🥕", "🧄", "🧅", "🥔", "🍠", "🥐", "🍞", "🥖", "🥨", "🧀", "🥚", "🍳", "🧈", "🥞",
+                    "🧇", "🥓", "🥩", "🍗", "🍖", "🌭", "🍔", "🍟", "🍕", "🥪", "🥙", "🌮", "🌯", "🥗", "🥘", "🍝", "🍜",
+                    "🍲", "🍛", "🍣", "🍱", "🥟", "🦪", "🍤", "🍙", "🍚", "🍘", "🍥", "🍢", "🍡", "🍧", "🍨", "🍦", "🥧",
+                    "🧁", "🍰", "🎂", "🍮", "🍭", "🍬", "🍫", "🍿", "🍩", "🍪", "🌰", "🥜", "🍯", "🥛", "🍼", "☕", "🍵",
+                    "🍶", "🍾", "🍷", "🍸", "🍹", "🍺", "🍻", "🥂", "🥃", "🥤", "🧋", "🧃", "🧊", "🥢", "🍽️", "🍴", "🥄",
+                    "🔪", "🏺", "🎃", "🎄", "🎆", "🎇", "🧨", "✨", "🎈", "🎉", "🎊", "🎋", "🎍", "🎎", "🎏", "🎐", "🎑",
+                    "🧧", "🎀", "🎁", "🎗️", "🎟️", "🎫", "🎖️", "🏆", "🏅", "🥇", "🥈", "🥉", "⚽", "⚾", "🥎", "🏀", "🏐",
+                    "🏈", "🏉", "🎾", "🥏", "🎳", "🏏", "🏑", "🏒", "🥍", "🏓", "🏸", "🥊", "🥋", "🥅", "⛳", "⛸️", "🎣",
+                    "🤿", "🎽", "🎿", "🛷", "🥌", "🎯", "🪀", "🪁", "🎱", "🔮", "🧿", "🎮", "🕹️", "🎰", "🎲", "🧩", "🧸",
+                    "♟️", "🃏", "🀄", "🎴", "🎭", "🖼️", "🎨", "🧵", "🧶", "🎵", "🎶", "🎙️", "🎚️", "🎛️", "🎤", "🎧",
+                    "📻", "🎷", "🎸", "🎹", "🎺", "🎻", "🥁", "📱", "📲", "☎️", "📞", "📟", "📠", "🔋", "🔌", "💻", "🖥️",
+                    "🖨️", "⌨️", "🖱️", "🖲️", "💽", "💾", "💿", "📀", "🧮", "🎥", "🎞️", "📽️", "🎬", "📺", "📷", "📸",
+                    "📹", "📼", "🔍", "🔎", "🕯️", "💡", "🔦", "🏮", "🔒", "🔓", "🔏", "🔐", "🔑", "🗝️", "🔨", "🪓", "⛏️",
+                    "⚒️", "🛠️", "🗡️", "⚔️", "🔫", "🏹", "🛡️", "🔧", "🔩", "⚙️", "🗜️", "⚖️", "🦯", "🔗", "⛓️", "🧰",
+                    "🧲", "⚗️", "🧪", "🧫", "🧬", "🔬", "🔭", "📡", "💉", "🩸", "💊", "🩹", "🚀", "🛸", "🗿", "⚠️", "🚸",
+                    "⛔", "🚫", "✅", "❌", "❓", "❗", "💱", "💲", "♻️", "🔱", "📛", "🔰", "⭕", "🟢", "🔵", "🟣", "🟡",
+                    "🟠", "🔴", "⚫", "⚪", "⬛", "⬜", "🔶", "🔷", "🔸", "🔹", "🔺", "🔻", "💠", "🔘", "🔲", "🔳", "🏁",
+                    "🚩", "🎌", "🏴", "🏳️", "🏳️‍🌈", "🏴‍☠️"
                 ];
             }
 
@@ -1502,6 +2039,8 @@
                 this.loadChat();
                 this.requestNotificationPermission();
                 this.updateProviderKeySections();
+                // Init YT Music after everything else
+                setTimeout(() => this.initYTMusic(), 300);
             }
 
             applyThemeFromSettings() {
@@ -1767,7 +2306,6 @@
                     copyBtn.addEventListener('click', () => {
                         const bubble = msgDiv.querySelector('.message-bubble');
                         const text = bubble ? bubble.textContent.trim() : '';
-                        // Fallback copy function
                         const fallbackCopy = (txt) => {
                             const textarea = document.createElement('textarea');
                             textarea.value = txt;
@@ -2081,7 +2619,6 @@
                 return data.choices?.[0]?.message?.content || 'No response.';
             }
 
-            // FIXED: Correct Gemini endpoint, uses selectedModel
             async callGeminiAPI(message, attachments) {
                 const modelId = this.selectedModel || 'gemini-3.1-flash-lite';
                 const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent`;
@@ -2340,6 +2877,687 @@
                     setTimeout(() => n.close(), 5000);
                 } catch (e) { /* silent */ }
             }
+
+            // ========== YT MUSIC INTEGRATION ==========
+            initYTMusic() {
+                this.yt = {
+                    player: null,
+                    playing: false,
+                    songUnavailable: false,
+                    progressInterval: null,
+                    isDragging: false,
+                    selectedVideoId: null,
+                    actualSelectedVideoId: null,
+                    playlist: [],
+                    repeat: false,
+                    autoPlay: true,
+                    volume: parseInt(localStorage.getItem('ytMusicVolume')) || 80,
+                    lyricsData: null,
+                    lyricsAutoSync: true,
+                    syncInterval: null,
+                    albumArtSpin: true,
+                    albumArtDisplayMode: 'spin',
+                    currentLang: 'en',
+                    lastSong: '',
+                    lastAuthor: '',
+                };
+                this.yt.playlist = JSON.parse(localStorage.getItem('ytMusicPlaylist') || '[]');
+                if (!this.yt.playlist.length) {
+                    this.yt.playlist = [
+                        { videoId: '7OHstJwaKoU', songName: '何千キロの君へ', authorName: 'SHIN - Topic',
+                            albumArt: 'https://i.ytimg.com/vi/7OHstJwaKoU/hqdefault.jpg' },
+                        { videoId: 'dh00du4hOGM', songName: '清夏', authorName: 'SHIN - Topic',
+                            albumArt: 'https://i.ytimg.com/vi/dh00du4hOGM/hqdefault.jpg' },
+                        { videoId: 'eJpkUecGyMI', songName: '恋花', authorName: 'SHIN - Topic',
+                            albumArt: 'https://i.ytimg.com/vi/eJpkUecGyMI/hqdefault.jpg' },
+                        { videoId: 'TQ8WlA2GXbk', songName: 'Official髭男dism - Pretender［Official Video］',
+                            authorName: 'Official髭男dism', albumArt: 'https://i.ytimg.com/vi/TQ8WlA2GXbk/hqdefault.jpg' },
+                    ];
+                }
+                this.yt.dom = {
+                    albumArt: document.getElementById('ytAlbumArt'),
+                    songTitle: document.getElementById('ytSongTitle'),
+                    authorName: document.getElementById('ytAuthorName'),
+                    playPauseBtn: document.getElementById('ytPlayPauseBtn'),
+                    prevBtn: document.getElementById('ytPrevBtn'),
+                    nextBtn: document.getElementById('ytNextBtn'),
+                    progressFill: document.getElementById('ytProgressFill'),
+                    progressBar: document.getElementById('ytProgressBar'),
+                    currentTime: document.getElementById('ytCurrentTime'),
+                    totalTime: document.getElementById('ytTotalTime'),
+                    volumeControl: document.getElementById('ytVolumeControl'),
+                    volIcon: document.getElementById('ytVolIcon'),
+                    playlist: document.getElementById('ytPlaylist'),
+                    playlistSearch: document.getElementById('ytPlaylistSearch'),
+                    clearPlaylistSearch: document.getElementById('ytClearPlaylistSearch'),
+                    searchInput: document.getElementById('ytSearchInput'),
+                    searchBtn: document.getElementById('ytSearchBtn'),
+                    searchResults: document.getElementById('ytSearchResults'),
+                    lyricsText: document.getElementById('ytLyricsText'),
+                    lyricsMeta: document.getElementById('ytLyricsMeta'),
+                    lyricsCard: document.getElementById('ytLyricsCard'),
+                    toggleSyncBtn: document.getElementById('ytToggleSyncBtn'),
+                    refreshLyricsBtn: document.getElementById('ytRefreshLyricsBtn'),
+                    autoPlayToggle: document.getElementById('ytAutoPlayToggle'),
+                    repeatToggle: document.getElementById('ytRepeatToggle'),
+                    lyricsToggle: document.getElementById('ytLyricsToggle'),
+                    errorMsg: document.getElementById('ytErrorMessage'),
+                    playlistCount: document.getElementById('ytPlaylistCount'),
+                };
+                // Load saved settings
+                const savedVol = localStorage.getItem('ytMusicVolume');
+                if (savedVol) { this.yt.volume = parseInt(savedVol);
+                    this.yt.dom.volumeControl.value = this.yt.volume; }
+                const savedRepeat = localStorage.getItem('ytMusicRepeat');
+                if (savedRepeat === 'true') { this.yt.repeat = true;
+                    this.yt.dom.repeatToggle.classList.add('active'); }
+                const savedAuto = localStorage.getItem('ytMusicAutoPlay');
+                if (savedAuto === 'false') { this.yt.autoPlay = false;
+                    this.yt.dom.autoPlayToggle.classList.remove('active'); } else { this.yt.dom.autoPlayToggle.classList
+                        .add('active'); }
+                const savedSpin = localStorage.getItem('ytMusicAlbumArtSpin');
+                if (savedSpin === 'false') { this.yt.albumArtSpin = false; }
+                this.setupYTEventListeners();
+                this.renderYTPlaylist();
+                this.initYTPlayer();
+                if (this.yt.playlist.length) {
+                    const first = this.yt.playlist[0];
+                    this.loadYTVideo(first.videoId, first.albumArt, first, false);
+                }
+            }
+
+            setupYTEventListeners() {
+                const d = this.yt.dom;
+                // Play/Pause
+                d.playPauseBtn.addEventListener('click', () => this.ytTogglePlay());
+                // Prev/Next
+                d.prevBtn.addEventListener('click', () => this.ytPlayPrev());
+                d.nextBtn.addEventListener('click', () => this.ytPlayNext());
+                // Volume
+                d.volumeControl.addEventListener('input', () => {
+                    const v = parseInt(d.volumeControl.value);
+                    this.yt.volume = v;
+                    localStorage.setItem('ytMusicVolume', v);
+                    if (this.yt.player && this.yt.player.setVolume) this.yt.player.setVolume(v);
+                    this.ytUpdateVolumeIcon(v);
+                });
+                // Progress bar
+                d.progressBar.addEventListener('mousedown', (e) => {
+                    this.yt.isDragging = true;
+                    this.ytSeek(e);
+                });
+                d.progressBar.addEventListener('touchstart', (e) => {
+                    this.yt.isDragging = true;
+                    this.ytSeek(e.touches[0]);
+                });
+                document.addEventListener('mousemove', (e) => { if (this.yt.isDragging) this.ytSeek(e); });
+                document.addEventListener('touchmove', (e) => { if (this.yt.isDragging) this.ytSeek(e.touches[0]); });
+                document.addEventListener('mouseup', () => { this.yt.isDragging = false; });
+                document.addEventListener('touchend', () => { this.yt.isDragging = false; });
+                // Playlist search
+                d.playlistSearch.addEventListener('input', () => {
+                    const term = d.playlistSearch.value.toLowerCase();
+                    const filtered = this.yt.playlist.filter(s =>
+                        s.songName.toLowerCase().includes(term) || s.authorName.toLowerCase().includes(term)
+                    );
+                    this.renderYTPlaylist(filtered);
+                    d.clearPlaylistSearch.style.display = term ? 'block' : 'none';
+                });
+                d.clearPlaylistSearch.addEventListener('click', () => {
+                    d.playlistSearch.value = '';
+                    d.clearPlaylistSearch.style.display = 'none';
+                    this.renderYTPlaylist();
+                });
+                // YouTube search
+                d.searchBtn.addEventListener('click', () => this.ytSearch());
+                d.searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') this.ytSearch(); });
+                // Auto-play toggle
+                d.autoPlayToggle.addEventListener('click', () => {
+                    this.yt.autoPlay = !this.yt.autoPlay;
+                    d.autoPlayToggle.classList.toggle('active');
+                    localStorage.setItem('ytMusicAutoPlay', this.yt.autoPlay);
+                });
+                // Repeat toggle
+                d.repeatToggle.addEventListener('click', () => {
+                    this.yt.repeat = !this.yt.repeat;
+                    d.repeatToggle.classList.toggle('active');
+                    localStorage.setItem('ytMusicRepeat', this.yt.repeat);
+                });
+                // Lyrics toggle
+                d.lyricsToggle.addEventListener('click', () => {
+                    const card = d.lyricsCard;
+                    card.style.display = card.style.display === 'none' ? 'block' : 'none';
+                    d.lyricsToggle.classList.toggle('active');
+                });
+                // Lyrics sync toggle
+                d.toggleSyncBtn.addEventListener('click', () => {
+                    this.yt.lyricsAutoSync = !this.yt.lyricsAutoSync;
+                    d.toggleSyncBtn.textContent = this.yt.lyricsAutoSync ? 'Sync' : 'Off';
+                });
+                // Refresh lyrics
+                d.refreshLyricsBtn.addEventListener('click', () => {
+                    const title = d.songTitle.textContent;
+                    const artist = d.authorName.textContent;
+                    if (title && title !== 'No Song') this.ytLoadLyrics(title, artist);
+                });
+                // Volume icon click = mute toggle
+                d.volIcon.addEventListener('click', () => {
+                    const v = parseInt(d.volumeControl.value);
+                    if (v > 0) {
+                        this.yt._lastVol = v;
+                        d.volumeControl.value = 0;
+                        if (this.yt.player && this.yt.player.setVolume) this.yt.player.setVolume(0);
+                        this.ytUpdateVolumeIcon(0);
+                    } else {
+                        const restore = this.yt._lastVol || 80;
+                        d.volumeControl.value = restore;
+                        if (this.yt.player && this.yt.player.setVolume) this.yt.player.setVolume(restore);
+                        this.ytUpdateVolumeIcon(restore);
+                    }
+                    localStorage.setItem('ytMusicVolume', d.volumeControl.value);
+                });
+            }
+
+            ytUpdateVolumeIcon(v) {
+                const icon = this.yt.dom.volIcon.querySelector('i');
+                if (v === 0) { icon.className = 'bx bx-volume-mute'; } else if (v < 50) { icon.className =
+                    'bx bx-volume-low'; } else { icon.className = 'bx bx-volume-full'; }
+            }
+
+            initYTPlayer() {
+                if (window.YT && window.YT.Player) {
+                    this.ytCreatePlayer();
+                } else {
+                    const tag = document.createElement('script');
+                    tag.src = 'https://www.youtube.com/iframe_api';
+                    document.head.appendChild(tag);
+                    window.onYouTubeIframeAPIReady = () => this.ytCreatePlayer();
+                }
+            }
+
+            ytCreatePlayer() {
+                const vid = this.yt.playlist.length ? this.yt.playlist[0].videoId : '';
+                this.yt.player = new YT.Player('player', {
+                    videoId: vid,
+                    playerVars: { autoplay: 0, controls: 0, modestbranding: 1, showinfo: 0, rel: 0, fs: 0,
+                        iv_load_policy: 3 },
+                    events: {
+                        onReady: (e) => {
+                            e.target.setVolume(this.yt.volume);
+                            this.ytUpdateVolumeIcon(this.yt.volume);
+                            if (this.yt.playlist.length) {
+                                const first = this.yt.playlist[0];
+                                this.loadYTVideo(first.videoId, first.albumArt, first, false);
+                            }
+                        },
+                        onStateChange: (e) => this.ytHandleStateChange(e),
+                        onError: (e) => this.ytHandleError(e),
+                    }
+                });
+            }
+
+            loadYTVideo(videoId, albumArtUrl, song, autoplay = true) {
+                const d = this.yt.dom;
+                this.yt.actualSelectedVideoId = videoId;
+                this.yt.selectedVideoId = videoId;
+                this.yt.songUnavailable = false;
+                d.errorMsg.style.display = 'none';
+                // Album art
+                if (albumArtUrl && albumArtUrl !== 'https://via.placeholder.com/200') {
+                    d.albumArt.src = albumArtUrl;
+                } else {
+                    d.albumArt.src = 'https://via.placeholder.com/200';
+                }
+                // Spin
+                if (this.yt.albumArtSpin && this.yt.playing) {
+                    d.albumArt.classList.add('rotate');
+                    d.albumArt.classList.remove('rotate-paused');
+                } else if (this.yt.albumArtSpin) {
+                    d.albumArt.classList.add('rotate-paused');
+                } else {
+                    d.albumArt.classList.remove('rotate', 'rotate-paused');
+                }
+                // Song info
+                if (song) {
+                    let clean = song.songName.replace(new RegExp(`^${song.authorName}\\s*-\\s*`), '');
+                    clean = clean.replace(new RegExp(`\\s*-\\s*${song.authorName}$`), '');
+                    d.songTitle.textContent = clean;
+                    d.authorName.textContent = song.authorName;
+                    this.yt.lastSong = song.songName;
+                    this.yt.lastAuthor = song.authorName;
+                    this.ytLoadLyrics(song.songName, song.authorName);
+                }
+                // Highlight in playlist
+                document.querySelectorAll('#ytPlaylist li').forEach(li => li.classList.remove('selected'));
+                document.querySelectorAll(`#ytPlaylist li[data-video="${videoId}"]`).forEach(li => li.classList.add(
+                'selected'));
+                // Load video
+                if (this.yt.player && this.yt.player.loadVideoById) {
+                    this.yt.player.loadVideoById(videoId);
+                    this.yt.player.setVolume(this.yt.volume);
+                    if (autoplay) {
+                        this.yt.player.playVideo();
+                        this.yt.playing = true;
+                        d.playPauseBtn.innerHTML = '<i class="bx bx-pause"></i>';
+                    } else {
+                        this.yt.player.pauseVideo();
+                        this.yt.playing = false;
+                        d.playPauseBtn.innerHTML = '<i class="bx bx-play"></i>';
+                    }
+                }
+                // Reset progress
+                d.progressFill.style.width = '0%';
+                d.currentTime.textContent = '0:00';
+                d.totalTime.textContent = '0:00';
+                if (this.yt.progressInterval) clearInterval(this.yt.progressInterval);
+                if (autoplay) this.ytStartProgress();
+                // Update playlist count
+                d.playlistCount.textContent = this.yt.playlist.length + ' songs';
+                // Update media session
+                this.ytSetupMediaSession(song);
+            }
+
+            ytTogglePlay() {
+                const d = this.yt.dom;
+                if (this.yt.songUnavailable) return;
+                if (!this.yt.player) return;
+                if (this.yt.playing) {
+                    this.yt.player.pauseVideo();
+                    this.yt.playing = false;
+                    d.playPauseBtn.innerHTML = '<i class="bx bx-play"></i>';
+                    if (this.yt.albumArtSpin) d.albumArt.classList.add('rotate-paused');
+                    if (this.yt.progressInterval) clearInterval(this.yt.progressInterval);
+                } else {
+                    this.yt.player.playVideo();
+                    this.yt.playing = true;
+                    d.playPauseBtn.innerHTML = '<i class="bx bx-pause"></i>';
+                    if (this.yt.albumArtSpin) { d.albumArt.classList.remove('rotate-paused');
+                        d.albumArt.classList.add('rotate'); }
+                    this.ytStartProgress();
+                }
+            }
+
+            ytPlayPrev() {
+                const items = this.yt.playlist;
+                if (!items.length) return;
+                const current = this.yt.actualSelectedVideoId;
+                let idx = items.findIndex(s => s.videoId === current);
+                if (idx <= 0) idx = items.length - 1;
+                else idx--;
+                const song = items[idx];
+                this.loadYTVideo(song.videoId, song.albumArt, song, true);
+                this.ytScrollToSong(song.videoId);
+            }
+
+            ytPlayNext() {
+                const items = this.yt.playlist;
+                if (!items.length) return;
+                const current = this.yt.actualSelectedVideoId;
+                let idx = items.findIndex(s => s.videoId === current);
+                if (idx < 0 || idx >= items.length - 1) idx = 0;
+                else idx++;
+                const song = items[idx];
+                this.loadYTVideo(song.videoId, song.albumArt, song, true);
+                this.ytScrollToSong(song.videoId);
+            }
+
+            ytStartProgress() {
+                if (this.yt.progressInterval) clearInterval(this.yt.progressInterval);
+                this.yt.progressInterval = setInterval(() => {
+                    if (!this.yt.player) return;
+                    const d = this.yt.dom;
+                    const cur = this.yt.player.getCurrentTime() || 0;
+                    const dur = this.yt.player.getDuration() || 0;
+                    if (dur > 0 && !this.yt.isDragging) {
+                        const pct = (cur / dur) * 100;
+                        d.progressFill.style.width = pct + '%';
+                        d.currentTime.textContent = this.ytFormatTime(cur);
+                        d.totalTime.textContent = this.ytFormatTime(dur);
+                    }
+                    // Sync lyrics
+                    if (this.yt.lyricsAutoSync && this.yt.lyricsData && this.yt.lyricsData.isLrc) {
+                        this.ytSyncLyrics(cur);
+                    }
+                }, 300);
+            }
+
+            ytFormatTime(s) {
+                const m = Math.floor(s / 60);
+                const sec = Math.floor(s % 60);
+                return m + ':' + (sec < 10 ? '0' : '') + sec;
+            }
+
+            ytSeek(e) {
+                const bar = this.yt.dom.progressBar;
+                const rect = bar.getBoundingClientRect();
+                const x = (e.clientX || e.pageX) - rect.left;
+                const pct = Math.max(0, Math.min(1, x / rect.width));
+                if (this.yt.player && this.yt.player.getDuration) {
+                    const dur = this.yt.player.getDuration();
+                    if (dur > 0) {
+                        this.yt.player.seekTo(pct * dur, true);
+                        this.yt.dom.progressFill.style.width = (pct * 100) + '%';
+                    }
+                }
+            }
+
+            ytHandleStateChange(e) {
+                const d = this.yt.dom;
+                const state = e.data;
+                if (state === 1) { // PLAYING
+                    this.yt.playing = true;
+                    d.playPauseBtn.innerHTML = '<i class="bx bx-pause"></i>';
+                    if (this.yt.albumArtSpin) { d.albumArt.classList.remove('rotate-paused');
+                        d.albumArt.classList.add('rotate'); }
+                    this.ytStartProgress();
+                } else if (state === 2) { // PAUSED
+                    this.yt.playing = false;
+                    d.playPauseBtn.innerHTML = '<i class="bx bx-play"></i>';
+                    if (this.yt.albumArtSpin) d.albumArt.classList.add('rotate-paused');
+                    if (this.yt.progressInterval) clearInterval(this.yt.progressInterval);
+                } else if (state === 0) { // ENDED
+                    this.yt.playing = false;
+                    d.playPauseBtn.innerHTML = '<i class="bx bx-play"></i>';
+                    if (this.yt.albumArtSpin) d.albumArt.classList.add('rotate-paused');
+                    if (this.yt.progressInterval) clearInterval(this.yt.progressInterval);
+                    if (this.yt.repeat) {
+                        this.yt.player.seekTo(0);
+                        this.yt.player.playVideo();
+                    } else if (this.yt.autoPlay) {
+                        this.ytPlayNext();
+                    }
+                }
+            }
+
+            ytHandleError(e) {
+                const d = this.yt.dom;
+                this.yt.songUnavailable = true;
+                this.yt.playing = false;
+                d.playPauseBtn.innerHTML = '<i class="bx bx-play"></i>';
+                d.errorMsg.textContent = '⚠ This song is unavailable. Skipping...';
+                d.errorMsg.style.display = 'block';
+                if (this.yt.autoPlay) {
+                    setTimeout(() => {
+                        d.errorMsg.style.display = 'none';
+                        this.ytPlayNext();
+                    }, 3000);
+                }
+            }
+
+            renderYTPlaylist(songsToRender) {
+                const d = this.yt.dom;
+                const list = songsToRender || this.yt.playlist;
+                d.playlist.innerHTML = '';
+                d.playlistCount.textContent = this.yt.playlist.length + ' songs';
+                if (!list.length) {
+                    const li = document.createElement('li');
+                    li.textContent = 'No songs in playlist.';
+                    li.style.textAlign = 'center';
+                    li.style.color = 'var(--md-sys-color-on-surface-variant)';
+                    li.style.cursor = 'default';
+                    d.playlist.appendChild(li);
+                    return;
+                }
+                const current = this.yt.actualSelectedVideoId;
+                list.forEach((song, idx) => {
+                    const li = document.createElement('li');
+                    li.setAttribute('data-video', song.videoId);
+                    li.setAttribute('data-index', idx);
+                    if (song.videoId === current) li.classList.add('selected');
+                    li.draggable = true;
+                    li.innerHTML = `
+                <span class="drag-handle"><i class="bx bx-menu"></i></span>
+                <span class="num">${idx+1}.</span>
+                <span class="name">${song.songName.replace(new RegExp(`^${song.authorName}\\s*-\\s*`), '').replace(new RegExp(`\\s*-\\s*${song.authorName}$`), '')}</span>
+                <span class="artist">${song.authorName}</span>
+                <span class="action"><button data-video="${song.videoId}" title="Remove"><i class="bx bx-trash"></i></button></span>
+              `;
+                    // Click to play
+                    li.addEventListener('click', (e) => {
+                        if (e.target.closest('.action') || e.target.closest('.drag-handle')) return;
+                        this.loadYTVideo(song.videoId, song.albumArt, song, true);
+                        this.ytScrollToSong(song.videoId);
+                    });
+                    // Remove
+                    const rm = li.querySelector('.action button');
+                    rm.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.ytRemoveSong(song.videoId);
+                    });
+                    // Drag events
+                    li.addEventListener('dragstart', (e) => {
+                        e.dataTransfer.setData('text/plain', idx);
+                        li.classList.add('dragging');
+                    });
+                    li.addEventListener('dragend', () => li.classList.remove('dragging'));
+                    li.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                        const target = e.target.closest('li');
+                        if (!target || target === li) return;
+                        const rect = target.getBoundingClientRect();
+                        const mid = rect.top + rect.height / 2;
+                        if (e.clientY < mid) { target.classList.add('drag-over-top');
+                            target.classList.remove('drag-over-bottom'); } else { target.classList.add(
+                                'drag-over-bottom');
+                            target.classList.remove('drag-over-top'); }
+                    });
+                    li.addEventListener('dragleave', () => {
+                        li.classList.remove('drag-over-top', 'drag-over-bottom');
+                    });
+                    li.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        li.classList.remove('drag-over-top', 'drag-over-bottom');
+                        const from = parseInt(e.dataTransfer.getData('text/plain'));
+                        const to = parseInt(li.getAttribute('data-index'));
+                        if (from !== to) {
+                            const moved = this.yt.playlist.splice(from, 1)[0];
+                            this.yt.playlist.splice(to, 0, moved);
+                            localStorage.setItem('ytMusicPlaylist', JSON.stringify(this.yt.playlist));
+                            this.renderYTPlaylist();
+                            // Restore selection
+                            if (this.yt.actualSelectedVideoId) {
+                                document.querySelectorAll(`#ytPlaylist li[data-video="${this.yt.actualSelectedVideoId}"]`)
+                                    .forEach(el => el.classList.add('selected'));
+                            }
+                        }
+                    });
+                    d.playlist.appendChild(li);
+                });
+            }
+
+            ytRemoveSong(videoId) {
+                const wasPlaying = this.yt.actualSelectedVideoId === videoId && this.yt.playing;
+                this.yt.playlist = this.yt.playlist.filter(s => s.videoId !== videoId);
+                localStorage.setItem('ytMusicPlaylist', JSON.stringify(this.yt.playlist));
+                if (this.yt.actualSelectedVideoId === videoId) this.yt.actualSelectedVideoId = null;
+                this.renderYTPlaylist();
+                if (wasPlaying) {
+                    if (this.yt.playlist.length) {
+                        const next = this.yt.playlist[0];
+                        this.loadYTVideo(next.videoId, next.albumArt, next, true);
+                        this.ytScrollToSong(next.videoId);
+                    } else {
+                        if (this.yt.player && this.yt.player.stopVideo) this.yt.player.stopVideo();
+                        this.yt.playing = false;
+                        this.yt.dom.playPauseBtn.innerHTML = '<i class="bx bx-play"></i>';
+                        this.yt.dom.albumArt.src = 'https://via.placeholder.com/200';
+                        this.yt.dom.songTitle.textContent = 'No Song';
+                        this.yt.dom.authorName.textContent = '';
+                        this.yt.dom.progressFill.style.width = '0%';
+                        this.yt.dom.currentTime.textContent = '0:00';
+                        this.yt.dom.totalTime.textContent = '0:00';
+                        if (this.yt.progressInterval) clearInterval(this.yt.progressInterval);
+                    }
+                }
+            }
+
+            ytScrollToSong(videoId) {
+                const el = document.querySelector(`#ytPlaylist li[data-video="${videoId}"]`);
+                if (el) el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            }
+
+            async ytSearch() {
+                const d = this.yt.dom;
+                const term = d.searchInput.value.trim();
+                if (!term) return;
+                d.searchResults.innerHTML = '<div class="empty-msg"><i class="bx bx-loader-circle bx-spin"></i> Searching...</div>';
+                try {
+                    const key = window.YOUTUBE_API_KEY || localStorage.getItem('ytApiKey') || '';
+                    if (!key || key === 'YOUR_YOUTUBE_API_KEY') {
+                        d.searchResults.innerHTML =
+                            '<div class="empty-msg">⚠ API key missing. Set YOUTUBE_API_KEY in config or localStorage.</div>';
+                        return;
+                    }
+                    const url =
+                        `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(term)}&type=video&maxResults=10&key=${key}`;
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error('API error ' + res.status);
+                    const data = await res.json();
+                    if (!data.items || !data.items.length) {
+                        d.searchResults.innerHTML = '<div class="empty-msg">No results found.</div>';
+                        return;
+                    }
+                    d.searchResults.innerHTML = '';
+                    data.items.forEach(item => {
+                        if (!item.id.videoId) return;
+                        const div = document.createElement('div');
+                        div.className = 'result-item';
+                        const thumb = item.snippet.thumbnails?.high?.url || item.snippet.thumbnails?.default?.url ||
+                            '';
+                        div.innerHTML = `
+                  <img src="${thumb}" alt="">
+                  <div class="info"><div class="title">${item.snippet.title}</div><div class="channel">${item.snippet.channelTitle}</div></div>
+                  <button class="add-btn" data-video="${item.id.videoId}" data-title="${item.snippet.title.replace(/"/g,'&quot;')}" data-author="${item.snippet.channelTitle.replace(/"/g,'&quot;')}" data-art="${thumb}">Add</button>
+                `;
+                        const addBtn = div.querySelector('.add-btn');
+                        addBtn.addEventListener('click', () => {
+                            const vid = addBtn.dataset.video;
+                            if (this.yt.playlist.some(s => s.videoId === vid)) {
+                                this.showToast('Already in playlist', 'fa-exclamation-circle', 2000);
+                                return;
+                            }
+                            this.yt.playlist.push({
+                                videoId: vid,
+                                songName: addBtn.dataset.title,
+                                authorName: addBtn.dataset.author,
+                                albumArt: addBtn.dataset.art || 'https://via.placeholder.com/200'
+                            });
+                            localStorage.setItem('ytMusicPlaylist', JSON.stringify(this.yt.playlist));
+                            this.renderYTPlaylist();
+                            this.showToast('Added to playlist', 'fa-check-circle', 1500);
+                        });
+                        d.searchResults.appendChild(div);
+                    });
+                } catch (e) {
+                    d.searchResults.innerHTML = '<div class="empty-msg">⚠ Search failed: ' + e.message + '</div>';
+                }
+            }
+
+            ytLoadLyrics(title, artist) {
+                const d = this.yt.dom;
+                d.lyricsMeta.textContent = 'Searching...';
+                d.lyricsText.textContent = 'Searching...';
+                // Use a simple cache
+                const cacheKey = 'yt_lyrics_' + encodeURIComponent(artist) + '_' + encodeURIComponent(title);
+                const cached = localStorage.getItem(cacheKey);
+                if (cached) {
+                    try {
+                        const data = JSON.parse(cached);
+                        if (data.lyrics) {
+                            this.ytDisplayLyrics(data.lyrics, artist, title, true);
+                            return;
+                        }
+                    } catch (e) {}
+                }
+                // Fetch from lrclib
+                const cleanArtist = artist.replace(/[\[\]()「」『』]/g, '').trim();
+                const cleanTitle = title.replace(/\[[^\]]*\]|\([^)]*\)|「[^」]*」|『[^』]*』/g, '').trim();
+                fetch(
+                        `https://lrclib.net/api/get?artist_name=${encodeURIComponent(cleanArtist)}&track_name=${encodeURIComponent(cleanTitle)}`
+                        )
+                    .then(r => r.json())
+                    .then(data => {
+                        const lyrics = data.syncedLyrics || data.plainLyrics;
+                        if (lyrics) {
+                            localStorage.setItem(cacheKey, JSON.stringify({ lyrics, timestamp: Date.now() }));
+                            this.ytDisplayLyrics(lyrics, cleanArtist, cleanTitle, false);
+                        } else {
+                            d.lyricsMeta.textContent = 'No lyrics found.';
+                            d.lyricsText.textContent = 'No lyrics available.';
+                        }
+                    })
+                    .catch(() => {
+                        d.lyricsMeta.textContent = 'Error loading lyrics.';
+                        d.lyricsText.textContent = 'Could not fetch lyrics.';
+                    });
+            }
+
+            ytDisplayLyrics(lyrics, artist, title, cached) {
+                const d = this.yt.dom;
+                const isLrc = /^\s*\[\d{1,2}:\d{2}/m.test(lyrics);
+                if (isLrc) {
+                    const lines = [];
+                    lyrics.split(/\r?\n/).forEach(line => {
+                        const m = line.match(/\[(\d{1,2}):(\d{2})(?:\.(\d+))?\](.*)/);
+                        if (m) {
+                            const time = parseInt(m[1]) * 60 + parseInt(m[2]) + (parseInt(m[3]) || 0) / 1000;
+                            lines.push({ time, text: m[4].trim() });
+                        }
+                    });
+                    this.yt.lyricsData = { isLrc: true, lines };
+                    d.lyricsText.innerHTML = lines.map(l =>
+                        `<div class="lrc-line" data-time="${l.time}"><span class="lrc-time">[${this.ytFormatTime(l.time)}]</span><span>${l.text}</span></div>`
+                        ).join('');
+                    d.lyricsMeta.textContent = `Synced lyrics • ${artist} – ${title}` + (cached ? ' (cached)' : '');
+                } else {
+                    this.yt.lyricsData = { isLrc: false };
+                    d.lyricsText.innerHTML = lyrics.split(/\r?\n/).filter(l => l.trim()).map(l =>
+                        `<div class="plain-line">${l}</div>`).join('');
+                    d.lyricsMeta.textContent = `Plain lyrics • ${artist} – ${title}` + (cached ? ' (cached)' : '');
+                }
+            }
+
+            ytSyncLyrics(curTime) {
+                const d = this.yt.dom;
+                if (!this.yt.lyricsData || !this.yt.lyricsData.isLrc) return;
+                const lines = this.yt.lyricsData.lines;
+                if (!lines || !lines.length) return;
+                let found = 0;
+                let lo = 0,
+                    hi = lines.length - 1;
+                while (lo <= hi) {
+                    const mid = Math.floor((lo + hi) / 2);
+                    if (lines[mid].time <= curTime) { found = mid;
+                        lo = mid + 1; } else hi = mid - 1;
+                }
+                const el = d.lyricsText;
+                const children = el.children;
+                for (let i = 0; i < children.length; i++) children[i].classList.remove('highlight');
+                const target = el.querySelector(`.lrc-line[data-time="${lines[found].time}"]`);
+                if (target) {
+                    target.classList.add('highlight');
+                    const parent = el;
+                    const parentRect = parent.getBoundingClientRect();
+                    const childRect = target.getBoundingClientRect();
+                    const offset = childRect.top - parentRect.top - parent.clientHeight / 2 + childRect.height / 2;
+                    parent.scrollBy({ top: offset, behavior: 'smooth' });
+                }
+            }
+
+            ytSetupMediaSession(song) {
+                if ('mediaSession' in navigator && song) {
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: song.songName,
+                        artist: song.authorName,
+                        artwork: [{ src: song.albumArt, sizes: '300x300', type: 'image/jpeg' }]
+                    });
+                    navigator.mediaSession.setActionHandler('play', () => this.ytTogglePlay());
+                    navigator.mediaSession.setActionHandler('pause', () => this.ytTogglePlay());
+                    navigator.mediaSession.setActionHandler('previoustrack', () => this.ytPlayPrev());
+                    navigator.mediaSession.setActionHandler('nexttrack', () => this.ytPlayNext());
+                }
+            }
+            // ========== END YT MUSIC INTEGRATION ==========
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -2802,6 +4020,13 @@
             if (musicUpload && audioFileInput) musicUpload.addEventListener('change', function() { if (this.files && this
                     .files.length > 0 && window.HexAudio) window.HexAudio.loadFile(this.files[0]); });
         })();
+    </script>
+
+    <script>
+        // Set a default YOUTUBE_API_KEY if not already defined - user must replace
+        if (typeof YOUTUBE_API_KEY === 'undefined') {
+            window.YOUTUBE_API_KEY = localStorage.getItem('ytApiKey') || 'YOUR_YOUTUBE_API_KEY';
+        }
     </script>
 </body>
 </html>
