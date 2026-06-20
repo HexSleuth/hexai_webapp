@@ -5,6 +5,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <title>HEX AI · Music Studio</title>
+          <!-- 🔮 AUTO THEME DETECTION (system preference) -->
+    <script>
+        (function() {
+            const stored = localStorage.getItem('dark');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = stored === null ? prefersDark : stored !== 'false';
+            document.body.classList.toggle('dark', isDark);
+        })();
+    </script>
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
