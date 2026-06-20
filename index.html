@@ -1773,12 +1773,6 @@
                 <input type="password" id="geminiKey" placeholder="AIza...">
             </div>
 
-            <!-- NEW: YouTube API Key -->
-            <div class="settings-section" id="ytApiKeySection">
-                <label>YouTube API Key <span style="font-weight:normal;text-transform:none;font-size:10px;color:var(--md-sys-color-on-surface-variant);">(for YT Music search)</span></label>
-                <input type="password" id="ytApiKeyInput" placeholder="AIza...">
-            </div>
-
             <div class="settings-section">
                 <label>Active Model</label>
                 <select id="modelSelect"><option value="">Select a model...</option></select>
@@ -1843,7 +1837,6 @@
             constructor() {
                 this.apiKey = localStorage.getItem('openrouter_key') || '';
                 this.geminiKey = localStorage.getItem('gemini_key') || '';
-                this.ytApiKey = localStorage.getItem('ytApiKey') || '';
                 this.provider = localStorage.getItem('hexai_provider') || 'openrouter';
                 this.selectedModel = this.provider === 'gemini' ?
                     (localStorage.getItem('hexai_gemini_model') || 'gemini-3.1-flash-lite') :
@@ -1904,7 +1897,6 @@
                 this.settingsClose = document.getElementById('settingsClose');
                 this.openRouterKeyInput = document.getElementById('openRouterKey');
                 this.geminiKeyInput = document.getElementById('geminiKey');
-                this.ytApiKeyInput = document.getElementById('ytApiKeyInput');
                 this.modelSelect = document.getElementById('modelSelect');
                 this.refreshModelsBtn = document.getElementById('refreshModelsBtn');
                 this.saveSettingsBtn = document.getElementById('saveSettingsBtn');
@@ -1983,32 +1975,32 @@
                     "🐸", "🐵", "🐒", "🐔", "🐧", "🐦", "🐤", "🐣", "🐥", "🦆", "🦅", "🦉", "🦇", "🐺", "🐗", "🐴", "🦄",
                     "🐝", "🐛", "🦋", "🐌", "🐞", "🐜", "🕷️", "🕸️", "🦂", "🐢", "🐍", "🦎", "🦖", "🦕", "🐙", "🦑",
                     "🦐", "🦞", "🦀", "🐡", "🐠", "🐟", "🐬", "🐳", "🐋", "🦈", "🐊", "🐅", "🐆", "🦓", "🦍", "🦧", "🐘",
-                    "🦛", "🦏", "🐪", "🐂", "🐄", "🐎", "🐖", "🐏", "🐑", "🦙", "🐐", "🦌", "🐕", "🐩", "🦮", "🐈", "🐓",
-                    "🦃", "🦚", "🦜", "🦢", "🦩", "🕊️", "🐇", "🦝", "🦨", "🦡", "🦫", "🦦", "🦥", "🐁", "🐀", "🐿️",
-                    "🦔", "🐾", "🐉", "🐲", "🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️", "🍀", "🎍", "🎋", "🍃", "🍂",
-                    "🍁", "🍄", "🐚", "🌾", "💐", "🌷", "🌹", "🥀", "🌺", "🌸", "🌼", "🌻", "🌞", "🌝", "🌛", "🌜", "🌚",
-                    "🌕", "🌖", "🌗", "🌘", "🌑", "🌒", "🌓", "🌔", "🌙", "🌎", "🌍", "🌏", "🪐", "💫", "⭐", "🌟", "✨",
-                    "⚡", "☄️", "💥", "🔥", "🌪️", "🌈", "☀️", "🌤️", "⛅", "🌥️", "☁️", "🌦️", "🌧️", "⛈️", "🌩️", "🌨️",
-                    "❄️", "☃️", "⛄", "🌬️", "💨", "💧", "💦", "☔", "☂️", "🌊", "🌫️", "🍏", "🍎", "🍐", "🍊", "🍋",
-                    "🍌", "🍉", "🍇", "🍓", "🫐", "🍈", "🍒", "🍑", "🥭", "🍍", "🥥", "🥝", "🍅", "🍆", "🥑", "🥦", "🥬",
-                    "🥒", "🌶️", "🌽", "🥕", "🧄", "🧅", "🥔", "🍠", "🥐", "🍞", "🥖", "🥨", "🧀", "🥚", "🍳", "🧈", "🥞",
-                    "🧇", "🥓", "🥩", "🍗", "🍖", "🌭", "🍔", "🍟", "🍕", "🥪", "🥙", "🌮", "🌯", "🥗", "🥘", "🍝", "🍜",
-                    "🍲", "🍛", "🍣", "🍱", "🥟", "🦪", "🍤", "🍙", "🍚", "🍘", "🍥", "🍢", "🍡", "🍧", "🍨", "🍦", "🥧",
-                    "🧁", "🍰", "🎂", "🍮", "🍭", "🍬", "🍫", "🍿", "🍩", "🍪", "🌰", "🥜", "🍯", "🥛", "🍼", "☕", "🍵",
-                    "🍶", "🍾", "🍷", "🍸", "🍹", "🍺", "🍻", "🥂", "🥃", "🥤", "🧋", "🧃", "🧊", "🥢", "🍽️", "🍴", "🥄",
-                    "🔪", "🏺", "🎃", "🎄", "🎆", "🎇", "🧨", "✨", "🎈", "🎉", "🎊", "🎋", "🎍", "🎎", "🎏", "🎐", "🎑",
-                    "🧧", "🎀", "🎁", "🎗️", "🎟️", "🎫", "🎖️", "🏆", "🏅", "🥇", "🥈", "🥉", "⚽", "⚾", "🥎", "🏀", "🏐",
-                    "🏈", "🏉", "🎾", "🥏", "🎳", "🏏", "🏑", "🏒", "🥍", "🏓", "🏸", "🥊", "🥋", "🥅", "⛳", "⛸️", "🎣",
-                    "🤿", "🎽", "🎿", "🛷", "🥌", "🎯", "🪀", "🪁", "🎱", "🔮", "🧿", "🎮", "🕹️", "🎰", "🎲", "🧩", "🧸",
-                    "♟️", "🃏", "🀄", "🎴", "🎭", "🖼️", "🎨", "🧵", "🧶", "🎵", "🎶", "🎙️", "🎚️", "🎛️", "🎤", "🎧",
-                    "📻", "🎷", "🎸", "🎹", "🎺", "🎻", "🥁", "📱", "📲", "☎️", "📞", "📟", "📠", "🔋", "🔌", "💻", "🖥️",
-                    "🖨️", "⌨️", "🖱️", "🖲️", "💽", "💾", "💿", "📀", "🧮", "🎥", "🎞️", "📽️", "🎬", "📺", "📷", "📸",
-                    "📹", "📼", "🔍", "🔎", "🕯️", "💡", "🔦", "🏮", "🔒", "🔓", "🔏", "🔐", "🔑", "🗝️", "🔨", "🪓", "⛏️",
-                    "⚒️", "🛠️", "🗡️", "⚔️", "🔫", "🏹", "🛡️", "🔧", "🔩", "⚙️", "🗜️", "⚖️", "🦯", "🔗", "⛓️", "🧰",
-                    "🧲", "⚗️", "🧪", "🧫", "🧬", "🔬", "🔭", "📡", "💉", "🩸", "💊", "🩹", "🚀", "🛸", "🗿", "⚠️", "🚸",
-                    "⛔", "🚫", "✅", "❌", "❓", "❗", "💱", "💲", "♻️", "🔱", "📛", "🔰", "⭕", "🟢", "🔵", "🟣", "🟡",
-                    "🟠", "🔴", "⚫", "⚪", "⬛", "⬜", "🔶", "🔷", "🔸", "🔹", "🔺", "🔻", "💠", "🔘", "🔲", "🔳", "🏁",
-                    "🚩", "🎌", "🏴", "🏳️", "🏳️‍🌈", "🏴‍☠️"
+                    "🦛", "🦏", "🐪", "🐫", "🦒", "🦘", "🐃", "🐂", "🐄", "🐎", "🐖", "🐏", "🐑", "🦙", "🐐", "🦌", "🐕",
+                    "🐩", "🦮", "🐈", "🐓", "🦃", "🦚", "🦜", "🦢", "🦩", "🕊️", "🐇", "🦝", "🦨", "🦡", "🦫", "🦦", "🦥",
+                    "🐁", "🐀", "🐿️", "🦔", "🐾", "🐉", "🐲", "🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️", "🍀", "🎍",
+                    "🎋", "🍃", "🍂", "🍁", "🍄", "🐚", "🌾", "💐", "🌷", "🌹", "🥀", "🌺", "🌸", "🌼", "🌻", "🌞", "🌝",
+                    "🌛", "🌜", "🌚", "🌕", "🌖", "🌗", "🌘", "🌑", "🌒", "🌓", "🌔", "🌙", "🌎", "🌍", "🌏", "🪐", "💫",
+                    "⭐", "🌟", "✨", "⚡", "☄️", "💥", "🔥", "🌪️", "🌈", "☀️", "🌤️", "⛅", "🌥️", "☁️", "🌦️", "🌧️",
+                    "⛈️", "🌩️", "🌨️", "❄️", "☃️", "⛄", "🌬️", "💨", "💧", "💦", "☔", "☂️", "🌊", "🌫️", "🍏", "🍎",
+                    "🍐", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🫐", "🍈", "🍒", "🍑", "🥭", "🍍", "🥥", "🥝", "🍅", "🍆",
+                    "🥑", "🥦", "🥬", "🥒", "🌶️", "🌽", "🥕", "🧄", "🧅", "🥔", "🍠", "🥐", "🍞", "🥖", "🥨", "🧀", "🥚",
+                    "🍳", "🧈", "🥞", "🧇", "🥓", "🥩", "🍗", "🍖", "🌭", "🍔", "🍟", "🍕", "🥪", "🥙", "🌮", "🌯", "🥗",
+                    "🥘", "🍝", "🍜", "🍲", "🍛", "🍣", "🍱", "🥟", "🦪", "🍤", "🍙", "🍚", "🍘", "🍥", "🍢", "🍡", "🍧",
+                    "🍨", "🍦", "🥧", "🧁", "🍰", "🎂", "🍮", "🍭", "🍬", "🍫", "🍿", "🍩", "🍪", "🌰", "🥜", "🍯", "🥛",
+                    "🍼", "☕", "🍵", "🍶", "🍾", "🍷", "🍸", "🍹", "🍺", "🍻", "🥂", "🥃", "🥤", "🧋", "🧃", "🧊", "🥢",
+                    "🍽️", "🍴", "🥄", "🔪", "🏺", "🎃", "🎄", "🎆", "🎇", "🧨", "✨", "🎈", "🎉", "🎊", "🎋", "🎍", "🎎",
+                    "🎏", "🎐", "🎑", "🧧", "🎀", "🎁", "🎗️", "🎟️", "🎫", "🎖️", "🏆", "🏅", "🥇", "🥈", "🥉", "⚽", "⚾",
+                    "🥎", "🏀", "🏐", "🏈", "🏉", "🎾", "🥏", "🎳", "🏏", "🏑", "🏒", "🥍", "🏓", "🏸", "🥊", "🥋", "🥅",
+                    "⛳", "⛸️", "🎣", "🤿", "🎽", "🎿", "🛷", "🥌", "🎯", "🪀", "🪁", "🎱", "🔮", "🧿", "🎮", "🕹️", "🎰",
+                    "🎲", "🧩", "🧸", "♟️", "🃏", "🀄", "🎴", "🎭", "🖼️", "🎨", "🧵", "🧶", "🎵", "🎶", "🎙️", "🎚️",
+                    "🎛️", "🎤", "🎧", "📻", "🎷", "🎸", "🎹", "🎺", "🎻", "🥁", "📱", "📲", "☎️", "📞", "📟", "📠", "🔋",
+                    "🔌", "💻", "🖥️", "🖨️", "⌨️", "🖱️", "🖲️", "💽", "💾", "💿", "📀", "🧮", "🎥", "🎞️", "📽️", "🎬",
+                    "📺", "📷", "📸", "📹", "📼", "🔍", "🔎", "🕯️", "💡", "🔦", "🏮", "🔒", "🔓", "🔏", "🔐", "🔑", "🗝️",
+                    "🔨", "🪓", "⛏️", "⚒️", "🛠️", "🗡️", "⚔️", "🔫", "🏹", "🛡️", "🔧", "🔩", "⚙️", "🗜️", "⚖️", "🦯",
+                    "🔗", "⛓️", "🧰", "🧲", "⚗️", "🧪", "🧫", "🧬", "🔬", "🔭", "📡", "💉", "🩸", "💊", "🩹", "🚀", "🛸",
+                    "🗿", "⚠️", "🚸", "⛔", "🚫", "✅", "❌", "❓", "❗", "💱", "💲", "♻️", "🔱", "📛", "🔰", "⭕", "🟢",
+                    "🔵", "🟣", "🟡", "🟠", "🔴", "⚫", "⚪", "⬛", "⬜", "🔶", "🔷", "🔸", "🔹", "🔺", "🔻", "💠", "🔘",
+                    "🔲", "🔳", "🏁", "🚩", "🎌", "🏴", "🏳️", "🏳️‍🌈", "🏴‍☠️"
                 ];
             }
 
@@ -2079,8 +2071,6 @@
                         .openRouterKeyInput.value = saved.openRouterKey; }
                 if (saved.geminiKey) { this.geminiKey = saved.geminiKey; if (this.geminiKeyInput) this.geminiKeyInput
                     .value = saved.geminiKey; }
-                if (saved.ytApiKey) { this.ytApiKey = saved.ytApiKey; if (this.ytApiKeyInput) this.ytApiKeyInput
-                    .value = saved.ytApiKey; }
                 if (saved.provider) { this.provider = saved.provider; if (this.providerSelect) this.providerSelect.value =
                         saved.provider; }
                 if (saved.model) { this.selectedModel = saved.model; }
@@ -2094,7 +2084,6 @@
                 const settings = {
                     openRouterKey: this.openRouterKeyInput ? this.openRouterKeyInput.value.trim() : this.apiKey,
                     geminiKey: this.geminiKeyInput ? this.geminiKeyInput.value.trim() : this.geminiKey,
-                    ytApiKey: this.ytApiKeyInput ? this.ytApiKeyInput.value.trim() : this.ytApiKey,
                     provider: this.providerSelect ? this.providerSelect.value : this.provider,
                     model: this.modelSelect ? this.modelSelect.value : this.selectedModel,
                     theme: this.themeSelect ? this.themeSelect.value : 'system',
@@ -2103,13 +2092,11 @@
                 };
                 this.apiKey = settings.openRouterKey;
                 this.geminiKey = settings.geminiKey;
-                this.ytApiKey = settings.ytApiKey;
                 this.provider = settings.provider;
                 this.selectedModel = settings.model;
                 localStorage.setItem('hexai_settings', JSON.stringify(settings));
                 localStorage.setItem('openrouter_key', this.apiKey);
                 localStorage.setItem('gemini_key', this.geminiKey);
-                localStorage.setItem('ytApiKey', this.ytApiKey);
                 localStorage.setItem('hexai_provider', this.provider);
                 if (this.provider === 'gemini') {
                     localStorage.setItem('hexai_gemini_model', this.selectedModel);
@@ -3415,10 +3402,10 @@
                 if (!term) return;
                 d.searchResults.innerHTML = '<div class="empty-msg"><i class="bx bx-loader-circle bx-spin"></i> Searching...</div>';
                 try {
-                    const key = this.ytApiKey || localStorage.getItem('ytApiKey') || '';
+                    const key = localStorage.getItem('ytApiKey') || '';
                     if (!key || key === 'YOUR_YOUTUBE_API_KEY') {
                         d.searchResults.innerHTML =
-                            '<div class="empty-msg">⚠ YouTube API key missing. Set in Settings → YouTube API Key.</div>';
+                            '<div class="empty-msg">⚠ API key missing. Set YOUTUBE_API_KEY in config or localStorage.</div>';
                         return;
                     }
                     const url =
