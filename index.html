@@ -14,7 +14,6 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1.21.0/index.js"></script>
 
     <style>
-        /* --- all existing styles (kept unchanged) --- */
         :root {
             --md-sys-color-primary: #6750A4;
             --md-sys-color-on-primary: #FFFFFF;
@@ -1775,8 +1774,8 @@
             </div>
 
             <!-- NEW: YouTube API Key -->
-            <div class="settings-section">
-                <label>YouTube API Key</label>
+            <div class="settings-section" id="ytApiKeySection">
+                <label>YouTube API Key <span style="font-weight:normal;text-transform:none;font-size:10px;color:var(--md-sys-color-on-surface-variant);">(for YT Music search)</span></label>
                 <input type="password" id="ytApiKeyInput" placeholder="AIza...">
             </div>
 
@@ -1844,12 +1843,11 @@
             constructor() {
                 this.apiKey = localStorage.getItem('openrouter_key') || '';
                 this.geminiKey = localStorage.getItem('gemini_key') || '';
+                this.ytApiKey = localStorage.getItem('ytApiKey') || '';
                 this.provider = localStorage.getItem('hexai_provider') || 'openrouter';
                 this.selectedModel = this.provider === 'gemini' ?
                     (localStorage.getItem('hexai_gemini_model') || 'gemini-3.1-flash-lite') :
                     (localStorage.getItem('hexai_openrouter_model') || 'google/gemini-3.1-flash-lite');
-                // Load YouTube API key
-                this.ytApiKey = localStorage.getItem('ytApiKey') || '';
 
                 this.openRouterModels = [
                     { label: 'gemini-3.1-flash-lite (Free)', value: 'gemini-3.1-flash-lite' },
@@ -1906,7 +1904,6 @@
                 this.settingsClose = document.getElementById('settingsClose');
                 this.openRouterKeyInput = document.getElementById('openRouterKey');
                 this.geminiKeyInput = document.getElementById('geminiKey');
-                // New YouTube API key input
                 this.ytApiKeyInput = document.getElementById('ytApiKeyInput');
                 this.modelSelect = document.getElementById('modelSelect');
                 this.refreshModelsBtn = document.getElementById('refreshModelsBtn');
@@ -2082,8 +2079,8 @@
                         .openRouterKeyInput.value = saved.openRouterKey; }
                 if (saved.geminiKey) { this.geminiKey = saved.geminiKey; if (this.geminiKeyInput) this.geminiKeyInput
                     .value = saved.geminiKey; }
-                if (saved.ytApiKey) { this.ytApiKey = saved.ytApiKey; if (this.ytApiKeyInput) this.ytApiKeyInput.value =
-                        saved.ytApiKey; }
+                if (saved.ytApiKey) { this.ytApiKey = saved.ytApiKey; if (this.ytApiKeyInput) this.ytApiKeyInput
+                    .value = saved.ytApiKey; }
                 if (saved.provider) { this.provider = saved.provider; if (this.providerSelect) this.providerSelect.value =
                         saved.provider; }
                 if (saved.model) { this.selectedModel = saved.model; }
@@ -2091,8 +2088,6 @@
                 if (saved.openRouterModels) this.openRouterModels = saved.openRouterModels;
                 if (saved.geminiModels) this.geminiModels = saved.geminiModels;
                 if (this.providerSelect) this.providerSelect.value = this.provider;
-                // Also update localStorage for YouTube API key if not already there
-                if (this.ytApiKey) localStorage.setItem('ytApiKey', this.ytApiKey);
             }
 
             saveSettings() {
@@ -3420,11 +3415,10 @@
                 if (!term) return;
                 d.searchResults.innerHTML = '<div class="empty-msg"><i class="bx bx-loader-circle bx-spin"></i> Searching...</div>';
                 try {
-                    // Use the saved YouTube API key from settings
                     const key = this.ytApiKey || localStorage.getItem('ytApiKey') || '';
                     if (!key || key === 'YOUR_YOUTUBE_API_KEY') {
                         d.searchResults.innerHTML =
-                            '<div class="empty-msg">⚠ YouTube API key missing. Add it in Settings.</div>';
+                            '<div class="empty-msg">⚠ YouTube API key missing. Set in Settings → YouTube API Key.</div>';
                         return;
                     }
                     const url =
@@ -4042,7 +4036,7 @@
     </script>
 
     <script>
-        // Set a default YOUTUBE_API_KEY if not already defined - now handled via settings
+        // Set a default YOUTUBE_API_KEY if not already defined - user must replace
         if (typeof YOUTUBE_API_KEY === 'undefined') {
             window.YOUTUBE_API_KEY = localStorage.getItem('ytApiKey') || 'YOUR_YOUTUBE_API_KEY';
         }
