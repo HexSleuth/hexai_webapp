@@ -15,8 +15,7 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">
-    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -838,7 +837,8 @@
             margin-top: 8px;
         }
         .extra-controls .auto-play-toggle,
-        .extra-controls .repeat-toggle {
+        .extra-controls .repeat-toggle,
+        .extra-controls .sponsor-toggle {
             display: flex;
             align-items: center;
             gap: 6px;
@@ -1867,7 +1867,8 @@
                 gap: 6px;
             }
             .extra-controls .auto-play-toggle,
-            .extra-controls .repeat-toggle {
+            .extra-controls .repeat-toggle,
+            .extra-controls .sponsor-toggle {
                 font-size: 0.7rem;
             }
             .playlist-import {
@@ -2422,6 +2423,10 @@
                             <div class="repeat-toggle">
                                 <span>Repeat</span>
                                 <button id="repeatBtn"><i class='bx bx-repeat'></i></button>
+                            </div>
+                            <div class="sponsor-toggle">
+                                <span>Skip Sponsors</span>
+                                <label class="switch"><input type="checkbox" id="sponsorBlockToggle" checked /><span class="slider"></span></label>
                             </div>
                             <div class="album-art-display-toggle">
                                 <div class="btn-group btn-group-sm" id="albumArtDisplayToggle">
@@ -4409,6 +4414,12 @@
             let autoSyncEnabled = true;
             let syncInterval = null;
 
+            // ===== SPONSORBLOCK GLOBALS =====
+            let sponsorSegments = [];
+            let skippedSegments = new Set();
+            let sponsorCheckInterval = null;
+            let sponsorBlockEnabled = true;
+
             const CORS_PROXY_URL = 'https://api.codetabs.com/v1/proxy?quest=';
 
             function formatTime(seconds) {
@@ -4554,7 +4565,29 @@
                 }
             }
 
+            // ===== SPONSORBLOCK FETCH FUNCTION =====
+            async function fetchSponsorTimes(videoId) {
+                try {
+                    const url = `https://sponsor.ajay.app/api/getVideoSponsorTimes?videoID=${videoId}`;
+                    const resp = await fetch(url);
+                    if (!resp.ok) return [];
+                    const data = await resp.json();
+                    return (data.sponsorTimes || []).map(([s, e]) => ({ start: parseFloat(s), end: parseFloat(e) }));
+                } catch (e) {
+                    console.warn('SponsorBlock fetch error:', e);
+                    return [];
+                }
+            }
+
             function loadNewVideo(videoId, albumArtUrl, songObject = null) {
+                // Clear previous sponsor checker
+                if (sponsorCheckInterval) {
+                    clearInterval(sponsorCheckInterval);
+                    sponsorCheckInterval = null;
+                }
+                sponsorSegments = [];
+                skippedSegments.clear();
+
                 if (player) player.setVolume(currentVolume);
                 const art = document.getElementById('albumArt');
                 art.style.transition = 'opacity 0.5s';
@@ -4633,6 +4666,27 @@
                 playing = true;
                 document.getElementById('playPauseBtn').innerHTML = ICON_PAUSE;
                 updateProgressBar();
+
+                // ===== START SPONSORBLOCK CHECKER =====
+                fetchSponsorTimes(videoId).then(segments => {
+                    sponsorSegments = segments;
+                    if (sponsorCheckInterval) clearInterval(sponsorCheckInterval);
+                    sponsorCheckInterval = setInterval(() => {
+                        if (!sponsorBlockEnabled || !player || typeof player.getCurrentTime !== 'function') return;
+                        const cur = player.getCurrentTime();
+                        for (let seg of sponsorSegments) {
+                            if (cur >= seg.start && cur < seg.end) {
+                                const key = seg.start + '-' + seg.end;
+                                if (!skippedSegments.has(key)) {
+                                    player.seekTo(seg.end);
+                                    skippedSegments.add(key);
+                                    console.log(`Skipped sponsor segment ${seg.start} → ${seg.end}`);
+                                }
+                                break;
+                            }
+                        }
+                    }, 1000);
+                }).catch(() => {});
             }
 
             function handlePlayerStateChange(event) {
@@ -4650,6 +4704,11 @@
                     if (repeatSong) { player.seekTo(0);
                         player.playVideo(); } else if (autoPlay) { playNextSong(); } else { document
                             .getElementById('playPauseBtn').innerHTML = ICON_REVISION; }
+                    // Clear sponsor interval on video end
+                    if (sponsorCheckInterval) {
+                        clearInterval(sponsorCheckInterval);
+                        sponsorCheckInterval = null;
+                    }
                 } else if (event.data === 2) {
                     document.getElementById('playPauseBtn').innerHTML = ICON_PLAY;
                     playing = false;
@@ -4659,6 +4718,11 @@
                     playing = true;
                     if (albumArtSpinEnabled) { art.classList.remove('rotate-paused');
                         art.classList.add('rotate'); }
+                } else if (event.data === 5) { // cued, new video
+                    if (sponsorCheckInterval) {
+                        clearInterval(sponsorCheckInterval);
+                        sponsorCheckInterval = null;
+                    }
                 }
             }
 
@@ -4675,6 +4739,10 @@
                 if (player && player.pauseVideo) player.pauseVideo();
                 document.getElementById('playPauseBtn').innerHTML = ICON_PLAY;
                 document.getElementById('albumArt').classList.add('rotate-paused');
+                if (sponsorCheckInterval) {
+                    clearInterval(sponsorCheckInterval);
+                    sponsorCheckInterval = null;
+                }
 
                 function updateCountdown() {
                     errorMsg.innerHTML = `⚠ Song unavailable. Skipping in ${countdown} seconds...`;
@@ -4808,6 +4876,35 @@
             document.getElementById('repeatBtn').addEventListener('click', function() {
                 repeatSong = !repeatSong;
                 this.classList.toggle('active', repeatSong);
+            });
+
+            document.getElementById('sponsorBlockToggle').addEventListener('change', function() {
+                sponsorBlockEnabled = this.checked;
+                if (!sponsorBlockEnabled && sponsorCheckInterval) {
+                    clearInterval(sponsorCheckInterval);
+                    sponsorCheckInterval = null;
+                } else if (sponsorBlockEnabled && player && typeof player.getVideoData === 'function') {
+                    const vid = player.getVideoData()?.video_id;
+                    if (vid) fetchSponsorTimes(vid).then(segments => {
+                        sponsorSegments = segments;
+                        if (sponsorCheckInterval) clearInterval(sponsorCheckInterval);
+                        sponsorCheckInterval = setInterval(() => {
+                            if (!sponsorBlockEnabled || !player || typeof player.getCurrentTime !== 'function') return;
+                            const cur = player.getCurrentTime();
+                            for (let seg of sponsorSegments) {
+                                if (cur >= seg.start && cur < seg.end) {
+                                    const key = seg.start + '-' + seg.end;
+                                    if (!skippedSegments.has(key)) {
+                                        player.seekTo(seg.end);
+                                        skippedSegments.add(key);
+                                        console.log(`Skipped sponsor segment ${seg.start} → ${seg.end}`);
+                                    }
+                                    break;
+                                }
+                            }
+                        }, 1000);
+                    }).catch(() => {});
+                }
             });
 
             document.getElementById('albumArtDisplayToggle')?.querySelectorAll('.btn').forEach(btn => {
@@ -5273,7 +5370,7 @@
                 });
             }
 
-            console.log('🚀 HEX AI Studio with YouTube Music, MP3 Upload & Offline Visualizer');
+            console.log('🚀 HEX AI Studio with YouTube Music, MP3 Upload, Offline Visualizer & SponsorBlock');
 
         })();
     </script>
