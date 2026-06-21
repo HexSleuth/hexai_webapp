@@ -4,13 +4,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <title>HEX AI with YouTube Music & Visualizer</title>
+    <title>HEX AI · Studio with YouTube Music & Visualizer</title>
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css" />
@@ -25,7 +24,7 @@
             theme: {
                 extend: {
                     colors: {
-                        "light-primary": "#24389c",
+                        "light-primary": "#1a2b8c",
                         "light-primary-container": "#3f51b5",
                         "light-on-primary": "#ffffff",
                         "light-on-primary-container": "#cacfff",
@@ -37,23 +36,23 @@
                         "light-tertiary-container": "#00691b",
                         "light-on-tertiary": "#ffffff",
                         "light-on-tertiary-container": "#83e881",
-                        "light-surface": "#f7f9fc",
-                        "light-surface-dim": "#d8dadd",
-                        "light-surface-bright": "#f7f9fc",
+                        "light-surface": "#f5f7fa",
+                        "light-surface-dim": "#d5d8db",
+                        "light-surface-bright": "#f5f7fa",
                         "light-surface-container-lowest": "#ffffff",
-                        "light-surface-container-low": "#f2f4f7",
-                        "light-surface-container": "#eceef1",
-                        "light-surface-container-high": "#e6e8eb",
-                        "light-surface-container-highest": "#e0e3e6",
-                        "light-on-surface": "#191c1e",
-                        "light-on-surface-variant": "#454652",
-                        "light-outline": "#757684",
-                        "light-outline-variant": "#c5c5d4",
+                        "light-surface-container-low": "#eff1f4",
+                        "light-surface-container": "#e9ebee",
+                        "light-surface-container-high": "#e3e5e8",
+                        "light-surface-container-highest": "#dddfe2",
+                        "light-on-surface": "#16181a",
+                        "light-on-surface-variant": "#3f404c",
+                        "light-outline": "#6f707e",
+                        "light-outline-variant": "#bfbfce",
                         "light-inverse-surface": "#2d3133",
                         "light-inverse-on-surface": "#eff1f4",
                         "light-inverse-primary": "#bac3ff",
-                        "light-background": "#f7f9fc",
-                        "light-on-background": "#191c1e",
+                        "light-background": "#f5f7fa",
+                        "light-on-background": "#16181a",
                         "light-error": "#ba1a1a",
                         "light-on-error": "#ffffff",
                         "light-error-container": "#ffdad6",
@@ -70,22 +69,22 @@
                         "dark-tertiary-container": "#005313",
                         "dark-on-tertiary": "#002204",
                         "dark-on-tertiary-container": "#94f990",
-                        "dark-surface": "#121212",
-                        "dark-surface-dim": "#1a1a1a",
-                        "dark-surface-bright": "#242424",
-                        "dark-surface-container-lowest": "#1f1f1f",
-                        "dark-surface-container-low": "#242424",
-                        "dark-surface-container": "#2a2a2a",
-                        "dark-surface-container-high": "#303030",
-                        "dark-surface-container-highest": "#363636",
+                        "dark-surface": "#0f0f0f",
+                        "dark-surface-dim": "#181818",
+                        "dark-surface-bright": "#222222",
+                        "dark-surface-container-lowest": "#1c1c1c",
+                        "dark-surface-container-low": "#212121",
+                        "dark-surface-container": "#272727",
+                        "dark-surface-container-high": "#2d2d2d",
+                        "dark-surface-container-highest": "#333333",
                         "dark-on-surface": "#e1e3e1",
                         "dark-on-surface-variant": "#c4c6c8",
                         "dark-outline": "#8e918f",
                         "dark-outline-variant": "#454746",
                         "dark-inverse-surface": "#e1e3e1",
                         "dark-inverse-on-surface": "#2d3133",
-                        "dark-inverse-primary": "#24389c",
-                        "dark-background": "#121212",
+                        "dark-inverse-primary": "#1a2b8c",
+                        "dark-background": "#0f0f0f",
                         "dark-on-background": "#e1e3e1",
                         "dark-error": "#ffb4ab",
                         "dark-error-container": "#93000a",
@@ -93,7 +92,9 @@
                         "dark-on-error-container": "#ffdad6",
                     },
                     fontFamily: {
-                        sans: ["Inter", "ui-sans-serif", "system-ui"]
+                        sans: ["Inter", "ui-sans-serif", "system-ui"],
+                        display: ["Sora", "ui-sans-serif", "system-ui"],
+                        mono: ["Orbitron", "monospace"],
                     },
                     borderRadius: {
                         sm: "0.25rem",
@@ -101,7 +102,32 @@
                         md: "0.75rem",
                         lg: "1rem",
                         xl: "1.5rem",
+                        "2xl": "2rem",
                         full: "9999px"
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                        'wave': 'wave 1.5s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.6', transform: 'scale(1)' },
+                            '50%': { opacity: '1', transform: 'scale(1.08)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' },
+                        },
+                        wave: {
+                            '0%, 100%': { transform: 'scaleY(0.3)' },
+                            '50%': { transform: 'scaleY(1)' },
+                        },
                     },
                 },
             },
@@ -109,88 +135,101 @@
     </script>
 
     <style>
-        /* -------- HEX AI base -------- */
+        /* -------- THEME SYSTEM (enhanced) -------- */
         :root {
-            --bg-surface: #f7f9fc;
-            --header-bg: rgba(247, 249, 252, 0.8);
+            --bg-surface: #f5f7fa;
+            --header-bg: rgba(245, 247, 250, 0.75);
             --header-border: rgba(0, 0, 0, 0.06);
-            --text-on-surface: #191c1e;
-            --text-on-surface-variant: #454652;
-            --text-primary: #24389c;
-            --text-muted: rgba(69, 70, 82, 0.6);
-            --hover-bg: rgba(36, 56, 156, 0.08);
-            --primary: #24389c;
+            --text-on-surface: #16181a;
+            --text-on-surface-variant: #3f404c;
+            --text-primary: #1a2b8c;
+            --text-muted: rgba(63, 64, 76, 0.5);
+            --hover-bg: rgba(26, 43, 140, 0.08);
+            --primary: #1a2b8c;
             --primary-container: #3f51b5;
             --secondary: #006876;
             --tertiary: #004e11;
             --status-green: #34A853;
-            --status-green-glow: rgba(52, 168, 83, 0.6);
-            --avatar-bg: #e0e3e6;
-            --border: rgba(0, 0, 0, 0.1);
-            --card-bg: #f2f4f7;
-            --input-bg: rgba(247, 249, 252, 0.8);
-            --typing-dot: rgba(36, 56, 156, 0.5);
-            --sel-bg: rgba(36, 56, 156, 0.15);
-            --sel-text: #191c1e;
-            --amb-blob1: rgba(36, 56, 156, 0.06);
-            --amb-blob2: rgba(88, 230, 255, 0.05);
-            --amb-blob3: rgba(131, 232, 129, 0.04);
-            --ai-avatar-bg: rgba(36, 56, 156, 0.1);
-            --toast-bg: #24389c;
+            --status-green-glow: rgba(52, 168, 83, 0.5);
+            --avatar-bg: #dddfe2;
+            --border: rgba(0, 0, 0, 0.08);
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --card-border: rgba(0, 0, 0, 0.06);
+            --input-bg: rgba(245, 247, 250, 0.8);
+            --typing-dot: rgba(26, 43, 140, 0.4);
+            --sel-bg: rgba(26, 43, 140, 0.15);
+            --sel-text: #16181a;
+            --amb-blob1: rgba(26, 43, 140, 0.06);
+            --amb-blob2: rgba(88, 230, 255, 0.04);
+            --amb-blob3: rgba(131, 232, 129, 0.03);
+            --ai-avatar-bg: rgba(26, 43, 140, 0.1);
+            --toast-bg: #1a2b8c;
             --viz-accent: #00e5ff;
-            --viz-glow: rgba(0, 229, 255, 0.4);
-            --viz-bg: #0a0a0f;
-            --viz-surface: #12121a;
+            --viz-glow: rgba(0, 229, 255, 0.35);
+            --viz-bg: #08080e;
+            --viz-surface: #0e0e18;
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.10);
+            --glow-primary: rgba(26, 43, 140, 0.15);
+            --gradient-primary: linear-gradient(135deg, #1a2b8c, #3f51b5);
+            --gradient-accent: linear-gradient(135deg, #00e5ff, #58e6ff);
+            --gradient-warm: linear-gradient(135deg, #83e881, #58e6ff);
         }
 
         .dark {
-            --bg-surface: #121212;
-            --header-bg: rgba(18, 18, 18, 0.8);
+            --bg-surface: #0f0f0f;
+            --header-bg: rgba(15, 15, 15, 0.75);
             --header-border: rgba(255, 255, 255, 0.06);
             --text-on-surface: #e1e3e1;
             --text-on-surface-variant: #c4c6c8;
             --text-primary: #bac3ff;
-            --text-muted: rgba(196, 198, 200, 0.5);
-            --hover-bg: rgba(186, 195, 255, 0.12);
+            --text-muted: rgba(196, 198, 200, 0.45);
+            --hover-bg: rgba(186, 195, 255, 0.10);
             --primary: #bac3ff;
             --primary-container: #293ca0;
             --secondary: #58e6ff;
             --tertiary: #83e881;
             --status-green: #83e881;
-            --status-green-glow: rgba(131, 232, 129, 0.5);
-            --avatar-bg: #2a2a2a;
-            --border: rgba(255, 255, 255, 0.1);
-            --card-bg: #242424;
+            --status-green-glow: rgba(131, 232, 129, 0.4);
+            --avatar-bg: #272727;
+            --border: rgba(255, 255, 255, 0.08);
+            --card-bg: rgba(33, 33, 33, 0.8);
+            --card-border: rgba(255, 255, 255, 0.06);
             --input-bg: rgba(30, 30, 30, 0.8);
-            --typing-dot: rgba(186, 195, 255, 0.5);
-            --sel-bg: rgba(186, 195, 255, 0.2);
+            --typing-dot: rgba(186, 195, 255, 0.4);
+            --sel-bg: rgba(186, 195, 255, 0.18);
             --sel-text: #e1e3e1;
             --amb-blob1: rgba(186, 195, 255, 0.04);
             --amb-blob2: rgba(88, 230, 255, 0.03);
-            --amb-blob3: rgba(131, 232, 129, 0.03);
-            --ai-avatar-bg: rgba(186, 195, 255, 0.12);
+            --amb-blob3: rgba(131, 232, 129, 0.02);
+            --ai-avatar-bg: rgba(186, 195, 255, 0.10);
             --toast-bg: #293ca0;
             --viz-accent: #00e5ff;
-            --viz-glow: rgba(0, 229, 255, 0.3);
-            --viz-bg: #0a0a0f;
-            --viz-surface: #12121a;
+            --viz-glow: rgba(0, 229, 255, 0.25);
+            --viz-bg: #08080e;
+            --viz-surface: #0e0e18;
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.6);
+            --glow-primary: rgba(186, 195, 255, 0.12);
+            --gradient-primary: linear-gradient(135deg, #293ca0, #3f51b5);
+            --gradient-accent: linear-gradient(135deg, #00e5ff, #58e6ff);
+            --gradient-warm: linear-gradient(135deg, #83e881, #58e6ff);
         }
 
-        /* -------- YT Music Player styles -------- */
+        /* -------- BASE -------- */
         html,
         body {
-            margin-top: 0;
+            margin: 0;
             height: 100vh;
             overflow: hidden;
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-surface);
             color: var(--text-on-surface);
-            transition: background-color 0.4s, color 0.4s;
+            transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
-            opacity: 1;
-            animation: none;
             cursor: default !important;
         }
 
@@ -206,36 +245,42 @@
             font-variation-settings: 'FILL' 1;
         }
 
+        /* -------- CUSTOM SCROLLBAR -------- */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-muted);
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-on-surface-variant);
+        }
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--text-muted) transparent;
+        }
+
+        /* -------- CHAT INPUT -------- */
         #chatInput {
             min-height: 42px;
             max-height: 120px;
             overflow-y: auto;
-        }
-
-        .chat-scroll::-webkit-scrollbar {
-            width: 4px;
-        }
-        .chat-scroll::-webkit-scrollbar-track {
             background: transparent;
         }
-        .chat-scroll::-webkit-scrollbar-thumb {
-            background: rgba(186, 195, 255, 0.2);
-            border-radius: 4px;
-        }
-        .chat-scroll::-webkit-scrollbar-thumb:hover {
-            background: rgba(186, 195, 255, 0.4);
-        }
-        .chat-scroll {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(186, 195, 255, 0.2) transparent;
-        }
 
+        /* -------- MESSAGES -------- */
         .message-wrapper .message-actions {
             display: flex;
             gap: 4px;
             margin-top: 6px;
             opacity: 0;
-            transition: opacity 0.2s;
+            transition: opacity 0.25s ease;
         }
         .message-wrapper:hover .message-actions,
         .message-wrapper:focus-within .message-actions {
@@ -256,33 +301,36 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.15s;
             font-size: 14px;
         }
         .message-actions button:hover {
-            background: rgba(128, 128, 128, 0.2);
+            background: rgba(128, 128, 128, 0.15);
+            transform: scale(1.08);
         }
         .message-wrapper.self-end .message-actions button {
             color: rgba(255, 255, 255, 0.85);
         }
         .message-wrapper.self-end .message-actions button:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
         }
 
+        /* -------- EMOJI PICKER -------- */
         .emoji-picker {
             position: absolute;
-            bottom: 70px;
+            bottom: 76px;
             right: 10px;
             background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 8px;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 10px;
             display: none;
             z-index: 100;
-            max-width: 340px;
-            max-height: 260px;
+            max-width: 360px;
+            max-height: 280px;
             overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            box-shadow: var(--shadow-lg);
         }
         .emoji-picker.open {
             display: block;
@@ -294,54 +342,62 @@
         }
         .emoji-grid span {
             cursor: pointer;
-            font-size: 20px;
+            font-size: 22px;
             text-align: center;
             padding: 6px;
-            border-radius: 8px;
-            transition: background 0.15s;
+            border-radius: 10px;
+            transition: background 0.15s, transform 0.15s;
             user-select: none;
         }
         .emoji-grid span:hover {
             background: var(--hover-bg);
+            transform: scale(1.12);
         }
 
+        /* -------- TOAST -------- */
         #toast {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
+            bottom: 28px;
+            right: 28px;
             background: var(--toast-bg);
+            backdrop-filter: blur(12px);
             color: #fff;
-            padding: 12px 20px;
-            border-radius: 50px;
+            padding: 12px 24px;
+            border-radius: 60px;
             font-size: 14px;
             font-weight: 500;
             z-index: 200;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(20px) scale(0.95);
             pointer-events: none;
-            transition: opacity 0.3s, transform 0.3s;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         #toast.show {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
+        /* -------- IMAGE PREVIEW -------- */
         .gen-preview-img {
             max-width: 100%;
             max-height: 400px;
             border-radius: 16px;
             object-fit: contain;
+            box-shadow: var(--shadow-card);
         }
 
+        /* -------- SPINNER -------- */
         .refresh-spinner {
             display: inline-block;
             width: 18px;
             height: 18px;
-            border: 2px solid transparent;
+            border: 2.5px solid transparent;
             border-top-color: currentColor;
             border-radius: 50%;
             animation: spin 0.7s linear infinite;
@@ -353,10 +409,13 @@
             }
         }
 
+        /* -------- NAV -------- */
         .nav-btn.active-nav {
             color: var(--text-primary) !important;
+            background: var(--hover-bg) !important;
         }
 
+        /* -------- RESPONSIVE TOAST -------- */
         @media (max-width: 768px) {
             #toast {
                 bottom: 100px;
@@ -364,58 +423,57 @@
                 left: 16px;
                 text-align: center;
                 justify-content: center;
+                padding: 10px 16px;
+                font-size: 13px;
             }
             .emoji-picker {
                 right: 0;
                 left: 0;
                 max-width: 100%;
-                bottom: 80px;
+                bottom: 84px;
             }
         }
 
-        /* ---------- YT Music Player specific overrides ---------- */
+        /* ================================================================
+               YT MUSIC PLAYER – enhanced UI
+               ================================================================ */
+
         #musicPanel .yt-music-container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1040px;
             margin: 0 auto;
             padding: 8px 0;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
             height: 100%;
             overflow-y: auto;
-        }
-
-        #musicPanel .yt-music-container::-webkit-scrollbar {
-            width: 4px;
-        }
-        #musicPanel .yt-music-container::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        #musicPanel .yt-music-container::-webkit-scrollbar-thumb {
-            background: rgba(186, 195, 255, 0.2);
-            border-radius: 4px;
         }
 
         #musicPanel .yt-music-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 18px;
             width: 100%;
         }
-
         #musicPanel .yt-music-row>div {
             flex: 1 1 300px;
             min-width: 260px;
         }
 
+        /* -------- PLAYER CARD -------- */
         #musicPanel .yt-player-card {
             background: var(--card-bg);
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            padding: 16px;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+            transition: box-shadow 0.3s, border-color 0.3s;
+        }
+        #musicPanel .yt-player-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--text-primary);
         }
 
         #musicPanel .yt-player-card .album-art-container {
@@ -424,7 +482,7 @@
             align-items: center;
             width: 100%;
             max-width: 280px;
-            margin: 0 auto 12px;
+            margin: 0 auto 14px;
             position: relative;
         }
 
@@ -433,13 +491,13 @@
             aspect-ratio: 1/1;
             object-fit: cover;
             border-radius: 50%;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-            transition: opacity 0.5s, transform 0.5s;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            transition: opacity 0.6s, transform 0.6s;
             max-width: 280px;
+            border: 2px solid rgba(255, 255, 255, 0.06);
         }
-
         #musicPanel .yt-player-card #albumArt.rotate {
-            animation: rotate 5s linear infinite;
+            animation: rotate 6s linear infinite;
         }
         #musicPanel .yt-player-card #albumArt.rotate-paused {
             animation-play-state: paused;
@@ -451,15 +509,16 @@
             max-width: 280px;
             margin: 0 auto;
             display: none;
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.06);
         }
         #musicPanel .yt-player-card #videoPlayerInAlbumArt iframe {
             width: 100% !important;
             height: 100% !important;
             min-height: 280px;
-            border-radius: 12px;
+            border-radius: 16px;
         }
 
         .album-art-video-mode #videoPlayerInAlbumArt {
@@ -471,11 +530,12 @@
 
         #musicPanel .yt-player-card #nowPlaying {
             text-align: center;
-            margin: 8px 0 4px;
+            margin: 6px 0 4px;
         }
         #musicPanel .yt-player-card #nowPlaying .song-title {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 700;
+            font-family: 'Sora', sans-serif;
             color: var(--text-on-surface);
             transition: color 0.4s;
             white-space: nowrap;
@@ -483,6 +543,7 @@
             text-overflow: ellipsis;
             display: block;
             line-height: 1.3;
+            letter-spacing: -0.01em;
         }
         #musicPanel .yt-player-card #nowPlaying .author-name {
             font-size: 14px;
@@ -492,97 +553,131 @@
             overflow: hidden;
             text-overflow: ellipsis;
             display: block;
+            font-weight: 400;
+            letter-spacing: 0.02em;
         }
 
+        /* -------- CONTROLS -------- */
         #musicPanel .yt-player-card .controls {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
-            padding: 8px 0 4px;
+            gap: 12px;
+            padding: 10px 0 6px;
             flex-wrap: nowrap;
         }
         #musicPanel .yt-player-card .controls button {
-            width: 48px;
-            height: 48px;
+            width: 52px;
+            height: 52px;
             border: none;
             border-radius: 50%;
-            background: var(--primary);
+            background: var(--gradient-primary);
             color: #fff;
-            font-size: 20px;
+            font-size: 22px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.3s, transform 0.15s;
+            transition: transform 0.2s, box-shadow 0.3s;
             flex-shrink: 0;
+            box-shadow: 0 4px 16px var(--glow-primary);
         }
         #musicPanel .yt-player-card .controls button:active {
-            transform: scale(0.92);
+            transform: scale(0.90);
         }
         #musicPanel .yt-player-card .controls button:hover {
-            background: var(--primary-container);
+            transform: scale(1.05);
+            box-shadow: 0 6px 24px var(--glow-primary);
         }
         #musicPanel .yt-player-card .controls button i {
-            font-size: 24px;
+            font-size: 26px;
             color: #fff;
         }
+        #musicPanel .yt-player-card .controls button#playPauseBtn {
+            width: 60px;
+            height: 60px;
+        }
 
+        /* -------- PROGRESS -------- */
         #musicPanel .yt-player-card .progress-container {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             touch-action: none;
-            margin: 4px 0;
+            margin: 6px 0;
         }
         #musicPanel .yt-player-card .progress-container .progress {
-            width: 95%;
+            width: 96%;
             height: 5px;
             background: var(--border);
-            border-radius: 4px;
+            border-radius: 8px;
             position: relative;
             cursor: pointer;
             margin: 4px auto;
             display: block;
             user-select: none;
+            overflow: hidden;
         }
         #musicPanel .yt-player-card .progress-container .progress #progress {
             height: 100%;
-            background: var(--primary);
-            border-radius: 4px;
-            transition: width 0.1s;
+            background: var(--gradient-primary);
+            border-radius: 8px;
+            transition: width 0.08s linear;
             width: 0%;
+            position: relative;
+        }
+        #musicPanel .yt-player-card .progress-container .progress #progress::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            width: 14px;
+            height: 14px;
+            background: var(--primary);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            border: 2px solid var(--bg-surface);
+            box-shadow: 0 0 12px var(--glow-primary);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        #musicPanel .yt-player-card .progress-container .progress:hover #progress::after {
+            opacity: 1;
         }
         #musicPanel .yt-player-card .progress-container .time-display {
             display: flex;
             justify-content: space-between;
-            width: 95%;
+            width: 96%;
             font-size: 12px;
             color: var(--text-on-surface-variant);
             margin-top: 2px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
         }
 
+        /* -------- VOLUME -------- */
         #musicPanel .yt-player-card .volume-container {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             width: 100%;
             padding: 4px 0;
             touch-action: none;
             margin: 0 auto;
         }
         #musicPanel .yt-player-card .volume-container .volume-icon {
-            font-size: 18px;
+            font-size: 20px;
             color: var(--primary);
-            min-width: 24px;
+            min-width: 28px;
+            text-align: center;
         }
         #musicPanel .yt-player-card .volume-container .volume-bar-container {
             position: relative;
             width: 100%;
             height: 6px;
             background: var(--border);
-            border-radius: 6px;
+            border-radius: 8px;
             overflow: visible;
             cursor: pointer;
         }
@@ -591,22 +686,27 @@
             top: 0;
             left: 0;
             height: 100%;
-            background: var(--primary);
-            border-radius: 6px;
+            background: var(--gradient-primary);
+            border-radius: 8px;
             width: 70%;
         }
         #musicPanel .yt-player-card .volume-container .volume-bar-container .volume-thumb {
             position: absolute;
             top: 50%;
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             background: #fff;
-            border: 2px solid var(--primary);
+            border: 2.5px solid var(--primary);
             border-radius: 50%;
             transform: translate(-50%, -50%);
             cursor: grab;
             z-index: 2;
             left: 70%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.15s;
+        }
+        #musicPanel .yt-player-card .volume-container .volume-bar-container .volume-thumb:hover {
+            transform: translate(-50%, -50%) scale(1.12);
         }
         #musicPanel .yt-player-card .volume-container #volumeControl {
             -webkit-appearance: none;
@@ -624,28 +724,30 @@
         }
         #musicPanel .yt-player-card .volume-container #volumeControl::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             cursor: pointer;
         }
         #musicPanel .yt-player-card .volume-container #volumeControl::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             cursor: pointer;
             border: none;
             background: transparent;
         }
 
+        /* -------- EXTRA CONTROLS -------- */
         #musicPanel .yt-player-card .extra-controls {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
-            margin: 4px 0 0;
+            gap: 14px;
+            margin: 6px 0 0;
             flex-wrap: wrap;
         }
         #musicPanel .yt-player-card .extra-controls .auto-play-toggle,
-        #musicPanel .yt-player-card .extra-controls .repeat-toggle {
+        #musicPanel .yt-player-card .extra-controls .repeat-toggle,
+        #musicPanel .yt-player-card .extra-controls .sponsor-toggle {
             display: flex;
             align-items: center;
             gap: 6px;
@@ -656,8 +758,8 @@
         #musicPanel .yt-player-card .extra-controls .switch {
             position: relative;
             display: inline-block;
-            width: 38px;
-            height: 20px;
+            width: 40px;
+            height: 22px;
         }
         #musicPanel .yt-player-card .extra-controls .switch input {
             opacity: 0;
@@ -671,51 +773,54 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: #ccc;
-            transition: 0.3s;
-            border-radius: 20px;
+            background: var(--border);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 22px;
         }
         #musicPanel .yt-player-card .extra-controls .switch .slider::before {
             position: absolute;
             content: "";
-            height: 14px;
-            width: 14px;
+            height: 16px;
+            width: 16px;
             left: 3px;
             bottom: 3px;
             background: white;
-            transition: 0.3s;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 50%;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
         }
         #musicPanel .yt-player-card .extra-controls .switch input:checked+.slider {
-            background: var(--primary);
+            background: var(--gradient-primary);
         }
         #musicPanel .yt-player-card .extra-controls .switch input:checked+.slider::before {
             transform: translateX(18px);
         }
 
         #musicPanel .yt-player-card #repeatBtn {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border: none;
             border-radius: 50%;
-            background: #ccc;
-            color: #fff;
-            font-size: 16px;
+            background: var(--border);
+            color: var(--text-on-surface-variant);
+            font-size: 18px;
             cursor: pointer;
-            transition: background 0.3s, transform 0.15s;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         #musicPanel .yt-player-card #repeatBtn:active {
-            transform: scale(0.9);
+            transform: scale(0.90);
         }
         #musicPanel .yt-player-card #repeatBtn.active {
-            background: var(--primary);
+            background: var(--gradient-primary);
+            color: #fff;
             transform: scale(1.05);
+            box-shadow: 0 4px 16px var(--glow-primary);
         }
 
-        /* ---------- playlist / lyrics / search ---------- */
+        /* -------- PLAYLIST / LYRICS / VISUALIZER -------- */
         #musicPanel .yt-music-row .playlist-col {
             flex: 1.6;
             min-width: 300px;
@@ -723,28 +828,32 @@
 
         #musicPanel .yt-music-row .playlist-col .playlist-card {
             background: var(--card-bg);
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            padding: 12px 14px;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            padding: 16px 18px;
+            box-shadow: var(--shadow-card);
             height: 100%;
             display: flex;
             flex-direction: column;
             min-height: 480px;
+            transition: box-shadow 0.3s;
+        }
+        #musicPanel .yt-music-row .playlist-col .playlist-card:hover {
+            box-shadow: var(--shadow-lg);
         }
 
         #musicPanel .playlist-toolbar {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         #musicPanel .playlist-toolbar .btn {
-            padding: 4px 12px;
-            border-radius: 20px;
+            padding: 5px 14px;
+            border-radius: 24px;
             font-size: 13px;
-            font-weight: 500;
+            font-weight: 600;
             border: 1px solid var(--border);
             background: transparent;
             color: var(--text-on-surface);
@@ -752,12 +861,16 @@
             transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
+        }
+        #musicPanel .playlist-toolbar .btn:hover {
+            background: var(--hover-bg);
         }
         #musicPanel .playlist-toolbar .btn.active {
-            background: var(--primary);
+            background: var(--gradient-primary);
             color: #fff;
-            border-color: var(--primary);
+            border-color: transparent;
+            box-shadow: 0 4px 16px var(--glow-primary);
         }
         #musicPanel .playlist-toolbar .btn-outline-primary {
             border-color: var(--primary);
@@ -767,21 +880,473 @@
             background: var(--hover-bg);
         }
 
-        /* ---------- VISUALIZER ---------- */
+        /* -------- PLAYLIST SEARCH -------- */
+        #musicPanel #playlistSearchContainer {
+            margin-bottom: 10px;
+        }
+        #musicPanel #playlistSearchContainer .input-group {
+            display: flex;
+            align-items: center;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2px 8px 2px 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        #musicPanel #playlistSearchContainer .input-group:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--glow-primary);
+        }
+        #musicPanel #playlistSearchContainer .input-group input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 8px 4px;
+            font-size: 14px;
+            color: var(--text-on-surface);
+        }
+        #musicPanel #playlistSearchContainer .input-group button {
+            background: transparent;
+            border: none;
+            color: var(--text-on-surface-variant);
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: 50%;
+            transition: background 0.2s;
+            font-size: 16px;
+        }
+        #musicPanel #playlistSearchContainer .input-group button:hover {
+            background: var(--hover-bg);
+        }
+
+        /* -------- SONG LIST -------- */
+        #musicPanel #songListContainer {
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+        }
+        #musicPanel #songList {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #musicPanel #songList .list-group-item {
+            display: flex;
+            align-items: center;
+            padding: 7px 10px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+            gap: 8px;
+            border-radius: 10px;
+            margin: 3px 0;
+            font-size: 14px;
+            background: transparent;
+            color: var(--text-on-surface);
+        }
+        #musicPanel #songList .list-group-item:hover {
+            background: var(--hover-bg);
+            transform: translateX(4px);
+        }
+        #musicPanel #songList .list-group-item.selected {
+            background: var(--gradient-primary);
+            color: #fff;
+            box-shadow: 0 4px 16px var(--glow-primary);
+            transform: translateX(4px);
+        }
+        #musicPanel #songList .list-group-item.selected .song-number,
+        #musicPanel #songList .list-group-item.selected .song-name,
+        #musicPanel #songList .list-group-item.selected .author-column {
+            color: #fff !important;
+        }
+        #musicPanel #songList .song-number {
+            width: 28px;
+            text-align: center;
+            font-size: 13px;
+            flex-shrink: 0;
+            color: var(--text-on-surface-variant);
+            font-weight: 500;
+        }
+        #musicPanel #songList .song-name {
+            flex: 2;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+        }
+        #musicPanel #songList .author-column {
+            flex: 1.2;
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+            color: var(--text-on-surface-variant);
+            font-weight: 400;
+        }
+        #musicPanel #songList .song-action {
+            width: 32px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        #musicPanel #songList .song-action .remove-song-btn {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: transparent;
+            color: var(--text-on-surface-variant);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+        #musicPanel #songList .song-action .remove-song-btn:hover {
+            background: rgba(220, 53, 69, 0.12);
+            color: #dc3545;
+            transform: scale(1.15);
+        }
+        #musicPanel #songList .drag-handle {
+            cursor: grab;
+            color: var(--text-on-surface-variant);
+            padding: 0 4px;
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+        #musicPanel #songList .drag-handle:active {
+            cursor: grabbing;
+        }
+
+        /* -------- LYRICS -------- */
+        #musicPanel #lyricsContainer {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            padding: 16px 18px;
+            box-shadow: var(--shadow-card);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+            transition: box-shadow 0.3s;
+        }
+        #musicPanel #lyricsContainer:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        #musicPanel #lyricsContainer #lyricsHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        #musicPanel #lyricsContainer #lyricsTitle {
+            font-weight: 700;
+            font-size: 17px;
+            font-family: 'Sora', sans-serif;
+            margin: 0;
+            color: var(--text-on-surface);
+        }
+        #musicPanel #lyricsContainer .lyrics-controls {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        #musicPanel #lyricsContainer .lyrics-controls button {
+            padding: 3px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-on-surface);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        #musicPanel #lyricsContainer .lyrics-controls button:hover {
+            background: var(--hover-bg);
+            border-color: var(--primary);
+        }
+        #musicPanel #lyricsContainer #lyricsMeta {
+            font-size: 12px;
+            color: var(--text-on-surface-variant);
+            margin-bottom: 6px;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+        }
+        #musicPanel #lyricsContainer #lyricsText {
+            flex: 1;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.8;
+            padding: 4px 2px;
+            scroll-behavior: smooth;
+            min-height: 120px;
+        }
+        #musicPanel #lyricsContainer .lrc-line {
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+        }
+        #musicPanel #lyricsContainer .lrc-line:hover {
+            background: var(--hover-bg);
+            transform: translateX(4px);
+        }
+        #musicPanel #lyricsContainer .lrc-line .lrc-time {
+            font-size: 12px;
+            color: var(--text-on-surface-variant);
+            width: 48px;
+            text-align: right;
+            flex-shrink: 0;
+            font-weight: 500;
+        }
+        #musicPanel #lyricsContainer .lrc-line.highlight {
+            background: rgba(186, 195, 255, 0.15);
+            font-weight: 600;
+            border-left: 3px solid var(--primary);
+            padding-left: 12px;
+        }
+        #musicPanel #lyricsContainer .lrc-line .lyrics-pair {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+        }
+        #musicPanel #lyricsContainer .lrc-line .lyrics-pair .original-lyric {
+            font-size: 14px;
+        }
+        #musicPanel #lyricsContainer .lrc-line .lyrics-pair .translated-lyric {
+            font-size: 13px;
+            color: var(--text-on-surface-variant);
+            font-style: italic;
+            border-left: 2.5px solid var(--primary);
+            padding-left: 10px;
+            opacity: 0.85;
+        }
+
+        /* -------- YOUTUBE SEARCH -------- */
+        #musicPanel #youtubeSearchSection {
+            margin-top: 10px;
+        }
+        #musicPanel #youtubeSearchSection .search-input-group {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2px 6px 2px 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        #musicPanel #youtubeSearchSection .search-input-group:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--glow-primary);
+        }
+        #musicPanel #youtubeSearchSection .search-input-group input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 8px 4px;
+            font-size: 14px;
+            color: var(--text-on-surface);
+        }
+        #musicPanel #youtubeSearchSection .search-input-group button {
+            padding: 6px 18px;
+            border-radius: 24px;
+            border: none;
+            background: var(--gradient-primary);
+            color: #fff;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 4px 16px var(--glow-primary);
+        }
+        #musicPanel #youtubeSearchSection .search-input-group button:hover {
+            transform: scale(1.04);
+            box-shadow: 0 6px 24px var(--glow-primary);
+        }
+
+        #musicPanel #searchResults {
+            margin-top: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        #musicPanel #searchResults .list-group-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+            background: transparent;
+            color: var(--text-on-surface);
+            border-radius: 10px;
+            margin: 3px 0;
+            cursor: default;
+            transition: background 0.2s;
+        }
+        #musicPanel #searchResults .list-group-item:hover {
+            background: var(--hover-bg);
+        }
+        #musicPanel #searchResults .list-group-item img {
+            width: 64px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        #musicPanel #searchResults .list-group-item .flex-grow-1 h6 {
+            font-size: 13px;
+            font-weight: 600;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #musicPanel #searchResults .list-group-item .flex-grow-1 p {
+            font-size: 11px;
+            margin: 0;
+            color: var(--text-on-surface-variant);
+        }
+        #musicPanel #searchResults .list-group-item .add-from-search-btn {
+            padding: 3px 14px;
+            border-radius: 16px;
+            border: none;
+            background: var(--gradient-primary);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+            flex-shrink: 0;
+            box-shadow: 0 2px 12px var(--glow-primary);
+        }
+        #musicPanel #searchResults .list-group-item .add-from-search-btn:hover {
+            transform: scale(1.06);
+            box-shadow: 0 4px 20px var(--glow-primary);
+        }
+
+        #musicPanel #searchLoading {
+            text-align: center;
+            padding: 14px;
+            color: var(--text-on-surface-variant);
+            font-size: 14px;
+        }
+        #musicPanel #searchError {
+            text-align: center;
+            padding: 14px;
+            color: #dc3545;
+            font-size: 14px;
+        }
+
+        /* -------- PLAYLIST IMPORT -------- */
+        #musicPanel .playlist-import {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        #musicPanel .playlist-import input {
+            flex: 1;
+            min-width: 180px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 8px 16px;
+            color: var(--text-on-surface);
+            font-size: 14px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        #musicPanel .playlist-import input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--glow-primary);
+        }
+        #musicPanel .playlist-import button {
+            padding: 8px 20px;
+            border-radius: 24px;
+            border: none;
+            background: var(--gradient-primary);
+            color: #fff;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 4px 16px var(--glow-primary);
+        }
+        #musicPanel .playlist-import button:hover {
+            transform: scale(1.04);
+            box-shadow: 0 6px 24px var(--glow-primary);
+        }
+        #musicPanel .playlist-import button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* -------- ALBUM ART TOGGLE -------- */
+        #musicPanel .album-art-display-toggle .btn-group .btn {
+            font-size: 11px;
+            padding: 3px 12px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-on-surface-variant);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        #musicPanel .album-art-display-toggle .btn-group .btn:hover {
+            background: var(--hover-bg);
+        }
+        #musicPanel .album-art-display-toggle .btn-group .btn.active {
+            background: var(--gradient-primary);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 2px 12px var(--glow-primary);
+        }
+        #musicPanel .album-art-display-toggle .btn-group .btn-outline-primary {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* -------- VISUALIZER (enhanced) -------- */
         #musicPanel #visualizerContainer {
             display: none;
             flex: 1;
             flex-direction: column;
             min-height: 350px;
             position: relative;
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
             background: var(--viz-bg);
-            border: 1px solid var(--border);
-            margin-top: 4px;
+            border: 1px solid var(--card-border);
+            margin-top: 6px;
+            box-shadow: var(--shadow-card);
+            transition: box-shadow 0.3s;
         }
         #musicPanel #visualizerContainer.active {
             display: flex;
+        }
+        #musicPanel #visualizerContainer:hover {
+            box-shadow: var(--shadow-lg);
         }
 
         #musicPanel #visualizerContainer #vizCanvas {
@@ -801,25 +1366,27 @@
             align-items: center;
             justify-content: center;
             z-index: 10;
-            background: radial-gradient(ellipse at center, rgba(10, 10, 15, 0.7) 0%, rgba(10, 10, 15, 0.95) 100%);
+            background: radial-gradient(ellipse at center, rgba(8, 8, 14, 0.7) 0%, rgba(8, 8, 14, 0.95) 100%);
             cursor: pointer;
             transition: opacity 0.6s ease;
-            border-radius: 12px;
+            border-radius: 16px;
+            backdrop-filter: blur(4px);
         }
         #musicPanel #visualizerContainer .viz-overlay.hidden {
             opacity: 0;
             pointer-events: none;
         }
         #musicPanel #visualizerContainer .viz-overlay .pulse-ring {
-            width: 72px;
-            height: 72px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             border: 2px solid var(--viz-accent);
             display: flex;
             align-items: center;
             justify-content: center;
             animation: pulseRingViz 2s ease-out infinite;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
+            box-shadow: 0 0 40px var(--viz-glow);
         }
         @keyframes pulseRingViz {
             0% {
@@ -827,8 +1394,8 @@
                 transform: scale(1);
             }
             50% {
-                box-shadow: 0 0 0 30px transparent;
-                transform: scale(1.05);
+                box-shadow: 0 0 0 40px transparent;
+                transform: scale(1.06);
             }
             100% {
                 box-shadow: 0 0 0 0 transparent;
@@ -836,15 +1403,15 @@
             }
         }
         #musicPanel #visualizerContainer .viz-overlay .play-icon {
-            font-size: 36px;
+            font-size: 40px;
             color: var(--viz-accent);
             font-variation-settings: 'FILL' 1;
         }
         #musicPanel #visualizerContainer .viz-overlay .start-text {
             font-family: 'Orbitron', sans-serif;
             font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
+            font-weight: 700;
+            letter-spacing: 0.14em;
             color: var(--text-on-surface);
             text-transform: uppercase;
         }
@@ -852,26 +1419,28 @@
             font-size: 0.7rem;
             color: var(--text-on-surface-variant);
             margin-top: 4px;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.08em;
+            font-weight: 400;
         }
 
         #musicPanel .viz-bar {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 10px;
+            gap: 8px;
+            padding: 8px 14px;
             background: var(--viz-surface);
-            border-top: 1px solid var(--border);
+            border-top: 1px solid var(--card-border);
             flex-shrink: 0;
             flex-wrap: wrap;
-            border-radius: 0 0 12px 12px;
+            border-radius: 0 0 16px 16px;
+            backdrop-filter: blur(8px);
         }
         #musicPanel .viz-bar .viz-btn {
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             border: 1px solid var(--border);
-            background: var(--surface2, #1a1a28);
+            background: rgba(255, 255, 255, 0.04);
             color: var(--text-on-surface);
             display: flex;
             align-items: center;
@@ -882,16 +1451,20 @@
             flex-shrink: 0;
         }
         #musicPanel .viz-bar .viz-btn:active {
-            transform: scale(0.92);
+            transform: scale(0.90);
+        }
+        #musicPanel .viz-bar .viz-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.06);
         }
         #musicPanel .viz-bar .viz-btn.primary-viz {
             background: var(--viz-accent);
             border-color: var(--viz-accent);
-            color: #000;
-            box-shadow: 0 0 16px var(--viz-glow);
+            color: #08080e;
+            box-shadow: 0 0 24px var(--viz-glow);
         }
         #musicPanel .viz-bar .viz-btn.primary-viz.paused {
-            background: var(--surface2, #1a1a28);
+            background: rgba(255, 255, 255, 0.06);
             border-color: var(--border);
             color: var(--text-on-surface);
             box-shadow: none;
@@ -899,10 +1472,11 @@
         #musicPanel .viz-bar .viz-mode-label {
             font-family: 'Orbitron', sans-serif;
             font-size: 0.6rem;
-            letter-spacing: 0.08em;
+            font-weight: 700;
+            letter-spacing: 0.1em;
             color: var(--viz-accent);
             text-transform: uppercase;
-            min-width: 44px;
+            min-width: 48px;
             text-align: center;
             flex-shrink: 0;
         }
@@ -912,15 +1486,16 @@
             min-width: 0;
             flex: 1;
             overflow: hidden;
-            padding: 0 4px;
+            padding: 0 6px;
         }
         #musicPanel .viz-bar .viz-track .viz-track-name {
-            font-weight: 500;
-            font-size: 0.75rem;
+            font-weight: 600;
+            font-size: 0.8rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             color: var(--text-on-surface);
+            font-family: 'Sora', sans-serif;
         }
         #musicPanel .viz-bar .viz-track .viz-track-artist {
             font-size: 0.65rem;
@@ -928,276 +1503,80 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            font-weight: 400;
         }
         #musicPanel .viz-bar .viz-vol-slider {
             -webkit-appearance: none;
-            width: 56px;
+            width: 60px;
             height: 3px;
             border-radius: 2px;
             background: var(--border);
             outline: none;
             cursor: pointer;
             flex-shrink: 0;
+            transition: width 0.3s;
         }
         #musicPanel .viz-bar .viz-vol-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             background: var(--viz-accent);
             cursor: pointer;
-            border: 1px solid var(--bg-surface);
-            box-shadow: 0 0 8px var(--viz-glow);
+            border: 2px solid var(--viz-bg);
+            box-shadow: 0 0 16px var(--viz-glow);
+            transition: transform 0.2s;
+        }
+        #musicPanel .viz-bar .viz-vol-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
         }
         #musicPanel .viz-bar .viz-vol-icon {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--text-on-surface-variant);
             flex-shrink: 0;
         }
 
-        /* ---------- lyrics ---------- */
-        #musicPanel #lyricsContainer {
-            background: var(--card-bg);
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            padding: 12px 14px;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 200px;
-        }
-        #musicPanel #lyricsContainer #lyricsHeader {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        #musicPanel #lyricsContainer #lyricsTitle {
-            font-weight: 600;
-            font-size: 16px;
-            margin: 0;
-        }
-        #musicPanel #lyricsContainer .lyrics-controls {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
-        }
-        #musicPanel #lyricsContainer .lyrics-controls button {
-            padding: 2px 10px;
-            border-radius: 14px;
-            font-size: 12px;
-            font-weight: 500;
-            border: 1px solid var(--border);
-            background: transparent;
+        #musicPanel .viz-toast {
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(8, 8, 14, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--viz-accent);
             color: var(--text-on-surface);
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 3px;
-        }
-        #musicPanel #lyricsContainer .lyrics-controls button:hover {
-            background: var(--hover-bg);
-        }
-        #musicPanel #lyricsContainer #lyricsMeta {
-            font-size: 12px;
-            color: var(--text-on-surface-variant);
-            margin-bottom: 6px;
-        }
-        #musicPanel #lyricsContainer #lyricsText {
-            flex: 1;
-            overflow-y: auto;
-            font-size: 14px;
-            line-height: 1.7;
-            padding: 4px 2px;
-            scroll-behavior: smooth;
-            min-height: 120px;
-        }
-        #musicPanel #lyricsContainer #lyricsText::-webkit-scrollbar {
-            width: 4px;
-        }
-        #musicPanel #lyricsContainer #lyricsText::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        #musicPanel #lyricsContainer #lyricsText::-webkit-scrollbar-thumb {
-            background: rgba(186, 195, 255, 0.2);
-            border-radius: 4px;
-        }
-
-        #musicPanel #lyricsContainer .lrc-line {
-            padding: 4px 6px;
-            border-radius: 4px;
-            transition: background 0.3s, color 0.3s;
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            cursor: pointer;
-        }
-        #musicPanel #lyricsContainer .lrc-line:hover {
-            background: var(--hover-bg);
-        }
-        #musicPanel #lyricsContainer .lrc-line .lrc-time {
-            font-size: 12px;
-            color: var(--text-on-surface-variant);
-            width: 44px;
-            text-align: right;
-            flex-shrink: 0;
-        }
-        #musicPanel #lyricsContainer .lrc-line.highlight {
-            background: rgba(186, 195, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 24px;
+            font-size: 0.7rem;
+            z-index: 20;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s;
+            box-shadow: 0 0 32px var(--viz-glow);
+            letter-spacing: 0.04em;
             font-weight: 500;
         }
-        #musicPanel #lyricsContainer .lrc-line .lyrics-pair {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            flex: 1;
-        }
-        #musicPanel #lyricsContainer .lrc-line .lyrics-pair .original-lyric {
-            font-size: 14px;
-        }
-        #musicPanel #lyricsContainer .lrc-line .lyrics-pair .translated-lyric {
-            font-size: 13px;
-            color: var(--text-on-surface-variant);
-            font-style: italic;
-            border-left: 2px solid var(--primary);
-            padding-left: 8px;
+        #musicPanel .viz-toast.show {
+            opacity: 1;
         }
 
-        /* ---------- YouTube search ---------- */
-        #musicPanel #youtubeSearchSection {
-            margin-top: 8px;
-        }
-        #musicPanel #youtubeSearchSection .search-input-group {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-            background: var(--input-bg);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 2px 6px 2px 14px;
-            transition: border-color 0.3s;
-        }
-        #musicPanel #youtubeSearchSection .search-input-group:focus-within {
-            border-color: var(--primary);
-        }
-        #musicPanel #youtubeSearchSection .search-input-group input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            outline: none;
-            padding: 6px 4px;
-            font-size: 14px;
-            color: var(--text-on-surface);
-        }
-        #musicPanel #youtubeSearchSection .search-input-group button {
-            padding: 6px 14px;
-            border-radius: 20px;
-            border: none;
-            background: var(--primary);
-            color: #fff;
-            font-weight: 500;
-            font-size: 13px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        #musicPanel #youtubeSearchSection .search-input-group button:hover {
-            background: var(--primary-container);
-        }
-
-        #musicPanel #searchResults {
-            margin-top: 8px;
-            max-height: 180px;
-            overflow-y: auto;
-        }
-        #musicPanel #searchResults::-webkit-scrollbar {
-            width: 4px;
-        }
-        #musicPanel #searchResults::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        #musicPanel #searchResults::-webkit-scrollbar-thumb {
-            background: rgba(186, 195, 255, 0.2);
-            border-radius: 4px;
-        }
-        #musicPanel #searchResults .list-group-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 8px;
-            border-bottom: 1px solid var(--border);
-            font-size: 13px;
-            background: transparent;
-            color: var(--text-on-surface);
-            border-radius: 6px;
-            margin: 2px 0;
-            cursor: default;
-        }
-        #musicPanel #searchResults .list-group-item img {
-            width: 60px;
-            height: 36px;
-            object-fit: cover;
-            border-radius: 6px;
-            flex-shrink: 0;
-        }
-        #musicPanel #searchResults .list-group-item .flex-grow-1 h6 {
-            font-size: 13px;
-            font-weight: 500;
-            margin: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        #musicPanel #searchResults .list-group-item .flex-grow-1 p {
-            font-size: 11px;
-            margin: 0;
-            color: var(--text-on-surface-variant);
-        }
-        #musicPanel #searchResults .list-group-item .add-from-search-btn {
-            padding: 2px 10px;
-            border-radius: 14px;
-            border: none;
-            background: var(--primary);
-            color: #fff;
-            font-size: 12px;
-            cursor: pointer;
-            transition: background 0.3s;
-            flex-shrink: 0;
-        }
-        #musicPanel #searchResults .list-group-item .add-from-search-btn:hover {
-            background: var(--primary-container);
-        }
-
-        #musicPanel #searchLoading {
-            text-align: center;
-            padding: 12px;
-            color: var(--text-on-surface-variant);
-            font-size: 14px;
-        }
-        #musicPanel #searchError {
-            text-align: center;
-            padding: 12px;
-            color: #dc3545;
-            font-size: 14px;
-        }
-
-        /* ---------- responsive ---------- */
+        /* -------- RESPONSIVE TWEAKS -------- */
         @media (max-width: 768px) {
             #musicPanel .yt-music-row>div {
                 flex: 1 1 100%;
                 min-width: 0;
             }
             #musicPanel .yt-player-card .controls button {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
             }
             #musicPanel .yt-player-card .controls button i {
-                font-size: 20px;
+                font-size: 22px;
+            }
+            #musicPanel .yt-player-card .controls button#playPauseBtn {
+                width: 52px;
+                height: 52px;
             }
             #musicPanel .yt-player-card .album-art-container {
                 max-width: 200px;
@@ -1212,11 +1591,11 @@
                 min-height: 200px;
             }
             #musicPanel .viz-bar .viz-vol-slider {
-                width: 40px;
+                width: 44px;
             }
             #musicPanel .viz-bar .viz-btn {
-                width: 28px;
-                height: 28px;
+                width: 30px;
+                height: 30px;
                 font-size: 14px;
             }
         }
@@ -1235,128 +1614,77 @@
                 min-height: 160px;
             }
             #musicPanel .yt-player-card #nowPlaying .song-title {
-                font-size: 15px;
+                font-size: 16px;
             }
             #musicPanel .yt-player-card #nowPlaying .author-name {
                 font-size: 12px;
             }
             #musicPanel .viz-bar .viz-vol-slider {
-                width: 32px;
+                width: 36px;
             }
             #musicPanel .viz-bar .viz-btn {
-                width: 24px;
-                height: 24px;
+                width: 26px;
+                height: 26px;
                 font-size: 12px;
             }
             #musicPanel .viz-bar .viz-mode-label {
                 font-size: 0.5rem;
-                min-width: 32px;
+                min-width: 36px;
             }
         }
 
-        /* Additional YT music card styling */
-        #musicPanel .yt-music-container .d-none {
-            display: none !important;
-        }
-
-        #musicPanel .yt-player-card #togglePlayerBtn {
-            display: none;
-        }
-
-        #musicPanel .yt-player-card #errorMessage {
-            color: #dc3545;
-            font-size: 13px;
-            text-align: center;
-            padding: 4px;
-            display: none;
-        }
-
-        #musicPanel .yt-player-card #background {
-            display: none;
-        }
-
-        #musicPanel .yt-music-container .card.dark-mode {
-            background: var(--card-bg);
-            color: var(--text-on-surface);
-        }
-
-        #musicPanel .yt-music-container .drag-handle {
-            cursor: grab;
-        }
-
-        #musicPanel .yt-music-container .drag-preview {
-            display: none;
-        }
-
-        /* settings overlay within music panel */
-        #musicPanel .floating-settings,
-        #musicPanel .floating-experimental,
-        #musicPanel .floating-top {
-            display: none !important;
-        }
-
-        #musicPanel .album-art-display-toggle .btn-group .btn {
-            font-size: 11px;
-            padding: 2px 10px;
-        }
-
-        #musicPanel .album-art-display-toggle .btn-group .btn.active {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
-
-        #musicPanel .album-art-display-toggle .btn-group .btn-outline-primary {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        /* ---------- ensure dark mode consistency ---------- */
+        /* -------- DARK MODE OVERRIDES -------- */
         .dark #musicPanel .yt-player-card {
-            background: #242424;
-            border-color: #3a3a3a;
+            background: rgba(33, 33, 33, 0.8);
+            border-color: rgba(255, 255, 255, 0.06);
         }
         .dark #musicPanel .yt-player-card .playlist-card {
-            background: #242424;
-            border-color: #3a3a3a;
+            background: rgba(33, 33, 33, 0.8);
+            border-color: rgba(255, 255, 255, 0.06);
         }
         .dark #musicPanel #lyricsContainer {
-            background: #242424;
-            border-color: #3a3a3a;
+            background: rgba(33, 33, 33, 0.8);
+            border-color: rgba(255, 255, 255, 0.06);
         }
         .dark #musicPanel #songList .list-group-item {
-            border-color: #3a3a3a;
+            border-color: rgba(255, 255, 255, 0.06);
         }
         .dark #musicPanel #searchResults .list-group-item {
-            border-color: #3a3a3a;
+            border-color: rgba(255, 255, 255, 0.06);
         }
         .dark #musicPanel .volume-bar-container {
-            background: #3a3a3a;
+            background: rgba(255, 255, 255, 0.08);
         }
         .dark #musicPanel .progress {
-            background: #3a3a3a;
+            background: rgba(255, 255, 255, 0.08);
         }
         .dark #musicPanel .volume-thumb {
-            background: #242424;
+            background: #2d2d2d;
             border-color: var(--primary);
         }
         .dark #musicPanel .switch .slider {
-            background: #444;
+            background: rgba(255, 255, 255, 0.15);
         }
         .dark #musicPanel #repeatBtn {
-            background: #444;
+            background: rgba(255, 255, 255, 0.08);
         }
         .dark #musicPanel #repeatBtn.active {
-            background: var(--primary);
+            background: var(--gradient-primary);
         }
         .dark #musicPanel #visualizerContainer {
-            border-color: #3a3a3a;
+            border-color: rgba(255, 255, 255, 0.06);
         }
         .dark #musicPanel .viz-bar {
-            border-color: #3a3a3a;
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+        .dark #musicPanel .viz-bar .viz-btn {
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .dark #musicPanel .viz-bar .viz-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        /* animation */
+        /* -------- ANIMATION -------- */
         @keyframes rotate {
             from {
                 transform: rotate(0deg);
@@ -1366,113 +1694,77 @@
             }
         }
 
-        /* -------- playlist import section -------- */
-        #musicPanel .playlist-import {
-            margin-top: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            align-items: center;
-        }
-        #musicPanel .playlist-import input {
-            flex: 1;
-            min-width: 180px;
-            background: var(--input-bg);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 6px 14px;
-            color: var(--text-on-surface);
-            font-size: 14px;
-        }
-        #musicPanel .playlist-import input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        #musicPanel .playlist-import button {
-            padding: 6px 16px;
-            border-radius: 20px;
-            border: none;
-            background: var(--primary);
-            color: #fff;
-            font-weight: 500;
-            font-size: 13px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        #musicPanel .playlist-import button:hover {
-            background: var(--primary-container);
-        }
-        #musicPanel .playlist-import button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* ---------- settings: translation service ---------- */
+        /* -------- SETTINGS: translation service -------- */
         #translationServiceSelect {
             background: var(--input-bg);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 4px 10px;
+            border-radius: 10px;
+            padding: 6px 12px;
             color: var(--text-on-surface);
             font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        #translationServiceSelect:focus {
+            outline: none;
+            border-color: var(--primary);
         }
 
-        /* Visualizer toast inside music panel */
-        #musicPanel .viz-toast {
-            position: absolute;
-            top: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--viz-surface);
-            border: 1px solid var(--viz-accent);
-            color: var(--text-on-surface);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            z-index: 20;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-            box-shadow: 0 0 16px var(--viz-glow);
-            letter-spacing: 0.04em;
+        /* -------- MISC -------- */
+        #musicPanel .yt-music-container .d-none {
+            display: none !important;
         }
-        #musicPanel .viz-toast.show {
-            opacity: 1;
+        #musicPanel .yt-player-card #togglePlayerBtn {
+            display: none;
         }
-
-        /* SponsorBlock toggle styling */
-        #musicPanel .yt-player-card .extra-controls .sponsor-toggle {
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        #musicPanel .yt-player-card #errorMessage {
+            color: #dc3545;
             font-size: 13px;
-            font-weight: 500;
-            color: var(--text-on-surface-variant);
+            text-align: center;
+            padding: 4px;
+            display: none;
+        }
+        #musicPanel .yt-player-card #background {
+            display: none;
+        }
+        #musicPanel .yt-music-container .card.dark-mode {
+            background: var(--card-bg);
+            color: var(--text-on-surface);
+        }
+        #musicPanel .yt-music-container .drag-handle {
+            cursor: grab;
+        }
+        #musicPanel .yt-music-container .drag-preview {
+            display: none;
+        }
+        #musicPanel .floating-settings,
+        #musicPanel .floating-experimental,
+        #musicPanel .floating-top {
+            display: none !important;
         }
     </style>
 </head>
 
 <body class="h-screen flex flex-col overflow-hidden selection:bg-[var(--sel-bg)] selection:text-[var(--sel-text)]" id="appBody">
 
-    <!-- Ambient blobs -->
+    <!-- Ambient blobs (enhanced) -->
     <div class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-        <div class="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] rounded-full bg-[var(--amb-blob1)] blur-[140px] opacity-60"></div>
-        <div class="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-[var(--amb-blob2)] blur-[160px] opacity-50"></div>
-        <div class="absolute top-[40%] left-[20%] w-[30vw] h-[30vw] rounded-full bg-[var(--amb-blob3)] blur-[120px] opacity-40"></div>
+        <div class="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] rounded-full bg-[var(--amb-blob1)] blur-[140px] opacity-60 animate-float"></div>
+        <div class="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-[var(--amb-blob2)] blur-[160px] opacity-50 animate-float" style="animation-delay:2s"></div>
+        <div class="absolute top-[40%] left-[20%] w-[30vw] h-[30vw] rounded-full bg-[var(--amb-blob3)] blur-[120px] opacity-40 animate-float" style="animation-delay:4s"></div>
     </div>
 
-    <!-- TOP BAR -->
+    <!-- TOP BAR (enhanced) -->
     <header class="fixed top-0 w-full z-50 bg-[var(--header-bg)] backdrop-blur-xl border-b border-[var(--header-border)] flex justify-between items-center px-4 h-16 shadow-sm">
         <div class="flex items-center gap-3">
-            <span class="material-symbols-outlined text-[var(--text-primary)]" style="font-variation-settings:'FILL'1;">token</span>
-            <h1 class="text-xl font-bold text-[var(--text-primary)]">HEX AI</h1>
-            <span class="w-2.5 h-2.5 rounded-full bg-[var(--status-green)] animate-pulse shadow-[0_0_8px_var(--status-green-glow)]"></span>
+            <span class="material-symbols-outlined text-[var(--text-primary)] animate-pulse-glow" style="font-variation-settings:'FILL'1;">token</span>
+            <h1 class="text-xl font-bold font-display bg-gradient-to-r from-[var(--text-primary)] to-[var(--secondary)] bg-clip-text text-transparent">HEX AI</h1>
+            <span class="w-2.5 h-2.5 rounded-full bg-[var(--status-green)] animate-pulse shadow-[0_0_12px_var(--status-green-glow)]"></span>
         </div>
-        <nav class="hidden md:flex items-center gap-4" id="desktopNav">
-            <button class="nav-btn active-nav font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors text-[var(--text-primary)]" data-panel="chat">Chat</button>
-            <button class="nav-btn font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors text-[var(--text-on-surface-variant)]" data-panel="image">Image</button>
-            <button class="nav-btn font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors text-[var(--text-on-surface-variant)]" data-panel="video">Video</button>
-            <button class="nav-btn font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors text-[var(--text-on-surface-variant)]" data-panel="music">Music</button>
+        <nav class="hidden md:flex items-center gap-2" id="desktopNav">
+            <button class="nav-btn active-nav font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-all text-[var(--text-primary)]" data-panel="chat">Chat</button>
+            <button class="nav-btn font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-all text-[var(--text-on-surface-variant)]" data-panel="image">Image</button>
+            <button class="nav-btn font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-all text-[var(--text-on-surface-variant)]" data-panel="video">Video</button>
+            <button class="nav-btn font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-all text-[var(--text-on-surface-variant)]" data-panel="music">Music</button>
         </nav>
         <div class="flex items-center gap-2">
             <div class="relative">
@@ -1480,46 +1772,48 @@
                     <span class="material-symbols-outlined">smart_toy</span>
                     <span id="modelBadgeText" class="hidden sm:inline text-sm font-medium">Model</span>
                 </button>
-                <div id="modelDropdown" class="absolute top-12 right-0 bg-[var(--card-bg)] backdrop-blur-md border border-[var(--border)] rounded-xl p-2 min-w-[220px] hidden z-50 shadow-lg"></div>
+                <div id="modelDropdown" class="absolute top-12 right-0 bg-[var(--card-bg)] backdrop-blur-xl border border-[var(--card-border)] rounded-2xl p-2 min-w-[220px] hidden z-50 shadow-lg"></div>
             </div>
             <button id="settingsBtn" class="text-[var(--text-on-surface-variant)] p-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors"><span class="material-symbols-outlined">settings</span></button>
             <button id="themeToggle" class="text-[var(--text-on-surface-variant)] p-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors"><span class="material-symbols-outlined" id="themeIcon">light_mode</span></button>
-            <div class="w-8 h-8 rounded-full bg-[var(--avatar-bg)] overflow-hidden border border-[var(--border)] ml-2">
+            <div class="w-8 h-8 rounded-full bg-[var(--avatar-bg)] overflow-hidden border border-[var(--border)] ml-2 ring-2 ring-[var(--primary)]/20">
                 <img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY9B_LgjP8DCOsl_eWm7kIKiipUKy--pQWw-LP7g5l0fH-v9sfGhz7WtB8N_x39u45dPEJbzxTMCGokU7K6XVxeaSAJ32-3WRffwQqbpjxIanJYzDUD7GqsysvdVMG6Oj2ZZVnJZhlvkXkeV1lY4fTGfQVQ1EN4KoJBWxpH1EjIBCKSGp0FZwB1dthGIR5DzIC5f__cWTr-8tNgrDKT2UXa7jGTumcACooNqlgqkstOluVhh6FpKtiyhrIfEWvQz3QSpnCILBHm6g">
             </div>
         </div>
     </header>
 
-    <!-- SETTINGS OVERLAY -->
-    <div id="settingsOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center hidden">
-        <div class="bg-[var(--card-bg)] backdrop-blur-xl border border-[var(--border)] rounded-2xl p-6 w-[90%] max-w-md shadow-2xl">
-            <h3 class="text-lg font-semibold mb-4">Settings</h3>
+    <!-- SETTINGS OVERLAY (enhanced) -->
+    <div id="settingsOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-md z-[100] flex items-center justify-center hidden">
+        <div class="bg-[var(--card-bg)] backdrop-blur-xl border border-[var(--card-border)] rounded-2xl p-6 w-[90%] max-w-md shadow-2xl animate-in fade-in zoom-in duration-300">
+            <h3 class="text-lg font-semibold font-display mb-4">Settings</h3>
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm mb-1">YouTube Data v3 API Key</label>
-                    <input type="password" id="ytApiKeyInput" placeholder="AIza..." class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-lg px-3 py-2" />
+                    <label class="block text-sm font-medium mb-1">YouTube Data v3 API Key</label>
+                    <input type="password" id="ytApiKeyInput" placeholder="AIza..." class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-xl px-3 py-2 focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all" />
                     <p class="text-xs text-[var(--text-muted)] mt-1">Required for YouTube search &amp; playlist import.</p>
                 </div>
                 <div>
-                    <label class="block text-sm mb-1">Lyrics Translation Service</label>
-                    <select id="translationServiceSelect" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-lg px-3 py-2">
+                    <label class="block text-sm font-medium mb-1">Lyrics Translation Service</label>
+                    <select id="translationServiceSelect" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-xl px-3 py-2 focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all">
                         <option value="auto">Automatic (multiple free)</option>
                         <option value="openrouter">OpenRouter</option>
                         <option value="gemini">Gemini</option>
                     </select>
                 </div>
-                <div><label class="block text-sm mb-1">AI Provider</label>
-                    <select id="providerSelect" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-lg px-3 py-2">
+                <div>
+                    <label class="block text-sm font-medium mb-1">AI Provider</label>
+                    <select id="providerSelect" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-xl px-3 py-2 focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all">
                         <option value="openrouter">Open Router (Free Models)</option>
                         <option value="gemini">Gemini API</option>
                     </select>
                 </div>
-                <div id="openRouterKeySection"><label class="block text-sm mb-1">OpenRouter API Key</label><input type="password" id="openRouterKey" placeholder="sk-or-..." class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-lg px-3 py-2"></div>
-                <div id="geminiKeySection" style="display:none"><label class="block text-sm mb-1">Gemini API Key</label><input type="password" id="geminiKey" placeholder="AIza..." class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-lg px-3 py-2"></div>
-                <div><label class="block text-sm mb-1">AI Model</label>
-                    <div class="flex gap-2"><select id="modelSelect" class="flex-1 bg-[var(--input-bg)] border border-[var(--border)] rounded-lg px-3 py-2"></select><button id="refreshModelsBtn" class="p-2 rounded-lg bg-[var(--hover-bg)]"><span class="material-symbols-outlined">refresh</span></button></div>
+                <div id="openRouterKeySection"><label class="block text-sm font-medium mb-1">OpenRouter API Key</label><input type="password" id="openRouterKey" placeholder="sk-or-..." class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-xl px-3 py-2 focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"></div>
+                <div id="geminiKeySection" style="display:none"><label class="block text-sm font-medium mb-1">Gemini API Key</label><input type="password" id="geminiKey" placeholder="AIza..." class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-xl px-3 py-2 focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"></div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">AI Model</label>
+                    <div class="flex gap-2"><select id="modelSelect" class="flex-1 bg-[var(--input-bg)] border border-[var(--border)] rounded-xl px-3 py-2 focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"></select><button id="refreshModelsBtn" class="p-2 rounded-xl bg-[var(--hover-bg)] hover:bg-[var(--border)] transition-colors"><span class="material-symbols-outlined">refresh</span></button></div>
                 </div>
-                <div class="flex justify-end gap-3 pt-2"><button id="settingsClose" class="px-4 py-2 rounded-full border border-[var(--border)]">Cancel</button><button id="saveSettingsBtn" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white">Save</button></div>
+                <div class="flex justify-end gap-3 pt-2"><button id="settingsClose" class="px-4 py-2 rounded-full border border-[var(--border)] hover:bg-[var(--hover-bg)] transition-colors">Cancel</button><button id="saveSettingsBtn" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white hover:scale-105 active:scale-95 transition-transform shadow-md">Save</button></div>
             </div>
         </div>
     </div>
@@ -1530,10 +1824,10 @@
         <!-- CHAT PANEL -->
         <div class="panel active flex-1 flex flex-col h-full" id="chatPanel">
             <div class="flex-1 overflow-y-auto chat-scroll p-4 md:p-6 flex flex-col gap-4" id="chatContainer">
-                <div class="flex justify-center my-4"><span class="bg-[var(--card-bg)] px-4 py-1.5 rounded-full text-sm text-[var(--text-on-surface-variant)]">Today</span></div>
+                <div class="flex justify-center my-4"><span class="bg-[var(--card-bg)] backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-[var(--text-on-surface-variant)] border border-[var(--card-border)]">Today</span></div>
                 <div id="typingIndicator" class="flex gap-3 self-start opacity-80 hidden">
                     <div class="w-8 h-8 rounded-full bg-[var(--ai-avatar-bg)] flex items-center justify-center border border-[var(--border)]"><span class="material-symbols-outlined text-[var(--text-primary)] text-sm">smart_toy</span></div>
-                    <div class="bg-[var(--card-bg)] px-4 py-3 rounded-2xl rounded-tl-sm flex items-center gap-1.5">
+                    <div class="bg-[var(--card-bg)] backdrop-blur-sm px-4 py-3 rounded-2xl rounded-tl-sm border border-[var(--card-border)] flex items-center gap-1.5">
                         <div class="w-1.5 h-1.5 rounded-full bg-[var(--typing-dot)] animate-bounce"></div>
                         <div class="w-1.5 h-1.5 rounded-full bg-[var(--typing-dot)] animate-bounce" style="animation-delay:150ms"></div>
                         <div class="w-1.5 h-1.5 rounded-full bg-[var(--typing-dot)] animate-bounce" style="animation-delay:300ms"></div>
@@ -1547,10 +1841,10 @@
                     <div id="emojiPicker" class="emoji-picker">
                         <div class="emoji-grid" id="emojiGrid"></div>
                     </div>
-                    <div class="relative flex items-center bg-[var(--input-bg)] backdrop-blur-xl border border-[var(--border)] rounded-full p-2 shadow-sm" id="inputPill">
+                    <div class="relative flex items-center bg-[var(--input-bg)] backdrop-blur-xl border border-[var(--border)] rounded-full p-1.5 shadow-sm hover:shadow-md transition-shadow" id="inputPill">
                         <button class="p-3 text-[var(--text-on-surface-variant)] hover:text-[var(--text-primary)] transition-colors rounded-full hover:bg-[var(--hover-bg)] ml-1" id="attachBtn"><span class="material-symbols-outlined">attach_file</span></button>
                         <input type="file" id="fileInput" accept="image/*,.pdf" hidden>
-                        <div id="attachmentPreviewContainer" class="hidden px-2 py-1 bg-[var(--card-bg)] rounded-lg text-xs flex items-center gap-1"></div>
+                        <div id="attachmentPreviewContainer" class="hidden px-2 py-1 bg-[var(--card-bg)] backdrop-blur-sm rounded-lg text-xs flex items-center gap-1 border border-[var(--card-border)]"></div>
                         <button class="p-3 text-[var(--text-on-surface-variant)] hover:text-[var(--text-primary)] transition-colors rounded-full hover:bg-[var(--hover-bg)]" id="emojiBtn"><span class="material-symbols-outlined">sentiment_satisfied</span></button>
                         <div class="relative flex-1"><textarea id="chatInput" class="w-full bg-transparent border-none focus:ring-0 text-[var(--text-on-surface)] placeholder-[var(--text-muted)] px-2 py-2 outline-none resize-none" placeholder="Message HEX AI..." rows="1"></textarea></div>
                         <button class="p-3 text-[var(--text-on-surface-variant)] hover:text-[var(--text-primary)] transition-colors rounded-full hover:bg-[var(--hover-bg)]" id="voiceBtn"><span class="material-symbols-outlined">mic</span></button>
@@ -1564,16 +1858,16 @@
         <!-- IMAGE PANEL -->
         <div class="panel hidden flex-1 overflow-y-auto p-4 md:p-6 h-full" id="imagePanel">
             <div class="flex flex-col md:flex-row gap-6 h-full">
-                <div class="md:w-1/3 bg-[var(--card-bg)] rounded-xl p-6 backdrop-blur-md border border-[var(--border)] flex flex-col gap-4">
-                    <h2 class="text-lg font-semibold flex items-center gap-2"><span class="material-symbols-outlined">image</span>Image Generation</h2>
-                    <textarea id="imgPromptInput" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-lg p-3 flex-1 min-h-[80px]" placeholder="Describe your vision..." rows="4"></textarea>
+                <div class="md:w-1/3 bg-[var(--card-bg)] backdrop-blur-xl rounded-2xl p-6 border border-[var(--card-border)] flex flex-col gap-4 shadow-sm">
+                    <h2 class="text-lg font-semibold font-display flex items-center gap-2"><span class="material-symbols-outlined text-[var(--text-primary)]">image</span>Image Generation</h2>
+                    <textarea id="imgPromptInput" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-xl p-3 flex-1 min-h-[80px] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all" placeholder="Describe your vision..." rows="4"></textarea>
                     <div class="grid grid-cols-2 gap-2">
-                        <select id="aspectRatio" class="bg-[var(--input-bg)] border border-[var(--border)] rounded-lg p-2 text-sm">
+                        <select id="aspectRatio" class="bg-[var(--input-bg)] border border-[var(--border)] rounded-xl p-2 text-sm focus:outline-none focus:border-[var(--primary)] transition-all">
                             <option value="1:1">1:1 Square</option>
                             <option value="16:9">16:9 Cinema</option>
                             <option value="9:16">9:16 Portrait</option>
                         </select>
-                        <select id="styleSelect" class="bg-[var(--input-bg)] border border-[var(--border)] rounded-lg p-2 text-sm">
+                        <select id="styleSelect" class="bg-[var(--input-bg)] border border-[var(--border)] rounded-xl p-2 text-sm focus:outline-none focus:border-[var(--primary)] transition-all">
                             <option>Photorealistic</option>
                             <option>Cyberpunk</option>
                             <option>Abstract Art</option>
@@ -1581,23 +1875,23 @@
                             <option>Oil Painting</option>
                         </select>
                     </div>
-                    <button id="generateImageBtn" class="w-full bg-[var(--primary)] text-white px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2 active:scale-95 transition-transform"><span class="material-symbols-outlined">auto_awesome</span>Generate</button>
+                    <button id="generateImageBtn" class="w-full bg-[var(--primary)] text-white px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-transform shadow-md"><span class="material-symbols-outlined">auto_awesome</span>Generate</button>
                 </div>
                 <div class="md:w-2/3 flex flex-col gap-4">
-                    <div id="imageGenPreviewContainer" class="flex-1 min-h-[200px] bg-[var(--card-bg)] rounded-xl border border-[var(--border)] flex items-center justify-center text-[var(--text-muted)]">
-                        <div class="text-center"><i class="fas fa-image text-3xl mb-2 block"></i>Preview</div>
+                    <div id="imageGenPreviewContainer" class="flex-1 min-h-[200px] bg-[var(--card-bg)] backdrop-blur-xl rounded-2xl border border-[var(--card-border)] flex items-center justify-center text-[var(--text-muted)] shadow-sm">
+                        <div class="text-center"><i class="fas fa-image text-3xl mb-2 block opacity-60"></i>Preview</div>
                     </div>
                     <div id="genImageActions" class="flex gap-2 hidden">
-                        <button id="addToChatBtn" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white text-sm">Add to Chat</button>
-                        <button id="downloadGenImageBtn" class="px-4 py-2 rounded-full border border-[var(--border)] hover:bg-[var(--hover-bg)] text-sm">Download</button>
-                        <button id="clearGenImageBtn" class="px-4 py-2 rounded-full border border-[var(--border)] hover:bg-[var(--hover-bg)] text-sm">Clear</button>
+                        <button id="addToChatBtn" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white text-sm hover:scale-105 active:scale-95 transition-transform">Add to Chat</button>
+                        <button id="downloadGenImageBtn" class="px-4 py-2 rounded-full border border-[var(--border)] hover:bg-[var(--hover-bg)] transition-colors text-sm">Download</button>
+                        <button id="clearGenImageBtn" class="px-4 py-2 rounded-full border border-[var(--border)] hover:bg-[var(--hover-bg)] transition-colors text-sm">Clear</button>
                     </div>
                     <div class="mt-4">
-                        <h3 class="text-lg font-semibold mb-3">Creation Gallery</h3>
+                        <h3 class="text-lg font-semibold font-display mb-3">Creation Gallery</h3>
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                            <div class="aspect-square rounded-xl overflow-hidden bg-[var(--card-bg)]"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfqHDmv17pvKSF083I-Fw1DS1TjGwW-wqdAjhv3w-JxO4-UcI2gdxXFF3NNFDfcY6xaqcngLvyW0AejK_pJKyLVY91VMSdkKU9AZ8QdexVZhwqOR2DxKWIkowbDOMmAxI5cQDWyWe7bObb2h6GMh5rFABXi1gIrosqep0uebMLGZE1dO7QRwh8P9M-Ep_7pXFES6nuW2znDu8eXfwkpnujFwoOVkvCbhJB8eqxCR51ctnSWPFl25UFoL9aYv_NOYxZkZo_RnaWGY06" class="w-full h-full object-cover" alt="cybercity"></div>
-                            <div class="aspect-square rounded-xl overflow-hidden bg-[var(--card-bg)]"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1PqIpSPnXQDLR6fvaqzk9i78KaTYtpOo7zLgX2T26w-DG2rpPS7Suyp7NVZczxLV-lVQJVRCxlZECI2Cb8TeBM6YZgXOMj8yFq0MOUVQ025TfbZokQuB1qSdOURMpXv8iWp53HMy9FbPSsDdmrOtURNJHHBoatlTocTTqdhewOH2E0Ddx43ZKc8FwSifeeDjiIAWSXg-HTAKNKo4suXTzxYW5Pcl8zLgkkS7NWioVgexrfjbo-ebRKfQFpR1xyGFDkQY1njthzvUZ" class="w-full h-full object-cover" alt="chrome"></div>
-                            <div class="aspect-square rounded-xl overflow-hidden bg-[var(--card-bg)]"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrr18fxb9wmF5oHupeI1eAo4fGF8ZsyjkFeDI3w2ZEPGaXgdxhrnwkSU4H9GNcgMmKW-RQWKdCe8ZNduWhsT_FLr-1dy-XkB-gYdgRsF2gTLUjD_TyCM8helXjbrOJ0znnzOA3HfLE6n7OC-D00Bn6L8-XEkPut-2S91jcPEwWW7cTLjupW-hUpUQ9GIXJrlbhhGnYjaV3a4kvFDthcdXpm0RR4tfo5CRa6DGwpS8yTBkQI3fQUAG6ipKHDh6rzf09H-HqLK4iENhU" class="w-full h-full object-cover" alt="renaissance"></div>
+                            <div class="aspect-square rounded-xl overflow-hidden bg-[var(--card-bg)] border border-[var(--card-border)] shadow-sm"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfqHDmv17pvKSF083I-Fw1DS1TjGwW-wqdAjhv3w-JxO4-UcI2gdxXFF3NNFDfcY6xaqcngLvyW0AejK_pJKyLVY91VMSdkKU9AZ8QdexVZhwqOR2DxKWIkowbDOMmAxI5cQDWyWe7bObb2h6GMh5rFABXi1gIrosqep0uebMLGZE1dO7QRwh8P9M-Ep_7pXFES6nuW2znDu8eXfwkpnujFwoOVkvCbhJB8eqxCR51ctnSWPFl25UFoL9aYv_NOYxZkZo_RnaWGY06" class="w-full h-full object-cover" alt="cybercity"></div>
+                            <div class="aspect-square rounded-xl overflow-hidden bg-[var(--card-bg)] border border-[var(--card-border)] shadow-sm"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1PqIpSPnXQDLR6fvaqzk9i78KaTYtpOo7zLgX2T26w-DG2rpPS7Suyp7NVZczxLV-lVQJVRCxlZECI2Cb8TeBM6YZgXOMj8yFq0MOUVQ025TfbZokQuB1qSdOURMpXv8iWp53HMy9FbPSsDdmrOtURNJHHBoatlTocTTqdhewOH2E0Ddx43ZKc8FwSifeeDjiIAWSXg-HTAKNKo4suXTzxYW5Pcl8zLgkkS7NWioVgexrfjbo-ebRKfQFpR1xyGFDkQY1njthzvUZ" class="w-full h-full object-cover" alt="chrome"></div>
+                            <div class="aspect-square rounded-xl overflow-hidden bg-[var(--card-bg)] border border-[var(--card-border)] shadow-sm"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrr18fxb9wmF5oHupeI1eAo4fGF8ZsyjkFeDI3w2ZEPGaXgdxhrnwkSU4H9GNcgMmKW-RQWKdCe8ZNduWhsT_FLr-1dy-XkB-gYdgRsF2gTLUjD_TyCM8helXjbrOJ0znnzOA3HfLE6n7OC-D00Bn6L8-XEkPut-2S91jcPEwWW7cTLjupW-hUpUQ9GIXJrlbhhGnYjaV3a4kvFDthcdXpm0RR4tfo5CRa6DGwpS8yTBkQI3fQUAG6ipKHDh6rzf09H-HqLK4iENhU" class="w-full h-full object-cover" alt="renaissance"></div>
                         </div>
                     </div>
                 </div>
@@ -1607,24 +1901,24 @@
         <!-- VIDEO PANEL -->
         <div class="panel hidden flex-1 overflow-y-auto p-4 md:p-6 h-full" id="videoPanel">
             <div class="flex flex-col md:flex-row gap-6 h-full">
-                <div class="md:w-1/3 bg-[var(--card-bg)] rounded-xl p-6 backdrop-blur-md border border-[var(--border)] flex flex-col gap-4">
-                    <h2 class="text-lg font-semibold flex items-center gap-2"><span class="material-symbols-outlined">videocam</span>Video Generation</h2>
-                    <textarea id="videoPromptInput" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-lg p-3 flex-1 min-h-[80px]" placeholder="Describe movement and scene..." rows="3">neon city at night, cyberpunk, cinematic slow pan</textarea>
+                <div class="md:w-1/3 bg-[var(--card-bg)] backdrop-blur-xl rounded-2xl p-6 border border-[var(--card-border)] flex flex-col gap-4 shadow-sm">
+                    <h2 class="text-lg font-semibold font-display flex items-center gap-2"><span class="material-symbols-outlined text-[var(--text-primary)]">videocam</span>Video Generation</h2>
+                    <textarea id="videoPromptInput" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-xl p-3 flex-1 min-h-[80px] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all" placeholder="Describe movement and scene..." rows="3">neon city at night, cyberpunk, cinematic slow pan</textarea>
                     <div class="flex gap-2">
-                        <button class="flex-1 py-2 rounded-lg bg-[var(--card-bg)] border border-[var(--border)] duration-btn active-dur" data-dur="3">3s</button>
-                        <button class="flex-1 py-2 rounded-lg bg-[var(--card-bg)] border border-[var(--border)] duration-btn" data-dur="5">5s</button>
-                        <button class="flex-1 py-2 rounded-lg bg-[var(--card-bg)] border border-[var(--border)] duration-btn" data-dur="8">8s</button>
+                        <button class="flex-1 py-2 rounded-xl bg-[var(--card-bg)] border border-[var(--border)] duration-btn active-dur hover:bg-[var(--hover-bg)] transition-colors" data-dur="3">3s</button>
+                        <button class="flex-1 py-2 rounded-xl bg-[var(--card-bg)] border border-[var(--border)] duration-btn hover:bg-[var(--hover-bg)] transition-colors" data-dur="5">5s</button>
+                        <button class="flex-1 py-2 rounded-xl bg-[var(--card-bg)] border border-[var(--border)] duration-btn hover:bg-[var(--hover-bg)] transition-colors" data-dur="8">8s</button>
                     </div>
                     <p class="text-sm text-[var(--text-muted)]">An AI image is generated first, then animated into a video loop.</p>
-                    <button id="generateVideoBtn" class="w-full bg-[var(--primary)] text-white px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2"><span class="material-symbols-outlined">movie_edit</span>Generate</button>
+                    <button id="generateVideoBtn" class="w-full bg-[var(--primary)] text-white px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-transform shadow-md"><span class="material-symbols-outlined">movie_edit</span>Generate</button>
                 </div>
                 <div class="md:w-2/3 flex flex-col gap-4 items-center justify-center">
-                    <canvas id="videoPreviewCanvas" width="512" height="512" class="hidden w-full max-w-[400px] rounded-2xl border border-[var(--border)]"></canvas>
-                    <video id="videoPreview" controls loop class="hidden w-full max-w-[400px] rounded-2xl"></video>
-                    <div id="videoGenStatus" class="text-sm text-[var(--text-muted)] text-center"><i class="fas fa-film text-2xl block mb-2"></i>Preview</div>
+                    <canvas id="videoPreviewCanvas" width="512" height="512" class="hidden w-full max-w-[400px] rounded-2xl border border-[var(--card-border)] shadow-sm"></canvas>
+                    <video id="videoPreview" controls loop class="hidden w-full max-w-[400px] rounded-2xl border border-[var(--card-border)] shadow-sm"></video>
+                    <div id="videoGenStatus" class="text-sm text-[var(--text-muted)] text-center"><i class="fas fa-film text-2xl block mb-2 opacity-60"></i>Preview</div>
                     <div id="videoActions" class="flex gap-2 hidden">
-                        <button id="downloadVideoBtn" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white text-sm">Download</button>
-                        <button id="clearVideoBtn" class="px-4 py-2 rounded-full border border-[var(--border)] hover:bg-[var(--hover-bg)] text-sm">Clear</button>
+                        <button id="downloadVideoBtn" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white text-sm hover:scale-105 active:scale-95 transition-transform">Download</button>
+                        <button id="clearVideoBtn" class="px-4 py-2 rounded-full border border-[var(--border)] hover:bg-[var(--hover-bg)] transition-colors text-sm">Clear</button>
                     </div>
                 </div>
             </div>
@@ -1651,7 +1945,7 @@
 
                         <div class="controls">
                             <button id="prevBtn" title="Previous"><i class='bx bx-skip-previous'></i></button>
-                            <button id="playPauseBtn" title="Play/Pause"><i class='bx bx-play' style='color:white;font-size:24px;'></i></button>
+                            <button id="playPauseBtn" title="Play/Pause"><i class='bx bx-play' style='color:white;font-size:26px;'></i></button>
                             <button id="nextBtn" title="Next"><i class='bx bx-skip-next'></i></button>
                         </div>
 
@@ -1688,7 +1982,7 @@
                             </div>
                             <div class="album-art-display-toggle">
                                 <div class="btn-group btn-group-sm" id="albumArtDisplayToggle">
-                                    <button class="btn btn-outline-primary active" data-mode="spin">Spin</button>
+                                    <button class="btn active" data-mode="spin">Spin</button>
                                     <button class="btn btn-outline-primary" data-mode="none">None</button>
                                     <button class="btn btn-outline-primary" data-mode="video">Video</button>
                                 </div>
@@ -1772,7 +2066,7 @@
                                     </div>
                                     <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">
                                         <button class="viz-btn primary-viz" id="vizPlayPause" title="Play / Pause">
-                                            <i class='bx bx-pause' style="font-size:20px;color:#000;" id="vizPlayIcon"></i>
+                                            <i class='bx bx-pause' style="font-size:20px;color:#08080e;" id="vizPlayIcon"></i>
                                         </button>
                                         <button class="viz-btn" id="vizUploadBtn" title="Load Audio File"><i class='bx bx-upload'></i></button>
                                         <input type="file" id="vizFileInput" accept="audio/*" style="display:none;">
@@ -1807,7 +2101,7 @@
     </main>
 
     <!-- BOTTOM NAV (mobile) -->
-    <nav class="md:hidden fixed bottom-4 left-0 right-0 mx-auto flex justify-around items-center h-16 px-4 z-50 bg-[var(--header-bg)] backdrop-blur-md w-[90%] rounded-full border border-[var(--border)] shadow-lg" id="bottomNav">
+    <nav class="md:hidden fixed bottom-4 left-0 right-0 mx-auto flex justify-around items-center h-16 px-4 z-50 bg-[var(--header-bg)] backdrop-blur-xl w-[90%] rounded-full border border-[var(--header-border)] shadow-lg" id="bottomNav">
         <button class="nav-btn active-nav flex flex-col items-center text-[var(--text-primary)]" data-panel="chat"><span class="material-symbols-outlined">chat_bubble</span><span class="text-[10px] font-medium">Chat</span></button>
         <button class="nav-btn flex flex-col items-center text-[var(--text-on-surface-variant)]" data-panel="image"><span class="material-symbols-outlined">image</span><span class="text-[10px]">Image</span></button>
         <button class="nav-btn flex flex-col items-center text-[var(--text-on-surface-variant)]" data-panel="video"><span class="material-symbols-outlined">movie</span><span class="text-[10px]">Video</span></button>
@@ -2060,7 +2354,7 @@
                     this.activeModels.forEach(m => {
                         const div = document.createElement('div');
                         div.className =
-                            'px-3 py-1.5 rounded-full cursor-pointer hover:bg-[var(--hover-bg)] text-sm';
+                            'px-3 py-1.5 rounded-full cursor-pointer hover:bg-[var(--hover-bg)] text-sm transition-colors';
                         div.textContent = m.label;
                         if (m.value === this.selectedModel) div.classList.add('bg-[var(--hover-bg)]',
                             'text-[var(--text-primary)]', 'font-medium');
@@ -2223,7 +2517,7 @@
                     this.attachmentPreviewContainer.classList.remove('hidden');
                     const names = this.pendingAttachments.map(a => a.name).join(', ');
                     this.attachmentPreviewContainer.innerHTML =
-                        `<span class="material-symbols-outlined text-sm">attach_file</span> ${names} <button id="removeAttachment" class="ml-2 text-red-400 hover:text-red-600 font-bold">✕</button>`;
+                        `<span class="material-symbols-outlined text-sm">attach_file</span> ${names} <button id="removeAttachment" class="ml-2 text-red-400 hover:text-red-600 font-bold transition-colors">✕</button>`;
                     const removeBtn = document.getElementById('removeAttachment');
                     if (removeBtn) {
                         removeBtn.addEventListener('click', () => {
@@ -2245,16 +2539,16 @@
                             if (att.type.startsWith('image/')) {
                                 const url = att.previewUrl || URL.createObjectURL(att.file);
                                 attachmentHtml +=
-                                    `<img src="${url}" class="max-w-[200px] w-full rounded-lg mb-2 object-cover" alt="attachment">`;
+                                    `<img src="${url}" class="max-w-[200px] w-full rounded-lg mb-2 object-cover border border-[var(--card-border)] shadow-sm" alt="attachment">`;
                             } else if (att.type === 'application/pdf') {
                                 const textContent = await this.extractPDFText(att.file);
                                 attachmentHtml +=
-                                    `<div class="p-2 rounded-lg bg-[var(--card-bg)] border mb-2 text-sm"><span class="material-symbols-outlined text-sm">picture_as_pdf</span> ${att.name}</div>`;
+                                    `<div class="p-2 rounded-lg bg-[var(--card-bg)] border border-[var(--card-border)] mb-2 text-sm backdrop-blur-sm"><span class="material-symbols-outlined text-sm">picture_as_pdf</span> ${att.name}</div>`;
                                 if (textContent) userContent +=
                                 `\n\n📄 PDF Content:\n${textContent.substring(0, 300)}...`;
                             } else {
                                 attachmentHtml +=
-                                    `<div class="p-2 rounded-lg bg-[var(--card-bg)] border mb-2 text-sm"><span class="material-symbols-outlined text-sm">insert_drive_file</span> ${att.name}</div>`;
+                                    `<div class="p-2 rounded-lg bg-[var(--card-bg)] border border-[var(--card-border)] mb-2 text-sm backdrop-blur-sm"><span class="material-symbols-outlined text-sm">insert_drive_file</span> ${att.name}</div>`;
                             }
                         }
                         this.pendingAttachments = [];
@@ -2338,10 +2632,10 @@
                         '<span class="material-symbols-outlined text-[var(--text-primary)]">smart_toy</span>';
 
                     wrapper.innerHTML = `
-                <div class="w-8 h-8 rounded-full flex-shrink-0 ${isUser ? 'overflow-hidden border border-[var(--border)]' : 'bg-[var(--ai-avatar-bg)] flex items-center justify-center border border-[var(--border)]'}">
+                <div class="w-8 h-8 rounded-full flex-shrink-0 ${isUser ? 'overflow-hidden border border-[var(--border)] ring-2 ring-[var(--primary)]/20' : 'bg-[var(--ai-avatar-bg)] flex items-center justify-center border border-[var(--border)]'}">
                   ${avatarHTML}
                 </div>
-                <div class="${isUser ? 'bg-[var(--primary)] text-white' : 'bg-[var(--card-bg)] border border-[var(--border)]'} p-4 rounded-2xl ${isUser ? 'rounded-tr-sm' : 'rounded-tl-sm'} shadow-sm max-w-full overflow-hidden">
+                <div class="${isUser ? 'bg-gradient-to-r from-[var(--primary)] to-[var(--primary-container)] text-white' : 'bg-[var(--card-bg)] backdrop-blur-sm border border-[var(--card-border)]'} p-4 rounded-2xl ${isUser ? 'rounded-tr-sm' : 'rounded-tl-sm'} shadow-sm max-w-full overflow-hidden">
                   <div class="message-content break-words">${processed}</div>
                   <div class="message-actions">
                     <button data-action="copy" data-msgid="${msgId}" title="Copy">
@@ -2509,7 +2803,7 @@
                     const clearPreview = () => {
                         this.currentGenImageUrl = null;
                         if (this.imageGenPreviewContainer) this.imageGenPreviewContainer.innerHTML =
-                            '<div class="text-center text-[var(--text-muted)]"><i class="fas fa-image text-3xl mb-2 block"></i>Preview</div>';
+                            '<div class="text-center text-[var(--text-muted)]"><i class="fas fa-image text-3xl mb-2 block opacity-60"></i>Preview</div>';
                         if (this.genImageActions) this.genImageActions.classList.add('hidden');
                     };
 
@@ -2682,7 +2976,7 @@
                     }
                     if (this.videoGenStatus) {
                         this.videoGenStatus.style.display = 'block';
-                        this.videoGenStatus.innerHTML = '<i class="fas fa-film text-2xl block mb-2"></i>Preview';
+                        this.videoGenStatus.innerHTML = '<i class="fas fa-film text-2xl block mb-2 opacity-60"></i>Preview';
                     }
                     if (this.videoActions) this.videoActions.classList.add('hidden');
                     this.currentVideoUrl = null;
@@ -2697,9 +2991,9 @@
             // ----- CONSTANTS -----
             const ICON_TRASH = '<i class=\'bx bx-trash\'></i>';
             const ICON_PLUS = '<i class=\'bx bx-plus\'></i>';
-            const ICON_PLAY = '<i class=\'bx bx-play\' style=\'color: white; font-size: 24px;\'></i>';
-            const ICON_PAUSE = '<i class=\'bx bx-pause\' style=\'color: white; font-size: 24px;\'></i>';
-            const ICON_REVISION = '<i class=\'bx bx-revision\' style=\'color: white; font-size: 24px;\'></i>';
+            const ICON_PLAY = '<i class=\'bx bx-play\' style=\'color: white; font-size: 26px;\'></i>';
+            const ICON_PAUSE = '<i class=\'bx bx-pause\' style=\'color: white; font-size: 26px;\'></i>';
+            const ICON_REVISION = '<i class=\'bx bx-revision\' style=\'color: white; font-size: 26px;\'></i>';
             const ICON_PREVIOUS = '<i class=\'bx bx-skip-previous\' ></i>';
             const ICON_NEXT = '<i class=\'bx bx-skip-next\' ></i>';
             const ICON_REPEAT = '<i class=\'bx bx-repeat\' ></i>';
@@ -3105,7 +3399,7 @@
                 if (player) player.setVolume(currentVolume);
 
                 const art = document.getElementById('albumArt');
-                art.style.transition = 'opacity 0.5s';
+                art.style.transition = 'opacity 0.6s';
                 art.style.opacity = '0';
 
                 if (albumArtDisplayMode !== 'video') {
@@ -3126,7 +3420,7 @@
                                 } else {
                                     art.classList.remove('rotate', 'rotate-paused');
                                 }
-                            }, 500);
+                            }, 600);
                         };
                     }, 500);
                 } else {
@@ -3252,7 +3546,6 @@
                     } else {
                         playPauseBtn.innerHTML = ICON_REVISION;
                     }
-                    // Clear SponsorBlock interval when video ends
                     if (sponsorCheckInterval) {
                         clearInterval(sponsorCheckInterval);
                         sponsorCheckInterval = null;
@@ -3267,7 +3560,6 @@
                     if (albumArtSpinEnabled) { art.classList.remove('rotate-paused');
                         art.classList.add('rotate'); }
                 } else if (event.data === 5) {
-                    // Cued state - clear interval
                     if (sponsorCheckInterval) {
                         clearInterval(sponsorCheckInterval);
                         sponsorCheckInterval = null;
@@ -4489,7 +4781,7 @@
                 createVizGenerativeAudio();
                 vizIsPlaying = true;
                 vizPlayIcon.className = 'bx bx-pause';
-                vizPlayIcon.style.color = '#000';
+                vizPlayIcon.style.color = '#08080e';
                 vizPlayPause.classList.remove('paused');
                 vizOverlay.classList.add('hidden');
             }
@@ -4509,7 +4801,7 @@
                     }
                     vizIsPlaying = true;
                     vizPlayIcon.className = 'bx bx-pause';
-                    vizPlayIcon.style.color = '#000';
+                    vizPlayIcon.style.color = '#08080e';
                     vizPlayPause.classList.remove('paused');
                     vizOverlay.classList.add('hidden');
                 }
@@ -4520,7 +4812,7 @@
                 createVizGenerativeAudio();
                 vizIsPlaying = true;
                 vizPlayIcon.className = 'bx bx-pause';
-                vizPlayIcon.style.color = '#000';
+                vizPlayIcon.style.color = '#08080e';
                 vizPlayPause.classList.remove('paused');
                 vizOverlay.classList.add('hidden');
                 initVizParticles();
@@ -4925,7 +5217,7 @@
                             vizAudioCtx?.resume();
                             vizIsPlaying = true;
                             vizPlayIcon.className = 'bx bx-pause';
-                            vizPlayIcon.style.color = '#000';
+                            vizPlayIcon.style.color = '#08080e';
                             vizPlayPause.classList.remove('paused');
                             vizOverlay.classList.add('hidden');
                             initVizParticles();
