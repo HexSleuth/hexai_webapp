@@ -135,7 +135,7 @@
     </script>
 
     <style>
-        /* -------- THEME SYSTEM (enhanced) -------- */
+        /* -------- THEME SYSTEM -------- */
         :root {
             --bg-surface: #f5f7fa;
             --header-bg: rgba(245, 247, 250, 0.75);
@@ -228,7 +228,6 @@
             transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
                 color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         body {
             cursor: default !important;
         }
@@ -240,12 +239,10 @@
             display: inline-block;
             vertical-align: middle;
         }
-
         .material-symbols-outlined.filled {
             font-variation-settings: 'FILL' 1;
         }
 
-        /* -------- CUSTOM SCROLLBAR -------- */
         ::-webkit-scrollbar {
             width: 5px;
             height: 5px;
@@ -266,7 +263,6 @@
             scrollbar-color: var(--text-muted) transparent;
         }
 
-        /* -------- CHAT INPUT -------- */
         #chatInput {
             min-height: 42px;
             max-height: 120px;
@@ -274,7 +270,6 @@
             background: transparent;
         }
 
-        /* -------- MESSAGES -------- */
         .message-wrapper .message-actions {
             display: flex;
             gap: 4px;
@@ -315,7 +310,6 @@
             background: rgba(255, 255, 255, 0.15);
         }
 
-        /* -------- EMOJI PICKER -------- */
         .emoji-picker {
             position: absolute;
             bottom: 76px;
@@ -354,7 +348,6 @@
             transform: scale(1.12);
         }
 
-        /* -------- TOAST -------- */
         #toast {
             position: fixed;
             bottom: 28px;
@@ -383,7 +376,6 @@
             transform: translateY(0) scale(1);
         }
 
-        /* -------- IMAGE PREVIEW -------- */
         .gen-preview-img {
             max-width: 100%;
             max-height: 400px;
@@ -392,7 +384,6 @@
             box-shadow: var(--shadow-card);
         }
 
-        /* -------- SPINNER -------- */
         .refresh-spinner {
             display: inline-block;
             width: 18px;
@@ -409,13 +400,11 @@
             }
         }
 
-        /* -------- NAV -------- */
         .nav-btn.active-nav {
             color: var(--text-primary) !important;
             background: var(--hover-bg) !important;
         }
 
-        /* -------- RESPONSIVE TOAST -------- */
         @media (max-width: 768px) {
             #toast {
                 bottom: 100px;
@@ -434,10 +423,7 @@
             }
         }
 
-        /* ================================================================
-               YT MUSIC PLAYER – enhanced UI
-               ================================================================ */
-
+        /* -------- YT MUSIC PLAYER -------- */
         #musicPanel .yt-music-container {
             width: 100%;
             max-width: 1040px;
@@ -461,7 +447,6 @@
             min-width: 260px;
         }
 
-        /* -------- PLAYER CARD -------- */
         #musicPanel .yt-player-card {
             background: var(--card-bg);
             backdrop-filter: blur(16px);
@@ -557,7 +542,6 @@
             letter-spacing: 0.02em;
         }
 
-        /* -------- CONTROLS -------- */
         #musicPanel .yt-player-card .controls {
             display: flex;
             justify-content: center;
@@ -598,7 +582,6 @@
             height: 60px;
         }
 
-        /* -------- PROGRESS -------- */
         #musicPanel .yt-player-card .progress-container {
             width: 100%;
             display: flex;
@@ -656,7 +639,6 @@
             letter-spacing: 0.02em;
         }
 
-        /* -------- VOLUME -------- */
         #musicPanel .yt-player-card .volume-container {
             display: flex;
             align-items: center;
@@ -736,7 +718,6 @@
             background: transparent;
         }
 
-        /* -------- EXTRA CONTROLS -------- */
         #musicPanel .yt-player-card .extra-controls {
             display: flex;
             justify-content: center;
@@ -820,7 +801,6 @@
             box-shadow: 0 4px 16px var(--glow-primary);
         }
 
-        /* -------- PLAYLIST / LYRICS / VISUALIZER -------- */
         #musicPanel .yt-music-row .playlist-col {
             flex: 1.6;
             min-width: 300px;
@@ -876,11 +856,7 @@
             border-color: var(--primary);
             color: var(--primary);
         }
-        #musicPanel .playlist-toolbar .btn-outline-primary:hover {
-            background: var(--hover-bg);
-        }
 
-        /* -------- PLAYLIST SEARCH -------- */
         #musicPanel #playlistSearchContainer {
             margin-bottom: 10px;
         }
@@ -920,7 +896,6 @@
             background: var(--hover-bg);
         }
 
-        /* -------- SONG LIST -------- */
         #musicPanel #songListContainer {
             flex: 1;
             overflow-y: auto;
@@ -1022,7 +997,6 @@
             cursor: grabbing;
         }
 
-        /* -------- LYRICS -------- */
         #musicPanel #lyricsContainer {
             background: var(--card-bg);
             backdrop-filter: blur(16px);
@@ -1138,7 +1112,6 @@
             opacity: 0.85;
         }
 
-        /* -------- YOUTUBE SEARCH -------- */
         #musicPanel #youtubeSearchSection {
             margin-top: 10px;
         }
@@ -1255,7 +1228,6 @@
             font-size: 14px;
         }
 
-        /* -------- PLAYLIST IMPORT -------- */
         #musicPanel .playlist-import {
             margin-top: 10px;
             display: flex;
@@ -1301,7 +1273,6 @@
             transform: none !important;
         }
 
-        /* -------- ALBUM ART TOGGLE -------- */
         #musicPanel .album-art-display-toggle .btn-group .btn {
             font-size: 11px;
             padding: 3px 12px;
@@ -1327,7 +1298,7 @@
             color: var(--primary);
         }
 
-        /* -------- VISUALIZER (enhanced) -------- */
+        /* -------- VISUALIZER -------- */
         #musicPanel #visualizerContainer {
             display: none;
             flex: 1;
@@ -1560,7 +1531,6 @@
             opacity: 1;
         }
 
-        /* -------- RESPONSIVE TWEAKS -------- */
         @media (max-width: 768px) {
             #musicPanel .yt-music-row>div {
                 flex: 1 1 100%;
@@ -1633,7 +1603,6 @@
             }
         }
 
-        /* -------- DARK MODE OVERRIDES -------- */
         .dark #musicPanel .yt-player-card {
             background: rgba(33, 33, 33, 0.8);
             border-color: rgba(255, 255, 255, 0.06);
@@ -1684,7 +1653,6 @@
             background: rgba(255, 255, 255, 0.08);
         }
 
-        /* -------- ANIMATION -------- */
         @keyframes rotate {
             from {
                 transform: rotate(0deg);
@@ -1694,7 +1662,6 @@
             }
         }
 
-        /* -------- SETTINGS: translation service -------- */
         #translationServiceSelect {
             background: var(--input-bg);
             border: 1px solid var(--border);
@@ -1709,7 +1676,6 @@
             border-color: var(--primary);
         }
 
-        /* -------- MISC -------- */
         #musicPanel .yt-music-container .d-none {
             display: none !important;
         }
@@ -1746,14 +1712,14 @@
 
 <body class="h-screen flex flex-col overflow-hidden selection:bg-[var(--sel-bg)] selection:text-[var(--sel-text)]" id="appBody">
 
-    <!-- Ambient blobs (enhanced) -->
+    <!-- Ambient blobs -->
     <div class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
         <div class="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] rounded-full bg-[var(--amb-blob1)] blur-[140px] opacity-60 animate-float"></div>
         <div class="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-[var(--amb-blob2)] blur-[160px] opacity-50 animate-float" style="animation-delay:2s"></div>
         <div class="absolute top-[40%] left-[20%] w-[30vw] h-[30vw] rounded-full bg-[var(--amb-blob3)] blur-[120px] opacity-40 animate-float" style="animation-delay:4s"></div>
     </div>
 
-    <!-- TOP BAR (enhanced) -->
+    <!-- TOP BAR -->
     <header class="fixed top-0 w-full z-50 bg-[var(--header-bg)] backdrop-blur-xl border-b border-[var(--header-border)] flex justify-between items-center px-4 h-16 shadow-sm">
         <div class="flex items-center gap-3">
             <span class="material-symbols-outlined text-[var(--text-primary)] animate-pulse-glow" style="font-variation-settings:'FILL'1;">token</span>
@@ -1782,7 +1748,7 @@
         </div>
     </header>
 
-    <!-- SETTINGS OVERLAY (enhanced) -->
+    <!-- SETTINGS OVERLAY -->
     <div id="settingsOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-md z-[100] flex items-center justify-center hidden">
         <div class="bg-[var(--card-bg)] backdrop-blur-xl border border-[var(--card-border)] rounded-2xl p-6 w-[90%] max-w-md shadow-2xl animate-in fade-in zoom-in duration-300">
             <h3 class="text-lg font-semibold font-display mb-4">Settings</h3>
@@ -1924,14 +1890,11 @@
             </div>
         </div>
 
-        <!-- MUSIC PANEL – YouTube Music Player + Visualizer + SponsorBlock -->
+        <!-- MUSIC PANEL -->
         <div class="panel hidden flex-1 p-2 md:p-4 overflow-y-auto h-full" id="musicPanel">
             <div class="yt-music-container" id="ytMusicContainer">
 
-                <!-- Row 1: Player + Playlist/Lyrics/Visualizer -->
                 <div class="yt-music-row">
-
-                    <!-- Player Column -->
                     <div class="yt-player-card" id="playerCard">
                         <div class="album-art-container">
                             <img id="albumArt" src="https://via.placeholder.com/300" alt="Album Art" />
@@ -1987,7 +1950,6 @@
                                     <button class="btn btn-outline-primary" data-mode="video">Video</button>
                                 </div>
                             </div>
-                            <!-- SponsorBlock Toggle -->
                             <div class="sponsor-toggle">
                                 <span>Skip Sponsors</span>
                                 <label class="switch">
@@ -2003,7 +1965,6 @@
                         </div>
                     </div>
 
-                    <!-- Playlist / Lyrics / Visualizer Column -->
                     <div class="playlist-col">
                         <div class="playlist-card">
                             <div class="playlist-toolbar">
@@ -2012,7 +1973,6 @@
                                 <button class="btn btn-outline-primary" id="showVisualizerBtn"><i class='bx bx-bar-chart-alt-2'></i> <span class="btn-text">Visualizer</span></button>
                             </div>
 
-                            <!-- Playlist Content -->
                             <div id="playlistContent">
                                 <div id="playlistSearchContainer">
                                     <div class="input-group">
@@ -2043,7 +2003,6 @@
                                 </div>
                             </div>
 
-                            <!-- Visualizer Content -->
                             <div id="visualizerContainer">
                                 <canvas id="vizCanvas"></canvas>
                                 <div class="viz-overlay" id="vizOverlay">
@@ -2080,7 +2039,6 @@
                     </div>
                 </div>
 
-                <!-- Row 2: Lyrics Container (full width) -->
                 <div id="lyricsContainer">
                     <div id="lyricsHeader">
                         <h6 id="lyricsTitle">Lyrics</h6>
@@ -2383,15 +2341,15 @@
                         }
                     });
                     this.modelBadgeBtn.addEventListener('click', () => this.modelDropdown.classList.toggle(
-                    'hidden'));
+                        'hidden'));
                     document.addEventListener('click', (e) => {
                         if (!this.modelBadgeBtn.contains(e.target)) this.modelDropdown.classList.add(
-                        'hidden');
+                            'hidden');
                     });
                     this.settingsBtn.addEventListener('click', () => this.settingsOverlay.classList.remove(
-                    'hidden'));
+                        'hidden'));
                     this.settingsClose.addEventListener('click', () => this.settingsOverlay.classList.add(
-                    'hidden'));
+                        'hidden'));
                     this.saveSettingsBtn.addEventListener('click', () => this.saveSettings());
                     this.refreshModelsBtn.addEventListener('click', () => this.fetchOpenRouterModels());
                     this.attachBtn.addEventListener('click', () => this.fileInput.click());
@@ -2482,14 +2440,14 @@
                             const end = this.chatInput.selectionEnd;
                             const text = this.chatInput.value;
                             this.chatInput.value = text.substring(0, start) + emoji + text.substring(
-                            end);
+                                end);
                             this.chatInput.focus();
                             this.chatInput.selectionStart = this.chatInput.selectionEnd = start +
                                 emoji.length;
                             this.emojiPicker.classList.remove('open');
                             this.chatInput.style.height = 'auto';
                             this.chatInput.style.height = Math.min(this.chatInput.scrollHeight,
-                            120) + 'px';
+                                120) + 'px';
                         });
                         grid.appendChild(span);
                     });
@@ -2545,7 +2503,7 @@
                                 attachmentHtml +=
                                     `<div class="p-2 rounded-lg bg-[var(--card-bg)] border border-[var(--card-border)] mb-2 text-sm backdrop-blur-sm"><span class="material-symbols-outlined text-sm">picture_as_pdf</span> ${att.name}</div>`;
                                 if (textContent) userContent +=
-                                `\n\n📄 PDF Content:\n${textContent.substring(0, 300)}...`;
+                                    `\n\n📄 PDF Content:\n${textContent.substring(0, 300)}...`;
                             } else {
                                 attachmentHtml +=
                                     `<div class="p-2 rounded-lg bg-[var(--card-bg)] border border-[var(--card-border)] mb-2 text-sm backdrop-blur-sm"><span class="material-symbols-outlined text-sm">insert_drive_file</span> ${att.name}</div>`;
@@ -2883,7 +2841,7 @@
                                 if (this.videoGenStatus) this.videoGenStatus.innerHTML =
                                     '<i class="fas fa-spinner fa-pulse"></i> Animating...';
                                 if (this.videoPreviewCanvas) this.videoPreviewCanvas.style.display =
-                                'block';
+                                    'block';
                                 this.animateImage(img, this.videoDuration, 24);
                                 showToast('Animating scene...', 'fa-video');
                             };
@@ -2988,7 +2946,6 @@
             //  YOUTUBE MUSIC PLAYER – full integration
             // ================================================================
 
-            // ----- CONSTANTS -----
             const ICON_TRASH = '<i class=\'bx bx-trash\'></i>';
             const ICON_PLUS = '<i class=\'bx bx-plus\'></i>';
             const ICON_PLAY = '<i class=\'bx bx-play\' style=\'color: white; font-size: 26px;\'></i>';
@@ -3000,7 +2957,6 @@
 
             const CORS_PROXY_URL = 'https://api.codetabs.com/v1/proxy?quest=';
 
-            // ----- STATE -----
             let player = null;
             let playing = false;
             let songUnavailable = false;
@@ -3030,12 +2986,10 @@
             let currentLang = 'en';
             let translationService = localStorage.getItem('translationService') || 'auto';
 
-            // SponsorBlock state
             let sponsorSegments = [];
             let skippedSegments = new Set();
             let sponsorCheckInterval = null;
 
-            // ----- TRANSLATIONS (minimal) -----
             const translations = {
                 en: {
                     addToPlaylist: 'Add to Playlist',
@@ -3095,7 +3049,6 @@
                 return translations[currentLang]?.[key] || key;
             }
 
-            // ----- DOM refs -----
             const musicPanel = document.getElementById('musicPanel');
             const albumArt = document.getElementById('albumArt');
             const videoPlayerInAlbumArt = document.getElementById('videoPlayerInAlbumArt');
@@ -3138,7 +3091,6 @@
             const importPlaylistBtn = document.getElementById('importPlaylistBtn');
             const sponsorBlockToggle = document.getElementById('sponsorBlockToggle');
 
-            // Visualizer DOM refs
             const vizContainer = document.getElementById('visualizerContainer');
             const vizCanvas = document.getElementById('vizCanvas');
             const vizOverlay = document.getElementById('vizOverlay');
@@ -3156,7 +3108,6 @@
             const vizToast = document.getElementById('vizToast');
             const showVisualizerBtn = document.getElementById('showVisualizerBtn');
 
-            // ----- HELPERS -----
             function formatTime(seconds) {
                 if (!seconds || seconds < 0) return '0:00';
                 const mins = Math.floor(seconds / 60);
@@ -3190,10 +3141,6 @@
                 return cleaned;
             }
 
-            // ================================================================
-            //  SPONSORBLOCK INTEGRATION
-            // ================================================================
-
             async function fetchSponsorTimes(videoId) {
                 try {
                     const url = `https://sponsor.ajay.app/api/getVideoSponsorTimes?videoID=${videoId}`;
@@ -3207,7 +3154,6 @@
                 }
             }
 
-            // ----- PLAYLIST MANAGEMENT -----
             function loadPlaylist() {
                 const stored = localStorage.getItem('youtubeMusicPlaylist');
                 if (stored) {
@@ -3331,7 +3277,7 @@
                         if (e.target.closest('.drag-handle') || e.target.closest('.remove-song-btn'))
                             return;
                         document.querySelectorAll('#songList li').forEach(el => el.classList.remove(
-                        'selected'));
+                            'selected'));
                         li.classList.add('selected');
                         actualSelectedVideoId = song.videoId;
                         loadNewVideo(song.videoId, song.albumArt, song);
@@ -3341,7 +3287,6 @@
                     songList.appendChild(li);
                 });
 
-                // Auto-select first only if no player yet
                 if (!player && songsToRender.length > 0) {
                     const first = songList.querySelector('li');
                     if (first) {
@@ -3362,7 +3307,6 @@
                 }
             }
 
-            // ----- REMOVE SONG -----
             function removeSong(videoIdToRemove) {
                 let currentPlaying = null;
                 try {
@@ -3394,7 +3338,6 @@
                 }
             }
 
-            // ----- LOAD / PLAY VIDEO -----
             function loadNewVideo(videoId, albumArtUrl, songObject = null) {
                 if (player) player.setVolume(currentVolume);
 
@@ -3466,7 +3409,7 @@
                         player = new YT.Player('player', {
                             videoId: videoId,
                             playerVars: { autoplay: 1, controls: 0, modestbranding: 1, showinfo: 0,
-                            rel: 0 },
+                                rel: 0 },
                             events: {
                                 onReady: (e) => {
                                     e.target.setVolume(currentVolume);
@@ -3494,7 +3437,6 @@
                 playPauseBtn.innerHTML = ICON_PAUSE;
                 updateProgressBar();
 
-                // ----- SponsorBlock integration -----
                 if (sponsorCheckInterval) {
                     clearInterval(sponsorCheckInterval);
                     sponsorCheckInterval = null;
@@ -3521,7 +3463,6 @@
                 });
             }
 
-            // ----- PLAYER STATE -----
             function handlePlayerStateChange(event) {
                 const art = document.getElementById('albumArt');
                 const autoPlay = autoPlayToggle && autoPlayToggle.checked;
@@ -3596,7 +3537,6 @@
                 updateCountdown();
             }
 
-            // ----- PROGRESS -----
             function updateProgressBar() {
                 if (progressInterval) clearInterval(progressInterval);
                 progressInterval = setInterval(() => {
@@ -3626,7 +3566,6 @@
                 }, 1000);
             }
 
-            // ----- SEEK -----
             let wasPlaying = false;
             progressBar.addEventListener('mousedown', (e) => {
                 if (songUnavailable) return;
@@ -3662,7 +3601,6 @@
                 }
             }
 
-            // ----- VOLUME -----
             function updateVolumeUI(val) {
                 const container = document.querySelector('.volume-bar-container');
                 if (!container || !volumeProgress || !volumeThumb) return;
@@ -3685,7 +3623,7 @@
                 if (e.target === volumeControl || e.target === volumeThumb) return;
                 const rect = this.getBoundingClientRect();
                 const pct = Math.max(0, Math.min(100, Math.round(((e.clientX - rect.left) / rect.width) *
-                100)));
+                    100)));
                 volumeControl.value = pct;
                 currentVolume = pct;
                 localStorage.setItem('volumeLevel', pct);
@@ -3705,7 +3643,6 @@
                 updateVolumeUI(val);
             });
 
-            // ----- PREV / NEXT -----
             function playPreviousSong() {
                 const items = document.querySelectorAll("#songList li:not(.empty-playlist)");
                 if (items.length === 0) return;
@@ -3769,7 +3706,6 @@
                 this.classList.toggle('active', repeatSong);
             });
 
-            // ----- ALBUM ART DISPLAY MODE -----
             albumArtDisplayToggle?.querySelectorAll('.btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const mode = this.dataset.mode;
@@ -3786,7 +3722,7 @@
                 const vidContainer = document.getElementById('videoPlayerInAlbumArt');
                 if (!art || !vidContainer) return;
                 document.body.classList.remove('album-art-spin-mode', 'album-art-none-mode',
-                'album-art-video-mode');
+                    'album-art-video-mode');
                 const curId = player ? player.getVideoData?.()?.video_id : selectedVideoId;
                 const curSong = playlist.find(s => s.videoId === curId);
                 const curUrl = curSong ? curSong.albumArt : art.src;
@@ -3855,7 +3791,6 @@
                 }
             }
 
-            // ----- LYRICS -----
             function parseLrc(text) {
                 const lines = [];
                 const regex = /\[(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?\](.*)/;
@@ -3945,7 +3880,6 @@
                 return { artist: extractedArtist, track: extractedTrack };
             }
 
-            // ----- TRANSLATION using OpenRouter or Gemini -----
             async function translateViaOpenRouter(text, targetLang) {
                 const apiKey = localStorage.getItem('openrouter_key') || '';
                 if (!apiKey) throw new Error('OpenRouter API key missing');
@@ -4160,7 +4094,7 @@
                             const el = lyricsText;
                             const children = el.children;
                             for (let i = 0; i < children.length; i++) children[i].classList.remove(
-                            'highlight');
+                                'highlight');
                             const toHighlight = el.querySelector(`.lrc-line[data-index="${found}"]`);
                             if (toHighlight) {
                                 toHighlight.classList.add('highlight');
@@ -4184,7 +4118,6 @@
                 startLyricsSync();
             }
 
-            // ----- YouTube Search -----
             const searchCache = JSON.parse(localStorage.getItem('ytSearchCache') || '{}');
             const CACHE_EXPIRY = 3600000;
 
@@ -4282,7 +4215,6 @@
                 if (playlist.length === 1) loadNewVideo(vid, art, song);
             }
 
-            // ----- IMPORT PLAYLIST FROM YOUTUBE MUSIC -----
             async function importPlaylistFromUrl() {
                 const input = playlistImportInput.value.trim();
                 if (!input) {
@@ -4350,11 +4282,15 @@
 
             importPlaylistBtn?.addEventListener('click', importPlaylistFromUrl);
 
-            // ----- INIT YT PLAYER -----
             window.onYouTubeIframeAPIReady = function() {
                 if (playlist.length === 0) return;
                 const first = playlist[0];
                 selectedVideoId = first.videoId;
+                if (player && typeof player.loadVideoById === 'function') {
+                    player.loadVideoById(selectedVideoId);
+                    player.setVolume(currentVolume);
+                    return;
+                }
                 player = new YT.Player('player', {
                     videoId: selectedVideoId,
                     playerVars: { autoplay: 0, controls: 0, modestbranding: 1, showinfo: 0, rel: 0, fs: 0,
@@ -4370,7 +4306,6 @@
                 });
             };
 
-            // ----- PLAYLIST SEARCH -----
             searchPlaylistInput?.addEventListener('input', function() {
                 const term = this.value.toLowerCase();
                 clearPlaylistSearchBtn?.classList.toggle('d-none', term.trim().length === 0);
@@ -4388,11 +4323,9 @@
                 searchPlaylistInput.focus();
             });
 
-            // ----- YT SEARCH EVENTS -----
             youtubeSearchBtn?.addEventListener('click', searchYouTube);
             youtubeSearchInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') searchYouTube(); });
 
-            // ----- TOGGLE LYRICS / PLAYLIST / VISUALIZER -----
             function showPlaylistView() {
                 document.getElementById('playlistContent').style.display = 'block';
                 document.getElementById('visualizerContainer').classList.remove('active');
@@ -4452,10 +4385,8 @@
             showLyricsBtn?.addEventListener('click', showLyricsView);
             showVisualizerBtn?.addEventListener('click', showVisualizerView);
 
-            // Default to playlist view
             showPlaylistView();
 
-            // ----- LYRICS CONTROLS -----
             toggleSyncBtn?.addEventListener('click', () => {
                 autoSyncEnabled = !autoSyncEnabled;
                 toggleSyncBtn.textContent = autoSyncEnabled ? 'Auto-Sync: ON' : 'Auto-Sync: OFF';
@@ -4587,7 +4518,6 @@
                 const duration = 99999;
                 const now = ctx.currentTime;
 
-                // Sub bass
                 const bassOsc = ctx.createOscillator();
                 bassOsc.type = 'sine';
                 bassOsc.frequency.value = 41;
@@ -4613,7 +4543,6 @@
                 bassLFO.start(now);
                 bassLFO.stop(now + duration);
 
-                // Pad
                 const pad1 = ctx.createOscillator();
                 pad1.type = 'sawtooth';
                 pad1.frequency.value = 110;
@@ -4645,7 +4574,6 @@
                 padLFO.start(now);
                 padLFO.stop(now + duration);
 
-                // Arpeggio
                 const arpNotes = [220, 277, 330, 415, 440, 554, 660, 830];
                 let arpIdx = 0;
                 const scheduleArp = () => {
@@ -4677,7 +4605,6 @@
                     scheduleArp();
                 }, 180);
 
-                // Hi-hat
                 const noiseBufSize = vizAudioCtx.sampleRate * 0.05;
                 const noiseBuf = vizAudioCtx.createBuffer(1, noiseBufSize, vizAudioCtx.sampleRate);
                 const nd = noiseBuf.getChannelData(0);
@@ -4819,7 +4746,6 @@
                 if (!vizAnimId) animateViz(0);
             }
 
-            // --- Visualizer draw modes ---
             function drawVizBars(w, h) {
                 if (!vizFreqData) return;
                 const barCount = 80;
@@ -5193,7 +5119,6 @@
                 vizToastTimer = setTimeout(() => { vizToast.classList.remove('show'); }, 2000);
             }
 
-            // ----- Visualizer event listeners -----
             vizOverlay.addEventListener('click', () => { startVizAudio(); });
             vizOverlay.addEventListener('touchend', (e) => { e.preventDefault();
                 startVizAudio(); });
@@ -5242,7 +5167,6 @@
                 }
             });
 
-            // Keyboard shortcuts for visualizer
             document.addEventListener('keydown', (e) => {
                 if (!vizContainer.classList.contains('active')) return;
                 switch (e.key.toLowerCase()) {
@@ -5279,7 +5203,6 @@
                 }
             });
 
-            // Touch swipe on visualizer
             let vizTouchX = 0,
                 vizTouchY = 0;
             vizContainer.addEventListener('touchstart', (e) => {
@@ -5297,14 +5220,11 @@
                 }
             });
 
-            // ----- Init visualizer -----
             function initViz() {
                 resizeVizCanvas();
                 initVizParticles();
                 vizModeLabel.textContent = vizModeNames[vizMode];
-                // Start idle animation
                 animateViz(0);
-                // Try auto-start
                 setTimeout(() => {
                     ensureVizAudio();
                     if (vizAudioCtx.state === 'running') {
@@ -5313,7 +5233,6 @@
                 }, 500);
             }
 
-            // Listen for resize
             window.addEventListener('resize', () => {
                 clearTimeout(vizResizeTimer);
                 vizResizeTimer = setTimeout(() => {
@@ -5322,7 +5241,6 @@
                 }, 150);
             });
 
-            // Cleanup
             window.addEventListener('beforeunload', () => {
                 if (vizAnimId) { cancelAnimationFrame(vizAnimId);
                     vizAnimId = null; }
@@ -5332,10 +5250,8 @@
                 }
             });
 
-            // ----- Start visualizer -----
             initViz();
 
-            // ----- INIT YT MUSIC -----
             function initYTMusic() {
                 loadPlaylist();
                 updateVolumeUI(currentVolume);
@@ -5348,13 +5264,11 @@
                     const saved = localStorage.getItem('translationService') || 'auto';
                     transServiceSelect.value = saved;
                 }
-                // Ensure visualizer is hidden initially
                 document.getElementById('visualizerContainer').style.display = 'none';
                 document.getElementById('visualizerContainer').classList.remove('active');
                 showPlaylistView();
             }
 
-            // ----- START -----
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', initYTMusic);
             } else {
@@ -5373,9 +5287,6 @@
                 loadLyricsFor
             };
 
-            // ================================================================
-            //  BOOT HEX AI
-            // ================================================================
             window.hexApp = new HexAI();
 
             const ytKeyInput = document.getElementById('ytApiKeyInput');
