@@ -3869,7 +3869,7 @@
             async function importPlaylistFromUrl(overrideUrl = null) {
                 let input = overrideUrl || playlistImportInput.value.trim();
                 if (!input) {
-                    showToast('https://music.youtube.com/playlist?list=PLw-ydWKI15cpWj-H499Ui_2UdCubVNAcK&si=fSb-cyPbvym_nj9v', 'fa-exclamation-circle');
+                    showToast('Please enter a YouTube Music playlist URL or ID.', 'fa-exclamation-circle');
                     return;
                 }
                 let playlistId = input;
