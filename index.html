@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <title>HEX AI · Studio with YouTube Music & Visualizer</title>
+    <title>HEX AI · Liquid Studio with YouTube Music & Visualizer</title>
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -110,6 +109,9 @@
                         'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
                         'shimmer': 'shimmer 2s linear infinite',
                         'wave': 'wave 1.5s ease-in-out infinite',
+                        'liquid': 'liquid 8s ease-in-out infinite',
+                        'liquid-slow': 'liquid 12s ease-in-out infinite',
+                        'ripple': 'ripple 3s ease-in-out infinite',
                     },
                     keyframes: {
                         float: {
@@ -128,6 +130,17 @@
                             '0%, 100%': { transform: 'scaleY(0.3)' },
                             '50%': { transform: 'scaleY(1)' },
                         },
+                        liquid: {
+                            '0%, 100%': { borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%' },
+                            '25%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
+                            '50%': { borderRadius: '40% 60% 70% 30% / 50% 60% 40% 50%' },
+                            '75%': { borderRadius: '30% 70% 50% 50% / 40% 40% 60% 60%' },
+                        },
+                        ripple: {
+                            '0%': { transform: 'scale(0.8)', opacity: '0.8' },
+                            '50%': { transform: 'scale(1.2)', opacity: '0.4' },
+                            '100%': { transform: 'scale(1.6)', opacity: '0' },
+                        },
                     },
                 },
             },
@@ -135,85 +148,97 @@
     </script>
 
     <style>
-        /* -------- THEME SYSTEM -------- */
+        /* -------- LIQUID THEME SYSTEM -------- */
         :root {
             --bg-surface: #f5f7fa;
-            --header-bg: rgba(245, 247, 250, 0.75);
-            --header-border: rgba(0, 0, 0, 0.06);
+            --header-bg: rgba(245, 247, 250, 0.55);
+            --header-border: rgba(0, 0, 0, 0.04);
             --text-on-surface: #16181a;
             --text-on-surface-variant: #3f404c;
             --text-primary: #1a2b8c;
-            --text-muted: rgba(63, 64, 76, 0.5);
-            --hover-bg: rgba(26, 43, 140, 0.08);
+            --text-muted: rgba(63, 64, 76, 0.4);
+            --hover-bg: rgba(26, 43, 140, 0.06);
             --primary: #1a2b8c;
             --primary-container: #3f51b5;
             --secondary: #006876;
             --tertiary: #004e11;
             --status-green: #34A853;
-            --status-green-glow: rgba(52, 168, 83, 0.5);
+            --status-green-glow: rgba(52, 168, 83, 0.4);
             --avatar-bg: #dddfe2;
-            --border: rgba(0, 0, 0, 0.08);
-            --card-bg: rgba(255, 255, 255, 0.7);
-            --card-border: rgba(0, 0, 0, 0.06);
-            --input-bg: rgba(245, 247, 250, 0.8);
-            --typing-dot: rgba(26, 43, 140, 0.4);
-            --sel-bg: rgba(26, 43, 140, 0.15);
+            --border: rgba(0, 0, 0, 0.05);
+            --card-bg: rgba(255, 255, 255, 0.5);
+            --card-border: rgba(0, 0, 0, 0.04);
+            --input-bg: rgba(245, 247, 250, 0.6);
+            --typing-dot: rgba(26, 43, 140, 0.3);
+            --sel-bg: rgba(26, 43, 140, 0.12);
             --sel-text: #16181a;
-            --amb-blob1: rgba(26, 43, 140, 0.06);
-            --amb-blob2: rgba(88, 230, 255, 0.04);
-            --amb-blob3: rgba(131, 232, 129, 0.03);
-            --ai-avatar-bg: rgba(26, 43, 140, 0.1);
+            --amb-blob1: rgba(26, 43, 140, 0.04);
+            --amb-blob2: rgba(88, 230, 255, 0.03);
+            --amb-blob3: rgba(131, 232, 129, 0.02);
+            --ai-avatar-bg: rgba(26, 43, 140, 0.06);
             --toast-bg: #1a2b8c;
             --viz-accent: #00e5ff;
-            --viz-glow: rgba(0, 229, 255, 0.35);
+            --viz-glow: rgba(0, 229, 255, 0.25);
             --viz-bg: #08080e;
             --viz-surface: #0e0e18;
-            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.10);
-            --glow-primary: rgba(26, 43, 140, 0.15);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.08);
+            --glow-primary: rgba(26, 43, 140, 0.08);
             --gradient-primary: linear-gradient(135deg, #1a2b8c, #3f51b5);
             --gradient-accent: linear-gradient(135deg, #00e5ff, #58e6ff);
             --gradient-warm: linear-gradient(135deg, #83e881, #58e6ff);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --liquid-1: rgba(26, 43, 140, 0.03);
+            --liquid-2: rgba(88, 230, 255, 0.02);
+            --liquid-3: rgba(131, 232, 129, 0.02);
+            --liquid-4: rgba(255, 200, 50, 0.02);
+            --radius-liquid: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            --radius-liquid-2: 60% 40% 30% 70% / 60% 30% 70% 40%;
         }
 
         .dark {
             --bg-surface: #0f0f0f;
-            --header-bg: rgba(15, 15, 15, 0.75);
-            --header-border: rgba(255, 255, 255, 0.06);
+            --header-bg: rgba(15, 15, 15, 0.55);
+            --header-border: rgba(255, 255, 255, 0.04);
             --text-on-surface: #e1e3e1;
             --text-on-surface-variant: #c4c6c8;
             --text-primary: #bac3ff;
-            --text-muted: rgba(196, 198, 200, 0.45);
-            --hover-bg: rgba(186, 195, 255, 0.10);
+            --text-muted: rgba(196, 198, 200, 0.35);
+            --hover-bg: rgba(186, 195, 255, 0.06);
             --primary: #bac3ff;
             --primary-container: #293ca0;
             --secondary: #58e6ff;
             --tertiary: #83e881;
             --status-green: #83e881;
-            --status-green-glow: rgba(131, 232, 129, 0.4);
+            --status-green-glow: rgba(131, 232, 129, 0.3);
             --avatar-bg: #272727;
-            --border: rgba(255, 255, 255, 0.08);
-            --card-bg: rgba(33, 33, 33, 0.8);
-            --card-border: rgba(255, 255, 255, 0.06);
-            --input-bg: rgba(30, 30, 30, 0.8);
-            --typing-dot: rgba(186, 195, 255, 0.4);
-            --sel-bg: rgba(186, 195, 255, 0.18);
+            --border: rgba(255, 255, 255, 0.04);
+            --card-bg: rgba(33, 33, 33, 0.5);
+            --card-border: rgba(255, 255, 255, 0.04);
+            --input-bg: rgba(30, 30, 30, 0.6);
+            --typing-dot: rgba(186, 195, 255, 0.3);
+            --sel-bg: rgba(186, 195, 255, 0.12);
             --sel-text: #e1e3e1;
-            --amb-blob1: rgba(186, 195, 255, 0.04);
-            --amb-blob2: rgba(88, 230, 255, 0.03);
+            --amb-blob1: rgba(186, 195, 255, 0.03);
+            --amb-blob2: rgba(88, 230, 255, 0.02);
             --amb-blob3: rgba(131, 232, 129, 0.02);
-            --ai-avatar-bg: rgba(186, 195, 255, 0.10);
+            --ai-avatar-bg: rgba(186, 195, 255, 0.06);
             --toast-bg: #293ca0;
             --viz-accent: #00e5ff;
-            --viz-glow: rgba(0, 229, 255, 0.25);
+            --viz-glow: rgba(0, 229, 255, 0.2);
             --viz-bg: #08080e;
             --viz-surface: #0e0e18;
-            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
-            --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.6);
-            --glow-primary: rgba(186, 195, 255, 0.12);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.5);
+            --glow-primary: rgba(186, 195, 255, 0.08);
             --gradient-primary: linear-gradient(135deg, #293ca0, #3f51b5);
             --gradient-accent: linear-gradient(135deg, #00e5ff, #58e6ff);
             --gradient-warm: linear-gradient(135deg, #83e881, #58e6ff);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --liquid-1: rgba(186, 195, 255, 0.02);
+            --liquid-2: rgba(88, 230, 255, 0.02);
+            --liquid-3: rgba(131, 232, 129, 0.02);
+            --liquid-4: rgba(255, 200, 50, 0.02);
         }
 
         /* -------- BASE -------- */
@@ -225,8 +250,8 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-surface);
             color: var(--text-on-surface);
-            transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
         body {
             cursor: default !important;
@@ -244,15 +269,15 @@
         }
 
         ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
+            width: 4px;
+            height: 4px;
         }
         ::-webkit-scrollbar-track {
             background: transparent;
         }
         ::-webkit-scrollbar-thumb {
             background: var(--text-muted);
-            border-radius: 8px;
+            border-radius: 12px;
             transition: background 0.3s;
         }
         ::-webkit-scrollbar-thumb:hover {
@@ -263,19 +288,225 @@
             scrollbar-color: var(--text-muted) transparent;
         }
 
-        #chatInput {
-            min-height: 42px;
-            max-height: 120px;
-            overflow-y: auto;
-            background: transparent;
+        /* -------- LIQUID AMBIENT BLOBS -------- */
+        .liquid-blob {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+            filter: blur(80px);
+            animation: liquidFloat 20s ease-in-out infinite;
+            border-radius: var(--radius-liquid);
+        }
+        .liquid-blob:nth-child(1) {
+            width: 55vw;
+            height: 55vw;
+            top: -15%;
+            right: -10%;
+            background: var(--liquid-1);
+            animation-delay: 0s;
+            animation-duration: 22s;
+        }
+        .liquid-blob:nth-child(2) {
+            width: 50vw;
+            height: 50vw;
+            bottom: -20%;
+            left: -15%;
+            background: var(--liquid-2);
+            animation-delay: -4s;
+            animation-duration: 26s;
+            border-radius: var(--radius-liquid-2);
+        }
+        .liquid-blob:nth-child(3) {
+            width: 40vw;
+            height: 40vw;
+            top: 30%;
+            left: 25%;
+            background: var(--liquid-3);
+            animation-delay: -8s;
+            animation-duration: 24s;
+            border-radius: 45% 55% 35% 65% / 55% 40% 60% 45%;
+        }
+        .liquid-blob:nth-child(4) {
+            width: 30vw;
+            height: 30vw;
+            bottom: 10%;
+            right: 15%;
+            background: var(--liquid-4);
+            animation-delay: -12s;
+            animation-duration: 28s;
+            border-radius: 35% 65% 55% 45% / 40% 55% 45% 60%;
+        }
+        @keyframes liquidFloat {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+            20% {
+                transform: translate(4%, -6%) scale(1.05) rotate(3deg);
+            }
+            40% {
+                transform: translate(-3%, 8%) scale(0.95) rotate(-4deg);
+            }
+            60% {
+                transform: translate(6%, 2%) scale(1.03) rotate(5deg);
+            }
+            80% {
+                transform: translate(-5%, -4%) scale(0.97) rotate(-2deg);
+            }
         }
 
+        /* -------- GLASSMORPHISM CARDS -------- */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(24px) saturate(1.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--shadow-card);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .glass-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px) saturate(1.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--shadow-card);
+        }
+
+        /* -------- LIQUID INPUT PILL -------- */
+        .liquid-input-pill {
+            background: var(--input-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 60px;
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .liquid-input-pill:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--glow-primary), var(--shadow-lg);
+            transform: scale(1.01);
+        }
+
+        /* -------- LIQUID BUTTONS -------- */
+        .btn-liquid {
+            background: var(--gradient-primary);
+            color: #fff;
+            border: none;
+            border-radius: 60px;
+            padding: 10px 24px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 20px var(--glow-primary);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-liquid::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .btn-liquid:hover {
+            transform: scale(1.04) translateY(-2px);
+            box-shadow: 0 8px 32px var(--glow-primary);
+        }
+        .btn-liquid:hover::before {
+            opacity: 1;
+        }
+        .btn-liquid:active {
+            transform: scale(0.96);
+        }
+
+        .btn-liquid-outline {
+            background: transparent;
+            color: var(--text-on-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: 60px;
+            padding: 10px 24px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(8px);
+        }
+        .btn-liquid-outline:hover {
+            background: var(--hover-bg);
+            border-color: var(--primary);
+            transform: scale(1.03);
+        }
+
+        /* -------- HEADER -------- */
+        header {
+            background: var(--header-bg);
+            backdrop-filter: blur(24px) saturate(1.5);
+            border-bottom: 1px solid var(--header-border);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+        }
+
+        .nav-btn {
+            position: relative;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            color: var(--text-on-surface-variant);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .nav-btn:hover {
+            background: var(--hover-bg);
+            transform: translateY(-1px);
+        }
+        .nav-btn.active-nav {
+            color: var(--text-primary);
+            background: var(--hover-bg);
+            box-shadow: 0 2px 12px var(--glow-primary);
+        }
+        .nav-btn.active-nav::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+        }
+
+        /* -------- CHAT MESSAGES -------- */
+        .message-wrapper .message-content {
+            line-height: 1.6;
+        }
+        .message-wrapper .message-content pre {
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 8px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+        }
+        .message-wrapper .message-content code {
+            font-size: 0.85em;
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.1);
+        }
         .message-wrapper .message-actions {
             display: flex;
             gap: 4px;
             margin-top: 6px;
             opacity: 0;
-            transition: opacity 0.25s ease;
+            transition: opacity 0.3s ease;
         }
         .message-wrapper:hover .message-actions,
         .message-wrapper:focus-within .message-actions {
@@ -290,35 +521,36 @@
             background: transparent;
             border: none;
             color: inherit;
-            padding: 6px;
+            padding: 4px 6px;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background 0.2s, transform 0.15s;
+            transition: all 0.2s;
             font-size: 14px;
         }
         .message-actions button:hover {
-            background: rgba(128, 128, 128, 0.15);
+            background: rgba(128, 128, 128, 0.1);
             transform: scale(1.08);
         }
         .message-wrapper.self-end .message-actions button {
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.7);
         }
         .message-wrapper.self-end .message-actions button:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
         }
 
+        /* -------- EMOJI PICKER -------- */
         .emoji-picker {
             position: absolute;
-            bottom: 76px;
+            bottom: 80px;
             right: 10px;
             background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 10px;
+            backdrop-filter: blur(24px) saturate(1.5);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 12px;
             display: none;
             z-index: 100;
             max-width: 360px;
@@ -328,6 +560,17 @@
         }
         .emoji-picker.open {
             display: block;
+            animation: fadeUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
         .emoji-grid {
             display: grid;
@@ -339,23 +582,24 @@
             font-size: 22px;
             text-align: center;
             padding: 6px;
-            border-radius: 10px;
-            transition: background 0.15s, transform 0.15s;
+            border-radius: 12px;
+            transition: all 0.15s;
             user-select: none;
         }
         .emoji-grid span:hover {
             background: var(--hover-bg);
-            transform: scale(1.12);
+            transform: scale(1.15);
         }
 
+        /* -------- TOAST -------- */
         #toast {
             position: fixed;
-            bottom: 28px;
-            right: 28px;
+            bottom: 32px;
+            right: 32px;
             background: var(--toast-bg);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
             color: #fff;
-            padding: 12px 24px;
+            padding: 14px 28px;
             border-radius: 60px;
             font-size: 14px;
             font-weight: 500;
@@ -363,9 +607,8 @@
             opacity: 0;
             transform: translateY(20px) scale(0.95);
             pointer-events: none;
-            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -375,7 +618,177 @@
             opacity: 1;
             transform: translateY(0) scale(1);
         }
+        @media (max-width: 768px) {
+            #toast {
+                bottom: 100px;
+                right: 16px;
+                left: 16px;
+                text-align: center;
+                justify-content: center;
+                padding: 12px 20px;
+                font-size: 13px;
+            }
+            .emoji-picker {
+                right: 0;
+                left: 0;
+                max-width: 100%;
+                bottom: 88px;
+            }
+        }
 
+        /* -------- CHAT INPUT -------- */
+        #chatInput {
+            min-height: 42px;
+            max-height: 120px;
+            overflow-y: auto;
+            background: transparent;
+        }
+
+        /* -------- SETTINGS OVERLAY -------- */
+        #settingsOverlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #settingsOverlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .settings-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(32px) saturate(1.6);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 36px;
+            max-width: 540px;
+            width: 92%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            transform: scale(0.92) translateY(24px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #settingsOverlay.active .settings-panel {
+            transform: scale(1) translateY(0);
+        }
+        .settings-panel h3 {
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-primary);
+        }
+        .setting-group {
+            margin-bottom: 18px;
+        }
+        .setting-group label {
+            display: block;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            color: var(--text-on-surface-variant);
+        }
+        .setting-group input,
+        .setting-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            background: var(--input-bg);
+            backdrop-filter: blur(8px);
+            color: var(--text-on-surface);
+            font-size: 0.9rem;
+            transition: all 0.25s;
+            outline: none;
+        }
+        .setting-group input:focus,
+        .setting-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--glow-primary);
+        }
+        .settings-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+        .settings-actions button {
+            flex: 1;
+            padding: 14px;
+            border-radius: 16px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .btn-cancel {
+            background: var(--hover-bg);
+            color: var(--text-on-surface);
+            border: 1px solid var(--glass-border);
+        }
+        .btn-cancel:hover {
+            background: var(--border);
+        }
+        .btn-save {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 20px var(--glow-primary);
+        }
+        .btn-save:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 32px var(--glow-primary);
+        }
+
+        /* -------- MODEL DROPDOWN -------- */
+        #modelDropdown {
+            background: var(--card-bg);
+            backdrop-filter: blur(32px) saturate(1.6);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-lg);
+            border-radius: 20px;
+            padding: 8px;
+            min-width: 220px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: fadeUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #modelDropdown>div {
+            padding: 10px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-size: 0.85rem;
+        }
+        #modelDropdown>div:hover {
+            background: var(--hover-bg);
+        }
+        #modelDropdown>div.bg-\[var\(--hover-bg\)\] {
+            background: var(--hover-bg);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* -------- IMAGE GEN -------- */
+        #imageGenPreviewContainer {
+            min-height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s;
+        }
         .gen-preview-img {
             max-width: 100%;
             max-height: 400px;
@@ -384,15 +797,60 @@
             box-shadow: var(--shadow-card);
         }
 
-        .refresh-spinner {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 2.5px solid transparent;
-            border-top-color: currentColor;
+        /* -------- VIDEO GEN -------- */
+        #videoGenOverlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(16px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #videoGenOverlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .gen-loader {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.08);
+            border-top-color: #fff;
             border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            vertical-align: middle;
+            animation: spin 1s linear infinite;
+            margin-bottom: 24px;
+        }
+        .gen-status {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        .gen-progress {
+            width: 280px;
+            max-width: 80%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .gen-progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+        .gen-percent {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.8rem;
+            margin-top: 8px;
+            font-variant-numeric: tabular-nums;
         }
         @keyframes spin {
             to {
@@ -400,30 +858,7 @@
             }
         }
 
-        .nav-btn.active-nav {
-            color: var(--text-primary) !important;
-            background: var(--hover-bg) !important;
-        }
-
-        @media (max-width: 768px) {
-            #toast {
-                bottom: 100px;
-                right: 16px;
-                left: 16px;
-                text-align: center;
-                justify-content: center;
-                padding: 10px 16px;
-                font-size: 13px;
-            }
-            .emoji-picker {
-                right: 0;
-                left: 0;
-                max-width: 100%;
-                bottom: 84px;
-            }
-        }
-
-        /* -------- YT MUSIC PLAYER -------- */
+        /* -------- MUSIC PANEL -------- */
         #musicPanel .yt-music-container {
             width: 100%;
             max-width: 1040px;
@@ -435,7 +870,6 @@
             height: 100%;
             overflow-y: auto;
         }
-
         #musicPanel .yt-music-row {
             display: flex;
             flex-wrap: wrap;
@@ -446,21 +880,19 @@
             flex: 1 1 300px;
             min-width: 260px;
         }
-
         #musicPanel .yt-player-card {
             background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            border-radius: 20px;
-            border: 1px solid var(--card-border);
-            padding: 20px;
+            backdrop-filter: blur(20px) saturate(1.4);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            padding: 24px;
             box-shadow: var(--shadow-card);
-            transition: box-shadow 0.3s, border-color 0.3s;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         #musicPanel .yt-player-card:hover {
             box-shadow: var(--shadow-lg);
-            border-color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.15);
         }
-
         #musicPanel .yt-player-card .album-art-container {
             display: flex;
             justify-content: center;
@@ -470,13 +902,12 @@
             margin: 0 auto 14px;
             position: relative;
         }
-
         #musicPanel .yt-player-card #albumArt {
             width: 100%;
             aspect-ratio: 1/1;
             object-fit: cover;
             border-radius: 50%;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
             transition: opacity 0.6s, transform 0.6s;
             max-width: 280px;
             border: 2px solid rgba(255, 255, 255, 0.06);
@@ -487,32 +918,14 @@
         #musicPanel .yt-player-card #albumArt.rotate-paused {
             animation-play-state: paused;
         }
-
-        #musicPanel .yt-player-card #videoPlayerInAlbumArt {
-            width: 100%;
-            aspect-ratio: 1/1;
-            max-width: 280px;
-            margin: 0 auto;
-            display: none;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-            border: 2px solid rgba(255, 255, 255, 0.06);
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
-        #musicPanel .yt-player-card #videoPlayerInAlbumArt iframe {
-            width: 100% !important;
-            height: 100% !important;
-            min-height: 280px;
-            border-radius: 16px;
-        }
-
-        .album-art-video-mode #videoPlayerInAlbumArt {
-            display: block !important;
-        }
-        .album-art-video-mode #albumArt {
-            display: none !important;
-        }
-
         #musicPanel .yt-player-card #nowPlaying {
             text-align: center;
             margin: 6px 0 4px;
@@ -541,7 +954,6 @@
             font-weight: 400;
             letter-spacing: 0.02em;
         }
-
         #musicPanel .yt-player-card .controls {
             display: flex;
             justify-content: center;
@@ -562,16 +974,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s, box-shadow 0.3s;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             flex-shrink: 0;
-            box-shadow: 0 4px 16px var(--glow-primary);
+            box-shadow: 0 4px 20px var(--glow-primary);
         }
         #musicPanel .yt-player-card .controls button:active {
             transform: scale(0.90);
         }
         #musicPanel .yt-player-card .controls button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 24px var(--glow-primary);
+            transform: scale(1.06);
+            box-shadow: 0 8px 32px var(--glow-primary);
         }
         #musicPanel .yt-player-card .controls button i {
             font-size: 26px;
@@ -581,7 +993,6 @@
             width: 60px;
             height: 60px;
         }
-
         #musicPanel .yt-player-card .progress-container {
             width: 100%;
             display: flex;
@@ -621,7 +1032,7 @@
             border-radius: 50%;
             transform: translateY(-50%);
             border: 2px solid var(--bg-surface);
-            box-shadow: 0 0 12px var(--glow-primary);
+            box-shadow: 0 0 20px var(--glow-primary);
             opacity: 0;
             transition: opacity 0.2s;
         }
@@ -638,7 +1049,6 @@
             font-weight: 500;
             letter-spacing: 0.02em;
         }
-
         #musicPanel .yt-player-card .volume-container {
             display: flex;
             align-items: center;
@@ -684,7 +1094,7 @@
             cursor: grab;
             z-index: 2;
             left: 70%;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
             transition: transform 0.15s;
         }
         #musicPanel .yt-player-card .volume-container .volume-bar-container .volume-thumb:hover {
@@ -717,7 +1127,6 @@
             border: none;
             background: transparent;
         }
-
         #musicPanel .yt-player-card .extra-controls {
             display: flex;
             justify-content: center;
@@ -768,7 +1177,7 @@
             background: white;
             transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 50%;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
         }
         #musicPanel .yt-player-card .extra-controls .switch input:checked+.slider {
             background: var(--gradient-primary);
@@ -776,7 +1185,6 @@
         #musicPanel .yt-player-card .extra-controls .switch input:checked+.slider::before {
             transform: translateX(18px);
         }
-
         #musicPanel .yt-player-card #repeatBtn {
             width: 40px;
             height: 40px;
@@ -798,31 +1206,28 @@
             background: var(--gradient-primary);
             color: #fff;
             transform: scale(1.05);
-            box-shadow: 0 4px 16px var(--glow-primary);
+            box-shadow: 0 4px 20px var(--glow-primary);
         }
-
         #musicPanel .yt-music-row .playlist-col {
             flex: 1.6;
             min-width: 300px;
         }
-
         #musicPanel .yt-music-row .playlist-col .playlist-card {
             background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            border-radius: 20px;
-            border: 1px solid var(--card-border);
-            padding: 16px 18px;
+            backdrop-filter: blur(20px) saturate(1.4);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            padding: 18px 20px;
             box-shadow: var(--shadow-card);
             height: 100%;
             display: flex;
             flex-direction: column;
             min-height: 480px;
-            transition: box-shadow 0.3s;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         #musicPanel .yt-music-row .playlist-col .playlist-card:hover {
             box-shadow: var(--shadow-lg);
         }
-
         #musicPanel .playlist-toolbar {
             display: flex;
             gap: 8px;
@@ -830,11 +1235,11 @@
             margin-bottom: 12px;
         }
         #musicPanel .playlist-toolbar .btn {
-            padding: 5px 14px;
+            padding: 5px 16px;
             border-radius: 24px;
             font-size: 13px;
             font-weight: 600;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
             background: transparent;
             color: var(--text-on-surface);
             cursor: pointer;
@@ -842,6 +1247,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            backdrop-filter: blur(4px);
         }
         #musicPanel .playlist-toolbar .btn:hover {
             background: var(--hover-bg);
@@ -850,13 +1256,12 @@
             background: var(--gradient-primary);
             color: #fff;
             border-color: transparent;
-            box-shadow: 0 4px 16px var(--glow-primary);
+            box-shadow: 0 4px 20px var(--glow-primary);
         }
         #musicPanel .playlist-toolbar .btn-outline-primary {
             border-color: var(--primary);
             color: var(--primary);
         }
-
         #musicPanel #playlistSearchContainer {
             margin-bottom: 10px;
         }
@@ -864,14 +1269,15 @@
             display: flex;
             align-items: center;
             background: var(--input-bg);
-            border: 1px solid var(--border);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
             border-radius: 24px;
             padding: 2px 8px 2px 16px;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
         }
         #musicPanel #playlistSearchContainer .input-group:focus-within {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--glow-primary);
+            box-shadow: 0 0 0 4px var(--glow-primary);
         }
         #musicPanel #playlistSearchContainer .input-group input {
             flex: 1;
@@ -895,7 +1301,6 @@
         #musicPanel #playlistSearchContainer .input-group button:hover {
             background: var(--hover-bg);
         }
-
         #musicPanel #songListContainer {
             flex: 1;
             overflow-y: auto;
@@ -909,12 +1314,12 @@
         #musicPanel #songList .list-group-item {
             display: flex;
             align-items: center;
-            padding: 7px 10px;
-            border-bottom: 1px solid var(--border);
+            padding: 7px 12px;
+            border-bottom: 1px solid var(--glass-border);
             cursor: pointer;
             transition: all 0.2s;
             gap: 8px;
-            border-radius: 10px;
+            border-radius: 12px;
             margin: 3px 0;
             font-size: 14px;
             background: transparent;
@@ -927,7 +1332,7 @@
         #musicPanel #songList .list-group-item.selected {
             background: var(--gradient-primary);
             color: #fff;
-            box-shadow: 0 4px 16px var(--glow-primary);
+            box-shadow: 0 4px 20px var(--glow-primary);
             transform: translateX(4px);
         }
         #musicPanel #songList .list-group-item.selected .song-number,
@@ -982,7 +1387,7 @@
             font-size: 15px;
         }
         #musicPanel #songList .song-action .remove-song-btn:hover {
-            background: rgba(220, 53, 69, 0.12);
+            background: rgba(220, 53, 69, 0.08);
             color: #dc3545;
             transform: scale(1.15);
         }
@@ -996,19 +1401,18 @@
         #musicPanel #songList .drag-handle:active {
             cursor: grabbing;
         }
-
         #musicPanel #lyricsContainer {
             background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            border-radius: 20px;
-            border: 1px solid var(--card-border);
-            padding: 16px 18px;
+            backdrop-filter: blur(20px) saturate(1.4);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            padding: 18px 20px;
             box-shadow: var(--shadow-card);
             flex: 1;
             display: flex;
             flex-direction: column;
             min-height: 200px;
-            transition: box-shadow 0.3s;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         #musicPanel #lyricsContainer:hover {
             box-shadow: var(--shadow-lg);
@@ -1038,7 +1442,7 @@
             border-radius: 16px;
             font-size: 12px;
             font-weight: 600;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
             background: transparent;
             color: var(--text-on-surface);
             cursor: pointer;
@@ -1046,6 +1450,7 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            backdrop-filter: blur(4px);
         }
         #musicPanel #lyricsContainer .lyrics-controls button:hover {
             background: var(--hover-bg);
@@ -1070,7 +1475,7 @@
         #musicPanel #lyricsContainer .lrc-line {
             padding: 4px 8px;
             border-radius: 8px;
-            transition: background 0.3s, color 0.3s, transform 0.2s;
+            transition: all 0.3s;
             display: flex;
             align-items: flex-start;
             gap: 10px;
@@ -1089,7 +1494,7 @@
             font-weight: 500;
         }
         #musicPanel #lyricsContainer .lrc-line.highlight {
-            background: rgba(186, 195, 255, 0.15);
+            background: rgba(186, 195, 255, 0.1);
             font-weight: 600;
             border-left: 3px solid var(--primary);
             padding-left: 12px;
@@ -1111,7 +1516,6 @@
             padding-left: 10px;
             opacity: 0.85;
         }
-
         #musicPanel #youtubeSearchSection {
             margin-top: 10px;
         }
@@ -1120,14 +1524,15 @@
             gap: 6px;
             align-items: center;
             background: var(--input-bg);
-            border: 1px solid var(--border);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
             border-radius: 24px;
             padding: 2px 6px 2px 16px;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
         }
         #musicPanel #youtubeSearchSection .search-input-group:focus-within {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--glow-primary);
+            box-shadow: 0 0 0 4px var(--glow-primary);
         }
         #musicPanel #youtubeSearchSection .search-input-group input {
             flex: 1;
@@ -1139,7 +1544,7 @@
             color: var(--text-on-surface);
         }
         #musicPanel #youtubeSearchSection .search-input-group button {
-            padding: 6px 18px;
+            padding: 6px 20px;
             border-radius: 24px;
             border: none;
             background: var(--gradient-primary);
@@ -1147,14 +1552,13 @@
             font-weight: 600;
             font-size: 13px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.3s;
-            box-shadow: 0 4px 16px var(--glow-primary);
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px var(--glow-primary);
         }
         #musicPanel #youtubeSearchSection .search-input-group button:hover {
             transform: scale(1.04);
-            box-shadow: 0 6px 24px var(--glow-primary);
+            box-shadow: 0 8px 32px var(--glow-primary);
         }
-
         #musicPanel #searchResults {
             margin-top: 8px;
             max-height: 200px;
@@ -1164,12 +1568,12 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 8px 10px;
-            border-bottom: 1px solid var(--border);
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--glass-border);
             font-size: 13px;
             background: transparent;
             color: var(--text-on-surface);
-            border-radius: 10px;
+            border-radius: 12px;
             margin: 3px 0;
             cursor: default;
             transition: background 0.2s;
@@ -1206,15 +1610,14 @@
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.3s;
+            transition: all 0.3s;
             flex-shrink: 0;
-            box-shadow: 0 2px 12px var(--glow-primary);
+            box-shadow: 0 2px 16px var(--glow-primary);
         }
         #musicPanel #searchResults .list-group-item .add-from-search-btn:hover {
             transform: scale(1.06);
-            box-shadow: 0 4px 20px var(--glow-primary);
+            box-shadow: 0 4px 24px var(--glow-primary);
         }
-
         #musicPanel #searchLoading {
             text-align: center;
             padding: 14px;
@@ -1227,7 +1630,6 @@
             color: #dc3545;
             font-size: 14px;
         }
-
         #musicPanel .playlist-import {
             margin-top: 10px;
             display: flex;
@@ -1239,17 +1641,18 @@
             flex: 1;
             min-width: 180px;
             background: var(--input-bg);
-            border: 1px solid var(--border);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
             border-radius: 24px;
             padding: 8px 16px;
             color: var(--text-on-surface);
             font-size: 14px;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
         }
         #musicPanel .playlist-import input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--glow-primary);
+            box-shadow: 0 0 0 4px var(--glow-primary);
         }
         #musicPanel .playlist-import button {
             padding: 8px 20px;
@@ -1260,29 +1663,29 @@
             font-weight: 600;
             font-size: 13px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.3s;
-            box-shadow: 0 4px 16px var(--glow-primary);
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px var(--glow-primary);
         }
         #musicPanel .playlist-import button:hover {
             transform: scale(1.04);
-            box-shadow: 0 6px 24px var(--glow-primary);
+            box-shadow: 0 8px 32px var(--glow-primary);
         }
         #musicPanel .playlist-import button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none !important;
         }
-
         #musicPanel .album-art-display-toggle .btn-group .btn {
             font-size: 11px;
             padding: 3px 12px;
             border-radius: 16px;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
             background: transparent;
             color: var(--text-on-surface-variant);
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 500;
+            backdrop-filter: blur(4px);
         }
         #musicPanel .album-art-display-toggle .btn-group .btn:hover {
             background: var(--hover-bg);
@@ -1291,7 +1694,7 @@
             background: var(--gradient-primary);
             color: #fff;
             border-color: transparent;
-            box-shadow: 0 2px 12px var(--glow-primary);
+            box-shadow: 0 2px 16px var(--glow-primary);
         }
         #musicPanel .album-art-display-toggle .btn-group .btn-outline-primary {
             border-color: var(--primary);
@@ -1305,13 +1708,13 @@
             flex-direction: column;
             min-height: 350px;
             position: relative;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
             background: var(--viz-bg);
-            border: 1px solid var(--card-border);
+            border: 1px solid var(--glass-border);
             margin-top: 6px;
             box-shadow: var(--shadow-card);
-            transition: box-shadow 0.3s;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         #musicPanel #visualizerContainer.active {
             display: flex;
@@ -1319,7 +1722,6 @@
         #musicPanel #visualizerContainer:hover {
             box-shadow: var(--shadow-lg);
         }
-
         #musicPanel #visualizerContainer #vizCanvas {
             display: block;
             width: 100%;
@@ -1328,7 +1730,6 @@
             background: var(--viz-bg);
             touch-action: none;
         }
-
         #musicPanel #visualizerContainer .viz-overlay {
             position: absolute;
             inset: 0;
@@ -1337,10 +1738,10 @@
             align-items: center;
             justify-content: center;
             z-index: 10;
-            background: radial-gradient(ellipse at center, rgba(8, 8, 14, 0.7) 0%, rgba(8, 8, 14, 0.95) 100%);
+            background: radial-gradient(ellipse at center, rgba(8, 8, 14, 0.5) 0%, rgba(8, 8, 14, 0.9) 100%);
             cursor: pointer;
             transition: opacity 0.6s ease;
-            border-radius: 16px;
+            border-radius: 20px;
             backdrop-filter: blur(4px);
         }
         #musicPanel #visualizerContainer .viz-overlay.hidden {
@@ -1393,17 +1794,16 @@
             letter-spacing: 0.08em;
             font-weight: 400;
         }
-
         #musicPanel .viz-bar {
             display: flex;
             align-items: center;
             gap: 8px;
             padding: 8px 14px;
             background: var(--viz-surface);
-            border-top: 1px solid var(--card-border);
+            border-top: 1px solid var(--glass-border);
             flex-shrink: 0;
             flex-wrap: wrap;
-            border-radius: 0 0 16px 16px;
+            border-radius: 0 0 20px 20px;
             backdrop-filter: blur(8px);
         }
         #musicPanel .viz-bar .viz-btn {
@@ -1506,7 +1906,6 @@
             color: var(--text-on-surface-variant);
             flex-shrink: 0;
         }
-
         #musicPanel .viz-toast {
             position: absolute;
             top: 16px;
@@ -1531,183 +1930,6 @@
             opacity: 1;
         }
 
-        @media (max-width: 768px) {
-            #musicPanel .yt-music-row>div {
-                flex: 1 1 100%;
-                min-width: 0;
-            }
-            #musicPanel .yt-player-card .controls button {
-                width: 44px;
-                height: 44px;
-                font-size: 18px;
-            }
-            #musicPanel .yt-player-card .controls button i {
-                font-size: 22px;
-            }
-            #musicPanel .yt-player-card .controls button#playPauseBtn {
-                width: 52px;
-                height: 52px;
-            }
-            #musicPanel .yt-player-card .album-art-container {
-                max-width: 200px;
-            }
-            #musicPanel .yt-player-card #albumArt {
-                max-width: 200px;
-            }
-            #musicPanel .yt-player-card #videoPlayerInAlbumArt {
-                max-width: 200px;
-            }
-            #musicPanel .yt-player-card #videoPlayerInAlbumArt iframe {
-                min-height: 200px;
-            }
-            #musicPanel .viz-bar .viz-vol-slider {
-                width: 44px;
-            }
-            #musicPanel .viz-bar .viz-btn {
-                width: 30px;
-                height: 30px;
-                font-size: 14px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            #musicPanel .yt-player-card .album-art-container {
-                max-width: 160px;
-            }
-            #musicPanel .yt-player-card #albumArt {
-                max-width: 160px;
-            }
-            #musicPanel .yt-player-card #videoPlayerInAlbumArt {
-                max-width: 160px;
-            }
-            #musicPanel .yt-player-card #videoPlayerInAlbumArt iframe {
-                min-height: 160px;
-            }
-            #musicPanel .yt-player-card #nowPlaying .song-title {
-                font-size: 16px;
-            }
-            #musicPanel .yt-player-card #nowPlaying .author-name {
-                font-size: 12px;
-            }
-            #musicPanel .viz-bar .viz-vol-slider {
-                width: 36px;
-            }
-            #musicPanel .viz-bar .viz-btn {
-                width: 26px;
-                height: 26px;
-                font-size: 12px;
-            }
-            #musicPanel .viz-bar .viz-mode-label {
-                font-size: 0.5rem;
-                min-width: 36px;
-            }
-        }
-
-        .dark #musicPanel .yt-player-card {
-            background: rgba(33, 33, 33, 0.8);
-            border-color: rgba(255, 255, 255, 0.06);
-        }
-        .dark #musicPanel .yt-player-card .playlist-card {
-            background: rgba(33, 33, 33, 0.8);
-            border-color: rgba(255, 255, 255, 0.06);
-        }
-        .dark #musicPanel #lyricsContainer {
-            background: rgba(33, 33, 33, 0.8);
-            border-color: rgba(255, 255, 255, 0.06);
-        }
-        .dark #musicPanel #songList .list-group-item {
-            border-color: rgba(255, 255, 255, 0.06);
-        }
-        .dark #musicPanel #searchResults .list-group-item {
-            border-color: rgba(255, 255, 255, 0.06);
-        }
-        .dark #musicPanel .volume-bar-container {
-            background: rgba(255, 255, 255, 0.08);
-        }
-        .dark #musicPanel .progress {
-            background: rgba(255, 255, 255, 0.08);
-        }
-        .dark #musicPanel .volume-thumb {
-            background: #2d2d2d;
-            border-color: var(--primary);
-        }
-        .dark #musicPanel .switch .slider {
-            background: rgba(255, 255, 255, 0.15);
-        }
-        .dark #musicPanel #repeatBtn {
-            background: rgba(255, 255, 255, 0.08);
-        }
-        .dark #musicPanel #repeatBtn.active {
-            background: var(--gradient-primary);
-        }
-        .dark #musicPanel #visualizerContainer {
-            border-color: rgba(255, 255, 255, 0.06);
-        }
-        .dark #musicPanel .viz-bar {
-            border-color: rgba(255, 255, 255, 0.06);
-        }
-        .dark #musicPanel .viz-bar .viz-btn {
-            background: rgba(255, 255, 255, 0.04);
-        }
-        .dark #musicPanel .viz-bar .viz-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        #translationServiceSelect {
-            background: var(--input-bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 6px 12px;
-            color: var(--text-on-surface);
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-        #translationServiceSelect:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        #musicPanel .yt-music-container .d-none {
-            display: none !important;
-        }
-        #musicPanel .yt-player-card #togglePlayerBtn {
-            display: none;
-        }
-        #musicPanel .yt-player-card #errorMessage {
-            color: #dc3545;
-            font-size: 13px;
-            text-align: center;
-            padding: 4px;
-            display: none;
-        }
-        #musicPanel .yt-player-card #background {
-            display: none;
-        }
-        #musicPanel .yt-music-container .card.dark-mode {
-            background: var(--card-bg);
-            color: var(--text-on-surface);
-        }
-        #musicPanel .yt-music-container .drag-handle {
-            cursor: grab;
-        }
-        #musicPanel .yt-music-container .drag-preview {
-            display: none;
-        }
-        #musicPanel .floating-settings,
-        #musicPanel .floating-experimental,
-        #musicPanel .floating-top {
-            display: none !important;
-        }
-
         /* -------- OFFLINE VISUALIZER (LIQUID RAINBOW) -------- */
         #musicPanel .music-tabs {
             display: flex;
@@ -1718,7 +1940,7 @@
         #musicPanel .music-tabs button {
             padding: 6px 18px;
             border-radius: 24px;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
             background: transparent;
             color: var(--text-on-surface-variant);
             font-weight: 500;
@@ -1728,6 +1950,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            backdrop-filter: blur(4px);
         }
         #musicPanel .music-tabs button:hover {
             background: var(--hover-bg);
@@ -1736,9 +1959,8 @@
             background: var(--gradient-primary);
             color: #fff;
             border-color: transparent;
-            box-shadow: 0 4px 16px var(--glow-primary);
+            box-shadow: 0 4px 20px var(--glow-primary);
         }
-
         #offlineTab {
             display: none;
             flex-direction: column;
@@ -1746,7 +1968,7 @@
             width: 100%;
             position: relative;
             background: #06060e;
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
             min-height: 480px;
             margin-top: 0;
@@ -1762,7 +1984,7 @@
             height: 100%;
             z-index: 1;
             pointer-events: none;
-            border-radius: 20px;
+            border-radius: 24px;
         }
         .offline-ui-top {
             position: relative;
@@ -1771,27 +1993,27 @@
             align-items: center;
             gap: 10px;
             padding: 8px 16px;
-            background: rgba(10, 10, 20, 0.6);
+            background: rgba(10, 10, 20, 0.5);
             backdrop-filter: blur(24px) saturate(1.4);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 50px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 60px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             margin: 12px auto 0;
             width: fit-content;
             max-width: 92%;
             transition: all 0.3s;
         }
         .offline-ui-top:hover {
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 60px rgba(167, 139, 250, 0.15);
-            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4), 0 0 60px rgba(167, 139, 250, 0.08);
+            border-color: rgba(255, 255, 255, 0.08);
         }
         .offline-file-label {
             display: flex;
             align-items: center;
             gap: 6px;
             padding: 5px 14px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.04);
             border-radius: 30px;
             color: #e0e0f0;
             font-size: 0.75rem;
@@ -1801,9 +2023,9 @@
             white-space: nowrap;
         }
         .offline-file-label:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 24px rgba(167, 139, 250, 0.15);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 24px rgba(167, 139, 250, 0.1);
             transform: translateY(-1px);
         }
         .offline-file-label:active {
@@ -1843,7 +2065,7 @@
         }
         .offline-status-text {
             font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.4);
             letter-spacing: 0.3px;
             white-space: nowrap;
         }
@@ -1854,11 +2076,11 @@
             align-items: center;
             gap: 8px;
             padding: 6px 14px;
-            background: rgba(10, 10, 20, 0.6);
+            background: rgba(10, 10, 20, 0.5);
             backdrop-filter: blur(24px) saturate(1.4);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 50px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 60px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             margin: 6px auto 12px;
             width: fit-content;
             max-width: 95%;
@@ -1867,15 +2089,15 @@
             flex-wrap: wrap;
         }
         .offline-ui-bottom:hover {
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 60px rgba(167, 139, 250, 0.15);
-            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4), 0 0 60px rgba(167, 139, 250, 0.08);
+            border-color: rgba(255, 255, 255, 0.08);
         }
         .offline-btn-play {
             width: 34px;
             height: 34px;
             border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
             color: #fff;
             cursor: pointer;
             display: flex;
@@ -1886,9 +2108,9 @@
             outline: none;
         }
         .offline-btn-play:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 0 20px rgba(167, 139, 250, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(167, 139, 250, 0.1);
             transform: scale(1.06);
         }
         .offline-btn-play:active {
@@ -1908,7 +2130,7 @@
             width: 100%;
             height: 4px;
             border-radius: 4px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.06);
             position: relative;
             overflow: visible;
             transition: height 0.2s;
@@ -1934,7 +2156,7 @@
             height: 12px;
             border-radius: 50%;
             background: #fff;
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
             opacity: 0;
             transition: opacity 0.2s;
             pointer-events: none;
@@ -1944,7 +2166,7 @@
         }
         .offline-time-display {
             font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.4);
             white-space: nowrap;
             letter-spacing: 0.3px;
             flex-shrink: 0;
@@ -1962,7 +2184,7 @@
         .offline-volume-icon {
             width: 16px;
             height: 16px;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.4);
             flex-shrink: 0;
             cursor: pointer;
             transition: color 0.2s;
@@ -1975,7 +2197,7 @@
             width: 44px;
             height: 4px;
             border-radius: 4px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.06);
             outline: none;
             cursor: pointer;
             transition: height 0.2s;
@@ -1990,7 +2212,7 @@
             border-radius: 50%;
             background: #fff;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
         .offline-volume-slider::-webkit-slider-thumb:active {
             transform: scale(1.3);
@@ -2002,7 +2224,7 @@
             background: #fff;
             cursor: pointer;
             border: none;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
         .offline-overlay {
             position: absolute;
@@ -2011,11 +2233,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(6, 6, 14, 0.7);
+            background: rgba(6, 6, 14, 0.6);
             backdrop-filter: blur(8px);
             cursor: pointer;
             transition: opacity 0.6s ease, visibility 0.6s ease;
-            border-radius: 20px;
+            border-radius: 24px;
         }
         .offline-overlay.hidden {
             opacity: 0;
@@ -2023,13 +2245,13 @@
             pointer-events: none;
         }
         .offline-overlay-card {
-            background: rgba(10, 10, 20, 0.6);
+            background: rgba(10, 10, 20, 0.5);
             backdrop-filter: blur(24px) saturate(1.4);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 32px;
             padding: 28px 32px;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             animation: float-card 4s ease-in-out infinite;
         }
         @keyframes float-card {
@@ -2066,7 +2288,7 @@
             margin-bottom: 2px;
         }
         .offline-overlay-sub {
-            color: rgba(255, 255, 255, 0.45);
+            color: rgba(255, 255, 255, 0.4);
             font-size: 0.8rem;
             letter-spacing: 0.2px;
         }
@@ -2074,11 +2296,11 @@
         /* -------- MP3 UPLOAD -------- */
         #mp3UploadSection {
             margin-top: 6px;
-            border-top: 1px solid var(--border);
+            border-top: 1px solid var(--glass-border);
             padding-top: 8px;
         }
         .mp3-drop-area {
-            border: 2px dashed var(--border);
+            border: 2px dashed var(--glass-border);
             border-radius: 16px;
             padding: 16px;
             text-align: center;
@@ -2086,6 +2308,7 @@
             transition: all 0.3s;
             margin-bottom: 6px;
             background: var(--input-bg);
+            backdrop-filter: blur(8px);
         }
         .mp3-drop-area:hover {
             border-color: var(--primary);
@@ -2119,7 +2342,7 @@
             gap: 8px;
             padding: 4px 8px;
             border-radius: 8px;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--glass-border);
             font-size: 0.8rem;
             transition: all 0.2s;
         }
@@ -2167,319 +2390,119 @@
             flex-shrink: 0;
         }
         .mp3-remove-btn:hover {
-            background: rgba(239, 68, 68, 0.15);
+            background: rgba(239, 68, 68, 0.1);
             color: #ef4444;
         }
 
-        /* -------- SETTINGS OVERLAY -------- */
-        #settingsOverlay {
-            position: fixed;
-            inset: 0;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        /* -------- RESPONSIVE -------- */
+        @media (max-width: 768px) {
+            #musicPanel .yt-music-row>div {
+                flex: 1 1 100%;
+                min-width: 0;
+            }
+            #musicPanel .yt-player-card .controls button {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+            #musicPanel .yt-player-card .controls button i {
+                font-size: 22px;
+            }
+            #musicPanel .yt-player-card .controls button#playPauseBtn {
+                width: 52px;
+                height: 52px;
+            }
+            #musicPanel .yt-player-card .album-art-container {
+                max-width: 200px;
+            }
+            #musicPanel .yt-player-card #albumArt {
+                max-width: 200px;
+            }
+            #musicPanel .viz-bar .viz-vol-slider {
+                width: 44px;
+            }
+            #musicPanel .viz-bar .viz-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+            .settings-panel {
+                padding: 24px;
+            }
         }
-        #settingsOverlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .settings-panel {
-            background: var(--card-bg);
-            backdrop-filter: blur(24px) saturate(1.6);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 32px;
-            max-width: 540px;
-            width: 92%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-lg);
-            transform: scale(0.92) translateY(20px);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        #settingsOverlay.active .settings-panel {
-            transform: scale(1) translateY(0);
-        }
-        .settings-panel h3 {
-            font-family: 'Sora', sans-serif;
-            font-weight: 700;
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text-primary);
-        }
-        .setting-group {
-            margin-bottom: 16px;
-        }
-        .setting-group label {
-            display: block;
-            font-weight: 500;
-            font-size: 0.85rem;
-            margin-bottom: 4px;
-            color: var(--text-on-surface-variant);
-        }
-        .setting-group input,
-        .setting-group select {
-            width: 100%;
-            padding: 10px 14px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: var(--input-bg);
-            color: var(--text-on-surface);
-            font-size: 0.9rem;
-            transition: all 0.25s;
-            outline: none;
-        }
-        .setting-group input:focus,
-        .setting-group select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(26, 43, 140, 0.1);
-        }
-        .dark .setting-group input:focus,
-        .dark .setting-group select:focus {
-            box-shadow: 0 0 0 3px rgba(186, 195, 255, 0.1);
-        }
-        .settings-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-        }
-        .settings-actions button {
-            flex: 1;
-            padding: 12px;
-            border-radius: 14px;
-            border: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.25s;
-        }
-        .btn-cancel {
-            background: var(--hover-bg);
-            color: var(--text-on-surface);
-        }
-        .btn-cancel:hover {
-            background: var(--border);
-        }
-        .btn-save {
-            background: var(--gradient-primary);
-            color: white;
-            box-shadow: 0 4px 12px rgba(26, 43, 140, 0.25);
-        }
-        .btn-save:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 20px rgba(26, 43, 140, 0.35);
+        @media (max-width: 480px) {
+            #musicPanel .yt-player-card .album-art-container {
+                max-width: 160px;
+            }
+            #musicPanel .yt-player-card #albumArt {
+                max-width: 160px;
+            }
+            #musicPanel .yt-player-card #nowPlaying .song-title {
+                font-size: 16px;
+            }
+            #musicPanel .yt-player-card #nowPlaying .author-name {
+                font-size: 12px;
+            }
+            #musicPanel .viz-bar .viz-vol-slider {
+                width: 36px;
+            }
+            #musicPanel .viz-bar .viz-btn {
+                width: 26px;
+                height: 26px;
+                font-size: 12px;
+            }
+            #musicPanel .viz-bar .viz-mode-label {
+                font-size: 0.5rem;
+                min-width: 36px;
+            }
         }
 
-        /* -------- VIDEO GEN OVERLAY -------- */
-        #videoGenOverlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9998;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(12px);
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        #videoGenOverlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .gen-loader {
-            width: 60px;
-            height: 60px;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top-color: #fff;
+        /* -------- UTILITIES -------- */
+        .refresh-spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid transparent;
+            border-top-color: currentColor;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
+            animation: spin 0.7s linear infinite;
+            vertical-align: middle;
         }
-        .gen-status {
-            color: #fff;
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 12px;
-        }
-        .gen-progress {
-            width: 280px;
-            max-width: 80%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .gen-progress-fill {
-            height: 100%;
-            background: var(--gradient-primary);
-            border-radius: 4px;
-            transition: width 0.3s;
-            width: 0%;
-        }
-        .gen-percent {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.8rem;
-            margin-top: 8px;
-            font-variant-numeric: tabular-nums;
-        }
-
-        /* -------- MODEL DROPDOWN -------- */
-        #modelDropdown {
-            background: var(--card-bg);
-            backdrop-filter: blur(24px) saturate(1.6);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-lg);
-            border-radius: 16px;
-            padding: 6px;
-            min-width: 200px;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        #modelDropdown>div {
-            padding: 8px 14px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.15s;
-            font-size: 0.85rem;
-        }
-        #modelDropdown>div:hover {
-            background: var(--hover-bg);
-        }
-        #modelDropdown>div.bg-\[var\(--hover-bg\)\] {
-            background: var(--hover-bg);
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        /* -------- IMAGE GEN -------- */
-        #imageGenPreviewContainer {
-            min-height: 240px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 16px;
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s;
-        }
-        #genImageActions button {
-            padding: 8px 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-on-surface-variant);
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.25s;
-        }
-        #genImageActions button:hover {
-            background: var(--hover-bg);
-        }
-        #genImageActions button:first-child {
-            background: var(--gradient-primary);
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 2px 12px rgba(26, 43, 140, 0.2);
-        }
-        #genImageActions button:first-child:hover {
-            transform: scale(1.03);
-        }
-
-        /* -------- VIDEO GEN -------- */
-        #videoPreviewCanvas,
-        #videoPreview {
-            border-radius: 16px;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-md);
-            max-width: 100%;
-        }
-        #videoActions button {
-            padding: 8px 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-on-surface-variant);
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.25s;
-        }
-        #videoActions button:hover {
-            background: var(--hover-bg);
-        }
-        #videoActions button:first-child {
-            background: var(--gradient-primary);
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 2px 12px rgba(26, 43, 140, 0.2);
-        }
-        #videoActions button:first-child:hover {
-            transform: scale(1.03);
-        }
-
-        /* -------- VIDEO PLAYER IN ALBUM ART -------- */
-        #videoPlayerInAlbumArt {
-            display: none;
-            width: 100%;
-            aspect-ratio: 1/1;
-            max-width: 220px;
-            margin: 0 auto;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-        }
-        .album-art-video-mode #videoPlayerInAlbumArt {
-            display: block;
-        }
-        .album-art-video-mode #albumArt {
+        .d-none {
             display: none !important;
         }
-        .album-art-video-mode #togglePlayerBtn,
-        .album-art-video-mode #togglePlayerBtn+div {
-            display: none !important;
+        .glass-border {
+            border: 1px solid var(--glass-border);
         }
-        #videoPlayerInAlbumArt #player {
-            width: 100% !important;
-            height: 100% !important;
-            border-radius: 50%;
+        .text-liquid {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
     </style>
 </head>
 
 <body class="h-screen flex flex-col overflow-hidden selection:bg-[var(--sel-bg)] selection:text-[var(--sel-text)]" id="appBody">
 
-    <!-- Ambient blobs -->
-    <div class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-        <div class="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] rounded-full bg-[var(--amb-blob1)] blur-[140px] opacity-60 animate-float"></div>
-        <div class="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-[var(--amb-blob2)] blur-[160px] opacity-50 animate-float" style="animation-delay:2s"></div>
-        <div class="absolute top-[40%] left-[20%] w-[30vw] h-[30vw] rounded-full bg-[var(--amb-blob3)] blur-[120px] opacity-40 animate-float" style="animation-delay:4s"></div>
-    </div>
+    <!-- LIQUID AMBIENT BLOBS -->
+    <div class="liquid-blob"></div>
+    <div class="liquid-blob"></div>
+    <div class="liquid-blob"></div>
+    <div class="liquid-blob"></div>
 
     <!-- TOP BAR -->
-    <header class="fixed top-0 w-full z-50 bg-[var(--header-bg)] backdrop-blur-xl border-b border-[var(--header-border)] flex justify-between items-center px-4 h-16 shadow-sm">
+    <header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-16">
         <div class="flex items-center gap-3">
             <span class="material-symbols-outlined text-[var(--text-primary)] animate-pulse-glow" style="font-variation-settings:'FILL'1;">token</span>
             <h1 class="text-xl font-bold font-display bg-gradient-to-r from-[var(--text-primary)] to-[var(--secondary)] bg-clip-text text-transparent">HEX AI</h1>
             <span class="w-2.5 h-2.5 rounded-full bg-[var(--status-green)] animate-pulse shadow-[0_0_12px_var(--status-green-glow)]"></span>
         </div>
         <nav class="hidden md:flex items-center gap-2" id="desktopNav">
-            <button class="nav-btn active-nav font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-all text-[var(--text-primary)]" data-panel="chat">Chat</button>
-            <button class="nav-btn font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-all text-[var(--text-on-surface-variant)]" data-panel="image">Image</button>
-            <button class="nav-btn font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-all text-[var(--text-on-surface-variant)]" data-panel="video">Video</button>
-            <button class="nav-btn font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-all text-[var(--text-on-surface-variant)]" data-panel="music">Music</button>
+            <button class="nav-btn active-nav" data-panel="chat">Chat</button>
+            <button class="nav-btn" data-panel="image">Image</button>
+            <button class="nav-btn" data-panel="video">Video</button>
+            <button class="nav-btn" data-panel="music">Music</button>
         </nav>
         <div class="flex items-center gap-2">
             <div class="relative">
@@ -2487,11 +2510,11 @@
                     <span class="material-symbols-outlined">smart_toy</span>
                     <span id="modelBadgeText" class="hidden sm:inline text-sm font-medium">Model</span>
                 </button>
-                <div id="modelDropdown" class="absolute top-12 right-0 bg-[var(--card-bg)] backdrop-blur-xl border border-[var(--card-border)] rounded-2xl p-2 min-w-[220px] hidden z-50 shadow-lg"></div>
+                <div id="modelDropdown" class="absolute top-12 right-0 hidden z-50 shadow-lg"></div>
             </div>
             <button id="settingsBtn" class="text-[var(--text-on-surface-variant)] p-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors"><span class="material-symbols-outlined">settings</span></button>
             <button id="themeToggle" class="text-[var(--text-on-surface-variant)] p-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors"><span class="material-symbols-outlined" id="themeIcon">light_mode</span></button>
-            <div class="w-8 h-8 rounded-full bg-[var(--avatar-bg)] overflow-hidden border border-[var(--border)] ml-2 ring-2 ring-[var(--primary)]/20">
+            <div class="w-8 h-8 rounded-full bg-[var(--avatar-bg)] overflow-hidden border border-[var(--glass-border)] ml-2 ring-2 ring-[var(--primary)]/20">
                 <img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY9B_LgjP8DCOsl_eWm7kIKiipUKy--pQWw-LP7g5l0fH-v9sfGhz7WtB8N_x39u45dPEJbzxTMCGokU7K6XVxeaSAJ32-3WRffwQqbpjxIanJYzDUD7GqsysvdVMG6Oj2ZZVnJZhlvkXkeV1lY4fTGfQVQ1EN4KoJBWxpH1EjIBCKSGp0FZwB1dthGIR5DzIC5f__cWTr-8tNgrDKT2UXa7jGTumcACooNqlgqkstOluVhh6FpKtiyhrIfEWvQz3QSpnCILBHm6g">
             </div>
         </div>
@@ -2508,7 +2531,7 @@
             </div>
             <div class="setting-group">
                 <label>Lyrics Translation Target Language</label>
-                <select id="targetLanguageSelect" style="width:100%;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:var(--input-bg);color:var(--text-on-surface);font-size:0.9rem;outline:none;">
+                <select id="targetLanguageSelect" style="width:100%;padding:12px 16px;border-radius:16px;border:1px solid var(--glass-border);background:var(--input-bg);color:var(--text-on-surface);font-size:0.9rem;outline:none;backdrop-filter:blur(8px);">
                     <option value="en">English</option>
                     <option value="af">Afrikaans</option>
                     <option value="sq">Albanian</option>
@@ -2624,12 +2647,8 @@
                 <label>AI Model</label>
                 <div style="display:flex;gap:8px;">
                     <select id="modelSelect" style="flex:1;"></select>
-                    <button id="refreshModelsBtn" style="padding:8px 12px;border-radius:12px;border:1px solid var(--border);background:var(--hover-bg);cursor:pointer;transition:all 0.2s;">↻</button>
+                    <button id="refreshModelsBtn" style="padding:8px 14px;border-radius:12px;border:1px solid var(--glass-border);background:var(--hover-bg);cursor:pointer;transition:all 0.2s;">↻</button>
                 </div>
-            </div>
-            <div class="setting-group">
-                <label>Offline MP3 Storage (max 20 files)</label>
-                <div style="font-size:0.8rem;color:var(--text-muted);">Upload MP3 files for offline playback. They are stored in your browser's local storage.</div>
             </div>
             <div class="settings-actions">
                 <button class="btn-cancel" id="settingsClose">Cancel</button>
@@ -2654,10 +2673,10 @@
         <!-- CHAT PANEL -->
         <div class="panel active flex-1 flex flex-col h-full" id="chatPanel">
             <div class="flex-1 overflow-y-auto chat-scroll p-4 md:p-6 flex flex-col gap-4" id="chatContainer">
-                <div class="flex justify-center my-4"><span class="bg-[var(--card-bg)] backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-[var(--text-on-surface-variant)] border border-[var(--card-border)]">Today</span></div>
+                <div class="flex justify-center my-4"><span class="glass-card px-4 py-1.5 rounded-full text-sm text-[var(--text-on-surface-variant)]">Today</span></div>
                 <div id="typingIndicator" class="flex gap-3 self-start opacity-80 hidden">
-                    <div class="w-8 h-8 rounded-full bg-[var(--ai-avatar-bg)] flex items-center justify-center border border-[var(--border)]"><span class="material-symbols-outlined text-[var(--text-primary)] text-sm">smart_toy</span></div>
-                    <div class="bg-[var(--card-bg)] backdrop-blur-sm px-4 py-3 rounded-2xl rounded-tl-sm border border-[var(--card-border)] flex items-center gap-1.5">
+                    <div class="w-8 h-8 rounded-full bg-[var(--ai-avatar-bg)] flex items-center justify-center border border-[var(--glass-border)]"><span class="material-symbols-outlined text-[var(--text-primary)] text-sm">smart_toy</span></div>
+                    <div class="glass-card px-4 py-3 rounded-2xl rounded-tl-sm flex items-center gap-1.5">
                         <div class="w-1.5 h-1.5 rounded-full bg-[var(--typing-dot)] animate-bounce"></div>
                         <div class="w-1.5 h-1.5 rounded-full bg-[var(--typing-dot)] animate-bounce" style="animation-delay:150ms"></div>
                         <div class="w-1.5 h-1.5 rounded-full bg-[var(--typing-dot)] animate-bounce" style="animation-delay:300ms"></div>
@@ -2671,14 +2690,14 @@
                     <div id="emojiPicker" class="emoji-picker">
                         <div class="emoji-grid" id="emojiGrid"></div>
                     </div>
-                    <div class="relative flex items-center bg-[var(--input-bg)] backdrop-blur-xl border border-[var(--border)] rounded-full p-1.5 shadow-sm hover:shadow-md transition-shadow" id="inputPill">
+                    <div class="relative flex items-center liquid-input-pill p-1.5" id="inputPill">
                         <button class="p-3 text-[var(--text-on-surface-variant)] hover:text-[var(--text-primary)] transition-colors rounded-full hover:bg-[var(--hover-bg)] ml-1" id="attachBtn"><span class="material-symbols-outlined">attach_file</span></button>
                         <input type="file" id="fileInput" accept="image/*,.pdf" hidden>
-                        <div id="attachmentPreviewContainer" class="hidden px-2 py-1 bg-[var(--card-bg)] backdrop-blur-sm rounded-lg text-xs flex items-center gap-1 border border-[var(--card-border)]"></div>
+                        <div id="attachmentPreviewContainer" class="hidden px-2 py-1 glass-card rounded-lg text-xs flex items-center gap-1"></div>
                         <button class="p-3 text-[var(--text-on-surface-variant)] hover:text-[var(--text-primary)] transition-colors rounded-full hover:bg-[var(--hover-bg)]" id="emojiBtn"><span class="material-symbols-outlined">sentiment_satisfied</span></button>
                         <div class="relative flex-1"><textarea id="chatInput" class="w-full bg-transparent border-none focus:ring-0 text-[var(--text-on-surface)] placeholder-[var(--text-muted)] px-2 py-2 outline-none resize-none" placeholder="Message HEX AI..." rows="1"></textarea></div>
                         <button class="p-3 text-[var(--text-on-surface-variant)] hover:text-[var(--text-primary)] transition-colors rounded-full hover:bg-[var(--hover-bg)]" id="voiceBtn"><span class="material-symbols-outlined">mic</span></button>
-                        <button class="p-3.5 bg-[var(--primary)] text-white rounded-full hover:scale-105 active:scale-95 transition-transform shadow-md" id="sendButton"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">send</span></button>
+                        <button class="p-3.5 btn-liquid rounded-full" id="sendButton"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">send</span></button>
                     </div>
                     <div class="text-center mt-2 text-xs text-[var(--text-muted)]">HEX AI can make mistakes. Verify important information.</div>
                 </div>
@@ -2688,16 +2707,16 @@
         <!-- IMAGE PANEL -->
         <div class="panel hidden flex-1 overflow-y-auto p-4 md:p-6 h-full" id="imagePanel">
             <div class="flex flex-col md:flex-row gap-6 h-full">
-                <div class="md:w-1/3 bg-[var(--card-bg)] backdrop-blur-xl rounded-2xl p-6 border border-[var(--card-border)] flex flex-col gap-4 shadow-sm">
+                <div class="md:w-1/3 glass-card p-6 flex flex-col gap-4">
                     <h2 class="text-lg font-semibold font-display flex items-center gap-2"><span class="material-symbols-outlined text-[var(--text-primary)]">image</span>Image Generation</h2>
-                    <textarea id="imgPromptInput" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-xl p-3 flex-1 min-h-[80px] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all" placeholder="Describe your vision..." rows="4"></textarea>
+                    <textarea id="imgPromptInput" class="w-full bg-[var(--input-bg)] backdrop-blur-sm border border-[var(--glass-border)] rounded-xl p-3 flex-1 min-h-[80px] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all" placeholder="Describe your vision..." rows="4"></textarea>
                     <div class="grid grid-cols-2 gap-2">
-                        <select id="aspectRatio" class="bg-[var(--input-bg)] border border-[var(--border)] rounded-xl p-2 text-sm focus:outline-none focus:border-[var(--primary)] transition-all">
+                        <select id="aspectRatio" class="bg-[var(--input-bg)] backdrop-blur-sm border border-[var(--glass-border)] rounded-xl p-2 text-sm focus:outline-none focus:border-[var(--primary)] transition-all">
                             <option value="1:1">1:1 Square</option>
                             <option value="16:9">16:9 Cinema</option>
                             <option value="9:16">9:16 Portrait</option>
                         </select>
-                        <select id="styleSelect" class="bg-[var(--input-bg)] border border-[var(--border)] rounded-xl p-2 text-sm focus:outline-none focus:border-[var(--primary)] transition-all">
+                        <select id="styleSelect" class="bg-[var(--input-bg)] backdrop-blur-sm border border-[var(--glass-border)] rounded-xl p-2 text-sm focus:outline-none focus:border-[var(--primary)] transition-all">
                             <option>Photorealistic</option>
                             <option>Cyberpunk</option>
                             <option>Abstract Art</option>
@@ -2705,23 +2724,23 @@
                             <option>Oil Painting</option>
                         </select>
                     </div>
-                    <button id="generateImageBtn" class="w-full bg-[var(--primary)] text-white px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-transform shadow-md"><span class="material-symbols-outlined">auto_awesome</span>Generate</button>
+                    <button id="generateImageBtn" class="w-full btn-liquid px-6 py-3 flex items-center justify-center gap-2"><span class="material-symbols-outlined">auto_awesome</span>Generate</button>
                 </div>
                 <div class="md:w-2/3 flex flex-col gap-4">
-                    <div id="imageGenPreviewContainer" class="flex-1 min-h-[200px] bg-[var(--card-bg)] backdrop-blur-xl rounded-2xl border border-[var(--card-border)] flex items-center justify-center text-[var(--text-muted)] shadow-sm">
+                    <div id="imageGenPreviewContainer" class="flex-1 min-h-[200px] glass-card flex items-center justify-center text-[var(--text-muted)]">
                         <div class="text-center"><i class="fas fa-image text-3xl mb-2 block opacity-60"></i>Preview</div>
                     </div>
                     <div id="genImageActions" class="flex gap-2 hidden">
-                        <button id="addToChatBtn" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white text-sm hover:scale-105 active:scale-95 transition-transform">Add to Chat</button>
-                        <button id="downloadGenImageBtn" class="px-4 py-2 rounded-full border border-[var(--border)] hover:bg-[var(--hover-bg)] transition-colors text-sm">Download</button>
-                        <button id="clearGenImageBtn" class="px-4 py-2 rounded-full border border-[var(--border)] hover:bg-[var(--hover-bg)] transition-colors text-sm">Clear</button>
+                        <button id="addToChatBtn" class="btn-liquid px-4 py-2 text-sm">Add to Chat</button>
+                        <button id="downloadGenImageBtn" class="btn-liquid-outline px-4 py-2 text-sm">Download</button>
+                        <button id="clearGenImageBtn" class="btn-liquid-outline px-4 py-2 text-sm">Clear</button>
                     </div>
                     <div class="mt-4">
                         <h3 class="text-lg font-semibold font-display mb-3">Creation Gallery</h3>
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                            <div class="aspect-square rounded-xl overflow-hidden bg-[var(--card-bg)] border border-[var(--card-border)] shadow-sm"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfqHDmv17pvKSF083I-Fw1DS1TjGwW-wqdAjhv3w-JxO4-UcI2gdxXFF3NNFDfcY6xaqcngLvyW0AejK_pJKyLVY91VMSdkKU9AZ8QdexVZhwqOR2DxKWIkowbDOMmAxI5cQDWyWe7bObb2h6GMh5rFABXi1gIrosqep0uebMLGZE1dO7QRwh8P9M-Ep_7pXFES6nuW2znDu8eXfwkpnujFwoOVkvCbhJB8eqxCR51ctnSWPFl25UFoL9aYv_NOYxZkZo_RnaWGY06" class="w-full h-full object-cover" alt="cybercity"></div>
-                            <div class="aspect-square rounded-xl overflow-hidden bg-[var(--card-bg)] border border-[var(--card-border)] shadow-sm"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1PqIpSPnXQDLR6fvaqzk9i78KaTYtpOo7zLgX2T26w-DG2rpPS7Suyp7NVZczxLV-lVQJVRCxlZECI2Cb8TeBM6YZgXOMj8yFq0MOUVQ025TfbZokQuB1qSdOURMpXv8iWp53HMy9FbPSsDdmrOtURNJHHBoatlTocTTqdhewOH2E0Ddx43ZKc8FwSifeeDjiIAWSXg-HTAKNKo4suXTzxYW5Pcl8zLgkkS7NWioVgexrfjbo-ebRKfQFpR1xyGFDkQY1njthzvUZ" class="w-full h-full object-cover" alt="chrome"></div>
-                            <div class="aspect-square rounded-xl overflow-hidden bg-[var(--card-bg)] border border-[var(--card-border)] shadow-sm"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrr18fxb9wmF5oHupeI1eAo4fGF8ZsyjkFeDI3w2ZEPGaXgdxhrnwkSU4H9GNcgMmKW-RQWKdCe8ZNduWhsT_FLr-1dy-XkB-gYdgRsF2gTLUjD_TyCM8helXjbrOJ0znnzOA3HfLE6n7OC-D00Bn6L8-XEkPut-2S91jcPEwWW7cTLjupW-hUpUQ9GIXJrlbhhGnYjaV3a4kvFDthcdXpm0RR4tfo5CRa6DGwpS8yTBkQI3fQUAG6ipKHDh6rzf09H-HqLK4iENhU" class="w-full h-full object-cover" alt="renaissance"></div>
+                            <div class="aspect-square rounded-xl overflow-hidden glass-card"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfqHDmv17pvKSF083I-Fw1DS1TjGwW-wqdAjhv3w-JxO4-UcI2gdxXFF3NNFDfcY6xaqcngLvyW0AejK_pJKyLVY91VMSdkKU9AZ8QdexVZhwqOR2DxKWIkowbDOMmAxI5cQDWyWe7bObb2h6GMh5rFABXi1gIrosqep0uebMLGZE1dO7QRwh8P9M-Ep_7pXFES6nuW2znDu8eXfwkpnujFwoOVkvCbhJB8eqxCR51ctnSWPFl25UFoL9aYv_NOYxZkZo_RnaWGY06" class="w-full h-full object-cover" alt="cybercity"></div>
+                            <div class="aspect-square rounded-xl overflow-hidden glass-card"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1PqIpSPnXQDLR6fvaqzk9i78KaTYtpOo7zLgX2T26w-DG2rpPS7Suyp7NVZczxLV-lVQJVRCxlZECI2Cb8TeBM6YZgXOMj8yFq0MOUVQ025TfbZokQuB1qSdOURMpXv8iWp53HMy9FbPSsDdmrOtURNJHHBoatlTocTTqdhewOH2E0Ddx43ZKc8FwSifeeDjiIAWSXg-HTAKNKo4suXTzxYW5Pcl8zLgkkS7NWioVgexrfjbo-ebRKfQFpR1xyGFDkQY1njthzvUZ" class="w-full h-full object-cover" alt="chrome"></div>
+                            <div class="aspect-square rounded-xl overflow-hidden glass-card"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrr18fxb9wmF5oHupeI1eAo4fGF8ZsyjkFeDI3w2ZEPGaXgdxhrnwkSU4H9GNcgMmKW-RQWKdCe8ZNduWhsT_FLr-1dy-XkB-gYdgRsF2gTLUjD_TyCM8helXjbrOJ0znnzOA3HfLE6n7OC-D00Bn6L8-XEkPut-2S91jcPEwWW7cTLjupW-hUpUQ9GIXJrlbhhGnYjaV3a4kvFDthcdXpm0RR4tfo5CRa6DGwpS8yTBkQI3fQUAG6ipKHDh6rzf09H-HqLK4iENhU" class="w-full h-full object-cover" alt="renaissance"></div>
                         </div>
                     </div>
                 </div>
@@ -2731,24 +2750,24 @@
         <!-- VIDEO PANEL -->
         <div class="panel hidden flex-1 overflow-y-auto p-4 md:p-6 h-full" id="videoPanel">
             <div class="flex flex-col md:flex-row gap-6 h-full">
-                <div class="md:w-1/3 bg-[var(--card-bg)] backdrop-blur-xl rounded-2xl p-6 border border-[var(--card-border)] flex flex-col gap-4 shadow-sm">
+                <div class="md:w-1/3 glass-card p-6 flex flex-col gap-4">
                     <h2 class="text-lg font-semibold font-display flex items-center gap-2"><span class="material-symbols-outlined text-[var(--text-primary)]">videocam</span>Video Generation</h2>
-                    <textarea id="videoPromptInput" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-xl p-3 flex-1 min-h-[80px] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all" placeholder="Describe movement and scene..." rows="3">neon city at night, cyberpunk, cinematic slow pan</textarea>
+                    <textarea id="videoPromptInput" class="w-full bg-[var(--input-bg)] backdrop-blur-sm border border-[var(--glass-border)] rounded-xl p-3 flex-1 min-h-[80px] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all" placeholder="Describe movement and scene..." rows="3">neon city at night, cyberpunk, cinematic slow pan</textarea>
                     <div class="flex gap-2">
-                        <button class="flex-1 py-2 rounded-xl bg-[var(--card-bg)] border border-[var(--border)] duration-btn active-dur hover:bg-[var(--hover-bg)] transition-colors" data-dur="3">3s</button>
-                        <button class="flex-1 py-2 rounded-xl bg-[var(--card-bg)] border border-[var(--border)] duration-btn hover:bg-[var(--hover-bg)] transition-colors" data-dur="5">5s</button>
-                        <button class="flex-1 py-2 rounded-xl bg-[var(--card-bg)] border border-[var(--border)] duration-btn hover:bg-[var(--hover-bg)] transition-colors" data-dur="8">8s</button>
+                        <button class="flex-1 py-2 rounded-xl glass-card duration-btn active-dur hover:bg-[var(--hover-bg)] transition-colors" data-dur="3">3s</button>
+                        <button class="flex-1 py-2 rounded-xl glass-card duration-btn hover:bg-[var(--hover-bg)] transition-colors" data-dur="5">5s</button>
+                        <button class="flex-1 py-2 rounded-xl glass-card duration-btn hover:bg-[var(--hover-bg)] transition-colors" data-dur="8">8s</button>
                     </div>
                     <p class="text-sm text-[var(--text-muted)]">An AI image is generated first, then animated into a video loop.</p>
-                    <button id="generateVideoBtn" class="w-full bg-[var(--primary)] text-white px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-transform shadow-md"><span class="material-symbols-outlined">movie_edit</span>Generate</button>
+                    <button id="generateVideoBtn" class="w-full btn-liquid px-6 py-3 flex items-center justify-center gap-2"><span class="material-symbols-outlined">movie_edit</span>Generate</button>
                 </div>
                 <div class="md:w-2/3 flex flex-col gap-4 items-center justify-center">
-                    <canvas id="videoPreviewCanvas" width="512" height="512" class="hidden w-full max-w-[400px] rounded-2xl border border-[var(--card-border)] shadow-sm"></canvas>
-                    <video id="videoPreview" controls loop class="hidden w-full max-w-[400px] rounded-2xl border border-[var(--card-border)] shadow-sm"></video>
+                    <canvas id="videoPreviewCanvas" width="512" height="512" class="hidden w-full max-w-[400px] rounded-2xl border border-[var(--glass-border)] shadow-sm"></canvas>
+                    <video id="videoPreview" controls loop class="hidden w-full max-w-[400px] rounded-2xl border border-[var(--glass-border)] shadow-sm"></video>
                     <div id="videoGenStatus" class="text-sm text-[var(--text-muted)] text-center"><i class="fas fa-film text-2xl block mb-2 opacity-60"></i>Preview</div>
                     <div id="videoActions" class="flex gap-2 hidden">
-                        <button id="downloadVideoBtn" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white text-sm hover:scale-105 active:scale-95 transition-transform">Download</button>
-                        <button id="clearVideoBtn" class="px-4 py-2 rounded-full border border-[var(--border)] hover:bg-[var(--hover-bg)] transition-colors text-sm">Clear</button>
+                        <button id="downloadVideoBtn" class="btn-liquid px-4 py-2 text-sm">Download</button>
+                        <button id="clearVideoBtn" class="btn-liquid-outline px-4 py-2 text-sm">Clear</button>
                     </div>
                 </div>
             </div>
@@ -2756,8 +2775,6 @@
 
         <!-- MUSIC PANEL -->
         <div class="panel hidden flex-1 p-2 md:p-4 overflow-y-auto h-full" id="musicPanel">
-
-            <!-- Music Tabs -->
             <div class="music-tabs">
                 <button class="active" data-music-tab="youtube"><i class='bx bxl-youtube'></i> YouTube</button>
                 <button data-music-tab="offline"><i class='bx bx-music'></i> Offline</button>
@@ -2769,20 +2786,16 @@
                     <div class="yt-player-card" id="playerCard">
                         <div class="album-art-container">
                             <img id="albumArt" src="https://via.placeholder.com/300" alt="Album Art" />
-                            <div id="videoPlayerInAlbumArt"></div>
                         </div>
-
                         <div id="nowPlaying">
                             <div class="song-title">No Song</div>
                             <div class="author-name">&nbsp;</div>
                         </div>
-
                         <div class="controls">
                             <button id="prevBtn" title="Previous"><i class='bx bx-skip-previous'></i></button>
                             <button id="playPauseBtn" title="Play/Pause"><i class='bx bx-play' style='color:white;font-size:26px;'></i></button>
                             <button id="nextBtn" title="Next"><i class='bx bx-skip-next'></i></button>
                         </div>
-
                         <div class="progress-container">
                             <div class="progress" id="progressBar">
                                 <div id="progress" style="width:0%"></div>
@@ -2792,7 +2805,6 @@
                                 <span id="totalTime">0:00</span>
                             </div>
                         </div>
-
                         <div class="volume-container">
                             <span class="volume-icon"><i class='bx bx-volume-full'></i></span>
                             <div class="volume-bar-container">
@@ -2801,7 +2813,6 @@
                                 <input type="range" id="volumeControl" min="0" max="100" value="70" />
                             </div>
                         </div>
-
                         <div class="extra-controls">
                             <div class="auto-play-toggle">
                                 <span>Auto-Play</span>
@@ -2818,7 +2829,6 @@
                                 <div class="btn-group btn-group-sm" id="albumArtDisplayToggle">
                                     <button class="btn active" data-mode="spin">Spin</button>
                                     <button class="btn btn-outline-primary" data-mode="none">None</button>
-                                    <button class="btn btn-outline-primary" data-mode="video">Video</button>
                                 </div>
                             </div>
                             <div class="sponsor-toggle">
@@ -2829,7 +2839,6 @@
                                 </label>
                             </div>
                         </div>
-
                         <div id="errorMessage" style="display:none;"></div>
                         <div id="playerContainer" style="display:none;">
                             <div id="player"></div>
@@ -2843,7 +2852,6 @@
                                 <button class="btn btn-outline-primary" id="showLyricsBtn"><i class='bi bi-music-note-list'></i> <span class="btn-text">Lyrics</span></button>
                                 <button class="btn btn-outline-primary" id="showVisualizerBtn"><i class='bx bx-bar-chart-alt-2'></i> <span class="btn-text">Visualizer</span></button>
                             </div>
-
                             <div id="playlistContent">
                                 <div id="playlistSearchContainer">
                                     <div class="input-group">
@@ -2851,12 +2859,10 @@
                                         <button id="clearPlaylistSearchBtn" class="d-none"><i class='bx bx-x'></i></button>
                                     </div>
                                 </div>
-
                                 <div class="playlist-import">
                                     <input type="text" id="playlistImportInput" placeholder="YouTube Music playlist URL or ID..." />
                                     <button id="importPlaylistBtn"><i class='bx bx-import'></i> Import</button>
                                 </div>
-
                                 <div id="mp3UploadSection">
                                     <div class="mp3-drop-area" id="mp3DropArea">
                                         <i class="bx bx-upload"></i>
@@ -2865,11 +2871,9 @@
                                     </div>
                                     <ul id="mp3List"></ul>
                                 </div>
-
                                 <div id="songListContainer">
                                     <ul id="songList"></ul>
                                 </div>
-
                                 <div id="youtubeSearchSection">
                                     <div class="search-input-group">
                                         <input type="text" id="youtubeSearchInput" placeholder="Search YouTube for songs..." />
@@ -2882,7 +2886,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div id="visualizerContainer">
                                 <canvas id="vizCanvas"></canvas>
                                 <div class="viz-overlay" id="vizOverlay">
@@ -2918,7 +2921,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div id="lyricsContainer">
                     <div id="lyricsHeader">
                         <h6 id="lyricsTitle">Lyrics</h6>
@@ -2987,9 +2989,7 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
     </main>
 
     <!-- BOTTOM NAV (mobile) -->
@@ -3017,7 +3017,7 @@
 
     <script>
         // ========================================================================
-        //  HEX AI – Complete Studio with YouTube Music Player + Dual Visualizer
+        //  HEX AI – Complete Studio with Liquid UX + YouTube Music + Dual Visualizer
         // ========================================================================
 
         (function() {
@@ -3438,16 +3438,16 @@
                             if (att.type.startsWith('image/')) {
                                 const url = att.previewUrl || URL.createObjectURL(att.file);
                                 attachmentHtml +=
-                                    `<img src="${url}" class="max-w-[200px] w-full rounded-lg mb-2 object-cover border border-[var(--card-border)] shadow-sm" alt="attachment">`;
+                                    `<img src="${url}" class="max-w-[200px] w-full rounded-lg mb-2 object-cover border border-[var(--glass-border)] shadow-sm" alt="attachment">`;
                             } else if (att.type === 'application/pdf') {
                                 const textContent = await this.extractPDFText(att.file);
                                 attachmentHtml +=
-                                    `<div class="p-2 rounded-lg bg-[var(--card-bg)] border border-[var(--card-border)] mb-2 text-sm backdrop-blur-sm"><span class="material-symbols-outlined text-sm">picture_as_pdf</span> ${att.name}</div>`;
+                                    `<div class="p-2 rounded-lg glass-card mb-2 text-sm"><span class="material-symbols-outlined text-sm">picture_as_pdf</span> ${att.name}</div>`;
                                 if (textContent) userContent +=
                                     `\n\n📄 PDF Content:\n${textContent.substring(0, 300)}...`;
                             } else {
                                 attachmentHtml +=
-                                    `<div class="p-2 rounded-lg bg-[var(--card-bg)] border border-[var(--card-border)] mb-2 text-sm backdrop-blur-sm"><span class="material-symbols-outlined text-sm">insert_drive_file</span> ${att.name}</div>`;
+                                    `<div class="p-2 rounded-lg glass-card mb-2 text-sm"><span class="material-symbols-outlined text-sm">insert_drive_file</span> ${att.name}</div>`;
                             }
                         }
                         this.pendingAttachments = [];
@@ -3531,10 +3531,10 @@
                         '<span class="material-symbols-outlined text-[var(--text-primary)]">smart_toy</span>';
 
                     wrapper.innerHTML = `
-                <div class="w-8 h-8 rounded-full flex-shrink-0 ${isUser ? 'overflow-hidden border border-[var(--border)] ring-2 ring-[var(--primary)]/20' : 'bg-[var(--ai-avatar-bg)] flex items-center justify-center border border-[var(--border)]'}">
+                <div class="w-8 h-8 rounded-full flex-shrink-0 ${isUser ? 'overflow-hidden border border-[var(--glass-border)] ring-2 ring-[var(--primary)]/20' : 'bg-[var(--ai-avatar-bg)] flex items-center justify-center border border-[var(--glass-border)]'}">
                   ${avatarHTML}
                 </div>
-                <div class="${isUser ? 'bg-gradient-to-r from-[var(--primary)] to-[var(--primary-container)] text-white' : 'bg-[var(--card-bg)] backdrop-blur-sm border border-[var(--card-border)]'} p-4 rounded-2xl ${isUser ? 'rounded-tr-sm' : 'rounded-tl-sm'} shadow-sm max-w-full overflow-hidden">
+                <div class="${isUser ? 'bg-gradient-to-r from-[var(--primary)] to-[var(--primary-container)] text-white' : 'glass-card'} p-4 rounded-2xl ${isUser ? 'rounded-tr-sm' : 'rounded-tl-sm'} shadow-sm max-w-full overflow-hidden">
                   <div class="message-content break-words">${processed}</div>
                   <div class="message-actions">
                     <button data-action="copy" data-msgid="${msgId}" title="Copy">
@@ -4393,8 +4393,6 @@
                                 onReady: (e) => {
                                     e.target.setVolume(currentVolume);
                                     updateVolumeUI(currentVolume);
-                                    if (albumArtDisplayMode === 'video')
-                                        initializeVideoPlayerInAlbumArt(videoId);
                                 },
                                 onStateChange: handlePlayerStateChange,
                                 onError: handleVideoError
@@ -4405,7 +4403,6 @@
                     player.loadVideoById(videoId);
                     player.setVolume(currentVolume);
                     player.playVideo();
-                    if (albumArtDisplayMode === 'video') initializeVideoPlayerInAlbumArt(videoId);
                 }
 
                 selectedVideoId = videoId;
@@ -4692,16 +4689,13 @@
                     this.classList.add('active');
                     albumArtDisplayMode = mode;
                     applyAlbumArtDisplayMode();
-                    updateVideoPlayerOnModeChange();
                 });
             });
 
             function applyAlbumArtDisplayMode() {
                 const art = document.getElementById('albumArt');
-                const vidContainer = document.getElementById('videoPlayerInAlbumArt');
-                if (!art || !vidContainer) return;
-                document.body.classList.remove('album-art-spin-mode', 'album-art-none-mode',
-                    'album-art-video-mode');
+                if (!art) return;
+                document.body.classList.remove('album-art-spin-mode', 'album-art-none-mode');
                 const curId = player ? player.getVideoData?.()?.video_id : selectedVideoId;
                 const curSong = playlist.find(s => s.videoId === curId);
                 const curUrl = curSong ? curSong.albumArt : art.src;
@@ -4711,7 +4705,6 @@
                         document.body.classList.add('album-art-spin-mode');
                         albumArtSpinEnabled = true;
                         art.style.display = 'block';
-                        vidContainer.style.display = 'none';
                         if (curSong && art.src !== curUrl) art.src = curUrl;
                         if (playing) { art.classList.remove('rotate-paused');
                             art.classList.add('rotate'); } else art.classList.remove('rotate', 'rotate-paused');
@@ -4720,54 +4713,15 @@
                         document.body.classList.add('album-art-none-mode');
                         albumArtSpinEnabled = false;
                         art.style.display = 'block';
-                        vidContainer.style.display = 'none';
                         if (curSong && art.src !== curUrl) art.src = curUrl;
                         art.classList.remove('rotate', 'rotate-paused');
-                        break;
-                    case 'video':
-                        document.body.classList.add('album-art-video-mode');
-                        albumArtSpinEnabled = false;
-                        art.style.display = 'none';
-                        vidContainer.style.display = 'block';
-                        art.classList.remove('rotate', 'rotate-paused');
-                        initializeVideoPlayerInAlbumArt(curId);
                         break;
                 }
                 localStorage.setItem('albumArtDisplayMode', albumArtDisplayMode);
             }
 
             function initializeVideoPlayerInAlbumArt(videoId) {
-                const container = document.getElementById('videoPlayerInAlbumArt');
-                if (!container || !videoId) return;
-                if (typeof YT !== 'undefined' && YT.Player) {
-                    const existing = container.querySelector('#player');
-                    if (existing && existing.id && window[existing.id]) {
-                        const vp = window[existing.id];
-                        if (vp.loadVideoById) { vp.loadVideoById(videoId);
-                            vp.setVolume(currentVolume); }
-                    } else {
-                        container.innerHTML = '<div id="playerInAlbumArt"></div>';
-                        const vp = new YT.Player('playerInAlbumArt', {
-                            videoId: videoId,
-                            playerVars: { autoplay: playing ? 1 : 0, controls: 0, modestbranding: 1,
-                                showinfo: 0, rel: 0, playsinline: 1 },
-                            events: {
-                                onReady: (e) => { e.target.setVolume(currentVolume);
-                                    e.target.playVideo(); }
-                            }
-                        });
-                        window.playerInAlbumArt = vp;
-                    }
-                } else {
-                    setTimeout(() => initializeVideoPlayerInAlbumArt(videoId), 100);
-                }
-            }
-
-            function updateVideoPlayerOnModeChange() {
-                const curId = player ? player.getVideoData?.()?.video_id : selectedVideoId;
-                if (albumArtDisplayMode === 'video' && curId) {
-                    setTimeout(() => initializeVideoPlayerInAlbumArt(curId), 50);
-                }
+                // placeholder for video mode – not fully implemented in this version
             }
 
             function parseLrc(text) {
@@ -7582,7 +7536,7 @@
                 });
             }
 
-            console.log('🚀 HEX AI Studio with YouTube Music Player + Dual Visualizer + SponsorBlock');
+            console.log('🚀 HEX AI Studio with Liquid UX + YouTube Music + Dual Visualizer + SponsorBlock');
 
         })();
     </script>
