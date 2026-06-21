@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>HEX AI · Music Studio</title>
 
     <!-- Fonts & Icons -->
@@ -849,14 +848,6 @@
         #albumArt.rotate-paused {
             animation: spin-slow-paused 8s linear infinite;
         }
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
 
         .controls {
             display: flex;
@@ -1016,8 +1007,7 @@
             margin-top: 8px;
         }
         .extra-controls .auto-play-toggle,
-        .extra-controls .repeat-toggle,
-        .extra-controls .sponsor-toggle {
+        .extra-controls .repeat-toggle {
             display: flex;
             align-items: center;
             gap: 6px;
@@ -1676,746 +1666,6 @@
             box-shadow: 0 2px 12px rgba(79, 55, 138, 0.2);
         }
 
-        /* ===== MP3 UPLOAD ===== */
-        .mp3-drop-area {
-            border: 2px dashed var(--border);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 8px;
-            background: var(--input-bg);
-        }
-        .mp3-drop-area:hover {
-            border-color: var(--primary);
-            background: var(--hover-bg);
-        }
-        .mp3-drop-area.dragover {
-            border-color: var(--primary);
-            background: var(--hover-bg);
-            transform: scale(1.01);
-        }
-        .mp3-drop-area i {
-            font-size: 1.8rem;
-            color: var(--text-muted);
-            display: block;
-            margin-bottom: 4px;
-        }
-        .mp3-drop-area span {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-        #mp3List {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            max-height: 120px;
-            overflow-y: auto;
-        }
-        #mp3List li {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 8px;
-            border-radius: 8px;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.8rem;
-            transition: all 0.2s;
-        }
-        #mp3List li:last-child {
-            border-bottom: none;
-        }
-        #mp3List li:hover {
-            background: var(--hover-bg);
-        }
-        .mp3-play-btn {
-            width: 28px;
-            height: 28px;
-            border: none;
-            border-radius: 8px;
-            background: var(--primary);
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .mp3-play-btn:hover {
-            transform: scale(1.05);
-        }
-        .mp3-name {
-            flex: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .mp3-remove-btn {
-            width: 28px;
-            height: 28px;
-            border: none;
-            border-radius: 8px;
-            background: transparent;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .mp3-remove-btn:hover {
-            background: rgba(239, 68, 68, 0.15);
-            color: #ef4444;
-        }
-
-        /* ===== OFFLINE VISUALIZER ===== */
-        #offlineTab {
-            display: none;
-            flex-direction: column;
-            height: 100%;
-            width: 100%;
-            position: relative;
-            background: #0e0d10;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            min-height: 480px;
-        }
-        #offlineTab.active {
-            display: flex;
-        }
-        #offlineCanvas {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-            border-radius: var(--radius-lg);
-        }
-        .offline-ui-top {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 16px;
-            background: rgba(28, 27, 31, 0.7);
-            backdrop-filter: blur(24px) saturate(1.4);
-            -webkit-backdrop-filter: blur(24px) saturate(1.4);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 50px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            margin: 12px auto 0;
-            width: fit-content;
-            max-width: 92%;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .offline-ui-top:hover {
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 60px rgba(207, 188, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.12);
-        }
-        .offline-file-label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 14px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 30px;
-            color: #e8e0e8;
-            font-size: 0.75rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-        .offline-file-label:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 24px rgba(207, 188, 255, 0.15);
-            transform: translateY(-1px);
-        }
-        .offline-file-label:active {
-            transform: scale(0.96);
-        }
-        .offline-status-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            flex-shrink: 0;
-            transition: all 0.4s;
-        }
-        .offline-status-dot.idle {
-            background: #94909c;
-            box-shadow: 0 0 8px #94909c;
-        }
-        .offline-status-dot.file {
-            background: #eeb8c8;
-            box-shadow: 0 0 10px #eeb8c8;
-            animation: pulse-dot 1.5s ease-in-out infinite;
-        }
-        .offline-status-dot.playing {
-            background: #cfbcff;
-            box-shadow: 0 0 10px #cfbcff;
-            animation: pulse-dot 1s ease-in-out infinite;
-        }
-        @keyframes pulse-dot {
-            0%,
-            100% {
-                opacity: 0.6;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.2);
-            }
-        }
-        .offline-status-text {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.5);
-            letter-spacing: 0.3px;
-            white-space: nowrap;
-        }
-        .offline-ui-bottom {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            background: rgba(28, 27, 31, 0.7);
-            backdrop-filter: blur(24px) saturate(1.4);
-            -webkit-backdrop-filter: blur(24px) saturate(1.4);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 50px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            margin: 6px auto 12px;
-            width: fit-content;
-            max-width: 95%;
-            justify-content: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            flex-wrap: wrap;
-        }
-        .offline-ui-bottom:hover {
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 60px rgba(207, 188, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.12);
-        }
-        .offline-btn-play {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.06);
-            color: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.25s;
-            flex-shrink: 0;
-            outline: none;
-        }
-        .offline-btn-play:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 0 20px rgba(207, 188, 255, 0.15);
-            transform: scale(1.06);
-        }
-        .offline-btn-play:active {
-            transform: scale(0.93);
-        }
-        .offline-progress-wrap {
-            flex: 1;
-            min-width: 60px;
-            max-width: 200px;
-            height: 22px;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            position: relative;
-        }
-        .offline-progress-track {
-            width: 100%;
-            height: 4px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.08);
-            position: relative;
-            overflow: visible;
-            transition: height 0.2s;
-        }
-        .offline-progress-wrap:hover .offline-progress-track {
-            height: 6px;
-        }
-        .offline-progress-fill {
-            height: 100%;
-            border-radius: 4px;
-            background: linear-gradient(90deg, #cfbcff, #eeb8c8, #a88be0);
-            background-size: 200% 100%;
-            animation: shimmer 3s linear infinite;
-            transition: width 0.08s linear;
-            position: relative;
-        }
-        @keyframes shimmer {
-            0% {
-                background-position: 0% 50%;
-            }
-            100% {
-                background-position: 200% 50%;
-            }
-        }
-        .offline-progress-thumb {
-            position: absolute;
-            right: -6px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #fff;
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
-            opacity: 0;
-            transition: opacity 0.2s;
-            pointer-events: none;
-        }
-        .offline-progress-wrap:hover .offline-progress-thumb {
-            opacity: 1;
-        }
-        .offline-time-display {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.5);
-            white-space: nowrap;
-            letter-spacing: 0.3px;
-            flex-shrink: 0;
-            min-width: 52px;
-            text-align: center;
-            font-variant-numeric: tabular-nums;
-            font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
-        }
-        .offline-volume-wrap {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-shrink: 0;
-        }
-        .offline-volume-icon {
-            width: 16px;
-            height: 16px;
-            color: rgba(255, 255, 255, 0.5);
-            flex-shrink: 0;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .offline-volume-icon:hover {
-            color: #fff;
-        }
-        .offline-volume-slider {
-            -webkit-appearance: none;
-            width: 44px;
-            height: 4px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.08);
-            outline: none;
-            cursor: pointer;
-            transition: height 0.2s;
-        }
-        .offline-volume-slider:hover {
-            height: 6px;
-        }
-        .offline-volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #fff;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-        .offline-volume-slider::-webkit-slider-thumb:active {
-            transform: scale(1.3);
-        }
-        .offline-volume-slider::-moz-range-thumb {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #fff;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-        .offline-overlay {
-            position: absolute;
-            inset: 0;
-            z-index: 20;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(28, 27, 31, 0.7);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            cursor: pointer;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-            border-radius: var(--radius-lg);
-        }
-        .offline-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-        .offline-overlay-card {
-            background: rgba(28, 27, 31, 0.6);
-            backdrop-filter: blur(24px) saturate(1.4);
-            -webkit-backdrop-filter: blur(24px) saturate(1.4);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: var(--radius-lg);
-            padding: 28px 32px;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            animation: float-card 4s ease-in-out infinite;
-        }
-        @keyframes float-card {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-6px);
-            }
-        }
-        .offline-overlay-icon {
-            font-size: 2.8rem;
-            margin-bottom: 8px;
-            animation: pulse-icon 2s ease-in-out infinite;
-            display: block;
-        }
-        @keyframes pulse-icon {
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 0.9;
-            }
-            50% {
-                transform: scale(1.10);
-                opacity: 1;
-            }
-        }
-        .offline-overlay-title {
-            color: #fff;
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-            margin-bottom: 2px;
-        }
-        .offline-overlay-sub {
-            color: rgba(255, 255, 255, 0.45);
-            font-size: 0.8rem;
-            letter-spacing: 0.2px;
-        }
-
-        /* ===== PANELS ===== */
-        .panel {
-            animation: panelFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        @keyframes panelFade {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ===== BOTTOM NAV ===== */
-        #bottomNav {
-            background: var(--header-bg);
-            backdrop-filter: blur(24px) saturate(1.6);
-            -webkit-backdrop-filter: blur(24px) saturate(1.6);
-            border: 1px solid var(--header-border);
-            box-shadow: var(--shadow-lg);
-            transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .yt-music-row {
-                flex-direction: column;
-            }
-            .yt-player-card {
-                flex: 1 1 auto;
-                min-width: 0;
-                padding: 16px 14px;
-            }
-            .playlist-col {
-                flex: 1 1 auto;
-                min-width: 0;
-            }
-            .playlist-card {
-                padding: 12px 14px;
-            }
-            .album-art-container {
-                max-width: 160px;
-            }
-            .controls button {
-                width: 44px;
-                height: 44px;
-                font-size: 1.1rem;
-            }
-            .settings-panel {
-                padding: 24px 20px;
-                width: 96%;
-                max-height: 92vh;
-            }
-            #toast {
-                bottom: 80px;
-                padding: 10px 18px;
-                font-size: 0.8rem;
-                max-width: 92%;
-            }
-            #lyricsText {
-                max-height: 200px;
-                font-size: 0.8rem;
-            }
-            .offline-ui-top {
-                padding: 4px 10px;
-                gap: 4px;
-            }
-            .offline-file-label {
-                padding: 3px 10px;
-                font-size: 0.65rem;
-            }
-            .offline-ui-bottom {
-                padding: 4px 10px;
-                gap: 4px;
-            }
-            .offline-btn-play {
-                width: 28px;
-                height: 28px;
-            }
-            .offline-time-display {
-                font-size: 0.6rem;
-                min-width: 44px;
-            }
-            .offline-volume-slider {
-                width: 32px;
-            }
-            .offline-overlay-card {
-                padding: 20px 18px;
-            }
-            .offline-overlay-icon {
-                font-size: 2rem;
-            }
-            .offline-overlay-title {
-                font-size: 0.95rem;
-            }
-        }
-        @media (max-width: 480px) {
-            .album-art-container {
-                max-width: 120px;
-            }
-            .controls button {
-                width: 38px;
-                height: 38px;
-                font-size: 0.95rem;
-            }
-            .extra-controls {
-                gap: 6px;
-            }
-            .extra-controls .auto-play-toggle,
-            .extra-controls .repeat-toggle,
-            .extra-controls .sponsor-toggle {
-                font-size: 0.7rem;
-            }
-            .playlist-import {
-                flex-wrap: wrap;
-            }
-            .playlist-import input {
-                min-width: 120px;
-            }
-            .album-art-display-toggle .btn-group .btn {
-                font-size: 0.65rem;
-                padding: 3px 8px;
-            }
-        }
-
-        /* ===== MISC ===== */
-        .refresh-spinner {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        .gen-preview-img {
-            width: 100%;
-            max-width: 400px;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-md);
-            margin: 0 auto;
-            display: block;
-        }
-        #videoGenOverlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9998;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        #videoGenOverlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .gen-loader {
-            width: 60px;
-            height: 60px;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-        .gen-status {
-            color: #fff;
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 12px;
-        }
-        .gen-progress {
-            width: 280px;
-            max-width: 80%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .gen-progress-fill {
-            height: 100%;
-            background: var(--primary-gradient);
-            border-radius: 4px;
-            transition: width 0.3s;
-            width: 0%;
-        }
-        .gen-percent {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.8rem;
-            margin-top: 8px;
-            font-variant-numeric: tabular-nums;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* ===== MODEL DROPDOWN ===== */
-        #modelDropdown {
-            background: var(--card-bg);
-            backdrop-filter: blur(24px) saturate(1.6);
-            -webkit-backdrop-filter: blur(24px) saturate(1.6);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-lg);
-            border-radius: var(--radius-md);
-            padding: 6px;
-            min-width: 200px;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        #modelDropdown>div {
-            padding: 8px 14px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.15s;
-            font-size: 0.85rem;
-        }
-        #modelDropdown>div:hover {
-            background: var(--hover-bg);
-        }
-        #modelDropdown>div.bg-\[var\(--hover-bg\)\] {
-            background: var(--hover-bg);
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        /* ===== IMAGE GEN ===== */
-        #imageGenPreviewContainer {
-            min-height: 240px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius-md);
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s;
-        }
-        #genImageActions button {
-            padding: 8px 20px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-on-surface-variant);
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.25s;
-        }
-        #genImageActions button:hover {
-            background: var(--hover-bg);
-        }
-        #genImageActions button:first-child {
-            background: var(--primary-gradient);
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 2px 12px rgba(79, 55, 138, 0.2);
-        }
-        #genImageActions button:first-child:hover {
-            transform: scale(1.03);
-        }
-
-        /* ===== VIDEO GEN ===== */
-        #videoPreviewCanvas,
-        #videoPreview {
-            border-radius: var(--radius-md);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-md);
-            max-width: 100%;
-        }
-        #videoActions button {
-            padding: 8px 20px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-on-surface-variant);
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.25s;
-        }
-        #videoActions button:hover {
-            background: var(--hover-bg);
-        }
-        #videoActions button:first-child {
-            background: var(--primary-gradient);
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 2px 12px rgba(79, 55, 138, 0.2);
-        }
-        #videoActions button:first-child:hover {
-            transform: scale(1.03);
-        }
-
         /* ===== VIDEO PLAYER IN ALBUM ART ===== */
         #videoPlayerInAlbumArt {
             display: none;
@@ -2484,15 +1734,12 @@
             font-size: 1rem;
         }
         #ytMusicContainer {
-            display: none;
+            display: flex;
             flex-direction: column;
             gap: 12px;
             height: 100%;
             overflow-y: auto;
             padding: 2px;
-        }
-        #ytMusicContainer.active {
-            display: flex;
         }
 
         /* ===== DARK MODE ADJUSTMENTS ===== */
@@ -2523,6 +1770,11 @@
         .dark #inputPill textarea::placeholder {
             color: var(--text-muted);
         }
+        .dark .gtranslate_wrapper .gt_selector {
+            background: var(--input-bg) !important;
+            color: var(--text-on-surface) !important;
+            border-color: var(--border) !important;
+        }
     </style>
 </head>
 
@@ -2542,25 +1794,11 @@
             <h1 class="text-xl font-bold font-sans text-[var(--text-primary)] tracking-tight">HEX AI</h1>
             <span class="w-2.5 h-2.5 rounded-full bg-[var(--status-green)] animate-pulse-glow shadow-[0_0_8px_var(--status-green-glow)]"></span>
         </div>
-        <nav class="hidden md:flex items-center gap-2" id="desktopNav">
-            <button class="nav-btn active-nav font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors text-[var(--text-primary)]" data-panel="chat">Chat</button>
-            <button class="nav-btn font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors text-[var(--text-on-surface-variant)]" data-panel="image">Image</button>
-            <button class="nav-btn font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors text-[var(--text-on-surface-variant)]" data-panel="video">Video</button>
-            <button class="nav-btn font-medium px-4 py-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors text-[var(--text-on-surface-variant)]" data-panel="music">Music</button>
-        </nav>
-        <div class="flex items-center gap-2">
-            <div class="relative">
-                <button id="modelBadgeBtn" class="text-[var(--text-on-surface-variant)] p-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors flex items-center gap-1">
-                    <span class="material-symbols-outlined" style="font-size:22px;">smart_toy</span>
-                    <span id="modelBadgeText" class="hidden sm:inline text-sm font-medium">Model</span>
-                </button>
-                <div id="modelDropdown" class="absolute top-12 right-0 z-50 hidden"></div>
-            </div>
+        <div class="flex items-center gap-3">
+            <!-- GTranslate -->
+            <div class="gtranslate_wrapper"></div>
             <button id="settingsBtn" class="text-[var(--text-on-surface-variant)] p-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors"><span class="material-symbols-outlined" style="font-size:22px;">settings</span></button>
             <button id="themeToggle" class="text-[var(--text-on-surface-variant)] p-2 rounded-full hover:bg-[var(--hover-bg)] transition-colors"><span class="material-symbols-outlined" id="themeIcon" style="font-size:22px;">light_mode</span></button>
-            <div class="w-8 h-8 rounded-full bg-[var(--avatar-bg)] overflow-hidden border border-[var(--border)] ml-2 ring-2 ring-[var(--glass-border)]">
-                <img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY9B_LgjP8DCOsl_eWm7kIKiipUKy--pQWw-LP7g5l0fH-v9sfGhz7WtB8N_x39u45dPEJbzxTMCGokU7K6XVxeaSAJ32-3WRffwQqbpjxIanJYzDUD7GqsysvdVMG6Oj2ZZVnJZhlvkXkeV1lY4fTGfQVQ1EN4KoJBWxpH1EjIBCKSGp0FZwB1dthGIR5DzIC5f__cWTr-8tNgrDKT2UXa7jGTumcACooNqlgqkstOluVhh6FpKtiyhrIfEWvQz3QSpnCILBHm6g">
-            </div>
         </div>
     </header>
 
@@ -2666,37 +1904,31 @@
                 <p style="font-size:0.75rem;color:var(--text-muted);margin-top:3px;">Lyrics will be auto-translated to this language when available.</p>
             </div>
             <div class="setting-group">
-                <label>Lyrics Translation Service</label>
-                <select id="translationServiceSelect">
-                    <option value="auto">Automatic (Google Translate)</option>
-                    <option value="mymemory">MyMemory API</option>
+                <label>Chat Language (Real-time responses)</label>
+                <select id="chatLanguageSelect" style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--input-bg);color:var(--text-on-surface);font-size:0.9rem;outline:none;">
+                    <option value="en">English</option>
+                    <option value="zh">中文</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="ru">Русский</option>
+                    <option value="ar">العربية</option>
+                    <option value="hi">हिन्दी</option>
+                    <option value="pt">Português</option>
+                    <option value="it">Italiano</option>
+                    <option value="nl">Nederlands</option>
+                    <option value="pl">Polski</option>
+                    <option value="sv">Svenska</option>
+                    <option value="tr">Türkçe</option>
+                    <option value="vi">Tiếng Việt</option>
+                    <option value="th">ไทย</option>
+                    <option value="id">Bahasa Indonesia</option>
+                    <option value="ms">Bahasa Melayu</option>
+                    <option value="fil">Filipino</option>
                 </select>
-            </div>
-            <div class="setting-group">
-                <label>AI Provider</label>
-                <select id="providerSelect">
-                    <option value="openrouter">Open Router (Free Models)</option>
-                    <option value="gemini">Gemini API</option>
-                </select>
-            </div>
-            <div id="openRouterKeySection" class="setting-group">
-                <label>OpenRouter API Key</label>
-                <input type="password" id="openRouterKey" placeholder="sk-or-..." />
-            </div>
-            <div id="geminiKeySection" class="setting-group" style="display:none">
-                <label>Gemini API Key</label>
-                <input type="password" id="geminiKey" placeholder="AIza..." />
-            </div>
-            <div class="setting-group">
-                <label>AI Model</label>
-                <div style="display:flex;gap:8px;">
-                    <select id="modelSelect" style="flex:1;"></select>
-                    <button id="refreshModelsBtn" style="padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--hover-bg);cursor:pointer;transition:all 0.2s;">↻</button>
-                </div>
-            </div>
-            <div class="setting-group">
-                <label>Offline MP3 Storage (max 20 files)</label>
-                <div style="font-size:0.8rem;color:var(--text-muted);">Upload MP3 files for offline playback. They are stored in your browser's local storage.</div>
+                <p style="font-size:0.75rem;color:var(--text-muted);margin-top:3px;">AI responses will be delivered in your chosen language in real time.</p>
             </div>
             <div class="settings-actions">
                 <button class="btn-cancel" id="settingsClose">Cancel</button>
@@ -2705,122 +1937,11 @@
         </div>
     </div>
 
-    <!-- VIDEO GENERATION OVERLAY -->
-    <div id="videoGenOverlay">
-        <div class="gen-loader"></div>
-        <div class="gen-status" id="genStatusText">Generating video...</div>
-        <div class="gen-progress">
-            <div class="gen-progress-fill" id="genProgressFill"></div>
-        </div>
-        <div class="gen-percent" id="genPercentText">0%</div>
-    </div>
-
     <!-- MAIN -->
     <main class="flex-1 flex flex-col pt-16 relative w-full max-w-5xl mx-auto z-10 pb-24 md:pb-0 overflow-hidden" id="mainContainer">
 
-        <!-- CHAT -->
-        <div class="panel active flex-1 flex flex-col h-full" id="chatPanel">
-            <div class="flex-1 overflow-y-auto chat-scroll p-4 md:p-6 flex flex-col gap-4" id="chatContainer">
-                <div class="flex justify-center my-2"><span class="bg-[var(--card-bg)] backdrop-blur-md px-4 py-1.5 rounded-full text-sm text-[var(--text-on-surface-variant)] border border-[var(--glass-border)]">Today</span></div>
-                <div id="typingIndicator" class="flex gap-3 self-start opacity-80 hidden">
-                    <div class="w-8 h-8 rounded-full bg-[var(--ai-avatar-bg)] flex items-center justify-center border border-[var(--border)]"><span class="material-symbols-outlined text-[var(--text-primary)] text-sm">smart_toy</span></div>
-                    <div class="bg-[var(--card-bg)] backdrop-blur-md px-4 py-3 rounded-2xl rounded-tl-sm flex items-center gap-1.5 border border-[var(--glass-border)]">
-                        <div class="w-1.5 h-1.5 rounded-full bg-[var(--typing-dot)] animate-bounce"></div>
-                        <div class="w-1.5 h-1.5 rounded-full bg-[var(--typing-dot)] animate-bounce" style="animation-delay:150ms"></div>
-                        <div class="w-1.5 h-1.5 rounded-full bg-[var(--typing-dot)] animate-bounce" style="animation-delay:300ms"></div>
-                    </div>
-                </div>
-                <div class="h-4"></div>
-            </div>
-            <div class="p-4 md:p-6 bg-gradient-to-t from-[var(--bg-surface)] to-transparent sticky bottom-0 left-0 w-full z-40">
-                <div class="max-w-3xl mx-auto relative">
-                    <div id="emojiPicker" class="emoji-picker">
-                        <div class="emoji-grid" id="emojiGrid"></div>
-                    </div>
-                    <div class="relative flex items-center rounded-full p-1.5 shadow-sm" id="inputPill">
-                        <button class="p-2.5 text-[var(--text-on-surface-variant)] hover:text-[var(--text-primary)] transition-colors rounded-full hover:bg-[var(--hover-bg)] ml-1" id="attachBtn"><span class="material-symbols-outlined" style="font-size:22px;">attach_file</span></button>
-                        <input type="file" id="fileInput" accept="image/*,.pdf" hidden />
-                        <div id="attachmentPreviewContainer" class="hidden px-3 py-1.5 bg-[var(--card-bg)] backdrop-blur-md rounded-lg text-xs flex items-center gap-1.5 border border-[var(--glass-border)]"></div>
-                        <button class="p-2.5 text-[var(--text-on-surface-variant)] hover:text-[var(--text-primary)] transition-colors rounded-full hover:bg-[var(--hover-bg)]" id="emojiBtn"><span class="material-symbols-outlined" style="font-size:22px;">sentiment_satisfied</span></button>
-                        <div class="relative flex-1"><textarea id="chatInput" class="w-full bg-transparent border-none focus:ring-0 text-[var(--text-on-surface)] placeholder-[var(--text-muted)] px-2 py-2 outline-none resize-none" placeholder="Message HEX AI..." rows="1"></textarea></div>
-                        <button class="p-2.5 text-[var(--text-on-surface-variant)] hover:text-[var(--text-primary)] transition-colors rounded-full hover:bg-[var(--hover-bg)]" id="voiceBtn"><span class="material-symbols-outlined" style="font-size:22px;">mic</span></button>
-                        <button class="p-3 bg-[var(--primary-gradient)] text-white rounded-full hover:scale-105 active:scale-95 transition-transform shadow-md flex items-center justify-center" id="sendButton"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;font-size:22px;">send</span></button>
-                    </div>
-                    <div class="text-center mt-2 text-xs text-[var(--text-muted)]">HEX AI can make mistakes. Verify important information.</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- IMAGE -->
-        <div class="panel hidden flex-1 overflow-y-auto p-4 md:p-6 h-full" id="imagePanel">
-            <div class="flex flex-col md:flex-row gap-6 h-full">
-                <div class="md:w-1/3 bg-[var(--card-bg)] backdrop-blur-md border border-[var(--glass-border)] rounded-2xl p-6 flex flex-col gap-4 shadow-sm">
-                    <h2 class="text-lg font-semibold font-sans flex items-center gap-2 text-[var(--text-primary)]"><span class="material-symbols-outlined">image</span>Image Generation</h2>
-                    <textarea id="imgPromptInput" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-xl p-3 flex-1 min-h-[80px] focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all outline-none text-[var(--text-on-surface)]" placeholder="Describe your vision..." rows="4"></textarea>
-                    <div class="grid grid-cols-2 gap-2">
-                        <select id="aspectRatio" class="bg-[var(--input-bg)] border border-[var(--border)] rounded-xl p-2 text-sm focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all outline-none text-[var(--text-on-surface)]">
-                            <option value="1:1">1:1 Square</option>
-                            <option value="16:9">16:9 Cinema</option>
-                            <option value="9:16">9:16 Portrait</option>
-                        </select>
-                        <select id="styleSelect" class="bg-[var(--input-bg)] border border-[var(--border)] rounded-xl p-2 text-sm focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all outline-none text-[var(--text-on-surface)]">
-                            <option>Photorealistic</option>
-                            <option>Cyberpunk</option>
-                            <option>Abstract Art</option>
-                            <option>Anime</option>
-                            <option>Oil Painting</option>
-                        </select>
-                    </div>
-                    <button id="generateImageBtn" class="w-full bg-[var(--primary-gradient)] text-white px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-md hover:shadow-lg"><span class="material-symbols-outlined">auto_awesome</span>Generate</button>
-                </div>
-                <div class="md:w-2/3 flex flex-col gap-4">
-                    <div id="imageGenPreviewContainer" class="flex-1 min-h-[200px] rounded-2xl border border-[var(--glass-border)] flex items-center justify-center text-[var(--text-muted)] bg-[var(--card-bg)] backdrop-blur-sm">
-                        <div class="text-center"><i class="fas fa-image text-3xl mb-2 block opacity-50"></i>Preview</div>
-                    </div>
-                    <div id="genImageActions" class="flex gap-2 hidden flex-wrap">
-                        <button id="addToChatBtn" class="px-4 py-2 rounded-full bg-[var(--primary-gradient)] text-white text-sm font-medium shadow-sm hover:shadow-md transition-all">Add to Chat</button>
-                        <button id="downloadGenImageBtn" class="px-4 py-2 rounded-full border border-[var(--border)] hover:bg-[var(--hover-bg)] text-sm font-medium transition-all">Download</button>
-                        <button id="clearGenImageBtn" class="px-4 py-2 rounded-full border border-[var(--border)] hover:bg-[var(--hover-bg)] text-sm font-medium transition-all">Clear</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- VIDEO -->
-        <div class="panel hidden flex-1 overflow-y-auto p-4 md:p-6 h-full" id="videoPanel">
-            <div class="flex flex-col md:flex-row gap-6 h-full">
-                <div class="md:w-1/3 bg-[var(--card-bg)] backdrop-blur-md border border-[var(--glass-border)] rounded-2xl p-6 flex flex-col gap-4 shadow-sm">
-                    <h2 class="text-lg font-semibold font-sans flex items-center gap-2 text-[var(--text-primary)]"><span class="material-symbols-outlined">videocam</span>Video Generation</h2>
-                    <textarea id="videoPromptInput" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-xl p-3 flex-1 min-h-[80px] focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all outline-none text-[var(--text-on-surface)]" placeholder="Describe movement and scene..." rows="3">neon city at night, cyberpunk, cinematic slow pan</textarea>
-                    <div class="flex gap-2">
-                        <button class="flex-1 py-2 rounded-xl bg-[var(--card-bg)] backdrop-blur-sm border border-[var(--border)] duration-btn active-dur text-sm font-medium transition-all" data-dur="3">3s</button>
-                        <button class="flex-1 py-2 rounded-xl bg-[var(--card-bg)] backdrop-blur-sm border border-[var(--border)] duration-btn text-sm font-medium transition-all" data-dur="5">5s</button>
-                        <button class="flex-1 py-2 rounded-xl bg-[var(--card-bg)] backdrop-blur-sm border border-[var(--border)] duration-btn text-sm font-medium transition-all" data-dur="8">8s</button>
-                    </div>
-                    <p class="text-sm text-[var(--text-muted)]">An AI image is generated first, then animated into a video loop.</p>
-                    <button id="generateVideoBtn" class="w-full bg-[var(--primary-gradient)] text-white px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all"><span class="material-symbols-outlined">movie_edit</span>Generate</button>
-                </div>
-                <div class="md:w-2/3 flex flex-col gap-4 items-center justify-center">
-                    <canvas id="videoPreviewCanvas" width="512" height="512" class="hidden w-full max-w-[400px] rounded-2xl border border-[var(--glass-border)] shadow-sm"></canvas>
-                    <video id="videoPreview" controls loop class="hidden w-full max-w-[400px] rounded-2xl shadow-sm"></video>
-                    <div id="videoGenStatus" class="text-sm text-[var(--text-muted)] text-center"><i class="fas fa-film text-3xl block mb-2 opacity-50"></i>Preview</div>
-                    <div id="videoActions" class="flex gap-2 hidden flex-wrap">
-                        <button id="downloadVideoBtn" class="px-4 py-2 rounded-full bg-[var(--primary-gradient)] text-white text-sm font-medium shadow-sm hover:shadow-md transition-all">Download</button>
-                        <button id="clearVideoBtn" class="px-4 py-2 rounded-full border border-[var(--border)] hover:bg-[var(--hover-bg)] text-sm font-medium transition-all">Clear</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MUSIC -->
-        <div class="panel hidden flex-1 p-2 md:p-4 overflow-y-auto h-full" id="musicPanel">
-            <!-- Music Tabs -->
-            <div class="music-tabs">
-                <button class="active" data-music-tab="youtube"><i class="bx bxl-youtube"></i> YouTube</button>
-                <button data-music-tab="offline"><i class="bx bx-music"></i> Offline</button>
-            </div>
-
-            <!-- YouTube Container -->
+        <!-- MUSIC PANEL -->
+        <div class="panel active flex-1 overflow-y-auto p-2 md:p-4 h-full" id="musicPanel">
             <div id="ytMusicContainer" class="active">
                 <div class="yt-music-row">
                     <!-- Player -->
@@ -2861,10 +1982,6 @@
                                 <span>Repeat</span>
                                 <button id="repeatBtn"><i class='bx bx-repeat'></i></button>
                             </div>
-                            <div class="sponsor-toggle">
-                                <span>Skip Sponsors</span>
-                                <label class="switch"><input type="checkbox" id="sponsorBlockToggle" checked /><span class="slider"></span></label>
-                            </div>
                             <div class="album-art-display-toggle">
                                 <div class="btn-group btn-group-sm" id="albumArtDisplayToggle">
                                     <button class="btn active" data-mode="spin">Spin</button>
@@ -2896,14 +2013,6 @@
                             <div class="playlist-import">
                                 <input type="text" id="playlistImportInput" placeholder="YouTube Music playlist URL or ID..." />
                                 <button id="importPlaylistBtn"><i class='bx bx-import'></i> Import</button>
-                            </div>
-                            <div id="mp3UploadSection">
-                                <div class="mp3-drop-area" id="mp3DropArea">
-                                    <i class="bx bx-upload"></i>
-                                    <span>Drop MP3 files here or click to upload</span>
-                                    <input type="file" id="mp3FileInput" accept=".mp3,audio/mpeg" multiple style="display:none;" />
-                                </div>
-                                <ul id="mp3List"></ul>
                             </div>
 
                             <!-- Playlist -->
@@ -2955,68 +2064,23 @@
                     <div id="lyricsText">No lyrics loaded</div>
                 </div>
             </div>
+        </div>
 
-            <!-- Offline Visualizer -->
-            <div id="offlineTab">
-                <canvas id="offlineCanvas"></canvas>
-                <div class="offline-overlay" id="offlineOverlay">
-                    <div class="offline-overlay-card">
-                        <span class="offline-overlay-icon">🎵</span>
-                        <div class="offline-overlay-title">Click to Start</div>
-                        <div class="offline-overlay-sub">Load an audio file or play the default track</div>
-                    </div>
+        <!-- BOTTOM CHAT BAR (always visible) -->
+        <div class="p-3 md:p-4 bg-gradient-to-t from-[var(--bg-surface)] to-transparent sticky bottom-0 left-0 w-full z-40 border-t border-[var(--glass-border)]">
+            <div class="max-w-4xl mx-auto relative">
+                <div class="relative flex items-center rounded-full p-1.5 shadow-sm" id="inputPill">
+                    <button class="p-2.5 text-[var(--text-on-surface-variant)] hover:text-[var(--text-primary)] transition-colors rounded-full hover:bg-[var(--hover-bg)] ml-1" id="attachBtn"><span class="material-symbols-outlined" style="font-size:22px;">attach_file</span></button>
+                    <input type="file" id="fileInput" accept="image/*,.pdf" hidden />
+                    <button class="p-2.5 text-[var(--text-on-surface-variant)] hover:text-[var(--text-primary)] transition-colors rounded-full hover:bg-[var(--hover-bg)]" id="emojiBtn"><span class="material-symbols-outlined" style="font-size:22px;">sentiment_satisfied</span></button>
+                    <div class="relative flex-1"><textarea id="chatInput" class="w-full bg-transparent border-none focus:ring-0 text-[var(--text-on-surface)] placeholder-[var(--text-muted)] px-2 py-2 outline-none resize-none" placeholder="Message HEX AI..." rows="1"></textarea></div>
+                    <button class="p-3 bg-[var(--primary-gradient)] text-white rounded-full hover:scale-105 active:scale-95 transition-transform shadow-md flex items-center justify-center" id="sendButton"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;font-size:22px;">send</span></button>
                 </div>
-                <div class="offline-ui-top">
-                    <input type="file" id="offlineFileInput" accept="audio/*" />
-                    <label for="offlineFileInput" class="offline-file-label" title="Upload an audio file">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                            <polyline points="17 8 12 3 7 8" />
-                            <line x1="12" y1="3" x2="12" y2="15" />
-                        </svg>
-                        <span>Load Audio</span>
-                    </label>
-                    <span class="offline-status-dot idle" id="offlineStatusDot"></span>
-                    <span class="offline-status-text" id="offlineStatusText">Idle</span>
-                </div>
-                <div class="offline-ui-bottom" id="offlineUiBottom">
-                    <button class="offline-btn-play" id="offlineBtnPlay" title="Play / Pause" aria-label="Play">
-                        <svg id="offlineIconPlay" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;">
-                            <polygon points="6,3 20,12 6,21" />
-                        </svg>
-                        <svg id="offlineIconPause" viewBox="0 0 24 24" fill="currentColor" style="display:none;width:14px;height:14px;">
-                            <rect x="5" y="3" width="5" height="18" rx="1" />
-                            <rect x="14" y="3" width="5" height="18" rx="1" />
-                        </svg>
-                    </button>
-                    <div class="offline-progress-wrap" id="offlineProgressWrap" title="Seek">
-                        <div class="offline-progress-track">
-                            <div class="offline-progress-fill" id="offlineProgressFill" style="width:0%;"></div>
-                            <div class="offline-progress-thumb"></div>
-                        </div>
-                    </div>
-                    <span class="offline-time-display" id="offlineTimeDisplay">0:00 / 0:00</span>
-                    <div class="offline-volume-wrap">
-                        <svg class="offline-volume-icon" id="offlineVolumeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" title="Mute / Unmute">
-                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" id="offlineVolPath1" />
-                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" id="offlineVolPath2" />
-                        </svg>
-                        <input type="range" class="offline-volume-slider" id="offlineVolumeSlider" min="0" max="100" value="75" title="Volume" />
-                    </div>
-                </div>
+                <div class="text-center mt-1 text-xs text-[var(--text-muted)]">HEX AI · Real-time responses in your chosen language</div>
             </div>
         </div>
 
     </main>
-
-    <!-- BOTTOM NAV -->
-    <nav class="md:hidden fixed bottom-4 left-0 right-0 mx-auto flex justify-around items-center h-14 px-4 z-50 w-[92%] rounded-full shadow-lg" id="bottomNav">
-        <button class="nav-btn active-nav flex flex-col items-center text-[var(--text-primary)]" data-panel="chat"><span class="material-symbols-outlined" style="font-size:20px;">chat_bubble</span><span class="text-[9px] font-medium">Chat</span></button>
-        <button class="nav-btn flex flex-col items-center text-[var(--text-on-surface-variant)]" data-panel="image"><span class="material-symbols-outlined" style="font-size:20px;">image</span><span class="text-[9px]">Image</span></button>
-        <button class="nav-btn flex flex-col items-center text-[var(--text-on-surface-variant)]" data-panel="video"><span class="material-symbols-outlined" style="font-size:20px;">movie</span><span class="text-[9px]">Video</span></button>
-        <button class="nav-btn flex flex-col items-center text-[var(--text-on-surface-variant)]" data-panel="music"><span class="material-symbols-outlined" style="font-size:20px;">music_note</span><span class="text-[9px]">Music</span></button>
-    </nav>
 
     <!-- TOAST -->
     <div id="toast"></div>
@@ -3029,8 +2093,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js">
     </script>
     <script src="https://www.youtube.com/iframe_api">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js">
     </script>
 
     <script>
@@ -3055,30 +2117,6 @@
                 applyTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark');
             });
 
-            // ===== PANEL SWITCHING =====
-            function switchPanel(panelName) {
-                document.querySelectorAll('.panel').forEach(p => {
-                    p.classList.add('hidden');
-                    p.classList.remove('active');
-                });
-                const panel = document.getElementById(panelName + 'Panel');
-                if (panel) {
-                    panel.classList.remove('hidden');
-                    panel.classList.add('active');
-                }
-                document.querySelectorAll('.nav-btn').forEach(el => {
-                    el.classList.remove('active-nav', 'text-[var(--text-primary)]');
-                    el.classList.add('text-[var(--text-on-surface-variant)]');
-                });
-                document.querySelectorAll(`[data-panel="${panelName}"]`).forEach(el => {
-                    el.classList.add('active-nav', 'text-[var(--text-primary)]');
-                });
-            }
-            document.querySelectorAll('[data-panel]').forEach(el => el.addEventListener('click', (e) => {
-                e.preventDefault();
-                switchPanel(el.dataset.panel);
-            }));
-
             // ===== TOAST =====
             const toastEl = document.getElementById('toast');
             let toastTimer;
@@ -3089,1895 +2127,6 @@
                 toastEl.classList.add('show');
                 clearTimeout(toastTimer);
                 toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
-            }
-
-            // ===== MUSIC TABS =====
-            const musicTabs = document.querySelectorAll('[data-music-tab]');
-            const ytContainer = document.getElementById('ytMusicContainer');
-            const offlineTab = document.getElementById('offlineTab');
-
-            musicTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    musicTabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    const tabName = this.dataset.musicTab;
-                    if (tabName === 'youtube') {
-                        ytContainer.classList.add('active');
-                        offlineTab.classList.remove('active');
-                    } else {
-                        ytContainer.classList.remove('active');
-                        offlineTab.classList.add('active');
-                        if (offlineAudioContext && offlineAudioContext.state === 'suspended') {
-                            offlineAudioContext.resume();
-                        }
-                        if (typeof Howler !== 'undefined' && Howler.ctx && Howler.ctx.state === 'suspended') {
-                            Howler.ctx.resume();
-                        }
-                    }
-                });
-            });
-
-            // ================================================================
-            // OFFLINE VISUALIZER – LIQUID RAINBOW (Howler.js + Web Audio API)
-            // ================================================================
-
-            const offlineCanvas = document.getElementById('offlineCanvas');
-            const offCtx = offlineCanvas.getContext('2d');
-            const offlineFileInput = document.getElementById('offlineFileInput');
-            const offlineOverlay = document.getElementById('offlineOverlay');
-            const offlineStatusDot = document.getElementById('offlineStatusDot');
-            const offlineStatusText = document.getElementById('offlineStatusText');
-            const offlineBtnPlay = document.getElementById('offlineBtnPlay');
-            const offlineIconPlay = document.getElementById('offlineIconPlay');
-            const offlineIconPause = document.getElementById('offlineIconPause');
-            const offlineProgressFill = document.getElementById('offlineProgressFill');
-            const offlineProgressWrap = document.getElementById('offlineProgressWrap');
-            const offlineTimeDisplay = document.getElementById('offlineTimeDisplay');
-            const offlineVolumeSlider = document.getElementById('offlineVolumeSlider');
-            const offlineVolumeIcon = document.getElementById('offlineVolumeIcon');
-            const offlineVolPath1 = document.getElementById('offlineVolPath1');
-            const offlineVolPath2 = document.getElementById('offlineVolPath2');
-
-            let offlineHowl = null;
-            let offlineAnalyser = null;
-            let offlineBufferLength = 128;
-            let offlineDataArray = null;
-            let offlineCurrentHeights = [];
-            let offlineTargetHeights = [];
-            let offlineParticles = [];
-            let offlineTime = 0;
-            let offlineLastFrameTime = performance.now();
-            let offlineHasAudio = false;
-            let offlineIsPlaying = false;
-            let offlineBeatEnergy = 0;
-            let offlineBeatCooldown = 0;
-            let offlineBeatFlash = 0;
-            let offlineLowFreqEnergy = 0;
-            let offlineSmoothedLowEnergy = 0;
-            let offlineVolumeBeforeMute = 75;
-            let offlineAnalyserConnected = false;
-            let offlineDefaultAttempted = false;
-            let offlineAudioContext = null;
-            let offlineFallbackAnalyser = null;
-            let offlineFallbackSource = null;
-            let offlineFallbackAudioEl = null;
-            let offlineIsDragging = false;
-
-            function offlineResizeCanvas() {
-                const rect = offlineTab.getBoundingClientRect();
-                offlineCanvas.width = rect.width || window.innerWidth;
-                offlineCanvas.height = rect.height || window.innerHeight;
-                if (offlineCurrentHeights.length !== offlineBufferLength) {
-                    offlineCurrentHeights = new Array(offlineBufferLength).fill(0);
-                    offlineTargetHeights = new Array(offlineBufferLength).fill(0);
-                }
-            }
-
-            window.addEventListener('resize', offlineResizeCanvas);
-            setTimeout(offlineResizeCanvas, 100);
-
-            function isHowlerAvailable() {
-                return typeof Howl !== 'undefined' && typeof Howler !== 'undefined';
-            }
-
-            function setupOfflineAnalyserInHowlerGraph() {
-                if (offlineAnalyserConnected) return true;
-                try {
-                    const ctx = Howler.ctx;
-                    if (!ctx || ctx.state === 'closed') return false;
-                    offlineAnalyser = ctx.createAnalyser();
-                    offlineAnalyser.fftSize = 512;
-                    offlineAnalyser.smoothingTimeConstant = 0.7;
-                    offlineBufferLength = offlineAnalyser.frequencyBinCount;
-                    offlineDataArray = new Uint8Array(offlineBufferLength);
-                    offlineCurrentHeights = new Array(offlineBufferLength).fill(0);
-                    offlineTargetHeights = new Array(offlineBufferLength).fill(0);
-                    const masterGain = Howler.masterGain;
-                    if (masterGain) {
-                        masterGain.disconnect();
-                        masterGain.connect(offlineAnalyser);
-                        offlineAnalyser.connect(ctx.destination);
-                        offlineAnalyserConnected = true;
-                        return true;
-                    }
-                } catch (e) {}
-                return false;
-            }
-
-            function setupOfflineFallbackAnalyser(audioElement) {
-                if (!offlineAudioContext) {
-                    offlineAudioContext = new(window.AudioContext || window.webkitAudioContext)();
-                }
-                if (offlineAudioContext.state === 'suspended') {
-                    offlineAudioContext.resume();
-                }
-                offlineFallbackAnalyser = offlineAudioContext.createAnalyser();
-                offlineFallbackAnalyser.fftSize = 512;
-                offlineFallbackAnalyser.smoothingTimeConstant = 0.7;
-                offlineFallbackSource = offlineAudioContext.createMediaElementSource(audioElement);
-                offlineFallbackSource.connect(offlineFallbackAnalyser);
-                offlineFallbackAnalyser.connect(offlineAudioContext.destination);
-                offlineAnalyser = offlineFallbackAnalyser;
-                offlineBufferLength = offlineFallbackAnalyser.frequencyBinCount;
-                offlineDataArray = new Uint8Array(offlineBufferLength);
-                offlineCurrentHeights = new Array(offlineBufferLength).fill(0);
-                offlineTargetHeights = new Array(offlineBufferLength).fill(0);
-                offlineAnalyserConnected = true;
-                offlineFallbackAudioEl = audioElement;
-                return true;
-            }
-
-            function offlineUpdateStatusUI() {
-                if (offlineIsPlaying && offlineHasAudio) {
-                    offlineStatusDot.className = 'offline-status-dot playing';
-                    offlineStatusText.textContent = 'Playing';
-                } else if (offlineHasAudio) {
-                    offlineStatusDot.className = 'offline-status-dot file';
-                    offlineStatusText.textContent = 'Audio Loaded';
-                } else {
-                    offlineStatusDot.className = 'offline-status-dot idle';
-                    offlineStatusText.textContent = 'Idle';
-                }
-                if (offlineIsPlaying) {
-                    offlineIconPlay.style.display = 'none';
-                    offlineIconPause.style.display = 'block';
-                } else {
-                    offlineIconPlay.style.display = 'block';
-                    offlineIconPause.style.display = 'none';
-                }
-            }
-
-            function offlineFormatTime(seconds) {
-                if (isNaN(seconds) || !isFinite(seconds)) return '0:00';
-                const m = Math.floor(seconds / 60);
-                const s = Math.floor(seconds % 60);
-                return `${m}:${s.toString().padStart(2, '0')}`;
-            }
-
-            function offlineUpdateTimeDisplay() {
-                if (!offlineHasAudio || !offlineHowl) {
-                    offlineTimeDisplay.textContent = '0:00 / 0:00';
-                    return;
-                }
-                const current = offlineHowl.seek() || 0;
-                const duration = offlineHowl.duration() || 0;
-                offlineTimeDisplay.textContent = `${offlineFormatTime(current)} / ${offlineFormatTime(duration)}`;
-            }
-
-            function offlineUpdateProgressBar() {
-                if (!offlineHasAudio || !offlineHowl) {
-                    offlineProgressFill.style.width = '0%';
-                    return;
-                }
-                const duration = offlineHowl.duration();
-                if (!duration || duration <= 0) {
-                    offlineProgressFill.style.width = '0%';
-                    return;
-                }
-                const current = offlineHowl.seek() || 0;
-                const pct = Math.min((current / duration) * 100, 100);
-                offlineProgressFill.style.width = `${pct}%`;
-            }
-
-            function offlineLoadAudioFile(file, fileUrl, isDefault = false) {
-                if (offlineHowl) {
-                    offlineHowl.unload();
-                    offlineHowl = null;
-                }
-                if (offlineFallbackAudioEl && offlineFallbackSource) {
-                    try {
-                        offlineFallbackSource.disconnect();
-                    } catch (e) {}
-                    offlineFallbackSource = null;
-                }
-                if (offlineFallbackAudioEl) {
-                    offlineFallbackAudioEl.pause();
-                    offlineFallbackAudioEl.src = '';
-                    offlineFallbackAudioEl = null;
-                }
-                offlineAnalyserConnected = false;
-                offlineAnalyser = null;
-                offlineFallbackAnalyser = null;
-                offlineDataArray = null;
-                offlineIsPlaying = false;
-                offlineBeatEnergy = 0;
-                offlineBeatCooldown = 0;
-                offlineBeatFlash = 0;
-                offlineLowFreqEnergy = 0;
-                offlineSmoothedLowEnergy = 0;
-                offlineCurrentHeights = new Array(offlineBufferLength || 128).fill(0);
-                offlineTargetHeights = new Array(offlineBufferLength || 128).fill(0);
-
-                const url = fileUrl || (file ? URL.createObjectURL(file) : null);
-                if (!url) return;
-
-                if (isHowlerAvailable()) {
-                    offlineHowl = new Howl({
-                        src: [url],
-                        format: file ? file.name.split('.').pop().toLowerCase() : 'mp3',
-                        html5: false,
-                        preload: true,
-                        onload: function() {
-                            offlineHasAudio = true;
-                            offlineUpdateStatusUI();
-                            offlineUpdateTimeDisplay();
-                            offlineUpdateProgressBar();
-                            if (isDefault) console.log('✅ Default audio loaded via Howler.js');
-                            else console.log('✅ Audio loaded via Howler.js');
-                            if (isDefault && !offlineIsPlaying) {
-                                const playId = offlineHowl.play();
-                                if (playId === undefined || playId === null) {
-                                    console.log('Default autoplay waiting for user gesture');
-                                }
-                            }
-                        },
-                        onplay: function() {
-                            if (!offlineAnalyserConnected || !offlineAnalyser) {
-                                setupOfflineAnalyserInHowlerGraph();
-                            }
-                            offlineIsPlaying = true;
-                            offlineUpdateStatusUI();
-                        },
-                        onpause: function() {
-                            offlineIsPlaying = false;
-                            offlineUpdateStatusUI();
-                        },
-                        onstop: function() {
-                            offlineIsPlaying = false;
-                            offlineUpdateStatusUI();
-                        },
-                        onend: function() {
-                            offlineIsPlaying = false;
-                            offlineUpdateStatusUI();
-                            offlineUpdateProgressBar();
-                        },
-                        onloaderror: function(_, err) {
-                            console.warn('Howler.js load error, trying fallback...', err);
-                            offlineFallbackLoadAudio(url, file, isDefault);
-                        },
-                        onplayerror: function() {
-                            console.warn('Howler.js play error, trying fallback...');
-                            offlineFallbackLoadAudio(url, file, isDefault);
-                        }
-                    });
-                    const setupDone = setupOfflineAnalyserInHowlerGraph();
-                    if (!setupDone) {
-                        setTimeout(() => {
-                            if (!offlineAnalyserConnected) {
-                                setupOfflineAnalyserInHowlerGraph();
-                            }
-                            if (!offlineAnalyserConnected) {
-                                console.warn('Could not connect analyser to Howler graph, using fallback');
-                                offlineFallbackLoadAudio(url, file, isDefault);
-                            }
-                        }, 300);
-                    }
-                    offlineHasAudio = true;
-                    offlineUpdateStatusUI();
-                    if (!isDefault) {
-                        const playId = offlineHowl.play();
-                        if (playId === undefined || playId === null) {
-                            console.log('Play pending — waiting for user interaction');
-                        }
-                    }
-                } else {
-                    offlineFallbackLoadAudio(url, file, isDefault);
-                }
-            }
-
-            function offlineFallbackLoadAudio(url, file, isDefault = false) {
-                console.log('🔄 Using native Web Audio API fallback');
-                if (offlineHowl) {
-                    offlineHowl.unload();
-                    offlineHowl = null;
-                }
-                if (!offlineFallbackAudioEl) {
-                    offlineFallbackAudioEl = new Audio();
-                    offlineFallbackAudioEl.controls = false;
-                    offlineFallbackAudioEl.preload = 'auto';
-                }
-                offlineFallbackAudioEl.src = url;
-                offlineFallbackAudioEl.load();
-                setupOfflineFallbackAnalyser(offlineFallbackAudioEl);
-                offlineAnalyser = offlineFallbackAnalyser;
-                offlineDataArray = new Uint8Array(offlineBufferLength);
-                offlineHasAudio = true;
-                offlineUpdateStatusUI();
-
-                if (!isDefault) {
-                    offlineFallbackAudioEl.play().then(() => {
-                        offlineIsPlaying = true;
-                        offlineUpdateStatusUI();
-                    }).catch(err => {
-                        console.warn('Fallback play failed:', err);
-                    });
-                } else {
-                    offlineFallbackAudioEl.play().then(() => {
-                        offlineIsPlaying = true;
-                        offlineUpdateStatusUI();
-                    }).catch(() => {
-                        console.log('Default autoplay blocked – user interaction needed');
-                    });
-                }
-
-                offlineHowl = {
-                    _fallback: true,
-                    play: function() {
-                        if (offlineFallbackAudioEl) {
-                            offlineFallbackAudioEl.play();
-                            return 1;
-                        }
-                        return null;
-                    },
-                    pause: function() {
-                        if (offlineFallbackAudioEl) offlineFallbackAudioEl.pause();
-                    },
-                    seek: function(val) {
-                        if (offlineFallbackAudioEl) {
-                            if (val !== undefined) offlineFallbackAudioEl.currentTime = val;
-                            return offlineFallbackAudioEl.currentTime;
-                        }
-                        return 0;
-                    },
-                    duration: function() {
-                        return offlineFallbackAudioEl ? offlineFallbackAudioEl.duration || 0 : 0;
-                    },
-                    volume: function(val) {
-                        if (offlineFallbackAudioEl) {
-                            if (val !== undefined) offlineFallbackAudioEl.volume = val;
-                            return offlineFallbackAudioEl.volume;
-                        }
-                        return 0.75;
-                    },
-                    playing: function() {
-                        return offlineFallbackAudioEl && !offlineFallbackAudioEl.paused;
-                    },
-                    unload: function() {
-                        if (offlineFallbackAudioEl) {
-                            offlineFallbackAudioEl.pause();
-                            offlineFallbackAudioEl.src = '';
-                        }
-                    },
-                };
-
-                offlineFallbackAudioEl.addEventListener('play', () => {
-                    offlineIsPlaying = true;
-                    offlineUpdateStatusUI();
-                });
-                offlineFallbackAudioEl.addEventListener('pause', () => {
-                    offlineIsPlaying = false;
-                    offlineUpdateStatusUI();
-                });
-                offlineFallbackAudioEl.addEventListener('ended', () => {
-                    offlineIsPlaying = false;
-                    offlineUpdateStatusUI();
-                });
-            }
-
-            function offlineTryLoadDefault() {
-                if (offlineDefaultAttempted) return;
-                offlineDefaultAttempted = true;
-                const defaultSongUrl = 'song.mp3';
-                fetch(defaultSongUrl, { method: 'HEAD' })
-                    .then(response => {
-                        if (response.ok) {
-                            offlineLoadAudioFile(null, defaultSongUrl, true);
-                        } else {
-                            console.log('Default song not found, skipping auto-load.');
-                        }
-                    })
-                    .catch(() => {
-                        console.log('Default song not accessible, skipping auto-load.');
-                    });
-            }
-
-            offlineFileInput.addEventListener('change', function() {
-                const files = this.files;
-                if (files && files.length > 0) {
-                    offlineLoadAudioFile(files[0], null, false);
-                }
-            });
-
-            document.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            });
-            document.addEventListener('drop', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                const files = e.dataTransfer.files;
-                if (files && files.length > 0) {
-                    const file = files[0];
-                    if (file.type.startsWith('audio/') ||
-                        /\.(mp3|wav|ogg|flac|m4a|aac|webm|opus)$/i.test(file.name)) {
-                        offlineLoadAudioFile(file, null, false);
-                    }
-                }
-            });
-
-            offlineBtnPlay.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (!offlineHasAudio || !offlineHowl) return;
-                if (!offlineAnalyserConnected && isHowlerAvailable() && offlineHowl && !offlineHowl._fallback) {
-                    setupOfflineAnalyserInHowlerGraph();
-                }
-                if (offlineIsPlaying) {
-                    offlineHowl.pause();
-                } else {
-                    if (offlineAudioContext && offlineAudioContext.state === 'suspended') {
-                        offlineAudioContext.resume();
-                    }
-                    if (isHowlerAvailable() && Howler.ctx && Howler.ctx.state === 'suspended') {
-                        Howler.ctx.resume();
-                    }
-                    offlineHowl.play();
-                }
-            });
-
-            offlineProgressWrap.addEventListener('click', function(e) {
-                if (!offlineHasAudio || !offlineHowl) return;
-                const rect = offlineProgressWrap.getBoundingClientRect();
-                const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-                const duration = offlineHowl.duration();
-                if (duration && duration > 0) {
-                    offlineHowl.seek(ratio * duration);
-                    offlineUpdateProgressBar();
-                    offlineUpdateTimeDisplay();
-                }
-            });
-
-            offlineProgressWrap.addEventListener('mousedown', function(e) {
-                if (!offlineHasAudio || !offlineHowl) return;
-                offlineIsDragging = true;
-                const rect = offlineProgressWrap.getBoundingClientRect();
-                const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-                const duration = offlineHowl.duration();
-                if (duration && duration > 0) {
-                    offlineHowl.seek(ratio * duration);
-                    offlineUpdateProgressBar();
-                    offlineUpdateTimeDisplay();
-                }
-            });
-            document.addEventListener('mousemove', function(e) {
-                if (!offlineIsDragging) return;
-                const rect = offlineProgressWrap.getBoundingClientRect();
-                const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-                const duration = offlineHowl ? offlineHowl.duration() : 0;
-                if (duration && duration > 0 && offlineHowl) {
-                    offlineHowl.seek(ratio * duration);
-                    offlineUpdateProgressBar();
-                    offlineUpdateTimeDisplay();
-                }
-            });
-            document.addEventListener('mouseup', function() {
-                offlineIsDragging = false;
-            });
-
-            offlineProgressWrap.addEventListener('touchstart', function(e) {
-                if (!offlineHasAudio || !offlineHowl) return;
-                offlineIsDragging = true;
-                const rect = offlineProgressWrap.getBoundingClientRect();
-                const ratio = Math.max(0, Math.min(1, (e.touches[0].clientX - rect.left) / rect.width));
-                const duration = offlineHowl.duration();
-                if (duration && duration > 0) {
-                    offlineHowl.seek(ratio * duration);
-                    offlineUpdateProgressBar();
-                    offlineUpdateTimeDisplay();
-                }
-            }, { passive: true });
-            document.addEventListener('touchmove', function(e) {
-                if (!offlineIsDragging) return;
-                const rect = offlineProgressWrap.getBoundingClientRect();
-                const ratio = Math.max(0, Math.min(1, (e.touches[0].clientX - rect.left) / rect.width));
-                const duration = offlineHowl ? offlineHowl.duration() : 0;
-                if (duration && duration > 0 && offlineHowl) {
-                    offlineHowl.seek(ratio * duration);
-                    offlineUpdateProgressBar();
-                    offlineUpdateTimeDisplay();
-                }
-            }, { passive: true });
-            document.addEventListener('touchend', function() {
-                offlineIsDragging = false;
-            });
-
-            offlineVolumeSlider.addEventListener('input', function() {
-                const vol = parseInt(this.value) / 100;
-                if (offlineHowl && !offlineHowl._fallback) {
-                    offlineHowl.volume(vol);
-                } else if (offlineHowl && offlineHowl._fallback) {
-                    offlineHowl.volume(vol);
-                }
-                if (isHowlerAvailable()) {
-                    Howler.volume(vol);
-                }
-                offlineUpdateVolumeIcon(vol);
-            });
-
-            offlineVolumeIcon.addEventListener('click', function() {
-                const currentVol = parseInt(offlineVolumeSlider.value);
-                if (currentVol > 0) {
-                    offlineVolumeBeforeMute = currentVol;
-                    offlineVolumeSlider.value = 0;
-                } else {
-                    offlineVolumeSlider.value = offlineVolumeBeforeMute;
-                }
-                const vol = parseInt(offlineVolumeSlider.value) / 100;
-                if (offlineHowl && !offlineHowl._fallback) {
-                    offlineHowl.volume(vol);
-                } else if (offlineHowl && offlineHowl._fallback) {
-                    offlineHowl.volume(vol);
-                }
-                if (isHowlerAvailable()) {
-                    Howler.volume(vol);
-                }
-                offlineUpdateVolumeIcon(vol);
-            });
-
-            function offlineUpdateVolumeIcon(vol) {
-                if (vol === 0) {
-                    offlineVolPath1.style.display = 'none';
-                    offlineVolPath2.style.display = 'none';
-                    offlineVolumeIcon.style.opacity = '0.4';
-                } else if (vol < 0.5) {
-                    offlineVolPath1.style.display = 'block';
-                    offlineVolPath2.style.display = 'none';
-                    offlineVolumeIcon.style.opacity = '0.7';
-                } else {
-                    offlineVolPath1.style.display = 'block';
-                    offlineVolPath2.style.display = 'block';
-                    offlineVolumeIcon.style.opacity = '1';
-                }
-            }
-
-            document.addEventListener('keydown', function(e) {
-                if (e.target.tagName === 'INPUT') return;
-                if (e.code === 'Space') {
-                    e.preventDefault();
-                    if (offlineOverlay.classList.contains('hidden') && offlineHasAudio && offlineHowl) {
-                        offlineBtnPlay.click();
-                    } else if (!offlineOverlay.classList.contains('hidden')) {
-                        offlineResumeAudio();
-                    }
-                } else if (e.code === 'ArrowLeft' && offlineHasAudio && offlineHowl) {
-                    e.preventDefault();
-                    const current = offlineHowl.seek() || 0;
-                    offlineHowl.seek(Math.max(0, current - 5));
-                } else if (e.code === 'ArrowRight' && offlineHasAudio && offlineHowl) {
-                    e.preventDefault();
-                    const current = offlineHowl.seek() || 0;
-                    const duration = offlineHowl.duration() || 0;
-                    offlineHowl.seek(Math.min(duration, current + 5));
-                } else if (e.code === 'ArrowUp') {
-                    e.preventDefault();
-                    offlineVolumeSlider.value = Math.min(100, parseInt(offlineVolumeSlider.value) + 5);
-                    offlineVolumeSlider.dispatchEvent(new Event('input'));
-                } else if (e.code === 'ArrowDown') {
-                    e.preventDefault();
-                    offlineVolumeSlider.value = Math.max(0, parseInt(offlineVolumeSlider.value) - 5);
-                    offlineVolumeSlider.dispatchEvent(new Event('input'));
-                }
-            });
-
-            function offlineDetectBeat() {
-                if (!offlineDataArray || offlineDataArray.length === 0) return;
-                let lowSum = 0;
-                const lowBinCount = Math.min(12, offlineBufferLength);
-                for (let i = 0; i < lowBinCount; i++) {
-                    lowSum += offlineDataArray[i] / 255;
-                }
-                offlineLowFreqEnergy = lowSum / lowBinCount;
-                const smoothing = 0.85;
-                offlineSmoothedLowEnergy = offlineSmoothedLowEnergy * smoothing + offlineLowFreqEnergy * (1 - smoothing);
-                const threshold = offlineSmoothedLowEnergy * 1.55 + 0.08;
-                if (offlineLowFreqEnergy > threshold && offlineBeatCooldown <= 0 && offlineLowFreqEnergy > 0.15) {
-                    offlineBeatEnergy = Math.min(1, offlineLowFreqEnergy * 2.5);
-                    offlineBeatCooldown = 0.18;
-                    offlineBeatFlash = 1;
-                }
-                if (offlineBeatCooldown > 0) offlineBeatCooldown -= 0.016;
-                if (offlineBeatFlash > 0) offlineBeatFlash = Math.max(0, offlineBeatFlash - 0.04);
-                offlineBeatEnergy *= 0.88;
-            }
-
-            function offlineSpawnParticle(x, y, hue, sizeMulti = 1) {
-                if (offlineParticles.length > 150) return;
-                const speed = 0.6 + Math.random() * 2.2 * sizeMulti;
-                offlineParticles.push({
-                    x: x,
-                    y: y,
-                    vx: (Math.random() - 0.5) * speed * 1.2,
-                    vy: -(speed * 1.6),
-                    alpha: 0.9,
-                    size: (Math.random() * 2.5 + 0.8) * sizeMulti,
-                    hue: hue,
-                    life: 1.0,
-                    decay: 0.006 + Math.random() * 0.028,
-                });
-            }
-
-            function offlineSpawnBeatParticles(centerX, centerY) {
-                const count = Math.floor(6 + offlineBeatEnergy * 18);
-                for (let i = 0; i < count; i++) {
-                    const angle = Math.random() * Math.PI * 2;
-                    const dist = Math.random() * 60;
-                    const px = centerX + Math.cos(angle) * dist;
-                    const py = centerY - Math.abs(Math.sin(angle)) * dist * 0.6;
-                    const hue = (Math.random() * 360) | 0;
-                    offlineSpawnParticle(px, py, hue, 1.4 + offlineBeatEnergy);
-                }
-            }
-
-            function offlineUpdateParticles(dt) {
-                for (let i = offlineParticles.length - 1; i >= 0; i--) {
-                    const p = offlineParticles[i];
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    p.life -= p.decay;
-                    p.alpha = p.life;
-                    if (p.life <= 0) offlineParticles.splice(i, 1);
-                }
-            }
-
-            function offlineDrawParticles(ctx) {
-                for (const p of offlineParticles) {
-                    ctx.save();
-                    ctx.globalAlpha = p.alpha * 0.75;
-                    ctx.fillStyle = `hsl(${p.hue}, 90%, 70%)`;
-                    ctx.shadowBlur = 8 + p.size;
-                    ctx.shadowColor = `hsl(${p.hue}, 90%, 55%)`;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.restore();
-                }
-            }
-
-            function offlineSetIdleTargetHeights() {
-                for (let i = 0; i < offlineBufferLength; i++) {
-                    offlineTargetHeights[i] =
-                        Math.sin(i * 0.15 + offlineTime * 2.5) * 15 +
-                        20 +
-                        Math.sin(i * 0.3 + offlineTime * 1.8) * 10 +
-                        Math.cos(i * 0.08 + offlineTime * 1.2) * 8;
-                }
-            }
-
-            function offlineRender(timestamp) {
-                requestAnimationFrame(offlineRender);
-
-                const dt = Math.min((timestamp - offlineLastFrameTime) / 1000, 0.1);
-                offlineLastFrameTime = timestamp;
-                offlineTime += dt;
-
-                const rect = offlineTab.getBoundingClientRect();
-                const WIDTH = offlineCanvas.width = rect.width || window.innerWidth;
-                const HEIGHT = offlineCanvas.height = rect.height || window.innerHeight;
-                const centerY = HEIGHT * 0.52;
-
-                offCtx.clearRect(0, 0, WIDTH, HEIGHT);
-
-                const flashIntensity = offlineBeatFlash * 0.06;
-                const bgGrad = offCtx.createRadialGradient(
-                    WIDTH / 2, HEIGHT * 0.45, HEIGHT * 0.1,
-                    WIDTH / 2, HEIGHT / 2, HEIGHT * 0.9
-                );
-                bgGrad.addColorStop(0,
-                    `rgba(${17 + flashIntensity * 40}, ${17 + flashIntensity * 30}, ${34 + flashIntensity * 50}, 1)`
-                );
-                bgGrad.addColorStop(0.5, '#0a0a14');
-                bgGrad.addColorStop(1, '#05050a');
-                offCtx.fillStyle = bgGrad;
-                offCtx.fillRect(0, 0, WIDTH, HEIGHT);
-
-                let useIdleWave = false;
-                if (offlineAnalyser && offlineDataArray) {
-                    offlineAnalyser.getByteFrequencyData(offlineDataArray);
-                    const maxVal = Math.max(...offlineDataArray);
-                    if (maxVal < 3) useIdleWave = true;
-                } else {
-                    useIdleWave = true;
-                }
-
-                if (!useIdleWave) {
-                    offlineDetectBeat();
-                } else {
-                    offlineBeatEnergy = 0;
-                    offlineBeatFlash = 0;
-                }
-
-                if (useIdleWave) {
-                    offlineSetIdleTargetHeights();
-                } else {
-                    for (let i = 0; i < offlineBufferLength; i++) {
-                        offlineTargetHeights[i] = (offlineDataArray[i] / 255) * (HEIGHT * 0.44);
-                    }
-                }
-
-                const lerpFactor = 0.18;
-                for (let i = 0; i < offlineBufferLength; i++) {
-                    offlineCurrentHeights[i] += (offlineTargetHeights[i] - offlineCurrentHeights[i]) * lerpFactor;
-                }
-
-                const totalBars = offlineBufferLength;
-                const barGap = Math.max(1, WIDTH / (totalBars * 4));
-                const barWidth = (WIDTH - barGap * (totalBars + 1)) / totalBars;
-                const barWidthClamped = Math.max(1.5, Math.min(barWidth, 28));
-
-                offCtx.save();
-                const reflectAlpha = 0.35;
-                for (let i = 0; i < totalBars; i++) {
-                    const x = barGap + i * (barWidthClamped + barGap);
-                    const barH = offlineCurrentHeights[i];
-                    if (barH < 1) continue;
-                    const hue = ((i / totalBars) * 360 + offlineTime * 35) % 360;
-                    const yTop = centerY + 1;
-                    const yBottom = centerY + barH;
-                    const refGrad = offCtx.createLinearGradient(x, yTop, x, yBottom);
-                    refGrad.addColorStop(0, `hsla(${hue}, 85%, 55%, ${reflectAlpha})`);
-                    refGrad.addColorStop(0.5, `hsla(${hue}, 80%, 40%, ${reflectAlpha * 0.6})`);
-                    refGrad.addColorStop(1, `hsla(${hue}, 70%, 25%, 0)`);
-                    offCtx.fillStyle = refGrad;
-                    offCtx.shadowBlur = 0;
-                    offCtx.beginPath();
-                    if (offCtx.roundRect) {
-                        offCtx.roundRect(x, yTop, barWidthClamped, barH, {
-                            upperLeft: 0,
-                            upperRight: 0,
-                            lowerLeft: barWidthClamped * 0.5,
-                            lowerRight: barWidthClamped * 0.5,
-                        });
-                    } else {
-                        offCtx.rect(x, yTop, barWidthClamped, barH);
-                    }
-                    offCtx.fill();
-                }
-                offCtx.restore();
-
-                offCtx.save();
-                const lineAlpha = 0.25 + offlineBeatFlash * 0.5;
-                const lineThickness = 3 + offlineBeatFlash * 6;
-                const lineGlow = offCtx.createLinearGradient(0, centerY - lineThickness / 2, 0, centerY + lineThickness /
-                    2);
-                lineGlow.addColorStop(0, 'rgba(255,255,255,0)');
-                lineGlow.addColorStop(0.5, `rgba(255,255,255,${lineAlpha})`);
-                lineGlow.addColorStop(1, 'rgba(255,255,255,0)');
-                offCtx.fillStyle = lineGlow;
-                offCtx.fillRect(0, centerY - lineThickness / 2, WIDTH, lineThickness);
-                offCtx.restore();
-
-                for (let i = 0; i < totalBars; i++) {
-                    const x = barGap + i * (barWidthClamped + barGap);
-                    const barH = offlineCurrentHeights[i];
-                    if (barH < 0.5) continue;
-                    const hue = ((i / totalBars) * 360 + offlineTime * 35) % 360;
-                    const yBottom = centerY - 1;
-                    const yTop = centerY - barH;
-                    const actualHeight = yBottom - yTop;
-                    const barGradient = offCtx.createLinearGradient(x, yTop, x, yBottom);
-                    barGradient.addColorStop(0, `hsl(${hue}, 100%, 75%)`);
-                    barGradient.addColorStop(0.35, `hsl(${hue}, 95%, 60%)`);
-                    barGradient.addColorStop(0.7, `hsl(${hue}, 85%, 45%)`);
-                    barGradient.addColorStop(1, `hsla(${hue}, 75%, 30%, 0.7)`);
-                    offCtx.fillStyle = barGradient;
-                    const glowBoost = 1 + offlineBeatFlash * 2;
-                    offCtx.shadowBlur = (10 + barH * 0.04) * glowBoost;
-                    offCtx.shadowColor = `hsla(${hue}, 90%, 55%, ${0.6 + offlineBeatFlash * 0.3})`;
-                    offCtx.beginPath();
-                    const radius = Math.min(barWidthClamped * 0.5, 6);
-                    if (offCtx.roundRect) {
-                        offCtx.roundRect(x, yTop, barWidthClamped, actualHeight, {
-                            upperLeft: radius,
-                            upperRight: radius,
-                            lowerLeft: 0,
-                            lowerRight: 0,
-                        });
-                    } else {
-                        offCtx.moveTo(x, yBottom);
-                        offCtx.lineTo(x, yTop + radius);
-                        offCtx.arcTo(x, yTop, x + radius, yTop, radius);
-                        offCtx.lineTo(x + barWidthClamped - radius, yTop);
-                        offCtx.arcTo(x + barWidthClamped, yTop, x + barWidthClamped, yTop + radius, radius);
-                        offCtx.lineTo(x + barWidthClamped, yBottom);
-                        offCtx.closePath();
-                    }
-                    offCtx.fill();
-                    offCtx.shadowBlur = 0;
-                    if (barH > 15 && Math.random() < barH / 350) {
-                        offlineSpawnParticle(x + barWidthClamped / 2, yTop, hue);
-                    }
-                }
-
-                if (offlineBeatFlash > 0.4 && offlineBeatCooldown > 0.1) {
-                    offlineSpawnBeatParticles(WIDTH / 2, centerY);
-                }
-
-                offlineUpdateParticles(dt);
-                offlineDrawParticles(offCtx);
-
-                const vignetteGrad = offCtx.createRadialGradient(
-                    WIDTH / 2, HEIGHT / 2, WIDTH * 0.55,
-                    WIDTH / 2, HEIGHT / 2, WIDTH * 0.85
-                );
-                vignetteGrad.addColorStop(0, 'rgba(0,0,0,0)');
-                vignetteGrad.addColorStop(1, 'rgba(0,0,0,0.45)');
-                offCtx.fillStyle = vignetteGrad;
-                offCtx.fillRect(0, 0, WIDTH, HEIGHT);
-
-                offlineUpdateProgressBar();
-                offlineUpdateTimeDisplay();
-                if (offlineIsPlaying && offlineHasAudio) {
-                    offlineUpdateStatusUI();
-                }
-            }
-
-            function offlineResumeAudio() {
-                if (offlineAudioContext && offlineAudioContext.state === 'suspended') {
-                    offlineAudioContext.resume();
-                }
-                if (isHowlerAvailable() && Howler.ctx && Howler.ctx.state === 'suspended') {
-                    Howler.ctx.resume();
-                }
-                if (!offlineAnalyserConnected && isHowlerAvailable() && offlineHowl && !offlineHowl._fallback) {
-                    setupOfflineAnalyserInHowlerGraph();
-                }
-                if (offlineHasAudio && offlineHowl && !offlineIsPlaying) {
-                    const result = offlineHowl.play();
-                    if (result === undefined && offlineHowl._fallback && offlineFallbackAudioEl) {
-                        offlineFallbackAudioEl.play().catch(() => {});
-                    }
-                }
-                offlineOverlay.classList.add('hidden');
-            }
-
-            offlineOverlay.addEventListener('click', offlineResumeAudio);
-
-            document.addEventListener('click', function(e) {
-                if (offlineAudioContext && offlineAudioContext.state === 'suspended') {
-                    offlineAudioContext.resume();
-                }
-                if (isHowlerAvailable() && Howler.ctx && Howler.ctx.state === 'suspended') {
-                    Howler.ctx.resume().then(() => {
-                        if (!offlineAnalyserConnected && offlineHowl && !offlineHowl._fallback) {
-                            setupOfflineAnalyserInHowlerGraph();
-                        }
-                    });
-                }
-                if (!offlineOverlay.classList.contains('hidden') &&
-                    ((offlineAudioContext && offlineAudioContext.state === 'running') ||
-                        (isHowlerAvailable() && Howler.ctx && Howler.ctx.state === 'running'))) {
-                    offlineOverlay.classList.add('hidden');
-                }
-            });
-
-            function offlineBootstrap() {
-                offlineResizeCanvas();
-                if (isHowlerAvailable()) {
-                    console.log('🌈 Howler.js v' + (Howler.version || '2.x') + ' detected');
-                    Howler.volume(parseInt(offlineVolumeSlider.value) / 100);
-                    Howler.autoUnlock = true;
-                    Howler.html5PoolSize = 10;
-                } else {
-                    console.log('⚠️ Howler.js not available — using native Web Audio API');
-                }
-
-                const ctxReady = (isHowlerAvailable() && Howler.ctx && Howler.ctx.state === 'running') ||
-                    (offlineAudioContext && offlineAudioContext.state === 'running');
-
-                if (ctxReady) {
-                    offlineOverlay.classList.add('hidden');
-                } else {
-                    offlineOverlay.classList.remove('hidden');
-                }
-
-                offlineUpdateStatusUI();
-                offlineUpdateVolumeIcon(parseInt(offlineVolumeSlider.value) / 100);
-                offlineLastFrameTime = performance.now();
-                requestAnimationFrame(offlineRender);
-
-                offlineTryLoadDefault();
-
-                console.log('🌈 Liquid Rainbow — Howler.js + Web Audio API Ready');
-                console.log('   🎵 Default song attempted (song.mp3) if available');
-                console.log('   ⌨️  Space=Play/Pause  ←→=Seek  ↑↓=Volume');
-            }
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', offlineBootstrap);
-            } else {
-                offlineBootstrap();
-            }
-
-            // ================================================================
-            // END OFFLINE VISUALIZER
-            // ================================================================
-
-            // ===== HEX AI =====
-            class HexAI {
-                constructor() {
-                    this.apiKey = localStorage.getItem('openrouter_key') || '';
-                    this.geminiKey = localStorage.getItem('gemini_key') || '';
-                    this.provider = localStorage.getItem('hexai_provider') || 'openrouter';
-                    this.selectedModel = this.provider === 'gemini' ?
-                        (localStorage.getItem('hexai_gemini_model') || 'gemini-3.1-flash-lite') :
-                        (localStorage.getItem('hexai_openrouter_model') || 'google/gemini-3.1-flash-lite');
-                    this.openRouterModels = [{
-                            label: 'gemini-3.1-flash-lite (Free)',
-                            value: 'google/gemini-3.1-flash-lite'
-                        },
-                        {
-                            label: 'gemini-3.1-flash-preview (pro)',
-                            value: 'google/gemini-3.1-flash-preview'
-                        },
-                        {
-                            label: 'Llama 3.2 3B (Free)',
-                            value: 'meta-llama/llama-3.2-3b-instruct:free'
-                        },
-                        {
-                            label: 'Mistral 7B (Free)',
-                            value: 'mistralai/mistral-7b-instruct:free'
-                        },
-                        {
-                            label: 'DeepSeek Chat (Free)',
-                            value: 'deepseek/deepseek-chat:free'
-                        },
-                    ];
-                    this.geminiModels = [{
-                            label: 'gemini-3.1-flash-lite',
-                            value: 'gemini-3.1-flash-lite'
-                        },
-                        {
-                            label: 'gemini-3.1-flash',
-                            value: 'gemini-3.1-flash'
-                        },
-                        {
-                            label: 'gemini-3.1-pro',
-                            value: 'gemini-3.1-pro'
-                        },
-                    ];
-                    this.isProcessing = false;
-                    this.pendingAttachments = [];
-                    this.currentGenImageUrl = null;
-                    this.currentVideoUrl = null;
-                    this.messageIdCounter = 0;
-                    this.videoDuration = 5000;
-                    this.animationId = null;
-                    this.mediaRecorder = null;
-                    this.recordedChunks = [];
-                    this.mp3Files = [];
-                    this.initDOM();
-                }
-
-                get activeModels() {
-                    return this.provider === 'gemini' ? this.geminiModels : this.openRouterModels;
-                }
-
-                initDOM() {
-                    this.chatContainer = document.getElementById('chatContainer');
-                    this.chatInput = document.getElementById('chatInput');
-                    this.sendButton = document.getElementById('sendButton');
-                    this.typingIndicator = document.getElementById('typingIndicator');
-                    this.modelBadgeText = document.getElementById('modelBadgeText');
-                    this.modelDropdown = document.getElementById('modelDropdown');
-                    this.modelBadgeBtn = document.getElementById('modelBadgeBtn');
-                    this.emojiBtn = document.getElementById('emojiBtn');
-                    this.emojiPicker = document.getElementById('emojiPicker');
-                    this.voiceBtn = document.getElementById('voiceBtn');
-                    this.attachBtn = document.getElementById('attachBtn');
-                    this.fileInput = document.getElementById('fileInput');
-                    this.attachmentPreviewContainer = document.getElementById('attachmentPreviewContainer');
-                    this.settingsBtn = document.getElementById('settingsBtn');
-                    this.settingsOverlay = document.getElementById('settingsOverlay');
-                    this.settingsClose = document.getElementById('settingsClose');
-                    this.saveSettingsBtn = document.getElementById('saveSettingsBtn');
-                    this.providerSelect = document.getElementById('providerSelect');
-                    this.openRouterKeyInput = document.getElementById('openRouterKey');
-                    this.geminiKeyInput = document.getElementById('geminiKey');
-                    this.modelSelect = document.getElementById('modelSelect');
-                    this.refreshModelsBtn = document.getElementById('refreshModelsBtn');
-                    this.generateImageBtn = document.getElementById('generateImageBtn');
-                    this.imgPromptInput = document.getElementById('imgPromptInput');
-                    this.imageGenPreviewContainer = document.getElementById('imageGenPreviewContainer');
-                    this.genImageActions = document.getElementById('genImageActions');
-                    this.addToChatBtn = document.getElementById('addToChatBtn');
-                    this.downloadGenImageBtn = document.getElementById('downloadGenImageBtn');
-                    this.clearGenImageBtn = document.getElementById('clearGenImageBtn');
-                    this.generateVideoBtn = document.getElementById('generateVideoBtn');
-                    this.videoPromptInput = document.getElementById('videoPromptInput');
-                    this.videoPreviewCanvas = document.getElementById('videoPreviewCanvas');
-                    this.videoPreview = document.getElementById('videoPreview');
-                    this.videoGenStatus = document.getElementById('videoGenStatus');
-                    this.videoActions = document.getElementById('videoActions');
-                    this.downloadVideoBtn = document.getElementById('downloadVideoBtn');
-                    this.clearVideoBtn = document.getElementById('clearVideoBtn');
-                    this.videoGenOverlay = document.getElementById('videoGenOverlay');
-                    this.genStatusText = document.getElementById('genStatusText');
-                    this.genProgressFill = document.getElementById('genProgressFill');
-                    this.genPercentText = document.getElementById('genPercentText');
-                    this.mp3FileInput = document.getElementById('mp3FileInput');
-                    this.mp3DropArea = document.getElementById('mp3DropArea');
-                    this.mp3List = document.getElementById('mp3List');
-                    this.init();
-                }
-
-                async init() {
-                    this.loadSettings();
-                    this.populateModelDropdown();
-                    this.renderModelDropdownMenu();
-                    this.updateProviderUI();
-                    this.setupEventListeners();
-                    this.setupVoiceRecognition();
-                    this.initEmojiPicker();
-                    this.initImageGenerator();
-                    this.initVideoGenerator();
-                    this.setupMessageActionDelegation();
-                    this.autoResizeInput();
-                    this.loadMP3Files();
-                    this.setupMP3Upload();
-                }
-
-                autoResizeInput() {
-                    this.chatInput.addEventListener('input', () => {
-                        this.chatInput.style.height = 'auto';
-                        this.chatInput.style.height = Math.min(this.chatInput.scrollHeight, 120) + 'px';
-                    });
-                }
-
-                loadSettings() {
-                    const saved = JSON.parse(localStorage.getItem('hexai_settings') || '{}');
-                    if (saved.openRouterKey) {
-                        this.apiKey = saved.openRouterKey;
-                        if (this.openRouterKeyInput) this.openRouterKeyInput.value = saved.openRouterKey;
-                    }
-                    if (saved.geminiKey) {
-                        this.geminiKey = saved.geminiKey;
-                        if (this.geminiKeyInput) this.geminiKeyInput.value = saved.geminiKey;
-                    }
-                    if (saved.provider) {
-                        this.provider = saved.provider;
-                        if (this.providerSelect) this.providerSelect.value = saved.provider;
-                    }
-                    if (saved.model) {
-                        this.selectedModel = saved.model;
-                    }
-                    if (this.providerSelect) this.providerSelect.value = this.provider;
-                    if (this.modelSelect) this.modelSelect.value = this.selectedModel;
-                    this.updateProviderUI();
-                }
-
-                saveSettings() {
-                    const settings = {
-                        openRouterKey: this.openRouterKeyInput ? this.openRouterKeyInput.value.trim() : this.apiKey,
-                        geminiKey: this.geminiKeyInput ? this.geminiKeyInput.value.trim() : this.geminiKey,
-                        provider: this.providerSelect ? this.providerSelect.value : this.provider,
-                        model: this.modelSelect ? this.modelSelect.value : this.selectedModel,
-                    };
-                    this.apiKey = settings.openRouterKey;
-                    this.geminiKey = settings.geminiKey;
-                    this.provider = settings.provider;
-                    this.selectedModel = settings.model;
-                    localStorage.setItem('hexai_settings', JSON.stringify(settings));
-                    localStorage.setItem('openrouter_key', this.apiKey);
-                    localStorage.setItem('gemini_key', this.geminiKey);
-                    localStorage.setItem('hexai_provider', this.provider);
-                    this.updateProviderUI();
-                    this.populateModelDropdown();
-                    this.renderModelDropdownMenu();
-                    this.settingsOverlay.classList.remove('active');
-                    showToast('Settings saved', 'fa-check-circle');
-                }
-
-                updateProviderUI() {
-                    const orSec = document.getElementById('openRouterKeySection');
-                    const gmSec = document.getElementById('geminiKeySection');
-                    if (orSec) orSec.style.display = this.provider === 'openrouter' ? 'block' : 'none';
-                    if (gmSec) gmSec.style.display = this.provider === 'gemini' ? 'block' : 'none';
-                }
-
-                populateModelDropdown() {
-                    if (!this.modelSelect) return;
-                    this.modelSelect.innerHTML = '';
-                    this.activeModels.forEach(m => {
-                        const opt = document.createElement('option');
-                        opt.value = m.value;
-                        opt.textContent = m.label;
-                        if (m.value === this.selectedModel) opt.selected = true;
-                        this.modelSelect.appendChild(opt);
-                    });
-                }
-
-                renderModelDropdownMenu() {
-                    if (!this.modelDropdown) return;
-                    this.modelDropdown.innerHTML = '';
-                    this.activeModels.forEach(m => {
-                        const div = document.createElement('div');
-                        div.className = 'px-3 py-1.5 rounded-full cursor-pointer hover:bg-[var(--hover-bg)] text-sm';
-                        div.textContent = m.label;
-                        if (m.value === this.selectedModel) div.classList.add('bg-[var(--hover-bg)]',
-                            'text-[var(--text-primary)]', 'font-medium');
-                        div.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            this.selectedModel = m.value;
-                            if (this.modelBadgeText) this.modelBadgeText.textContent = m.label.split('(')[0]
-                                .trim();
-                            this.renderModelDropdownMenu();
-                            this.modelDropdown.classList.add('hidden');
-                        });
-                        this.modelDropdown.appendChild(div);
-                    });
-                    const model = this.activeModels.find(m => m.value === this.selectedModel);
-                    if (this.modelBadgeText) this.modelBadgeText.textContent = model ? model.label.split('(')[0]
-                        .trim() : this.selectedModel;
-                }
-
-                setupEventListeners() {
-                    this.sendButton.addEventListener('click', () => this.handleSend());
-                    this.chatInput.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter' && !e.shiftKey) {
-                            e.preventDefault();
-                            this.handleSend();
-                        }
-                    });
-                    this.modelBadgeBtn.addEventListener('click', () => this.modelDropdown.classList.toggle('hidden'));
-                    document.addEventListener('click', (e) => {
-                        if (!this.modelBadgeBtn.contains(e.target)) this.modelDropdown.classList.add('hidden');
-                    });
-                    this.settingsBtn.addEventListener('click', () => this.settingsOverlay.classList.add('active'));
-                    this.settingsClose.addEventListener('click', () => this.settingsOverlay.classList.remove(
-                        'active'));
-                    this.saveSettingsBtn.addEventListener('click', () => this.saveSettings());
-                    this.refreshModelsBtn.addEventListener('click', () => this.fetchOpenRouterModels());
-                    this.attachBtn.addEventListener('click', () => this.fileInput.click());
-                    this.fileInput.addEventListener('change', (e) => this.handleFileUpload(e));
-                    this.providerSelect.addEventListener('change', () => {
-                        this.provider = this.providerSelect.value;
-                        this.updateProviderUI();
-                    });
-                    this.emojiBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        this.emojiPicker.classList.toggle('open');
-                    });
-                    document.addEventListener('click', (e) => {
-                        if (!this.emojiPicker.contains(e.target) && e.target !== this.emojiBtn) {
-                            this.emojiPicker.classList.remove('open');
-                        }
-                    });
-                    document.querySelectorAll('.duration-btn').forEach(btn => {
-                        btn.addEventListener('click', () => {
-                            document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove(
-                                'active-dur', 'bg-[var(--hover-bg)]', 'font-medium'));
-                            btn.classList.add('active-dur', 'bg-[var(--hover-bg)]', 'font-medium');
-                            this.videoDuration = parseInt(btn.dataset.dur) * 1000;
-                        });
-                    });
-                    const defaultDurBtn = document.querySelector('.duration-btn[data-dur="5"]');
-                    if (defaultDurBtn) defaultDurBtn.click();
-                }
-
-                setupVoiceRecognition() {
-                    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                        if (this.voiceBtn) this.voiceBtn.style.display = 'none';
-                        return;
-                    }
-                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                    const recognition = new SpeechRecognition();
-                    recognition.continuous = false;
-                    recognition.interimResults = true;
-                    recognition.lang = 'en-US';
-                    let isListening = false;
-                    this.voiceBtn.addEventListener('click', () => {
-                        if (isListening) {
-                            recognition.stop();
-                            isListening = false;
-                            this.voiceBtn.innerHTML = '<span class="material-symbols-outlined">mic</span>';
-                        } else {
-                            recognition.start();
-                            isListening = true;
-                            this.voiceBtn.innerHTML =
-                                '<span class="material-symbols-outlined" style="color:var(--primary);">mic</span>';
-                        }
-                    });
-                    recognition.addEventListener('result', (e) => {
-                        const transcript = Array.from(e.results).map(r => r[0].transcript).join('');
-                        this.chatInput.value = transcript;
-                        this.chatInput.style.height = 'auto';
-                        this.chatInput.style.height = Math.min(this.chatInput.scrollHeight, 120) + 'px';
-                    });
-                    recognition.addEventListener('end', () => {
-                        isListening = false;
-                        this.voiceBtn.innerHTML = '<span class="material-symbols-outlined">mic</span>';
-                    });
-                    recognition.addEventListener('error', () => {
-                        isListening = false;
-                        this.voiceBtn.innerHTML = '<span class="material-symbols-outlined">mic</span>';
-                    });
-                }
-
-                initEmojiPicker() {
-                    const emojis = ['😀', '😂', '😍', '🥰', '😎', '🤩', '😇', '😜', '🤔', '😴', '😢', '😡', '👍', '👎', '👏',
-                        '🙌', '💪', '🔥', '⭐', '❤️', '💔', '🎉', '🎂', '🍕', '☕', '🚀', '🌈', '✨', '💡', '📌', '📎',
-                        '🖊️', '📷', '🎵', '🎬', '📁', '🗑️', '✅', '❌', '➕', '➖', '📊', '📈', '💬', '🗨️', '🕒', '🌍'
-                    ];
-                    const grid = document.getElementById('emojiGrid');
-                    if (!grid) return;
-                    grid.innerHTML = '';
-                    emojis.forEach(emoji => {
-                        const span = document.createElement('span');
-                        span.textContent = emoji;
-                        span.addEventListener('click', () => {
-                            const start = this.chatInput.selectionStart;
-                            const end = this.chatInput.selectionEnd;
-                            const text = this.chatInput.value;
-                            this.chatInput.value = text.substring(0, start) + emoji + text.substring(end);
-                            this.chatInput.focus();
-                            this.chatInput.selectionStart = this.chatInput.selectionEnd = start + emoji
-                                .length;
-                            this.emojiPicker.classList.remove('open');
-                            this.chatInput.style.height = 'auto';
-                            this.chatInput.style.height = Math.min(this.chatInput.scrollHeight, 120) +
-                                'px';
-                        });
-                        grid.appendChild(span);
-                    });
-                }
-
-                async handleFileUpload(event) {
-                    const file = event.target.files[0];
-                    if (!file) return;
-                    this.pendingAttachments.push({
-                        file,
-                        previewUrl: null,
-                        type: file.type,
-                        name: file.name
-                    });
-                    this.updateAttachmentUI();
-                    event.target.value = '';
-                }
-
-                updateAttachmentUI() {
-                    if (!this.attachmentPreviewContainer) return;
-                    if (this.pendingAttachments.length === 0) {
-                        this.attachmentPreviewContainer.classList.add('hidden');
-                        return;
-                    }
-                    this.attachmentPreviewContainer.classList.remove('hidden');
-                    const names = this.pendingAttachments.map(a => a.name).join(', ');
-                    this.attachmentPreviewContainer.innerHTML =
-                        `<span class="material-symbols-outlined text-sm">attach_file</span> ${names} <button id="removeAttachment" class="ml-2 text-red-400 hover:text-red-600 font-bold">✕</button>`;
-                    const removeBtn = document.getElementById('removeAttachment');
-                    if (removeBtn) {
-                        removeBtn.addEventListener('click', () => {
-                            this.pendingAttachments = [];
-                            this.updateAttachmentUI();
-                        });
-                    }
-                }
-
-                async handleSend() {
-                    const text = this.chatInput.value.trim();
-                    if ((!text && this.pendingAttachments.length === 0) || this.isProcessing) return;
-                    this.isProcessing = true;
-                    let userContent = text;
-                    let attachmentHtml = '';
-                    if (this.pendingAttachments.length > 0) {
-                        for (const att of this.pendingAttachments) {
-                            if (att.type.startsWith('image/')) {
-                                const url = att.previewUrl || URL.createObjectURL(att.file);
-                                attachmentHtml +=
-                                    `<img src="${url}" class="max-w-[200px] w-full rounded-lg mb-2 object-cover" alt="attachment">`;
-                            } else if (att.type === 'application/pdf') {
-                                const textContent = await this.extractPDFText(att.file);
-                                attachmentHtml +=
-                                    `<div class="p-2 rounded-lg bg-[var(--card-bg)] border mb-2 text-sm"><span class="material-symbols-outlined text-sm">picture_as_pdf</span> ${att.name}</div>`;
-                                if (textContent) userContent += `\n\n📄 PDF Content:\n${textContent.substring(0,300)}...`;
-                            } else {
-                                attachmentHtml +=
-                                    `<div class="p-2 rounded-lg bg-[var(--card-bg)] border mb-2 text-sm"><span class="material-symbols-outlined text-sm">insert_drive_file</span> ${att.name}</div>`;
-                            }
-                        }
-                        this.pendingAttachments = [];
-                        this.updateAttachmentUI();
-                    }
-                    let finalMessage = userContent;
-                    if (attachmentHtml) finalMessage = attachmentHtml + (userContent ? '<br/><br/>' + this
-                        .escapeHtml(userContent) : '');
-                    this.addMessage(finalMessage || '[Attachment]', 'user');
-                    this.chatInput.value = '';
-                    this.chatInput.style.height = 'auto';
-                    this.typingIndicator.classList.remove('hidden');
-                    this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
-                    await this.fetchAIResponse(userContent);
-                    this.typingIndicator.classList.add('hidden');
-                    this.isProcessing = false;
-                }
-
-                async extractPDFText(file) {
-                    try {
-                        const arrayBuffer = await file.arrayBuffer();
-                        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                        let fullText = '';
-                        for (let i = 1; i <= pdf.numPages; i++) {
-                            const page = await pdf.getPage(i);
-                            const content = await page.getTextContent();
-                            fullText += content.items.map(item => item.str).join(' ') + ' ';
-                        }
-                        return fullText.trim();
-                    } catch (e) {
-                        return '';
-                    }
-                }
-
-                escapeHtml(s) {
-                    return s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' } [c]));
-                }
-
-                animateEmojis(text) {
-                    if (!text) return '';
-                    const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
-                    const segments = [...segmenter.segment(text)];
-                    let result = '';
-                    for (const { segment } of segments) {
-                        if (/\p{Emoji}/u.test(segment) && segment.length <= 4) {
-                            const cp = [...segment].map(c => c.codePointAt(0).toString(16)).join('-');
-                            result +=
-                                `<img src="https://fonts.gstatic.com/s/e/notoemoji/latest/${cp}/512.gif" alt="${segment}" class="inline-block w-5 h-5 align-middle message-emoji" loading="lazy" onerror="this.outerHTML='<span>${this.escapeHtml(segment)}</span>';">`;
-                        } else {
-                            result += this.escapeHtml(segment);
-                        }
-                    }
-                    return result;
-                }
-
-                addMessage(content, sender) {
-                    const msgId = ++this.messageIdCounter;
-                    const wrapper = document.createElement('div');
-                    const isUser = sender === 'user';
-                    wrapper.className =
-                        `message-wrapper flex gap-3 max-w-3xl ${isUser ? 'self-end flex-row-reverse' : 'self-start'}`;
-                    wrapper.setAttribute('data-msgid', msgId);
-                    wrapper.dataset.sender = sender;
-                    let processed;
-                    const containsHTML = /<[a-z][\s\S]*>/i.test(content);
-                    if (isUser) {
-                        processed = containsHTML ? content : this.animateEmojis(content);
-                    } else {
-                        const emojiAnimated = this.animateEmojis(content);
-                        processed = marked.parse(emojiAnimated);
-                        setTimeout(() => {
-                            wrapper.querySelectorAll('pre code').forEach(block => {
-                                hljs.highlightElement(block);
-                            });
-                        }, 50);
-                    }
-                    const avatarHTML = isUser ?
-                        '<img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO7PkW0vHzTsw97GXSYpyl4lfkpN7kupWFaB5Dfqv_WSrHKAJAl-nmg-PugV3LLSsvLrUl6u4TjsQZCrxSFbB9fu70blOZKBpNFpiIKscXFgNehVIETbKvRb0b3AS5H_5CgisK4LjG-ZopHAw9DsogMFutGJ4WqKebCEY-rUuA8l5quJhu6AXcHWzKin5WfQMwipwi9Qn5rdbP3SRhulX_--HgGOHLQLb-KmNftFu8zIOZTCcql972KN5rGyqC88jtKfI72Hlu_no">' :
-                        '<span class="material-symbols-outlined text-[var(--text-primary)]">smart_toy</span>';
-                    wrapper.innerHTML = `
-                <div class="w-8 h-8 rounded-full flex-shrink-0 ${isUser ? 'overflow-hidden border border-[var(--border)]' : 'bg-[var(--ai-avatar-bg)] flex items-center justify-center border border-[var(--border)]'}">
-                  ${avatarHTML}
-                </div>
-                <div class="${isUser ? 'bg-[var(--primary-gradient)] text-white' : 'bg-[var(--card-bg)] backdrop-blur-md border border-[var(--glass-border)]'} p-4 rounded-2xl ${isUser ? 'rounded-tr-sm' : 'rounded-tl-sm'} shadow-sm max-w-full overflow-hidden">
-                  <div class="message-content break-words">${processed}</div>
-                  <div class="message-actions">
-                    <button data-action="copy" data-msgid="${msgId}" title="Copy"><span class="material-symbols-outlined" style="font-size:18px;">content_copy</span></button>
-                    <button data-action="share" data-msgid="${msgId}" title="Share"><span class="material-symbols-outlined" style="font-size:18px;">share</span></button>
-                    <button data-action="delete" data-msgid="${msgId}" title="Delete"><span class="material-symbols-outlined" style="font-size:18px;">delete</span></button>
-                  </div>
-                </div>`;
-                    this.chatContainer.appendChild(wrapper);
-                    this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
-                }
-
-                setupMessageActionDelegation() {
-                    this.chatContainer.addEventListener('click', (e) => {
-                        const actionBtn = e.target.closest('[data-action]');
-                        if (!actionBtn) return;
-                        e.stopPropagation();
-                        const msgId = actionBtn.dataset.msgid;
-                        const wrapper = this.chatContainer.querySelector(`[data-msgid="${msgId}"]`);
-                        if (!wrapper) return;
-                        const action = actionBtn.dataset.action;
-                        if (action === 'copy') this.copyMessage(wrapper);
-                        else if (action === 'share') this.shareMessage(wrapper);
-                        else if (action === 'delete') {
-                            wrapper.remove();
-                            showToast('Message deleted', 'fa-trash');
-                        }
-                    });
-                }
-
-                copyMessage(wrapper) {
-                    const contentDiv = wrapper.querySelector('.message-content');
-                    if (!contentDiv) return;
-                    const text = contentDiv.innerText.trim();
-                    if (navigator.clipboard && navigator.clipboard.writeText) {
-                        navigator.clipboard.writeText(text).then(() => {
-                            showToast('Copied to clipboard', 'fa-copy');
-                        }).catch(() => this.fallbackCopy(text));
-                    } else {
-                        this.fallbackCopy(text);
-                    }
-                }
-
-                fallbackCopy(text) {
-                    const textarea = document.createElement('textarea');
-                    textarea.value = text;
-                    textarea.style.position = 'fixed';
-                    textarea.style.opacity = '0';
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    try {
-                        document.execCommand('copy');
-                        showToast('Copied to clipboard', 'fa-copy');
-                    } catch (err) {
-                        showToast('Copy failed', 'fa-exclamation-circle');
-                    }
-                    document.body.removeChild(textarea);
-                }
-
-                shareMessage(wrapper) {
-                    const contentDiv = wrapper.querySelector('.message-content');
-                    if (!contentDiv) return;
-                    const text = contentDiv.innerText.trim();
-                    if (navigator.share) {
-                        navigator.share({ text: text }).catch(() => {});
-                    } else {
-                        this.copyMessage(wrapper);
-                        showToast('Copied (share not supported)', 'fa-share');
-                    }
-                }
-
-                async fetchAIResponse(userMsg) {
-                    if (this.provider === 'gemini') await this.fetchGeminiResponse(userMsg);
-                    else await this.fetchOpenRouterResponse(userMsg);
-                }
-
-                async fetchOpenRouterResponse(userMsg) {
-                    if (!this.apiKey) {
-                        this.addMessage(
-                            '⚠️ Please set your OpenRouter API key in Settings to enable AI responses.', 'bot');
-                        return;
-                    }
-                    try {
-                        const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-                            method: 'POST',
-                            headers: {
-                                'Authorization': `Bearer ${this.apiKey}`,
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                model: this.selectedModel,
-                                messages: [{ role: 'user', content: userMsg }]
-                            })
-                        });
-                        const data = await res.json();
-                        this.addMessage(data.choices?.[0]?.message?.content ||
-                            'No response received. Try a different model.', 'bot');
-                    } catch (e) {
-                        this.addMessage('Error: ' + e.message, 'bot');
-                    }
-                }
-
-                async fetchGeminiResponse(userMsg) {
-                    if (!this.geminiKey) {
-                        this.addMessage('⚠️ Please set your Gemini API key in Settings.', 'bot');
-                        return;
-                    }
-                    try {
-                        const res = await fetch(
-                            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${this.geminiKey}`, {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({
-                                    contents: [{ parts: [{ text: userMsg }] }]
-                                })
-                            });
-                        const data = await res.json();
-                        this.addMessage(data.candidates?.[0]?.content?.parts?.[0]?.text ||
-                            'No response received.', 'bot');
-                    } catch (e) {
-                        this.addMessage('Error: ' + e.message, 'bot');
-                    }
-                }
-
-                async fetchOpenRouterModels() {
-                    if (!this.apiKey) {
-                        showToast('Set API key first', 'fa-key');
-                        return;
-                    }
-                    try {
-                        const res = await fetch('https://openrouter.ai/api/v1/models', {
-                            headers: { Authorization: `Bearer ${this.apiKey}` }
-                        });
-                        const data = await res.json();
-                        const freeModels = data.data.filter(m => m.pricing?.prompt === '0' && m.pricing
-                            ?.completion === '0');
-                        if (freeModels.length > 0) {
-                            this.openRouterModels = freeModels.map(m => ({
-                                label: m.id + ' (Free)',
-                                value: m.id
-                            }));
-                            this.populateModelDropdown();
-                            this.renderModelDropdownMenu();
-                            showToast(`Found ${freeModels.length} free models`, 'fa-sync');
-                        }
-                    } catch (e) {
-                        showToast('Failed to fetch models', 'fa-exclamation-circle');
-                    }
-                }
-
-                initImageGenerator() {
-                    if (!this.generateImageBtn) return;
-                    const showPreview = (url) => {
-                        this.currentGenImageUrl = url;
-                        if (this.imageGenPreviewContainer) this.imageGenPreviewContainer.innerHTML =
-                            `<img src="${url}" class="gen-preview-img" alt="AI Generated">`;
-                        if (this.genImageActions) this.genImageActions.classList.remove('hidden');
-                    };
-                    const clearPreview = () => {
-                        this.currentGenImageUrl = null;
-                        if (this.imageGenPreviewContainer) this.imageGenPreviewContainer.innerHTML =
-                            '<div class="text-center text-[var(--text-muted)]"><i class="fas fa-image text-3xl mb-2 block opacity-50"></i>Preview</div>';
-                        if (this.genImageActions) this.genImageActions.classList.add('hidden');
-                    };
-                    this.generateImageBtn.addEventListener('click', async () => {
-                        const prompt = this.imgPromptInput?.value?.trim() || 'abstract liquid art, neon cyberpunk';
-                        const style = document.getElementById('styleSelect')?.value || '';
-                        const fullPrompt = style ? `${prompt}, ${style} style` : prompt;
-                        this.generateImageBtn.disabled = true;
-                        this.generateImageBtn.innerHTML = '<span class="refresh-spinner"></span> Generating...';
-                        if (this.imageGenPreviewContainer) this.imageGenPreviewContainer.innerHTML =
-                            '<div class="text-center text-[var(--text-muted)]"><i class="fas fa-spinner fa-pulse text-2xl mb-2 block"></i>Generating...</div>';
-                        try {
-                            const url =
-                                `https://image.pollinations.ai/prompt/${encodeURIComponent(fullPrompt)}?width=512&height=512&seed=${Date.now()}&nologo=true`;
-                            const img = new Image();
-                            img.onload = () => showPreview(url);
-                            img.onerror = () => { throw new Error('Failed to load image'); };
-                            img.src = url;
-                            showToast('Image generated!', 'fa-check-circle');
-                        } catch (e) {
-                            showToast('Image generation failed', 'fa-exclamation-circle');
-                            clearPreview();
-                        } finally {
-                            this.generateImageBtn.disabled = false;
-                            this.generateImageBtn.innerHTML =
-                                '<span class="material-symbols-outlined">auto_awesome</span>Generate';
-                        }
-                    });
-                    if (this.clearGenImageBtn) this.clearGenImageBtn.addEventListener('click', clearPreview);
-                    if (this.addToChatBtn) this.addToChatBtn.addEventListener('click', async () => {
-                        if (!this.currentGenImageUrl) return;
-                        try {
-                            const res = await fetch(this.currentGenImageUrl);
-                            const blob = await res.blob();
-                            const file = new File([blob], 'ai_art_' + Date.now() + '.png', { type: 'image/png' });
-                            const previewUrl = URL.createObjectURL(file);
-                            this.pendingAttachments.push({ file, previewUrl, type: 'image', name: file.name });
-                            this.updateAttachmentUI();
-                            showToast('AI image added to chat!', 'fa-check-circle');
-                            switchPanel('chat');
-                        } catch (e) {
-                            showToast('Failed to add image', 'fa-exclamation-circle');
-                        }
-                    });
-                    if (this.downloadGenImageBtn) this.downloadGenImageBtn.addEventListener('click', () => {
-                        if (this.currentGenImageUrl) {
-                            const a = document.createElement('a');
-                            a.href = this.currentGenImageUrl;
-                            a.download = 'hex_ai_' + Date.now() + '.png';
-                            a.click();
-                            showToast('Image downloaded!', 'fa-download');
-                        }
-                    });
-                }
-
-                initVideoGenerator() {
-                    if (!this.generateVideoBtn) return;
-                    this.generateVideoBtn.addEventListener('click', async () => {
-                        const prompt = this.videoPromptInput?.value?.trim() ||
-                            'neon city at night, cyberpunk, cinematic';
-                        this.generateVideoBtn.disabled = true;
-                        this.generateVideoBtn.innerHTML = '<span class="refresh-spinner"></span> Generating...';
-                        if (this.videoGenStatus) this.videoGenStatus.innerHTML =
-                            '<i class="fas fa-spinner fa-pulse"></i> Drawing AI image...';
-                        if (this.videoPreviewCanvas) this.videoPreviewCanvas.style.display = 'none';
-                        if (this.videoPreview) this.videoPreview.style.display = 'none';
-                        if (this.videoActions) this.videoActions.classList.add('hidden');
-                        this.clearVideoPreview();
-
-                        this.videoGenOverlay.classList.add('active');
-                        this.genStatusText.textContent = 'Generating video...';
-                        this.genProgressFill.style.width = '0%';
-                        this.genPercentText.textContent = '0%';
-
-                        try {
-                            const imgUrl =
-                                `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&seed=${Date.now()}&nologo=true`;
-                            const img = new Image();
-                            img.crossOrigin = 'Anonymous';
-                            img.onload = () => {
-                                this.genStatusText.textContent = 'Animating scene...';
-                                this.genProgressFill.style.width = '50%';
-                                this.genPercentText.textContent = '50%';
-                                if (this.videoPreviewCanvas) this.videoPreviewCanvas.style.display =
-                                    'block';
-                                this.animateImage(img, this.videoDuration, 24);
-                                setTimeout(() => {
-                                    this.genProgressFill.style.width = '100%';
-                                    this.genPercentText.textContent = '100%';
-                                    setTimeout(() => {
-                                        this.videoGenOverlay.classList.remove('active');
-                                    }, 400);
-                                }, this.videoDuration + 300);
-                                showToast('Animating scene...', 'fa-video');
-                            };
-                            img.onerror = () => { throw new Error('Image generation failed'); };
-                            img.src = imgUrl;
-                        } catch (e) {
-                            this.videoGenOverlay.classList.remove('active');
-                            showToast('Video generation failed', 'fa-exclamation-circle');
-                            this.clearVideoPreview();
-                        } finally {
-                            this.generateVideoBtn.disabled = false;
-                            this.generateVideoBtn.innerHTML =
-                                '<span class="material-symbols-outlined">movie_edit</span>Generate';
-                        }
-                    });
-                    if (this.clearVideoBtn) this.clearVideoBtn.addEventListener('click', () => this
-                        .clearVideoPreview());
-                    if (this.downloadVideoBtn) this.downloadVideoBtn.addEventListener('click', () => {
-                        if (this.currentVideoUrl) {
-                            const a = document.createElement('a');
-                            a.href = this.currentVideoUrl;
-                            a.download = 'hex_video_' + Date.now() + '.webm';
-                            a.click();
-                            showToast('Video downloaded!', 'fa-download');
-                        }
-                    });
-                }
-
-                animateImage(img, durationMs, fps) {
-                    if (!this.videoPreviewCanvas) return;
-                    const ctx = this.videoPreviewCanvas.getContext('2d');
-                    const w = this.videoPreviewCanvas.width = 512;
-                    const h = this.videoPreviewCanvas.height = 512;
-                    const totalFrames = Math.floor((durationMs / 1000) * fps);
-                    let frame = 0;
-                    const stream = this.videoPreviewCanvas.captureStream(fps);
-                    const mimeType = MediaRecorder.isTypeSupported('video/webm; codecs=vp8') ?
-                        'video/webm; codecs=vp8' : 'video/webm';
-                    this.mediaRecorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 2500000 });
-                    this.recordedChunks = [];
-                    this.mediaRecorder.ondataavailable = e => this.recordedChunks.push(e.data);
-                    this.mediaRecorder.onstop = () => {
-                        const blob = new Blob(this.recordedChunks, { type: 'video/webm' });
-                        const url = URL.createObjectURL(blob);
-                        this.showVideoPreview(url);
-                    };
-                    const drawFrame = () => {
-                        const progress = frame / totalFrames;
-                        const panX = Math.sin(progress * Math.PI * 2) * 0.12;
-                        const zoom = 1.0 + Math.sin(progress * Math.PI) * 0.15;
-                        const drawW = w / zoom;
-                        const drawH = h / zoom;
-                        const x = (w - drawW) * (0.5 + panX);
-                        const y = (h - drawH) * 0.5;
-                        ctx.clearRect(0, 0, w, h);
-                        ctx.drawImage(img, x, y, drawW, drawH, 0, 0, w, h);
-                        frame++;
-                        if (frame < totalFrames && this.mediaRecorder && this.mediaRecorder.state ===
-                            'recording') {
-                            this.animationId = requestAnimationFrame(drawFrame);
-                        } else if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
-                            this.mediaRecorder.stop();
-                        }
-                    };
-                    this.mediaRecorder.start();
-                    drawFrame();
-                }
-
-                showVideoPreview(url) {
-                    this.currentVideoUrl = url;
-                    if (this.videoPreview) {
-                        this.videoPreview.src = url;
-                        this.videoPreview.style.display = 'block';
-                    }
-                    if (this.videoPreviewCanvas) this.videoPreviewCanvas.style.display = 'none';
-                    if (this.videoGenStatus) this.videoGenStatus.style.display = 'none';
-                    if (this.videoActions) this.videoActions.classList.remove('hidden');
-                }
-
-                clearVideoPreview() {
-                    if (this.animationId) cancelAnimationFrame(this.animationId);
-                    if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') this.mediaRecorder.stop();
-                    if (this.videoPreview) {
-                        this.videoPreview.style.display = 'none';
-                        this.videoPreview.src = '';
-                    }
-                    if (this.videoPreviewCanvas) {
-                        this.videoPreviewCanvas.style.display = 'none';
-                        const ctx = this.videoPreviewCanvas.getContext('2d');
-                        if (ctx) ctx.clearRect(0, 0, this.videoPreviewCanvas.width, this.videoPreviewCanvas
-                            .height);
-                    }
-                    if (this.videoGenStatus) {
-                        this.videoGenStatus.style.display = 'block';
-                        this.videoGenStatus.innerHTML =
-                            '<i class="fas fa-film text-3xl block mb-2 opacity-50"></i>Preview';
-                    }
-                    if (this.videoActions) this.videoActions.classList.add('hidden');
-                    this.currentVideoUrl = null;
-                    this.recordedChunks = [];
-                }
-
-                // ===== MP3 UPLOAD =====
-                loadMP3Files() {
-                    const stored = localStorage.getItem('hexai_mp3_files');
-                    if (stored) {
-                        try {
-                            this.mp3Files = JSON.parse(stored);
-                        } catch {
-                            this.mp3Files = [];
-                        }
-                    }
-                    this.renderMP3List();
-                }
-
-                saveMP3Files() {
-                    const meta = this.mp3Files.map(f => ({ name: f.name, size: f.size, key: f.key }));
-                    localStorage.setItem('hexai_mp3_files', JSON.stringify(meta));
-                }
-
-                setupMP3Upload() {
-                    const dropArea = this.mp3DropArea;
-                    const fileInput = this.mp3FileInput;
-
-                    dropArea.addEventListener('click', () => fileInput.click());
-
-                    dropArea.addEventListener('dragover', (e) => {
-                        e.preventDefault();
-                        dropArea.classList.add('dragover');
-                    });
-                    dropArea.addEventListener('dragleave', () => {
-                        dropArea.classList.remove('dragover');
-                    });
-                    dropArea.addEventListener('drop', (e) => {
-                        e.preventDefault();
-                        dropArea.classList.remove('dragover');
-                        const files = e.dataTransfer.files;
-                        if (files.length) this.handleMP3Files(files);
-                    });
-
-                    fileInput.addEventListener('change', (e) => {
-                        if (e.target.files.length) this.handleMP3Files(e.target.files);
-                        fileInput.value = '';
-                    });
-                }
-
-                handleMP3Files(files) {
-                    for (const file of files) {
-                        if (file.type !== 'audio/mpeg' && !file.name.toLowerCase().endsWith('.mp3')) {
-                            showToast('Skipping non-MP3 file: ' + file.name, 'fa-exclamation-circle');
-                            continue;
-                        }
-                        if (this.mp3Files.length >= 20) {
-                            showToast('Max 20 MP3 files reached. Remove some first.', 'fa-exclamation-circle');
-                            break;
-                        }
-                        const key = 'mp3_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                            const dataUrl = e.target.result;
-                            this.mp3Files.push({ name: file.name, size: file.size, key, dataUrl });
-                            this.saveMP3Files();
-                            this.renderMP3List();
-                            showToast('Uploaded: ' + file.name, 'fa-check-circle');
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                }
-
-                renderMP3List() {
-                    if (!this.mp3List) return;
-                    this.mp3List.innerHTML = '';
-                    if (this.mp3Files.length === 0) {
-                        this.mp3List.innerHTML =
-                            '<li style="color:var(--text-muted);font-size:0.8rem;padding:8px;text-align:center;">No MP3 files uploaded.</li>';
-                        return;
-                    }
-                    this.mp3Files.forEach((f, idx) => {
-                        const li = document.createElement('li');
-                        const playBtn = document.createElement('button');
-                        playBtn.className = 'mp3-play-btn';
-                        playBtn.innerHTML = '<i class="bx bx-play"></i>';
-                        playBtn.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            this.playMP3(idx);
-                        });
-                        const nameSpan = document.createElement('span');
-                        nameSpan.className = 'mp3-name';
-                        nameSpan.textContent = f.name;
-                        const removeBtn = document.createElement('button');
-                        removeBtn.className = 'mp3-remove-btn';
-                        removeBtn.innerHTML = '<i class="bx bx-trash"></i>';
-                        removeBtn.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            this.removeMP3(idx);
-                        });
-                        li.appendChild(playBtn);
-                        li.appendChild(nameSpan);
-                        li.appendChild(removeBtn);
-                        this.mp3List.appendChild(li);
-                    });
-                }
-
-                playMP3(idx) {
-                    const f = this.mp3Files[idx];
-                    if (!f || !f.dataUrl) {
-                        showToast('MP3 data not available', 'fa-exclamation-circle');
-                        return;
-                    }
-                    const audio = new Audio(f.dataUrl);
-                    audio.volume = currentVolume / 100;
-                    audio.play().then(() => {
-                        document.querySelector("#nowPlaying .song-title").textContent = f.name;
-                        document.querySelector("#nowPlaying .author-name").textContent = 'Offline MP3';
-                        document.getElementById("albumArt").src = 'https://via.placeholder.com/300?text=🎵+MP3';
-                        if (player && typeof player.pauseVideo === 'function') player.pauseVideo();
-                        const progressInterval = setInterval(() => {
-                            if (audio.paused && audio.currentTime === 0) {
-                                clearInterval(progressInterval);
-                                return;
-                            }
-                            const pct = (audio.currentTime / audio.duration) * 100;
-                            document.getElementById("progress").style.width = pct + '%';
-                            document.getElementById("currentTime").textContent = formatTime(audio
-                                .currentTime);
-                            document.getElementById("totalTime").textContent = formatTime(audio
-                                .duration);
-                        }, 500);
-                        audio.addEventListener('ended', () => {
-                            clearInterval(progressInterval);
-                            document.getElementById("progress").style.width = '0%';
-                            document.getElementById("currentTime").textContent = '0:00';
-                        });
-                        window._currentMP3 = audio;
-                        window._currentMP3Interval = progressInterval;
-                        playing = true;
-                        document.getElementById("playPauseBtn").innerHTML = ICON_PAUSE;
-                    }).catch(() => {
-                        showToast('Failed to play MP3', 'fa-exclamation-circle');
-                    });
-                }
-
-                removeMP3(idx) {
-                    const f = this.mp3Files[idx];
-                    if (!f) return;
-                    this.mp3Files.splice(idx, 1);
-                    this.saveMP3Files();
-                    this.renderMP3List();
-                    showToast('Removed: ' + f.name, 'fa-trash');
-                }
             }
 
             // ================================================================
@@ -5011,17 +2160,7 @@
             let showRomanize = false;
             let showTranslation = false;
             let targetLanguage = localStorage.getItem('lyrics_target_language') || 'en';
-            let translationService = localStorage.getItem('lyrics_translation_service') || 'auto';
             let isEditingLyrics = false;
-            let currentLyricsOriginal = null;
-            let currentLyricsRomanized = null;
-            let currentLyricsTranslated = null;
-
-            // ===== SPONSORBLOCK =====
-            let sponsorSegments = [];
-            let skippedSegments = new Set();
-            let sponsorCheckInterval = null;
-            let sponsorBlockEnabled = true;
 
             const CORS_PROXY_URL = 'https://api.codetabs.com/v1/proxy?quest=';
 
@@ -5334,7 +2473,6 @@
             function playNextFromQueue() {
                 if (queue.length === 0) {
                     if (playlist.length > 0) {
-                        // auto-play from playlist
                         const cur = document.querySelector("#songList li.selected");
                         const items = document.querySelectorAll("#songList li:not(.empty-playlist)");
                         if (items.length === 0) return;
@@ -5363,29 +2501,8 @@
                 loadNewVideo(nextSong.videoId, nextSong.albumArt, nextSong);
             }
 
-            // ===== SPONSORBLOCK =====
-            async function fetchSponsorTimes(videoId) {
-                try {
-                    const url = `https://sponsor.ajay.app/api/getVideoSponsorTimes?videoID=${videoId}`;
-                    const resp = await fetch(url);
-                    if (!resp.ok) return [];
-                    const data = await resp.json();
-                    return (data.sponsorTimes || []).map(([s, e]) => ({ start: parseFloat(s), end: parseFloat(e) }));
-                } catch (e) {
-                    console.warn('SponsorBlock fetch error:', e);
-                    return [];
-                }
-            }
-
             // ===== LOAD VIDEO =====
             function loadNewVideo(videoId, albumArtUrl, songObject = null) {
-                if (sponsorCheckInterval) {
-                    clearInterval(sponsorCheckInterval);
-                    sponsorCheckInterval = null;
-                }
-                sponsorSegments = [];
-                skippedSegments.clear();
-
                 if (player) player.setVolume(currentVolume);
                 const art = document.getElementById('albumArt');
                 art.style.transition = 'opacity 0.5s';
@@ -5483,28 +2600,6 @@
                 playing = true;
                 document.getElementById('playPauseBtn').innerHTML = ICON_PAUSE;
                 updateProgressBar();
-
-                // SponsorBlock
-                fetchSponsorTimes(videoId).then(segments => {
-                    sponsorSegments = segments;
-                    if (sponsorCheckInterval) clearInterval(sponsorCheckInterval);
-                    sponsorCheckInterval = setInterval(() => {
-                        if (!sponsorBlockEnabled || !player || typeof player.getCurrentTime !==
-                            'function') return;
-                        const cur = player.getCurrentTime();
-                        for (let seg of sponsorSegments) {
-                            if (cur >= seg.start && cur < seg.end) {
-                                const key = seg.start + '-' + seg.end;
-                                if (!skippedSegments.has(key)) {
-                                    player.seekTo(seg.end);
-                                    skippedSegments.add(key);
-                                    console.log(`Skipped sponsor segment ${seg.start} → ${seg.end}`);
-                                }
-                                break;
-                            }
-                        }
-                    }, 1000);
-                }).catch(() => {});
             }
 
             function handlePlayerStateChange(event) {
@@ -5532,10 +2627,6 @@
                     } else {
                         document.getElementById('playPauseBtn').innerHTML = ICON_REVISION;
                     }
-                    if (sponsorCheckInterval) {
-                        clearInterval(sponsorCheckInterval);
-                        sponsorCheckInterval = null;
-                    }
                 } else if (event.data === 2) {
                     document.getElementById('playPauseBtn').innerHTML = ICON_PLAY;
                     playing = false;
@@ -5546,11 +2637,6 @@
                     if (albumArtSpinEnabled) {
                         art.classList.remove('rotate-paused');
                         art.classList.add('rotate');
-                    }
-                } else if (event.data === 5) {
-                    if (sponsorCheckInterval) {
-                        clearInterval(sponsorCheckInterval);
-                        sponsorCheckInterval = null;
                     }
                 }
             }
@@ -5570,10 +2656,6 @@
                 if (player && player.pauseVideo) player.pauseVideo();
                 document.getElementById('playPauseBtn').innerHTML = ICON_PLAY;
                 document.getElementById('albumArt').classList.add('rotate-paused');
-                if (sponsorCheckInterval) {
-                    clearInterval(sponsorCheckInterval);
-                    sponsorCheckInterval = null;
-                }
 
                 function updateCountdown() {
                     errorMsg.innerHTML = `⚠ Song unavailable. Skipping in ${countdown} seconds...`;
@@ -5713,37 +2795,6 @@
             document.getElementById('repeatBtn').addEventListener('click', function() {
                 repeatSong = !repeatSong;
                 this.classList.toggle('active', repeatSong);
-            });
-
-            document.getElementById('sponsorBlockToggle').addEventListener('change', function() {
-                sponsorBlockEnabled = this.checked;
-                if (!sponsorBlockEnabled && sponsorCheckInterval) {
-                    clearInterval(sponsorCheckInterval);
-                    sponsorCheckInterval = null;
-                } else if (sponsorBlockEnabled && player && typeof player.getVideoData === 'function') {
-                    const vid = player.getVideoData()?.video_id;
-                    if (vid) fetchSponsorTimes(vid).then(segments => {
-                        sponsorSegments = segments;
-                        if (sponsorCheckInterval) clearInterval(sponsorCheckInterval);
-                        sponsorCheckInterval = setInterval(() => {
-                            if (!sponsorBlockEnabled || !player || typeof player.getCurrentTime !==
-                                'function') return;
-                            const cur = player.getCurrentTime();
-                            for (let seg of sponsorSegments) {
-                                if (cur >= seg.start && cur < seg.end) {
-                                    const key = seg.start + '-' + seg.end;
-                                    if (!skippedSegments.has(key)) {
-                                        player.seekTo(seg.end);
-                                        skippedSegments.add(key);
-                                        console.log(
-                                            `Skipped sponsor segment ${seg.start} → ${seg.end}`);
-                                    }
-                                    break;
-                                }
-                            }
-                        }, 1000);
-                    }).catch(() => {});
-                }
             });
 
             document.getElementById('albumArtDisplayToggle')?.querySelectorAll('.btn').forEach(btn => {
@@ -5914,12 +2965,8 @@
                 return { artist: extractedArtist, track: extractedTrack };
             }
 
-            // ----- ROMANIZATION -----
-            // Simple romanization for common scripts (Japanese, Korean, Chinese, Russian, etc.)
-            // For production, use a proper library; this is a lightweight fallback.
-            function romanizeText(text, lang = 'auto') {
+            function romanizeText(text) {
                 if (!text) return text;
-                // Japanese: use basic mapping for common kana
                 const kanaMap = {
                     'あ': 'a',
                     'い': 'i',
@@ -6026,7 +3073,6 @@
                     'ぴゅ': 'pyu',
                     'ぴょ': 'pyo',
                 };
-                // Korean simple romanization (rough)
                 const koreanMap = {
                     'ㄱ': 'g',
                     'ㄲ': 'kk',
@@ -6069,7 +3115,6 @@
                     'ㅢ': 'ui',
                     'ㅣ': 'i',
                 };
-                // Russian Cyrillic
                 const cyrillicMap = {
                     'а': 'a',
                     'б': 'b',
@@ -6105,11 +3150,8 @@
                     'ю': 'yu',
                     'я': 'ya',
                 };
-                // Detect language and apply mapping
                 let result = text;
-                // Japanese detection (Hiragana/Katakana)
                 if (/[\u3040-\u30FF]/.test(text)) {
-                    // Simple kana->romaji
                     let out = '';
                     for (let i = 0; i < text.length; i++) {
                         const ch = text[i];
@@ -6127,7 +3169,6 @@
                     }
                     result = out;
                 } else if (/[\uAC00-\uD7AF]/.test(text)) {
-                    // Korean
                     let out = '';
                     for (const ch of text) {
                         if (koreanMap[ch]) out += koreanMap[ch];
@@ -6135,7 +3176,6 @@
                     }
                     result = out;
                 } else if (/[\u0400-\u04FF]/.test(text)) {
-                    // Cyrillic
                     let out = '';
                     for (const ch of text) {
                         const lower = ch.toLowerCase();
@@ -6144,38 +3184,21 @@
                     }
                     result = out;
                 }
-                // Chinese: use pinyin-like mapping (very basic)
-                // For Chinese, we'll just return the original since proper romanization requires a dictionary
                 return result;
             }
 
-            // ----- TRANSLATION -----
             async function translateText(text, targetLang) {
                 if (!text || !targetLang || targetLang === 'en') return text;
                 try {
-                    const service = translationService;
-                    if (service === 'mymemory') {
-                        const url =
-                            `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${targetLang}`;
-                        const res = await fetch(url);
-                        if (!res.ok) throw new Error('Translation API error');
-                        const data = await res.json();
-                        if (data.responseData && data.responseData.translatedText) {
-                            return data.responseData.translatedText;
-                        }
-                        return text;
-                    } else {
-                        // Google Translate via free API
-                        const url =
-                            `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
-                        const res = await fetch(url);
-                        if (!res.ok) throw new Error('Translation API error');
-                        const data = await res.json();
-                        if (data && data[0] && data[0][0] && data[0][0][0]) {
-                            return data[0].map(segment => segment[0]).join('');
-                        }
-                        return text;
+                    const url =
+                        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error('Translation API error');
+                    const data = await res.json();
+                    if (data && data[0] && data[0][0] && data[0][0][0]) {
+                        return data[0].map(segment => segment[0]).join('');
                     }
+                    return text;
                 } catch (e) {
                     console.warn('Translation failed:', e);
                     return text;
@@ -6206,7 +3229,6 @@
                                 document.getElementById('lyricsMeta').textContent =
                                     `Plain lyrics found for ${cleanArtist} – ${cleanTrack} (Cached)`;
                             }
-                            // Apply romanization & translation if enabled
                             if (showRomanize || showTranslation) {
                                 applyLyricsEnhancements();
                             }
@@ -6290,7 +3312,6 @@
                 if (showTranslation && targetLanguage !== 'en') {
                     translated = await translateText(text, targetLanguage);
                 }
-                // Render with enhancements
                 let html = '';
                 const rawLines = lines;
                 for (let i = 0; i < rawLines.length; i++) {
@@ -6310,14 +3331,12 @@
                     html += lineHtml;
                 }
                 container.innerHTML = html;
-                // Update meta
                 const meta = document.getElementById('lyricsMeta');
                 let metaText = document.getElementById('lyricsMeta').textContent.split(' (')[0];
                 const extras = [];
                 if (showRomanize) extras.push('Romaji');
                 if (showTranslation && targetLanguage !== 'en') extras.push(`→ ${targetLanguage}`);
                 if (extras.length > 0) metaText += ` [${extras.join(' + ')}]`;
-                // Add language badge
                 if (showTranslation && targetLanguage !== 'en') {
                     metaText += ` <span class="lyrics-lang-badge">${targetLanguage.toUpperCase()}</span>`;
                 }
@@ -6385,7 +3404,6 @@
                 if (showRomanize || showTranslation) {
                     await applyLyricsEnhancements();
                 } else {
-                    // Re-render original
                     if (lyricsData) {
                         if (lyricsData.isLrc && lyricsData.lrcLines) {
                             renderLrcLines(lyricsData.lrcLines);
@@ -6422,11 +3440,9 @@
 
             document.getElementById('editLyricsBtn')?.addEventListener('click', () => {
                 if (isEditingLyrics) {
-                    // Save edit
                     const editArea = document.getElementById('lyricsText').querySelector('.lyrics-edit-area');
                     if (editArea) {
                         const newText = editArea.value;
-                        // Try to parse as LRC
                         const parsed = parseLrc(newText);
                         if (parsed.length > 0) {
                             lyricsData = { isLrc: true, lrcLines: parsed };
@@ -6437,7 +3453,6 @@
                             document.getElementById('lyricsText').innerHTML = lines.map(line =>
                                 `<div class="plain-line">${line}</div>`).join('');
                         }
-                        // Cache edited lyrics
                         const { artist: cleanArtist, track: cleanTrack } = cleanTitleAndArtist(lastSong,
                             lastAuthor);
                         const cacheKey =
@@ -6460,7 +3475,6 @@
                     }
                     return;
                 }
-                // Enter edit mode
                 isEditingLyrics = true;
                 document.getElementById('editLyricsBtn').innerHTML = '<i class="bx bx-save"></i> Save';
                 const container = document.getElementById('lyricsText');
@@ -6741,17 +3755,10 @@
                 applyAlbumArtDisplayMode();
                 if (document.getElementById('autoPlayToggle')) document.getElementById('autoPlayToggle').checked =
                     true;
-                // Load target language from settings
                 const savedLang = localStorage.getItem('lyrics_target_language');
                 if (savedLang) targetLanguage = savedLang;
-                const savedService = localStorage.getItem('lyrics_translation_service');
-                if (savedService) translationService = savedService;
-                // Set target language dropdown
                 const langSelect = document.getElementById('targetLanguageSelect');
                 if (langSelect) langSelect.value = targetLanguage;
-                // Set translation service
-                const serviceSelect = document.getElementById('translationServiceSelect');
-                if (serviceSelect) serviceSelect.value = translationService;
             }
 
             if (document.readyState === 'loading') {
@@ -6760,58 +3767,207 @@
                 initYTMusic();
             }
 
-            // ===== BOOT HEX AI =====
-            window.hexApp = new HexAI();
-
+            // ===== SETTINGS =====
+            const settingsBtn = document.getElementById('settingsBtn');
+            const settingsOverlay = document.getElementById('settingsOverlay');
+            const settingsClose = document.getElementById('settingsClose');
+            const saveSettingsBtn = document.getElementById('saveSettingsBtn');
             const ytKeyInput = document.getElementById('ytApiKeyInput');
+            const targetLangSelect = document.getElementById('targetLanguageSelect');
+            const chatLangSelect = document.getElementById('chatLanguageSelect');
+
+            // Load saved API key
             if (ytKeyInput) {
                 const savedKey = localStorage.getItem('yt_api_key') || '';
                 if (savedKey) ytKeyInput.value = savedKey;
-                const origSave = window.hexApp.saveSettings.bind(window.hexApp);
-                window.hexApp.saveSettings = function() {
-                    if (ytKeyInput) {
-                        const key = ytKeyInput.value.trim();
-                        if (key) localStorage.setItem('yt_api_key', key);
-                        else localStorage.removeItem('yt_api_key');
+            }
+
+            // Load saved chat language
+            if (chatLangSelect) {
+                const savedChatLang = localStorage.getItem('chat_language') || 'en';
+                chatLangSelect.value = savedChatLang;
+            }
+
+            // Settings toggle
+            settingsBtn.addEventListener('click', () => {
+                settingsOverlay.classList.add('active');
+            });
+
+            settingsClose.addEventListener('click', () => {
+                settingsOverlay.classList.remove('active');
+            });
+
+            settingsOverlay.addEventListener('click', (e) => {
+                if (e.target === settingsOverlay) {
+                    settingsOverlay.classList.remove('active');
+                }
+            });
+
+            // Save settings
+            saveSettingsBtn.addEventListener('click', () => {
+                if (ytKeyInput) {
+                    const key = ytKeyInput.value.trim();
+                    if (key) localStorage.setItem('yt_api_key', key);
+                    else localStorage.removeItem('yt_api_key');
+                }
+                if (targetLangSelect) {
+                    targetLanguage = targetLangSelect.value;
+                    localStorage.setItem('lyrics_target_language', targetLanguage);
+                    showToast(`Target language set to ${targetLanguage}`, 'fa-language');
+                    // Re-apply lyrics enhancements if active
+                    if (showTranslation && lyricsData) {
+                        applyLyricsEnhancements();
                     }
-                    // Save translation settings
-                    const langSelect = document.getElementById('targetLanguageSelect');
-                    if (langSelect) {
-                        targetLanguage = langSelect.value;
-                        localStorage.setItem('lyrics_target_language', targetLanguage);
-                    }
-                    const serviceSelect = document.getElementById('translationServiceSelect');
-                    if (serviceSelect) {
-                        translationService = serviceSelect.value;
-                        localStorage.setItem('lyrics_translation_service', translationService);
-                    }
-                    origSave();
-                };
-                document.getElementById('saveSettingsBtn')?.addEventListener('click', function() {
-                    if (ytKeyInput) {
-                        const key = ytKeyInput.value.trim();
-                        if (key) localStorage.setItem('yt_api_key', key);
-                        else localStorage.removeItem('yt_api_key');
-                    }
-                    const langSelect = document.getElementById('targetLanguageSelect');
-                    if (langSelect) {
-                        targetLanguage = langSelect.value;
-                        localStorage.setItem('lyrics_target_language', targetLanguage);
-                        showToast(`Target language set to ${targetLanguage}`, 'fa-language');
-                    }
-                    const serviceSelect = document.getElementById('translationServiceSelect');
-                    if (serviceSelect) {
-                        translationService = serviceSelect.value;
-                        localStorage.setItem('lyrics_translation_service', translationService);
-                    }
+                }
+                if (chatLangSelect) {
+                    const chatLang = chatLangSelect.value;
+                    localStorage.setItem('chat_language', chatLang);
+                    showToast(`Chat language set to ${chatLang}`, 'fa-language');
+                }
+                settingsOverlay.classList.remove('active');
+                showToast('Settings saved', 'fa-check-circle');
+            });
+
+            // ===== CHAT SYSTEM =====
+            const chatInput = document.getElementById('chatInput');
+            const sendButton = document.getElementById('sendButton');
+            const emojiBtn = document.getElementById('emojiBtn');
+            const emojiPicker = document.getElementById('emojiPicker');
+            const attachBtn = document.getElementById('attachBtn');
+            const fileInput = document.getElementById('fileInput');
+
+            // Emoji picker
+            const emojis = ['😀', '😂', '😍', '🥰', '😎', '🤩', '😇', '😜', '🤔', '😴', '😢', '😡', '👍', '👎', '👏',
+                '🙌', '💪', '🔥', '⭐', '❤️', '💔', '🎉', '🎂', '🍕', '☕', '🚀', '🌈', '✨', '💡', '📌', '📎',
+                '🖊️', '📷', '🎵', '🎬', '📁', '🗑️', '✅', '❌', '➕', '➖', '📊', '📈', '💬', '🗨️', '🕒', '🌍'
+            ];
+            const emojiGrid = document.querySelector('.emoji-grid');
+            if (emojiGrid) {
+                emojis.forEach(emoji => {
+                    const span = document.createElement('span');
+                    span.textContent = emoji;
+                    span.addEventListener('click', () => {
+                        const start = chatInput.selectionStart;
+                        const end = chatInput.selectionEnd;
+                        const text = chatInput.value;
+                        chatInput.value = text.substring(0, start) + emoji + text.substring(end);
+                        chatInput.focus();
+                        chatInput.selectionStart = chatInput.selectionEnd = start + emoji.length;
+                        emojiPicker.classList.remove('open');
+                        chatInput.style.height = 'auto';
+                        chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + 'px';
+                    });
+                    emojiGrid.appendChild(span);
                 });
             }
 
-            console.log('🚀 HEX AI Studio · Theme UI/UX Upgraded');
+            emojiBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                emojiPicker.classList.toggle('open');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!emojiPicker.contains(e.target) && e.target !== emojiBtn) {
+                    emojiPicker.classList.remove('open');
+                }
+            });
+
+            // File attachment
+            attachBtn.addEventListener('click', () => fileInput.click());
+
+            // Auto-resize input
+            chatInput.addEventListener('input', () => {
+                chatInput.style.height = 'auto';
+                chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + 'px';
+            });
+
+            // Send message
+            let isProcessing = false;
+
+            async function handleSend() {
+                const text = chatInput.value.trim();
+                if (!text || isProcessing) return;
+                isProcessing = true;
+                chatInput.value = '';
+                chatInput.style.height = 'auto';
+                showToast('Thinking...', 'fa-spinner fa-pulse');
+
+                // Get chat language
+                const chatLang = localStorage.getItem('chat_language') || 'en';
+
+                // Simple AI response with real-time language
+                let response = '';
+                try {
+                    const url =
+                        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${chatLang}&dt=t&q=${encodeURIComponent(text)}`;
+                    const res = await fetch(url);
+                    if (res.ok) {
+                        const data = await res.json();
+                        response = data[0][0][0] || `I received: "${text}"`;
+                    } else {
+                        response = `I received: "${text}" (in ${chatLang})`;
+                    }
+                } catch (e) {
+                    response = `I received: "${text}" (translation service unavailable)`;
+                }
+
+                // Add response to chat (visual only)
+                const chatContainer = document.getElementById('chatContainer');
+                if (chatContainer) {
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = 'message-wrapper self-start flex gap-3 max-w-3xl';
+                    msgDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-[var(--ai-avatar-bg)] flex items-center justify-center border border-[var(--border)]">
+                  <span class="material-symbols-outlined text-[var(--text-primary)] text-sm">smart_toy</span>
+                </div>
+                <div class="bg-[var(--card-bg)] backdrop-blur-md border border-[var(--glass-border)] p-4 rounded-2xl rounded-tl-sm shadow-sm max-w-full overflow-hidden">
+                  <div class="message-content break-words">${response}</div>
+                </div>
+              `;
+                    chatContainer.appendChild(msgDiv);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }
+
+                isProcessing = false;
+                showToast('Ready', 'fa-check-circle', 1000);
+            }
+
+            sendButton.addEventListener('click', handleSend);
+            chatInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                }
+            });
+
+            // Initial chat message
+            setTimeout(() => {
+                const chatContainer = document.getElementById('chatContainer');
+                if (chatContainer && chatContainer.children.length === 0) {
+                    const welcome = document.createElement('div');
+                    welcome.className = 'message-wrapper self-start flex gap-3 max-w-3xl';
+                    const lang = localStorage.getItem('chat_language') || 'en';
+                    const msg = lang === 'zh' ? '👋 你好！我是 HEX AI。输入任何消息，我会用你选择的语言回复。' :
+                        lang === 'ja' ? '👋 こんにちは！HEX AIです。選択した言語で返信します。' :
+                        lang === 'ko' ? '👋 안녕하세요! HEX AI입니다. 선택한 언어로 답변드립니다.' :
+                        `👋 Hello! I'm HEX AI. I'll respond in your selected language (${lang}).`;
+                    welcome.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-[var(--ai-avatar-bg)] flex items-center justify-center border border-[var(--border)]">
+                  <span class="material-symbols-outlined text-[var(--text-primary)] text-sm">smart_toy</span>
+                </div>
+                <div class="bg-[var(--card-bg)] backdrop-blur-md border border-[var(--glass-border)] p-4 rounded-2xl rounded-tl-sm shadow-sm max-w-full overflow-hidden">
+                  <div class="message-content break-words">${msg}</div>
+                </div>
+              `;
+                    chatContainer.appendChild(welcome);
+                }
+            }, 200);
+
+            console.log('🚀 HEX AI Studio · YouTube Music + Chat with Real-time Translation');
             console.log('   🎨 Material Design 3 · Purple palette');
-            console.log('   🎵 YouTube Music with Queue & SponsorBlock');
-            console.log('   📜 Lyrics: Sync, Edit, Refresh, Search, Romaji, Translation');
-            console.log('   🌐 Target language: ' + targetLanguage);
+            console.log('   🎵 YouTube Music with Queue & Lyrics');
+            console.log('   🌐 GTranslate integration for UI language');
+            console.log('   💬 Chat responds in your selected language in real time');
 
         })();
     </script>
