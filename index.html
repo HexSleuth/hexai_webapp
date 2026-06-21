@@ -4335,7 +4335,31 @@
 
         })();
     </script>
-    <script>window.onload = () => new Audio('song.mp3').play().catch(() => {});</script>
+    <script>
+(function() {
+  const audio = new Audio('song.mp3');
+  audio.loop = false;       // change to true if you want looping
+  audio.muted = true;       // start muted – autoplay is allowed
+
+  // Attempt to play immediately (works because it's muted)
+  audio.play().catch(() => {});
+
+  // After the *first* user interaction, unmute and keep playing
+  const unmuteOnce = () => {
+    audio.muted = false;
+    if (audio.paused) audio.play().catch(() => {});
+    // Remove listeners so it only happens once
+    ['click', 'touchstart', 'keydown'].forEach(evt =>
+      document.removeEventListener(evt, unmuteOnce)
+    );
+  };
+
+  ['click', 'touchstart', 'keydown'].forEach(evt =>
+    document.addEventListener(evt, unmuteOnce, { once: true })
+  );
+})();
+        
+    </script>
 </body>
 
 </html>
