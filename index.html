@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <title>HEX AI with YouTube Music</title>
+    <title>HEX AI with YouTube Music & SponsorBlock</title>
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1577,7 +1577,7 @@
 
     <!-- SETTINGS OVERLAY -->
     <div id="settingsOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center hidden">
-        <div class="bg-[var(--card-bg)] backdrop-blur-xl border border-[var(--border)] rounded-2xl p-6 w-[90%] max-w-md shadow-2xl">
+        <div class="bg-[var(--card-bg)] backdrop-blur-xl border border-[var(--border)] rounded-2xl p-6 w-[90%] max-w-4xl shadow-2xl max-h-[90vh] overflow-y-auto">
             <h3 class="text-lg font-semibold mb-4">Settings</h3>
             <div class="space-y-4">
                 <div>
@@ -1668,6 +1668,61 @@
                 <div><label class="block text-sm mb-1">AI Model</label>
                     <div class="flex gap-2"><select id="modelSelect" class="flex-1 bg-[var(--input-bg)] border border-[var(--border)] rounded-lg px-3 py-2"></select><button id="refreshModelsBtn" class="p-2 rounded-lg bg-[var(--hover-bg)]"><span class="material-symbols-outlined">refresh</span></button></div>
                 </div>
+
+                <!-- SponsorBlock Settings -->
+                <div class="border-t pt-4 mt-2">
+                    <h4 class="text-md font-semibold mb-2">SponsorBlock Settings</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm mb-1">Categories</label>
+                            <div class="space-y-1 text-sm">
+                                <label><input type="checkbox" class="sponsor-category" value="sponsor" checked> Sponsor</label>
+                                <label><input type="checkbox" class="sponsor-category" value="selfpromo" checked> Self-promo</label>
+                                <label><input type="checkbox" class="sponsor-category" value="interaction" checked> Interaction</label>
+                                <label><input type="checkbox" class="sponsor-category" value="intro" checked> Intro</label>
+                                <label><input type="checkbox" class="sponsor-category" value="outro" checked> Outro</label>
+                                <label><input type="checkbox" class="sponsor-category" value="preview" checked> Preview</label>
+                                <label><input type="checkbox" class="sponsor-category" value="music_offtopic" checked> Music Off-topic</label>
+                                <label><input type="checkbox" class="sponsor-category" value="exclusive_access" checked> Exclusive Access</label>
+                                <label><input type="checkbox" class="sponsor-category" value="poi_highlight" checked> POI Highlight</label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm mb-1">Action Types</label>
+                            <div class="space-y-1 text-sm">
+                                <label><input type="checkbox" class="sponsor-action" value="skip" checked> Skip</label>
+                                <label><input type="checkbox" class="sponsor-action" value="mute" checked> Mute</label>
+                                <label><input type="checkbox" class="sponsor-action" value="full" checked> Full</label>
+                                <label><input type="checkbox" class="sponsor-action" value="poi" checked> POI</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                        <div>
+                            <label class="block text-sm mb-1">Skip Threshold</label>
+                            <div class="flex gap-2">
+                                <input type="number" id="skipThresholdStart" value="0.2" step="0.1" class="w-1/2 bg-[var(--input-bg)] border border-[var(--border)] rounded px-2 py-1 text-sm" />
+                                <input type="number" id="skipThresholdEnd" value="1" step="0.1" class="w-1/2 bg-[var(--input-bg)] border border-[var(--border)] rounded px-2 py-1 text-sm" />
+                            </div>
+                            <p class="text-xs text-[var(--text-muted)] mt-1">Skip from between time-[start] and time+[end]</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm mb-1">Server Endpoint</label>
+                            <input type="text" id="serverEndpoint" value="https://sponsor.ajay.app" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded px-2 py-1 text-sm" />
+                        </div>
+                        <div>
+                            <label class="block text-sm mb-1">Skip Tracking</label>
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" id="skipTracking" checked /> Enable tracking
+                            </label>
+                        </div>
+                        <div>
+                            <label class="block text-sm mb-1">Highlight Key (for POI)</label>
+                            <input type="text" id="highlightKey" value="Enter" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded px-2 py-1 text-sm" />
+                        </div>
+                    </div>
+                </div>
+
                 <div class="flex justify-end gap-3 pt-2"><button id="settingsClose" class="px-4 py-2 rounded-full border border-[var(--border)]">Cancel</button><button id="saveSettingsBtn" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white">Save</button></div>
             </div>
         </div>
@@ -1834,7 +1889,7 @@
                                     <button class="btn btn-outline-primary" data-mode="video">Video</button>
                                 </div>
                             </div>
-                            <!-- ✅ SponsorBlock Toggle (UI already present) -->
+                            <!-- SponsorBlock Toggle -->
                             <div class="sponsor-toggle">
                                 <span>Skip Sponsors</span>
                                 <label class="switch">
@@ -1919,10 +1974,9 @@
         (function() {
             'use strict';
 
-            // ----- HEX AI & YT Music Player with SponsorBlock (Fixed) -----
-            // The conflicting "Adblock Plus" script has been removed.
-            // SponsorBlock now uses a `sponsorVideoId` guard to prevent stale intervals.
-            // Toggle logic works correctly for the currently loaded video.
+            // ----- HEX AI & YT Music Player with SponsorBlock (Integrated from sb.js) -----
+            // The sb.js logic has been adapted to work with the YouTube iframe player.
+            // All configurable options are exposed in the settings overlay.
 
             const bodyEl = document.getElementById('appBody');
             const themeIcon = document.getElementById('themeIcon');
@@ -2924,7 +2978,7 @@
 
             // ================================================================
             //  YOUTUBE MUSIC PLAYER – Enhanced Lyrics Engine (Multi-source)
-            //  with ✅ SponsorBlock integration fully implemented (FIXED)
+            //  with ✅ SponsorBlock integration using sb.js logic
             // ================================================================
 
             const ICON_TRASH = '<i class=\'bx bx-trash\'></i>';
@@ -2971,11 +3025,213 @@
             let currentLang = localStorage.getItem('translationTargetLang') || 'en';
             let translationService = localStorage.getItem('translationService') || 'auto';
 
-            // ✅ SponsorBlock state
-            let sponsorVideoId = null; // Guard against stale intervals
-            let sponsorSegments = [];
-            let skippedSegments = new Set();
-            let sponsorCheckInterval = null;
+            // ============================================================
+            //  SPONSORBLOCK INTEGRATION (sb.js adapted)
+            // ============================================================
+            const SB_VERSION = "1.3.2";
+            let sbVideoId = null;
+            let skipSegments = new Map();
+            let muteSegments = new Map();
+            let sbInterval = null;
+            let sbCategories = [];
+            let sbActionTypes = [];
+            let sbSkipThreshold = [0.2, 1];
+            let sbServerEndpoint = "https://sponsor.ajay.app";
+            let sbSkipTracking = true;
+            let sbHighlightKey = "Enter";
+
+            // Load SponsorBlock settings from localStorage
+            function loadSBSettings() {
+                const saved = JSON.parse(localStorage.getItem('sb_settings') || '{}');
+                sbCategories = saved.categories || ["sponsor", "selfpromo", "interaction", "intro", "outro", "preview", "music_offtopic", "exclusive_access", "poi_highlight"];
+                sbActionTypes = saved.actionTypes || ["skip", "mute", "full", "poi"];
+                sbSkipThreshold = saved.skipThreshold || [0.2, 1];
+                sbServerEndpoint = saved.serverEndpoint || "https://sponsor.ajay.app";
+                sbSkipTracking = saved.skipTracking !== undefined ? saved.skipTracking : true;
+                sbHighlightKey = saved.highlightKey || "Enter";
+            }
+            loadSBSettings();
+
+            function saveSBSettings() {
+                const settings = {
+                    categories: sbCategories,
+                    actionTypes: sbActionTypes,
+                    skipThreshold: sbSkipThreshold,
+                    serverEndpoint: sbServerEndpoint,
+                    skipTracking: sbSkipTracking,
+                    highlightKey: sbHighlightKey
+                };
+                localStorage.setItem('sb_settings', JSON.stringify(settings));
+            }
+
+            // Fetch segments from SponsorBlock API
+            function sbFetchSegments(videoId, callback) {
+                const url = `${sbServerEndpoint}/api/skipSegments?videoID=${videoId}&categories=${JSON.stringify(sbCategories)}&actionTypes=${JSON.stringify(sbActionTypes)}`;
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", url);
+                xhr.responseType = "json";
+                xhr.onload = () => {
+                    if (xhr.status === 200) {
+                        callback(null, xhr.response);
+                    } else {
+                        callback(xhr.status, null);
+                    }
+                };
+                xhr.send();
+            }
+
+            // Track skip (optional)
+            function sbTrackSkip(uuid) {
+                if (!sbSkipTracking) return;
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", `${sbServerEndpoint}/api/viewedVideoSponsorTime?UUID=${uuid}`);
+                xhr.send();
+            }
+
+            // Find end time for a given current time, returns end time or null
+            function sbFindEndTime(now, map) {
+                let endTime = null;
+                for (const [start, segment] of map) {
+                    if (now + sbSkipThreshold[0] >= start && now - start <= sbSkipThreshold[1]) {
+                        endTime = segment.end;
+                        sbTrackSkip(segment.uuid);
+                        map.delete(start); // use once
+                        // Check for overlapping segments
+                        for (const [overStart, overSeg] of map) {
+                            if (endTime >= overStart && overStart >= now) {
+                                endTime = overSeg.end;
+                                sbTrackSkip(overSeg.uuid);
+                                map.delete(overStart);
+                            }
+                        }
+                        break;
+                    }
+                }
+                return endTime;
+            }
+
+            // Main skip/mute check
+            function sbSkipOrMute() {
+                if (!player || typeof player.getCurrentTime !== 'function') return;
+                const currentTime = player.getCurrentTime();
+                // Mute handling
+                if (player.isMuted() && currentTime >= (muteEndTime || 0)) {
+                    player.unMute();
+                    muteEndTime = 0;
+                }
+                // Skip segments
+                const skipEnd = sbFindEndTime(currentTime, skipSegments);
+                if (skipEnd !== null) {
+                    player.seekTo(skipEnd, true);
+                }
+                // Mute segments
+                const muteEnd = sbFindEndTime(currentTime, muteSegments);
+                if (muteEnd !== null) {
+                    player.mute();
+                    muteEndTime = muteEnd;
+                }
+            }
+
+            let muteEndTime = 0;
+
+            // Load segments for a video
+            function sbLoadSegments(videoId) {
+                sbFetchSegments(videoId, (err, data) => {
+                    if (err) {
+                        console.error("[SB.js] error fetching segments", err);
+                        return;
+                    }
+                    skipSegments = new Map();
+                    muteSegments = new Map();
+                    data.forEach(s => {
+                        const segment = [s.segment[0], { end: s.segment[1], uuid: s.UUID }];
+                        if (s.actionType === "skip") {
+                            skipSegments.set(segment[0], segment[1]);
+                        } else if (s.actionType === "mute") {
+                            muteSegments.set(segment[0], segment[1]);
+                        } else if (s.actionType === "full") {
+                            // Show full video label (only if we have a title element)
+                            const titleEl = document.querySelector("#nowPlaying .song-title");
+                            if (titleEl) {
+                                const label = document.createElement("span");
+                                label.style.cssText = "color: #fff; background-color: #0d0; display: inline-block; margin: 0 5px; padding: 0 6px; border-radius: 4px; font-size: 12px;";
+                                label.textContent = "SPONSOR";
+                                titleEl.parentNode.insertBefore(label, titleEl);
+                                setTimeout(() => label.remove(), 5000);
+                            }
+                        } else if (s.actionType === "poi") {
+                            // POI highlight
+                            const key = sbHighlightKey || "Enter";
+                            const listener = (e) => {
+                                if (e.key === key) {
+                                    player.seekTo(s.segment[1], true);
+                                    sbTrackSkip(s.UUID);
+                                    document.removeEventListener("keydown", listener);
+                                    showToast("Skipped to POI highlight", "fa-flag");
+                                }
+                            };
+                            document.addEventListener("keydown", listener);
+                        }
+                    });
+                    console.log(`[SB.js] Loaded ${skipSegments.size + muteSegments.size} segments for ${videoId}`);
+                });
+            }
+
+            // Reset SB state
+            function sbReset() {
+                if (sbInterval) {
+                    clearInterval(sbInterval);
+                    sbInterval = null;
+                }
+                skipSegments = new Map();
+                muteSegments = new Map();
+                muteEndTime = 0;
+                sbVideoId = null;
+            }
+
+            // Setup SB for a new video
+            function sbSetup(videoId) {
+                sbReset();
+                sbVideoId = videoId;
+                sbLoadSegments(videoId);
+                // Start interval to check skip/mute
+                sbInterval = setInterval(() => {
+                    if (!player || typeof player.getVideoData !== 'function') return;
+                    const data = player.getVideoData();
+                    if (!data || data.video_id !== sbVideoId) {
+                        // Video changed, stop
+                        sbReset();
+                        return;
+                    }
+                    sbSkipOrMute();
+                }, 1000);
+            }
+
+            // Toggle SponsorBlock on/off
+            function sbToggle(enabled) {
+                if (enabled) {
+                    if (player && typeof player.getVideoData === 'function') {
+                        const data = player.getVideoData();
+                        if (data && data.video_id) {
+                            sbSetup(data.video_id);
+                        }
+                    }
+                } else {
+                    sbReset();
+                }
+            }
+
+            // Called when a new video is loaded
+            function onVideoLoaded(videoId) {
+                const sponsorToggle = document.getElementById('sponsorBlockToggle');
+                if (sponsorToggle && sponsorToggle.checked) {
+                    sbSetup(videoId);
+                } else {
+                    sbReset();
+                }
+            }
+
+            // ----- End of SponsorBlock integration -----
 
             function formatTime(seconds) {
                 if (!seconds || seconds < 0) return '0:00';
@@ -3250,25 +3506,12 @@
                         totalTimeEl.textContent = '0:00';
                         if (progressInterval) clearInterval(progressInterval);
                         actualSelectedVideoId = null;
+                        sbReset(); // clear SB
                     }
                 }
             }
 
-            // ✅ SponsorBlock: fetch sponsor times from public API
-            async function fetchSponsorTimes(videoId) {
-                try {
-                    const url = `https://sponsor.ajay.app/api/skipSegments?videoID=${videoId}`;
-                    const resp = await fetch(url);
-                    if (!resp.ok) return [];
-                    const data = await resp.json();
-                    return data.filter(item => item.actionType === 'skip').map(item => item.segment);
-                } catch (e) {
-                    console.warn('SponsorBlock fetch error:', e);
-                    return [];
-                }
-            }
-
-            // ✅ Modified loadNewVideo with SponsorBlock integration (fixed guarding)
+            // Modified loadNewVideo with SponsorBlock integration
             function loadNewVideo(videoId, albumArtUrl, songObject = null) {
                 if (player) player.setVolume(currentVolume);
 
@@ -3353,6 +3596,8 @@
                                     e.target.setVolume(currentVolume);
                                     updateVolumeUI(currentVolume);
                                     if (albumArtDisplayMode === 'video') initializeVideoPlayerInAlbumArt(videoId);
+                                    // SponsorBlock: setup for new video
+                                    onVideoLoaded(videoId);
                                 },
                                 onStateChange: handlePlayerStateChange,
                                 onError: handleVideoError
@@ -3364,6 +3609,7 @@
                     player.setVolume(currentVolume);
                     player.playVideo();
                     if (albumArtDisplayMode === 'video') initializeVideoPlayerInAlbumArt(videoId);
+                    onVideoLoaded(videoId);
                 }
 
                 selectedVideoId = videoId;
@@ -3373,59 +3619,8 @@
                 playing = true;
                 playPauseBtn.innerHTML = ICON_PAUSE;
                 updateProgressBar();
-
-                // ✅ SponsorBlock: fetch and start checker if toggle is on (with guard)
-                const sponsorToggle = document.getElementById('sponsorBlockToggle');
-                if (sponsorToggle && !sponsorToggle.checked) {
-                    if (sponsorCheckInterval) {
-                        clearInterval(sponsorCheckInterval);
-                        sponsorCheckInterval = null;
-                    }
-                    return;
-                }
-
-                // Set guard immediately
-                sponsorVideoId = videoId;
-
-                fetchSponsorTimes(videoId).then(segments => {
-                    if (sponsorVideoId !== videoId) return; // stale fetch, discard
-                    sponsorSegments = segments.map(([start, end]) => ({
-                        start,
-                        end
-                    }));
-                    skippedSegments.clear();
-                    if (sponsorCheckInterval) {
-                        clearInterval(sponsorCheckInterval);
-                        sponsorCheckInterval = null;
-                    }
-                    if (sponsorToggle && sponsorToggle.checked) {
-                        sponsorCheckInterval = setInterval(() => {
-                            let curVideoId = null;
-                            try {
-                                curVideoId = player.getVideoData().video_id;
-                            } catch (e) {
-                                return;
-                            }
-                            if (curVideoId !== videoId) return; // wrong video
-                            if (!player || typeof player.getCurrentTime !== 'function') return;
-                            const cur = player.getCurrentTime();
-                            for (let seg of sponsorSegments) {
-                                if (cur >= seg.start && cur < seg.end) {
-                                    const key = seg.start + '-' + seg.end;
-                                    if (!skippedSegments.has(key)) {
-                                        player.seekTo(seg.end);
-                                        skippedSegments.add(key);
-                                        console.log(`Skipped sponsor segment ${seg.start} → ${seg.end}`);
-                                    }
-                                    break;
-                                }
-                            }
-                        }, 1000);
-                    }
-                });
             }
 
-            // ✅ Modified handlePlayerStateChange with cleanup
             function handlePlayerStateChange(event) {
                 const art = document.getElementById('albumArt');
                 const autoPlay = autoPlayToggle && autoPlayToggle.checked;
@@ -3441,12 +3636,9 @@
                     }
                 }
 
-                // ✅ Clean up SponsorBlock interval on end/cued
+                // Clean up SB on end/cued
                 if (event.data === 0 || event.data === 5) {
-                    if (sponsorCheckInterval) {
-                        clearInterval(sponsorCheckInterval);
-                        sponsorCheckInterval = null;
-                    }
+                    sbReset();
                 }
 
                 if (event.data === 0) {
@@ -4395,6 +4587,7 @@
                         onReady: (e) => {
                             e.target.setVolume(currentVolume);
                             updateVolumeUI(currentVolume);
+                            onVideoLoaded(selectedVideoId);
                         },
                         onStateChange: handlePlayerStateChange,
                         onError: handleVideoError
@@ -4465,58 +4658,53 @@
                 window.open(URL.createObjectURL(blob), '_blank');
             });
 
-            // ✅ SponsorBlock toggle event listener (fixed: re-fetches segments when toggled ON)
+            // SponsorBlock toggle event
             const sponsorToggle = document.getElementById('sponsorBlockToggle');
             if (sponsorToggle) {
                 sponsorToggle.addEventListener('change', function() {
-                    if (!this.checked) {
-                        if (sponsorCheckInterval) {
-                            clearInterval(sponsorCheckInterval);
-                            sponsorCheckInterval = null;
-                        }
-                    } else {
-                        // If a video is currently loaded, fetch its segments and start interval
-                        if (player && typeof player.getVideoData === 'function') {
-                            const data = player.getVideoData();
-                            if (data && data.video_id) {
-                                const vid = data.video_id;
-                                sponsorVideoId = vid;
-                                fetchSponsorTimes(vid).then(segments => {
-                                    if (sponsorVideoId !== vid) return;
-                                    sponsorSegments = segments.map(([start, end]) => ({
-                                        start,
-                                        end
-                                    }));
-                                    skippedSegments.clear();
-                                    if (sponsorCheckInterval) clearInterval(sponsorCheckInterval);
-                                    sponsorCheckInterval = setInterval(() => {
-                                        let curVideoId = null;
-                                        try {
-                                            curVideoId = player.getVideoData().video_id;
-                                        } catch (e) {
-                                            return;
-                                        }
-                                        if (curVideoId !== vid) return;
-                                        if (!player || typeof player.getCurrentTime !== 'function') return;
-                                        const cur = player.getCurrentTime();
-                                        for (let seg of sponsorSegments) {
-                                            if (cur >= seg.start && cur < seg.end) {
-                                                const key = seg.start + '-' + seg.end;
-                                                if (!skippedSegments.has(key)) {
-                                                    player.seekTo(seg.end);
-                                                    skippedSegments.add(key);
-                                                    console.log(`Skipped sponsor segment ${seg.start} → ${seg.end}`);
-                                                }
-                                                break;
-                                            }
-                                        }
-                                    }, 1000);
-                                });
-                            }
-                        }
-                    }
+                    sbToggle(this.checked);
                 });
             }
+
+            // Also save SponsorBlock settings when saveSettings is called
+            const origSaveSettings = window.hexApp.saveSettings.bind(window.hexApp);
+            window.hexApp.saveSettings = function() {
+                // Collect SB settings from the overlay
+                const categoryCheckboxes = document.querySelectorAll('.sponsor-category');
+                const actionCheckboxes = document.querySelectorAll('.sponsor-action');
+                const skipStart = document.getElementById('skipThresholdStart');
+                const skipEnd = document.getElementById('skipThresholdEnd');
+                const serverEndpoint = document.getElementById('serverEndpoint');
+                const skipTracking = document.getElementById('skipTracking');
+                const highlightKey = document.getElementById('highlightKey');
+
+                sbCategories = Array.from(categoryCheckboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+                sbActionTypes = Array.from(actionCheckboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+                sbSkipThreshold = [
+                    parseFloat(skipStart.value) || 0.2,
+                    parseFloat(skipEnd.value) || 1
+                ];
+                sbServerEndpoint = serverEndpoint.value.trim() || 'https://sponsor.ajay.app';
+                sbSkipTracking = skipTracking.checked;
+                sbHighlightKey = highlightKey.value.trim() || 'Enter';
+
+                saveSBSettings();
+                // Reload SB if video is playing
+                if (player && typeof player.getVideoData === 'function') {
+                    const data = player.getVideoData();
+                    if (data && data.video_id) {
+                        sbReset();
+                        if (sponsorToggle && sponsorToggle.checked) {
+                            sbSetup(data.video_id);
+                        }
+                    }
+                }
+                origSaveSettings();
+            };
 
             function initYTMusic() {
                 loadPlaylist();
@@ -4607,8 +4795,8 @@
                 });
             }
 
-            console.log('🚀 HEX AI Studio with YouTube Music Player & ✅ SponsorBlock integration (FIXED)');
-            console.log('ℹ️  SponsorBlock will automatically skip sponsored segments when the toggle is ON.');
+            console.log('🚀 HEX AI Studio with YouTube Music Player & ✅ SponsorBlock integration (sb.js adapted)');
+            console.log(`ℹ️  SponsorBlock v${SB_VERSION} will skip sponsored segments when toggle is ON.`);
 
         })();
     </script>
