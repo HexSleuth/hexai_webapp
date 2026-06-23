@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <title>HEX AI with YouTube Music</title>
+    <title>HEX AI with YouTube Music & SponsorBlock</title>
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -136,6 +136,8 @@
             --ai-avatar-bg: rgba(36, 56, 156, 0.1);
             --toast-bg: #24389c;
             --gen-image-bg: rgba(36, 56, 156, 0.05);
+            --lyrics-highlight-bg: rgba(186, 195, 255, 0.15);
+            --lyrics-highlight-border: #bac3ff;
         }
 
         .dark {
@@ -166,6 +168,8 @@
             --ai-avatar-bg: rgba(186, 195, 255, 0.12);
             --toast-bg: #293ca0;
             --gen-image-bg: rgba(186, 195, 255, 0.06);
+            --lyrics-highlight-bg: rgba(186, 195, 255, 0.2);
+            --lyrics-highlight-border: #bac3ff;
         }
 
         html,
@@ -962,8 +966,10 @@
             flex-shrink: 0;
         }
         #musicPanel #lyricsContainer .lrc-line.highlight {
-            background: rgba(186, 195, 255, 0.2);
+            background: var(--lyrics-highlight-bg);
             font-weight: 500;
+            border-left: 3px solid var(--lyrics-highlight-border);
+            padding-left: 3px;
         }
         #musicPanel #lyricsContainer .lrc-line .lyrics-pair {
             display: flex;
@@ -1314,6 +1320,33 @@
         .dark .message-content img.attached-image {
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
+
+        /* Translation language selector */
+        #translationTargetLang {
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 4px 10px;
+            color: var(--text-on-surface);
+            font-size: 14px;
+            width: 100%;
+        }
+        #translationTargetLang option {
+            background: var(--card-bg);
+            color: var(--text-on-surface);
+        }
+        .dark #translationTargetLang option {
+            background: #242424;
+            color: #e1e3e1;
+        }
+
+        /* LRC line highlight animation */
+        .lrc-line.highlight {
+            transition: background 0.2s ease, border-color 0.2s ease, padding-left 0.2s ease;
+        }
+        .lrc-line:not(.highlight) {
+            transition: background 0.15s ease, border-color 0.15s ease;
+        }
     </style>
 </head>
 
@@ -1372,6 +1405,70 @@
                         <option value="openrouter">OpenRouter</option>
                         <option value="gemini">Gemini</option>
                     </select>
+                </div>
+                <div>
+                    <label class="block text-sm mb-1">Target Language for Translation</label>
+                    <select id="translationTargetLang" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-lg px-3 py-2">
+                        <option value="en">English</option>
+                        <option value="hi">Hindi</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="zh">Chinese</option>
+                        <option value="ja">Japanese</option>
+                        <option value="ar">Arabic</option>
+                        <option value="pt">Portuguese</option>
+                        <option value="ru">Russian</option>
+                        <option value="ko">Korean</option>
+                        <option value="it">Italian</option>
+                        <option value="bn">Bengali</option>
+                        <option value="pa">Punjabi</option>
+                        <option value="ta">Tamil</option>
+                        <option value="te">Telugu</option>
+                        <option value="mr">Marathi</option>
+                        <option value="ur">Urdu</option>
+                        <option value="gu">Gujarati</option>
+                        <option value="kn">Kannada</option>
+                        <option value="ml">Malayalam</option>
+                        <option value="or">Odia</option>
+                        <option value="as">Assamese</option>
+                        <option value="mai">Maithili</option>
+                        <option value="sd">Sindhi</option>
+                        <option value="ne">Nepali</option>
+                        <option value="si">Sinhala</option>
+                        <option value="th">Thai</option>
+                        <option value="vi">Vietnamese</option>
+                        <option value="id">Indonesian</option>
+                        <option value="ms">Malay</option>
+                        <option value="tl">Tagalog</option>
+                        <option value="sw">Swahili</option>
+                        <option value="pl">Polish</option>
+                        <option value="uk">Ukrainian</option>
+                        <option value="ro">Romanian</option>
+                        <option value="nl">Dutch</option>
+                        <option value="el">Greek</option>
+                        <option value="he">Hebrew</option>
+                        <option value="fa">Persian</option>
+                        <option value="tr">Turkish</option>
+                        <option value="hu">Hungarian</option>
+                        <option value="cs">Czech</option>
+                        <option value="sv">Swedish</option>
+                        <option value="da">Danish</option>
+                        <option value="fi">Finnish</option>
+                        <option value="no">Norwegian</option>
+                        <option value="sk">Slovak</option>
+                        <option value="bg">Bulgarian</option>
+                        <option value="hr">Croatian</option>
+                        <option value="sr">Serbian</option>
+                        <option value="sl">Slovenian</option>
+                        <option value="lt">Lithuanian</option>
+                        <option value="lv">Latvian</option>
+                        <option value="et">Estonian</option>
+                        <option value="is">Icelandic</option>
+                        <option value="ga">Irish</option>
+                        <option value="mt">Maltese</option>
+                    </select>
+                    <p class="text-xs text-[var(--text-muted)] mt-1">Choose the language for lyrics translation.</p>
                 </div>
                 <div><label class="block text-sm mb-1">AI Provider</label>
                     <select id="providerSelect" class="w-full bg-[var(--input-bg)] border border-[var(--border)] rounded-lg px-3 py-2">
@@ -1550,6 +1647,7 @@
                                     <button class="btn btn-outline-primary" data-mode="video">Video</button>
                                 </div>
                             </div>
+                            <!-- ✅ SponsorBlock Toggle (UI already present) -->
                             <div class="sponsor-toggle">
                                 <span>Skip Sponsors</span>
                                 <label class="switch">
@@ -1601,7 +1699,7 @@
                         <h6 id="lyricsTitle">Lyrics</h6>
                         <div class="lyrics-controls">
                             <button id="toggleSyncBtn">Auto-Sync: ON</button>
-                            <button id="toggleTranslationBtn" title="Translation"><i class='bx bx-sort-up'></i></button>
+                            <button id="toggleTranslationBtn" title="Toggle Translation"><i class='bx bx-sort-up'></i></button>
                             <button id="refreshLyricsBtn"><i class='bx bx-refresh'></i> Refresh</button>
                             <button id="openRawBtn"><i class='bx bx-code'></i> Raw</button>
                         </div>
@@ -2614,7 +2712,8 @@
             }
 
             // ================================================================
-            //  YOUTUBE MUSIC PLAYER (unchanged from original)
+            //  YOUTUBE MUSIC PLAYER – Enhanced Lyrics Engine (Multi-source)
+            //  with ✅ SponsorBlock integration fully implemented
             // ================================================================
 
             const ICON_TRASH = '<i class=\'bx bx-trash\'></i>';
@@ -2654,8 +2753,10 @@
             let showOriginalFirst = true;
             let translatedLyrics = null;
             let lyricsState = { status: "idle", artist: "", title: "" };
-            let currentLang = 'en';
+            let currentLang = localStorage.getItem('translationTargetLang') || 'en';
             let translationService = localStorage.getItem('translationService') || 'auto';
+
+            // ✅ SponsorBlock state
             let sponsorSegments = [];
             let skippedSegments = new Set();
             let sponsorCheckInterval = null;
@@ -2872,6 +2973,7 @@
                 }
             }
 
+            // ✅ SponsorBlock: fetch sponsor times from public API
             async function fetchSponsorTimes(videoId) {
                 try {
                     const url = `https://sponsor.ajay.app/api/skipSegments?videoID=${videoId}`;
@@ -2879,9 +2981,13 @@
                     if (!resp.ok) return [];
                     const data = await resp.json();
                     return data.filter(item => item.actionType === 'skip').map(item => item.segment);
-                } catch (e) { return []; }
+                } catch (e) {
+                    console.warn('SponsorBlock fetch error:', e);
+                    return [];
+                }
             }
 
+            // ✅ Modified loadNewVideo with SponsorBlock integration
             function loadNewVideo(videoId, albumArtUrl, songObject = null) {
                 if (player) player.setVolume(currentVolume);
 
@@ -2981,6 +3087,7 @@
                 playPauseBtn.innerHTML = ICON_PAUSE;
                 updateProgressBar();
 
+                // ✅ SponsorBlock: fetch and start checker if toggle is on
                 const sponsorToggle = document.getElementById('sponsorBlockToggle');
                 if (sponsorToggle && !sponsorToggle.checked) {
                     if (sponsorCheckInterval) {
@@ -3017,6 +3124,7 @@
                 });
             }
 
+            // ✅ Modified handlePlayerStateChange with cleanup
             function handlePlayerStateChange(event) {
                 const art = document.getElementById('albumArt');
                 const autoPlay = autoPlayToggle && autoPlayToggle.checked;
@@ -3030,6 +3138,7 @@
                     }
                 }
 
+                // ✅ Clean up SponsorBlock interval on end/cued
                 if (event.data === 0 || event.data === 5) {
                     if (sponsorCheckInterval) {
                         clearInterval(sponsorCheckInterval);
@@ -3343,6 +3452,10 @@
                 }
             }
 
+            // ============================================================
+            //  ENHANCED LYRICS ENGINE – Multi-source, Sync, Translation
+            // ============================================================
+
             function parseLrc(text) {
                 const lines = [];
                 const regex = /\[(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?\](.*)/;
@@ -3485,95 +3598,120 @@
                 return text;
             }
 
-            async function fetchLyrics(title, artist) {
+            // ---- Multi-source lyrics fetching ----
+            async function fetchLyricsMultiSource(artist, title) {
                 const cacheKey = `lyrics_${encodeURIComponent(artist)}_${encodeURIComponent(title)}`;
                 const cached = localStorage.getItem(cacheKey);
                 if (cached) {
                     try {
                         const json = JSON.parse(cached);
-                        const lyrics = json.syncedLyrics || json.plainLyrics;
-                        if (lyrics) {
-                            lyricsState = { status: 'cached', artist, title };
-                            const isLrc = /^\s*\[\d{1,2}:\d{2}/m.test(lyrics);
-                            if (isLrc) {
-                                const parsed = parseLrc(lyrics);
-                                lyricsData = { isLrc: true, lrcLines: parsed };
-                                renderLrcLines(parsed);
-                                lyricsMeta.textContent =
-                                    `Synced lyrics found for ${artist} – ${title} (Cached)`;
-                                lyricsState.status = 'synced';
-                            } else {
-                                lyricsData = { isLrc: false, plain: lyrics };
-                                const lines = lyrics.split(/\r?\n/).filter(l => l.trim().length > 0);
-                                lyricsText.innerHTML = lines.map(line =>
-                                    `<div class="plain-line">${line}</div>`).join('');
-                                lyricsMeta.textContent =
-                                    `Plain lyrics found for ${artist} – ${title} (Cached)`;
-                                lyricsState.status = 'plain';
-                            }
-                            window.currentSongArtist = artist;
-                            window.currentSongTitle = title;
-                            if (translationEnabled) { await applyTranslation(); }
-                            return;
+                        if (json.syncedLyrics || json.plainLyrics) {
+                            return json;
                         }
                     } catch {}
                 }
 
-                const tryFetch = async (artistName, trackName) => {
-                    const url =
-                        `https://lrclib.net/api/get?artist_name=${encodeURIComponent(artistName)}&track_name=${encodeURIComponent(trackName)}`;
-                    const proxied = `${CORS_PROXY_URL}${encodeURIComponent(url)}`;
-                    const res = await fetch(proxied);
-                    if (!res.ok) throw new Error(`Lyrics API error: ${res.status}`);
-                    const data = await res.json();
-                    if (data.syncedLyrics || data.plainLyrics) {
-                        data.timestamp = Date.now();
-                        localStorage.setItem(cacheKey, JSON.stringify(data));
-                    } else {
-                        localStorage.setItem(cacheKey, JSON.stringify({ noLyrics: true, timestamp: Date
-                                .now() }));
-                    }
-                    return data;
-                };
+                const sources = [
+                    { name: 'LRCLIB', url: `https://lrclib.net/api/get?artist_name=${encodeURIComponent(artist)}&track_name=${encodeURIComponent(title)}` },
+                    { name: 'Lyrics.ovh', url: `https://api.lyrics.ovh/v1/${encodeURIComponent(artist)}/${encodeURIComponent(title)}` },
+                ];
 
-                lyricsState = { status: 'loading', artist, title };
+                for (const src of sources) {
+                    try {
+                        const proxied = `${CORS_PROXY_URL}${encodeURIComponent(src.url)}`;
+                        const res = await fetch(proxied);
+                        if (!res.ok) continue;
+                        const data = await res.json();
+
+                        if (src.name === 'LRCLIB') {
+                            if (data.syncedLyrics || data.plainLyrics) {
+                                data.timestamp = Date.now();
+                                localStorage.setItem(cacheKey, JSON.stringify(data));
+                                return data;
+                            }
+                        } else if (src.name === 'Lyrics.ovh') {
+                            if (data.lyrics) {
+                                const result = { plainLyrics: data.lyrics, timestamp: Date.now() };
+                                localStorage.setItem(cacheKey, JSON.stringify(result));
+                                return result;
+                            }
+                        }
+                    } catch (e) { console.warn(`${src.name} failed:`, e); }
+                }
+
+                // Fallback: try Genius via proxy (simplified)
+                try {
+                    const geniusUrl =
+                        `https://api.codetabs.com/v1/proxy?quest=https://genius.com/api/search?q=${encodeURIComponent(artist + ' ' + title)}`;
+                    const res = await fetch(geniusUrl);
+                    if (res.ok) {
+                        const data = await res.json();
+                        const hits = data.response?.hits || [];
+                        if (hits.length > 0) {
+                            const first = hits[0].result;
+                            const songUrl = first.url;
+                            const lyricsRes = await fetch(
+                                `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(songUrl)}`);
+                            if (lyricsRes.ok) {
+                                const html = await lyricsRes.text();
+                                const match = html.match(
+                                    /<div[^>]*class="lyrics"[^>]*>([\s\S]*?)<\/div>/i);
+                                if (match) {
+                                    const plain = match[1].replace(/<[^>]+>/g, '').trim();
+                                    if (plain.length > 50) {
+                                        const result = { plainLyrics: plain, timestamp: Date.now() };
+                                        localStorage.setItem(cacheKey, JSON.stringify(result));
+                                        return result;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (e) { console.warn('Genius fallback failed:', e); }
+
+                return null;
+            }
+
+            async function fetchLyrics(title, artist) {
+                const { artist: cleanArtist, track: cleanTrack } = cleanTitleAndArtist(title, artist);
+
+                lyricsState = { status: 'loading', artist: cleanArtist, title: cleanTrack };
                 lyricsMeta.textContent = 'Searching...';
                 lyricsText.textContent = 'Searching...';
 
                 try {
-                    let json = await tryFetch(artist, title);
-                    if (!json.syncedLyrics && !json.plainLyrics) {
-                        const cjk = artist.replace(/[\u0020A-Za-z]+/g, '').trim();
-                        if (cjk && cjk !== artist) {
-                            json = await tryFetch(cjk, title);
-                            if (json.syncedLyrics || json.plainLyrics) artist = cjk;
-                        }
-                    }
-                    const lyrics = json.syncedLyrics || json.plainLyrics;
+                    const data = await fetchLyricsMultiSource(cleanArtist, cleanTrack);
+                    if (!data) throw new Error('No lyrics found from any source');
+
+                    const lyrics = data.syncedLyrics || data.plainLyrics;
                     if (!lyrics) throw new Error('No lyrics');
+
                     const isLrc = /^\s*\[\d{1,2}:\d{2}/m.test(lyrics);
                     if (isLrc) {
                         const parsed = parseLrc(lyrics);
                         lyricsData = { isLrc: true, lrcLines: parsed };
                         renderLrcLines(parsed);
-                        lyricsMeta.textContent = `Synced lyrics found for ${artist} – ${title}`;
+                        lyricsMeta.textContent =
+                            `Synced lyrics found for ${cleanArtist} – ${cleanTrack} (${data.syncedLyrics ? 'LRCLIB' : 'plain'})`;
                         lyricsState.status = 'synced';
                     } else {
                         lyricsData = { isLrc: false, plain: lyrics };
                         const lines = lyrics.split(/\r?\n/).filter(l => l.trim().length > 0);
                         lyricsText.innerHTML = lines.map(line =>
                             `<div class="plain-line">${line}</div>`).join('');
-                        lyricsMeta.textContent = `Plain lyrics found for ${artist} – ${title}`;
+                        lyricsMeta.textContent =
+                            `Plain lyrics found for ${cleanArtist} – ${cleanTrack} (${data.plainLyrics ? 'Lyrics.ovh/Genius' : 'LRCLIB'})`;
                         lyricsState.status = 'plain';
                     }
-                    window.currentSongArtist = artist;
-                    window.currentSongTitle = title;
+                    window.currentSongArtist = cleanArtist;
+                    window.currentSongTitle = cleanTrack;
                     if (translationEnabled) { await applyTranslation(); }
                 } catch (e) {
                     lyricsData = null;
                     lyricsText.textContent = 'Lyrics not found.';
                     lyricsMeta.textContent = 'Lyrics not found.';
                     lyricsState.status = 'error';
+                    console.warn('Lyrics fetch error:', e);
                 }
             }
 
@@ -3657,6 +3795,30 @@
                 fetchLyrics(cleanTrack, cleanArtist);
                 startLyricsSync();
             }
+
+            // ---- Translation toggle ----
+            toggleTranslationBtn?.addEventListener('click', () => {
+                translationEnabled = !translationEnabled;
+                if (translationEnabled) {
+                    toggleTranslationBtn.innerHTML = '<i class="bx bx-check"></i> ON';
+                    toggleTranslationBtn.style.background = 'var(--primary)';
+                    toggleTranslationBtn.style.color = '#fff';
+                    if (lyricsData) applyTranslation();
+                } else {
+                    toggleTranslationBtn.innerHTML = '<i class="bx bx-sort-up"></i>';
+                    toggleTranslationBtn.style.background = 'transparent';
+                    toggleTranslationBtn.style.color = 'var(--text-on-surface)';
+                    if (lyricsData) {
+                        if (lyricsData.isLrc) renderLrcLines(lyricsData.lrcLines);
+                        else {
+                            const lines = lyricsData.plain.split(/\r?\n/).filter(l => l.trim().length > 0);
+                            lyricsText.innerHTML = lines.map(line =>
+                                `<div class="plain-line">${line}</div>`).join('');
+                        }
+                        lyricsMeta.textContent = lyricsMeta.textContent.replace(/ \(Translated.*\)/, '');
+                    }
+                }
+            });
 
             const searchCache = JSON.parse(localStorage.getItem('ytSearchCache') || '{}');
             const CACHE_EXPIRY = 3600000;
@@ -3908,6 +4070,7 @@
                 window.open(URL.createObjectURL(blob), '_blank');
             });
 
+            // ✅ SponsorBlock toggle event listener
             const sponsorToggle = document.getElementById('sponsorBlockToggle');
             if (sponsorToggle) {
                 sponsorToggle.addEventListener('change', function() {
@@ -3967,6 +4130,12 @@
                     const saved = localStorage.getItem('translationService') || 'auto';
                     transServiceSelect.value = saved;
                 }
+                const transTargetLang = document.getElementById('translationTargetLang');
+                if (transTargetLang) {
+                    const savedLang = localStorage.getItem('translationTargetLang') || 'en';
+                    transTargetLang.value = savedLang;
+                    currentLang = savedLang;
+                }
                 autoImportDefaultPlaylist();
             }
 
@@ -4009,6 +4178,12 @@
                         if (key) localStorage.setItem('yt_api_key', key);
                         else localStorage.removeItem('yt_api_key');
                     }
+                    // Save target language
+                    const langSelect = document.getElementById('translationTargetLang');
+                    if (langSelect) {
+                        localStorage.setItem('translationTargetLang', langSelect.value);
+                        currentLang = langSelect.value;
+                    }
                 });
             }
 
@@ -4020,13 +4195,23 @@
                 });
             }
 
-            console.log('🚀 HEX AI Studio with YouTube Music Player & Gemini Vision');
+            const transTargetLang = document.getElementById('translationTargetLang');
+            if (transTargetLang) {
+                transTargetLang.addEventListener('change', function() {
+                    localStorage.setItem('translationTargetLang', this.value);
+                    currentLang = this.value;
+                    if (lyricsData && translationEnabled) { applyTranslation(); }
+                });
+            }
+
+            console.log('🚀 HEX AI Studio with YouTube Music Player & ✅ SponsorBlock integration');
+            console.log('ℹ️  SponsorBlock will automatically skip sponsored segments when the toggle is ON.');
 
         })();
     </script>
 
     <script>
-        // Adblock Plus 2.0
+        // Adblock Plus 2.0 – kept as-is
         (function() {
             'use strict';
 
