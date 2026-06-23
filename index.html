@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html class="dark" lang="en">
 
@@ -2979,8 +2978,47 @@
             let skippedSegments = new Set();
             let sponsorCheckInterval = null;
 
+            const progressFill = document.getElementById('progress');
+            const currentTimeEl = document.getElementById('currentTime');
+            const totalTimeEl = document.getElementById('totalTime');
+            const progressBar = document.getElementById('progressBar');
+            const volumeControl = document.getElementById('volumeControl');
+            const volumeProgress = document.getElementById('volumeProgress');
+            const volumeThumb = document.getElementById('volumeThumb');
+            const albumArt = document.getElementById('albumArt');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const repeatBtn = document.getElementById('repeatBtn');
+            const autoPlayToggle = document.getElementById('autoPlayToggle');
+            const albumArtDisplayToggle = document.getElementById('albumArtDisplayToggle');
+            const playerContainer = document.getElementById('playerContainer');
+            const errorMessage = document.getElementById('errorMessage');
+            const songList = document.getElementById('songList');
+            const lyricsText = document.getElementById('lyricsText');
+            const lyricsMeta = document.getElementById('lyricsMeta');
+            const toggleTranslationBtn = document.getElementById('toggleTranslationBtn');
+            const toggleSyncBtn = document.getElementById('toggleSyncBtn');
+            const refreshLyricsBtn = document.getElementById('refreshLyricsBtn');
+            const openRawBtn = document.getElementById('openRawBtn');
+            const searchResultsList = document.getElementById('searchResultsList');
+            const searchLoading = document.getElementById('searchLoading');
+            const searchError = document.getElementById('searchError');
+            const searchResults = document.getElementById('searchResults');
+            const youtubeSearchInput = document.getElementById('youtubeSearchInput');
+            const youtubeSearchBtn = document.getElementById('youtubeSearchBtn');
+            const searchPlaylistInput = document.getElementById('searchPlaylistInput');
+            const clearPlaylistSearchBtn = document.getElementById('clearPlaylistSearchBtn');
+            const songListContainer = document.getElementById('songListContainer');
+            const lyricsContainer = document.getElementById('lyricsContainer');
+            const showSongListBtn = document.getElementById('showSongListBtn');
+            const showLyricsBtn = document.getElementById('showLyricsBtn');
+            const playlistSearchContainer = document.getElementById('playlistSearchContainer');
+            const playlistImportInput = document.getElementById('playlistImportInput');
+            const importPlaylistBtn = document.getElementById('importPlaylistBtn');
+
             function formatTime(seconds) {
-                if (!seconds || seconds < 0) return '0:00';
+                if (!seconds || seconds < 0 || !isFinite(seconds)) return '0:00';
                 const mins = Math.floor(seconds / 60);
                 const secs = Math.floor(seconds % 60);
                 return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
@@ -3374,6 +3412,8 @@
                 totalTimeEl.textContent = '0:00';
                 playing = true;
                 playPauseBtn.innerHTML = ICON_PAUSE;
+
+                // ✅ Start progress bar immediately with robust handling
                 updateProgressBar();
 
                 // ✅ SponsorBlock: fetch and start checker if toggle is on (with guard)
@@ -3451,6 +3491,11 @@
                     }
                 }
 
+                // ✅ When video starts playing (state=1) or buffering (state=3), ensure progress bar is active
+                if (event.data === 1 || event.data === 3) {
+                    updateProgressBar();
+                }
+
                 if (event.data === 0) {
                     playing = false;
                     if (albumArtSpinEnabled) art.classList.add('rotate-paused');
@@ -3507,18 +3552,30 @@
                 updateCountdown();
             }
 
+            // ✅ FIXED: Robust progress bar update with retry for duration=0
             function updateProgressBar() {
                 if (progressInterval) clearInterval(progressInterval);
+
                 progressInterval = setInterval(() => {
-                    if (player && typeof player.getCurrentTime === 'function' && !isDragging) {
+                    if (!player || typeof player.getCurrentTime !== 'function' || isDragging) {
+                        return;
+                    }
+                    try {
                         const cur = player.getCurrentTime();
                         const dur = player.getDuration();
-                        if (dur > 0) {
-                            const pct = (cur / dur) * 100;
+
+                        // Only update if duration is valid and finite
+                        if (dur > 0 && isFinite(dur) && cur >= 0 && isFinite(cur)) {
+                            const pct = Math.min((cur / dur) * 100, 100);
                             progressFill.style.width = pct + '%';
                             currentTimeEl.textContent = formatTime(cur);
                             totalTimeEl.textContent = formatTime(dur);
+                        } else if (dur === 0 || !isFinite(dur)) {
+                            // Duration not loaded yet, keep display as "0:00"
+                            // Optionally show a loading state
                         }
+
+                        // Check if video ended
                         if (player.getPlayerState() === 0) {
                             clearInterval(progressInterval);
                             const autoPlay = autoPlayToggle && autoPlayToggle.checked;
@@ -3532,6 +3589,8 @@
                                 playing = false;
                             }
                         }
+                    } catch (e) {
+                        // Silently handle errors
                     }
                 }, 1000);
             }
@@ -3577,11 +3636,13 @@
                 const clientX = e.clientX || e.touches?.[0]?.clientX || 0;
                 const clickPos = clientX - progressBar.getBoundingClientRect().left;
                 const dur = player?.getDuration?.() || 0;
-                const seekTime = (clickPos / barWidth) * dur;
-                if (player && dur > 0) {
-                    player.seekTo(seekTime, true);
-                    if (!wasPlaying) player.pauseVideo();
-                    progressFill.style.width = (seekTime / dur) * 100 + '%';
+                if (dur > 0) {
+                    const seekTime = (clickPos / barWidth) * dur;
+                    if (player && seekTime >= 0 && seekTime <= dur) {
+                        player.seekTo(seekTime, true);
+                        if (!wasPlaying) player.pauseVideo();
+                        progressFill.style.width = (seekTime / dur) * 100 + '%';
+                    }
                 }
             }
 
@@ -4397,6 +4458,8 @@
                         onReady: (e) => {
                             e.target.setVolume(currentVolume);
                             updateVolumeUI(currentVolume);
+                            // ✅ Start progress bar when player is ready
+                            setTimeout(updateProgressBar, 500);
                         },
                         onStateChange: handlePlayerStateChange,
                         onError: handleVideoError
