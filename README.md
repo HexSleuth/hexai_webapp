@@ -1,53 +1,49 @@
-# HEX-AI
-👋 **HEX AI !** Setup API KEYS In Settings,🎶 When you open HEX AI , a song will play in the background, Upload images/PDFs , 🌍 Free AI Models,🫵😎 Animated Emojis, Free image gen & Free Ai Animated video Gen,💃 Integrated Youtube Music with Sponser block,🪩 Voice Input.
-
-# 📎Get API key 🗝️ 🔐 
-
-1. 👉 https://openrouter.ai/
-   
-2. 👉https://aistudio.google.com/app/api-keys
-
- # Follow these steps:-
-
-# Getting an API key from OpenRouter takes just a few quick steps: 
-
-1.Sign up: Go to the ⁠OpenRouter website and create an account using your email, Google, or GitHub.
-
-2.Go to Keys: Click your profile picture in the top right corner and select Keys from the dropdown menu.
-
-3.Create a Key: Click Create API Key.
-
-4.Configure & Generate: Give it a descriptive name (like my-test-app). You can optionally set a credit limit or expiration date for security, or leave these blank for unlimited usage. Then, click Create.
-Copy the Key: Make sure to copy the key immediately! It will only be shown to you once, and you won't be able to view it again. 
-
-# You can get a Gemini API key for free by creating a project in Google AI Studio. 
-
-# Follow these steps:
-
-1.Go to ⁠Google AI Studio and sign in with your Google Account.
-
-2.Accept the terms of service and confirm your location if prompted.
-
-3.Click on Get API key in the left-hand sidebar.
-
-4.Click Create API key.
-
-5. Select a Google Cloud project to link the key to, or create a new one, then click Create key.
-Copy your new API key and store it securely. 
-
-# 🔧 Setup & Usage
-
-1. API Keys – Open the Settings (gear icon) and add:
-   · YouTube Data v3 API Key – required for YouTube search & playlist import.
-   · OpenRouter or Gemini API Key – for AI chat, vision, and lyrics translation (optional, but recommended).
-2. Chat – Type a message, attach images/PDFs, and press Enter or the send button. AI will respond using the selected model.
-3. Image Generation – Describe a scene, choose style/aspect, and click Generate. The preview can be added to chat or analyzed.
-4. Video Generation – Enter a prompt, pick duration, and click Generate – an AI image will be animated into a short looping video.
-5. Music Player – The default playlist loads automatically. You can:
-   · Click any song to play.
-   · Search YouTube for new tracks and add them.
-   · Import a YouTube Music playlist via URL.
-   · Toggle Auto-Sync for synced lyrics, Translation (via OpenRouter/Gemini), and SponsorBlock to skip sponsored segments.
-   · Switch album art display between Spin, None, or Video (embedded YouTube player inside the art circle).
-
-Everything is saved locally (playlist, settings, volume, theme, etc.). Enjoy!
+Here is a polished and comprehensive description for HEX AI, perfect for a GitHub README, app store listing, or project documentation:
+# 👋 Welcome to HEX AI
+**HEX AI** is your all-in-one multimedia and AI companion. Experience a seamless blend of advanced artificial intelligence, creative generation tools, and uninterrupted music—all in one dynamic workspace.
+When you open HEX AI, a background track sets the mood, inviting you to chat, create, and listen seamlessly.
+## ✨ Key Features
+ * **Multimodal AI Chat:** Chat with free AI models, upload Images and PDFs for analysis, and use Voice Input for hands-free interaction.
+ * **Creative Studio:** Generate stunning AI images and create short, animated looping AI videos—completely free.
+ * **Built-in YouTube Music Player:**
+   * Search for tracks, import your favorite playlists via URL, and enjoy integrated **SponsorBlock** to automatically skip annoying sponsored segments.
+   * Features include Auto-Sync lyrics, AI-powered lyrics translation, and customizable album art displays (Spin, Video embedded, or None).
+ * **Animated Emojis:**🫵😎 Bring your interface to life with expressive, animated emojis.
+ * **Privacy & Persistence:** Everything—your playlists, settings, volume, and themes—is saved completely locally.
+## 🔧 Setup & Usage
+To get the most out of HEX AI, you will need to configure a few settings.
+ 1. **API Keys:** Open the **Settings** (gear icon) and add your keys:
+   * **YouTube Data v3 API Key** *(Required)*: For YouTube search and playlist imports.
+   * **OpenRouter** or **Gemini API Key** *(Highly Recommended)*: To power AI chat, vision features, and lyrics translation.
+ 2. **Chatting:** Type a message, use voice input, or attach images/PDFs. Press Enter or click send to get a response from your chosen AI model.
+ 3. **Image Generation:** Describe the scene you want, select your style and aspect ratio, and click **Generate**. The resulting image can be added straight to your chat for further analysis.
+ 4. **Video Generation:** Enter a prompt, choose your desired duration, and click **Generate** to turn an AI image into a short, looping animated video.
+ 5. **Music Player:** A default playlist loads automatically on startup.
+   * Click any song to play it.
+   * Search YouTube for new tracks and add them instantly.
+   * Paste a YouTube Music playlist URL to import it.
+   * Toggle Auto-Sync, AI Translation, and SponsorBlock via the player controls.
+## 🔐 How to Get Your API Keys
+You will need to generate API keys to unlock HEX AI's full potential.
+### 1. OpenRouter API Key (For AI Models)
+ 1. **Sign up:** Go to the OpenRouter website and create an account using your Email, Google, or GitHub.
+ 2. **Go to Keys:** Click your profile picture in the top right corner and select **Keys** from the dropdown menu.
+ 3. **Create a Key:** Click **Create API Key**.
+ 4. **Configure & Generate:** Give it a descriptive name (e.g., HEX-AI-App). You can optionally set a credit limit or expiration date for security, or leave these blank for unlimited usage. Click **Create**.
+ 5. **Copy the Key:** *Make sure to copy the key immediately!* It will only be shown to you once.
+### 2. Google Gemini API Key (For AI Models)
+ 1. **Sign in:** Go to Google AI Studio and sign in with your Google Account.
+ 2. **Accept Terms:** Accept the terms of service and confirm your location if prompted.
+ 3. **Find the Menu:** Click on **Get API key** in the left-hand sidebar.
+ 4. **Generate:** Click **Create API key**.
+ 5. **Link Project:** Select an existing Google Cloud project to link the key to, or create a new one, then click **Create key**.
+ 6. **Save it:** Copy your new API key and store it securely.
+### 3. YouTube Data v3 API Key (For Music Player)
+ 1. Go to the Google Cloud Console.
+ 2. Create a new project (or select an existing one).
+ 3. Navigate to **APIs & Services** > **Library**.
+ 4. Search for **YouTube Data API v3** and click **Enable**.
+ 5. Go to **APIs & Services** > **Credentials**.
+ 6. Click **Create Credentials** > **API Key** and copy the generated key.
+> **Note:** Once your keys are added to the settings menu, you are ready to enjoy everything HEX AI has to offer! 🎶💃🪩
+> 
