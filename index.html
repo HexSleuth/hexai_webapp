@@ -3732,7 +3732,7 @@
             }
             const model = STATE.settings.geminiModel || 'gemini-2.0-flash';
             const url =
-                `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
             const body = {
                 contents: [{ parts: [{ text: promptText }] }]
             };
