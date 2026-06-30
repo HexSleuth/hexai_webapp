@@ -3012,8 +3012,8 @@
                 provider: 'openrouter',
                 openRouterKey: '',
                 geminiKey: '',
-                chatModel: 'google/gemini-2.0-flash-001',
-                geminiModel: 'gemini-2.0-flash',
+                chatModel: 'google/gemini-3.1-flash-lite',
+                geminiModel: 'gemini-3.1-flash-lite',
                 transcriptApiKey: '',
                 ytApiKey: '',
                 theme: 'system',
@@ -3288,12 +3288,12 @@
                     }
                 } else {
                     sel.innerHTML =
-                        `<option value="google/gemini-2.0-flash-001">Gemini 2.0 Flash</option><option value="openai/gpt-4o-mini">GPT-4o Mini</option><option value="anthropic/claude-3-haiku">Claude 3 Haiku</option><option value="meta-llama/llama-4-maverick">Llama 4 Maverick</option>`;
-                    sel.value = STATE.settings.chatModel || 'google/gemini-2.0-flash-001';
+                        `<option value="google/gemini-3.1-flash-lite">gemini-3.1-flash-lite</option><option value="openai/gpt-4o-mini">GPT-4o Mini</option><option value="anthropic/claude-3-haiku">Claude 3 Haiku</option><option value="meta-llama/llama-4-maverick">Llama 4 Maverick</option>`;
+                    sel.value = STATE.settings.chatModel || 'gemini-3.1-flash-lite';
                 }
             } else {
                 const sel = document.getElementById('geminiModelSelect');
-                sel.value = STATE.settings.geminiModel || 'gemini-2.0-flash';
+                sel.value = STATE.settings.geminiModel || 'gemini-3.1-flash-lite';
             }
         }
 
