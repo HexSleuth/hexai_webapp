@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -104,11 +105,13 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         html {
             font-size: 16px;
             scroll-behavior: smooth;
             -webkit-text-size-adjust: 100%;
         }
+
         body {
             font-family: var(--md-font);
             background: var(--md-background);
@@ -128,13 +131,16 @@
             width: 6px;
             height: 6px;
         }
+
         ::-webkit-scrollbar-track {
             background: transparent;
         }
+
         ::-webkit-scrollbar-thumb {
             background: var(--md-outline-variant);
             border-radius: var(--md-shape-full);
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: var(--md-outline);
         }
@@ -145,66 +151,77 @@
             line-height: 1.2;
             letter-spacing: 0;
         }
+
         .md-headline-medium {
             font-size: 1.5rem;
             font-weight: 400;
             line-height: 1.25;
             letter-spacing: 0;
         }
+
         .md-headline-small {
             font-size: 1.25rem;
             font-weight: 400;
             line-height: 1.3;
             letter-spacing: 0;
         }
+
         .md-title-large {
             font-size: 1.125rem;
             font-weight: 500;
             line-height: 1.4;
             letter-spacing: 0;
         }
+
         .md-title-medium {
             font-size: 1rem;
             font-weight: 500;
             line-height: 1.4;
             letter-spacing: 0.005em;
         }
+
         .md-title-small {
             font-size: 0.875rem;
             font-weight: 500;
             line-height: 1.4;
             letter-spacing: 0.005em;
         }
+
         .md-body-large {
             font-size: 1rem;
             font-weight: 400;
             line-height: 1.5;
             letter-spacing: 0.005em;
         }
+
         .md-body-medium {
             font-size: 0.875rem;
             font-weight: 400;
             line-height: 1.4;
             letter-spacing: 0.005em;
         }
+
         .md-body-small {
             font-size: 0.75rem;
             font-weight: 400;
             line-height: 1.4;
             letter-spacing: 0.01em;
         }
+
         .md-label-large {
             font-size: 0.875rem;
             font-weight: 500;
             line-height: 1.4;
             letter-spacing: 0.005em;
         }
+
         .md-label-medium {
             font-size: 0.75rem;
             font-weight: 500;
             line-height: 1.4;
             letter-spacing: 0.01em;
         }
+
         .md-label-small {
             font-size: 0.688rem;
             font-weight: 500;
@@ -215,15 +232,19 @@
         .md-elevation-1 {
             box-shadow: var(--md-elevation1);
         }
+
         .md-elevation-2 {
             box-shadow: var(--md-elevation2);
         }
+
         .md-elevation-3 {
             box-shadow: var(--md-elevation3);
         }
+
         .md-elevation-4 {
             box-shadow: var(--md-elevation4);
         }
+
         .md-elevation-5 {
             box-shadow: var(--md-elevation5);
         }
@@ -231,18 +252,23 @@
         .md-shape-xs {
             border-radius: var(--md-shape-xs);
         }
+
         .md-shape-sm {
             border-radius: var(--md-shape-sm);
         }
+
         .md-shape-md {
             border-radius: var(--md-shape-md);
         }
+
         .md-shape-lg {
             border-radius: var(--md-shape-lg);
         }
+
         .md-shape-xl {
             border-radius: var(--md-shape-xl);
         }
+
         .md-shape-full {
             border-radius: var(--md-shape-full);
         }
@@ -269,49 +295,60 @@
             position: relative;
             overflow: hidden;
         }
+
         .md-button:hover {
             box-shadow: var(--md-elevation2);
             filter: brightness(0.96);
         }
+
         .md-button:active {
             transform: scale(0.96);
             box-shadow: var(--md-elevation1);
         }
+
         .md-button.filled {
             background: var(--md-primary);
             color: var(--md-on-primary);
             box-shadow: var(--md-elevation1);
         }
+
         .md-button.filled:hover {
             box-shadow: var(--md-elevation2);
             filter: brightness(1.04);
         }
+
         .md-button.tonal {
             background: var(--md-secondary-container);
             color: var(--md-on-secondary-container);
             box-shadow: none;
         }
+
         .md-button.tonal:hover {
             background: color-mix(in srgb, var(--md-secondary-container) 92%, black);
         }
+
         .md-button.outlined {
             background: transparent;
             color: var(--md-primary);
             border: 1px solid var(--md-outline);
             box-shadow: none;
         }
+
         .md-button.outlined:hover {
             background: var(--md-surface);
             border-color: var(--md-primary);
         }
+
         .md-button.text {
             background: transparent;
             color: var(--md-primary);
             box-shadow: none;
         }
+
         .md-button.text:hover {
             background: var(--md-surface-variant);
         }
+
         .md-button:disabled {
             opacity: 0.38;
             pointer-events: none;
@@ -332,30 +369,38 @@
             font-size: 1.25rem;
             position: relative;
         }
+
         .md-icon-button:hover {
             background: var(--md-surface-variant);
             color: var(--md-on-surface);
         }
+
         .md-icon-button:active {
             transform: scale(0.92);
         }
+
         .md-icon-button.filled {
             background: var(--md-primary);
             color: var(--md-on-primary);
         }
+
         .md-icon-button.filled:hover {
             background: color-mix(in srgb, var(--md-primary) 92%, black);
         }
+
         .md-icon-button.tonal {
             background: var(--md-secondary-container);
             color: var(--md-on-secondary-container);
         }
+
         .md-icon-button.tonal:hover {
             background: color-mix(in srgb, var(--md-secondary-container) 92%, black);
         }
+
         .md-icon-button.outlined {
             border: 1px solid var(--md-outline);
         }
+
         .md-icon-button.outlined:hover {
             border-color: var(--md-primary);
         }
@@ -369,13 +414,16 @@
             transition: all var(--md-transition);
             border: 1px solid transparent;
         }
+
         .md-card:hover {
             box-shadow: var(--md-elevation2);
         }
+
         .md-card.outlined {
             border-color: var(--md-outline-variant);
             box-shadow: none;
         }
+
         .md-card.outlined:hover {
             border-color: var(--md-outline);
         }
@@ -386,6 +434,7 @@
             gap: 4px;
             width: 100%;
         }
+
         .md-text-field .input-wrap {
             position: relative;
             display: flex;
@@ -397,18 +446,22 @@
             padding: 0 12px;
             min-height: 48px;
         }
+
         .md-text-field .input-wrap:hover {
             background: color-mix(in srgb, var(--md-surface-variant) 96%, black);
         }
+
         .md-text-field .input-wrap:focus-within {
             border-bottom-color: var(--md-primary);
             background: var(--md-surface-variant);
         }
+
         .md-text-field .input-wrap .icon {
             color: var(--md-on-surface-variant);
             font-size: 1.125rem;
             margin-right: 8px;
         }
+
         .md-text-field input,
         .md-text-field textarea,
         .md-text-field select {
@@ -425,10 +478,12 @@
             width: 100%;
             resize: none;
         }
+
         .md-text-field textarea {
             min-height: 40px;
             max-height: 120px;
         }
+
         .md-text-field .label {
             font-size: 0.75rem;
             font-weight: 500;
@@ -436,6 +491,7 @@
             padding-left: 12px;
             letter-spacing: 0.01em;
         }
+
         .md-text-field .supporting {
             font-size: 0.688rem;
             color: var(--md-on-surface-variant);
@@ -455,6 +511,7 @@
             flex-shrink: 0;
             min-height: 64px;
         }
+
         .logo {
             display: flex;
             align-items: center;
@@ -465,15 +522,18 @@
             cursor: pointer;
             letter-spacing: -0.01em;
         }
+
         .logo .logo-icon {
             font-size: 1.6rem;
             color: var(--md-primary);
         }
+
         .header-actions {
             display: flex;
             gap: 4px;
             align-items: center;
         }
+
         .header-actions .md-icon-button {
             width: 40px;
             height: 40px;
@@ -495,10 +555,12 @@
             color: var(--md-on-surface-variant);
             max-width: 180px;
         }
+
         .model-badge-wrap:hover {
             background: color-mix(in srgb, var(--md-surface-variant) 92%, black);
             border-color: var(--md-outline);
         }
+
         .model-badge-dot {
             width: 8px;
             height: 8px;
@@ -506,18 +568,22 @@
             flex-shrink: 0;
             transition: all var(--md-transition);
         }
+
         .model-badge-dot.online {
             background: #4caf50;
             box-shadow: 0 0 0 2px #4caf5040;
         }
+
         .model-badge-dot.offline {
             background: var(--md-error);
             box-shadow: 0 0 0 2px var(--md-error)40;
         }
+
         .model-badge-dot.idle {
             background: #ffb300;
             box-shadow: 0 0 0 2px #ffb30040;
         }
+
         .model-badge-text {
             white-space: nowrap;
             overflow: hidden;
@@ -532,6 +598,7 @@
             flex-direction: column;
             background: var(--md-background);
         }
+
         .panel {
             display: none;
             flex-direction: column;
@@ -539,14 +606,17 @@
             overflow: hidden;
             animation: fadeSlideIn 0.3s ease;
         }
+
         .panel.active {
             display: flex;
         }
+
         @keyframes fadeSlideIn {
             from {
                 opacity: 0;
                 transform: translateY(8px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -559,6 +629,7 @@
             height: 100%;
             overflow: hidden;
         }
+
         .chat-messages {
             flex: 1;
             overflow-y: auto;
@@ -568,6 +639,7 @@
             gap: 8px;
             scroll-behavior: smooth;
         }
+
         .msg {
             display: flex;
             flex-direction: column;
@@ -575,22 +647,27 @@
             animation: msgIn 0.25s ease;
             gap: 4px;
         }
+
         @keyframes msgIn {
             from {
                 opacity: 0;
                 transform: translateY(6px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
         .msg.user {
             align-self: flex-end;
         }
+
         .msg.assistant {
             align-self: flex-start;
         }
+
         .msg-header {
             display: flex;
             align-items: center;
@@ -598,6 +675,7 @@
             font-size: 0.75rem;
             color: var(--md-on-surface-variant);
         }
+
         .msg-header .msg-avatar {
             width: 28px;
             height: 28px;
@@ -610,19 +688,23 @@
             background: var(--md-secondary-container);
             color: var(--md-on-secondary-container);
         }
+
         .msg.user .msg-header .msg-avatar {
             background: var(--md-primary);
             color: var(--md-on-primary);
         }
+
         .msg.assistant .msg-header .msg-avatar {
             background: var(--md-secondary-container);
             color: var(--md-on-secondary-container);
         }
+
         .msg-timestamp {
             font-size: 0.7rem;
             color: var(--md-on-surface-variant);
             opacity: 0.7;
         }
+
         .msg-bubble {
             padding: 12px 16px;
             border-radius: var(--md-shape-md);
@@ -634,6 +716,7 @@
             border-bottom-left-radius: var(--md-shape-xs);
             position: relative;
         }
+
         .msg.user .msg-bubble {
             background: var(--md-primary);
             color: var(--md-on-primary);
@@ -652,21 +735,25 @@
             background: var(--md-surface);
             border: 1px solid var(--md-outline-variant);
         }
+
         .msg-bubble .msg-image:hover {
             transform: scale(1.02);
         }
+
         .msg-bubble .msg-image-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
             margin: 4px 0;
         }
+
         .msg-bubble .msg-image-grid .msg-image {
             max-width: 120px;
             max-height: 120px;
             flex: 1 1 auto;
             min-width: 60px;
         }
+
         .msg-bubble pre {
             background: var(--md-surface);
             padding: 10px;
@@ -680,6 +767,7 @@
             word-break: break-word;
             border: 1px solid var(--md-outline-variant);
         }
+
         .msg-bubble .message-emoji {
             width: 1.3em;
             height: 1.3em;
@@ -696,9 +784,11 @@
             opacity: 0.4;
             transition: opacity var(--md-transition);
         }
+
         .msg:hover .msg-actions {
             opacity: 1;
         }
+
         .msg-actions button {
             background: transparent;
             border: none;
@@ -712,17 +802,21 @@
             align-items: center;
             gap: 4px;
         }
+
         .msg-actions button:hover {
             background: var(--md-surface-variant);
             color: var(--md-on-surface);
         }
+
         .msg-actions button .action-label {
             font-size: 0.7rem;
             font-weight: 500;
         }
+
         .msg.user .msg-actions button {
             color: var(--md-on-surface-variant);
         }
+
         .msg.user .msg-actions button:hover {
             background: color-mix(in srgb, var(--md-primary) 85%, black);
             color: var(--md-on-primary);
@@ -733,6 +827,7 @@
             gap: 4px;
             padding: 6px 12px;
         }
+
         .typing-indicator span {
             width: 6px;
             height: 6px;
@@ -740,19 +835,24 @@
             background: var(--md-on-surface-variant);
             animation: typingBounce 1.4s infinite;
         }
+
         .typing-indicator span:nth-child(2) {
             animation-delay: 0.2s;
         }
+
         .typing-indicator span:nth-child(3) {
             animation-delay: 0.4s;
         }
+
         @keyframes typingBounce {
+
             0%,
             60%,
             100% {
                 transform: translateY(0);
                 opacity: 0.3;
             }
+
             30% {
                 transform: translateY(-6px);
                 opacity: 1;
@@ -770,6 +870,7 @@
             flex-wrap: wrap;
             position: relative;
         }
+
         .chat-input-row {
             flex: 1;
             display: flex;
@@ -782,10 +883,12 @@
             transition: all var(--md-transition);
             min-width: 0;
         }
+
         .chat-input-row:focus-within {
             border-color: var(--md-primary);
             background: var(--md-surface);
         }
+
         .chat-textarea {
             flex: 1;
             background: transparent;
@@ -801,15 +904,18 @@
             line-height: 1.4;
             width: 100%;
         }
+
         .chat-textarea::placeholder {
             color: var(--md-on-surface-variant);
         }
+
         .chat-input-actions {
             display: flex;
             gap: 2px;
             align-items: center;
             flex-shrink: 0;
         }
+
         .btn-send {
             width: 40px;
             height: 40px;
@@ -825,28 +931,35 @@
             transition: all var(--md-transition);
             flex-shrink: 0;
         }
+
         .btn-send:hover {
             filter: brightness(1.05);
             box-shadow: var(--md-elevation2);
         }
+
         .btn-send:active {
             transform: scale(0.92);
         }
+
         .chat-input-area .md-icon-button {
             width: 36px;
             height: 36px;
             font-size: 0.95rem;
         }
+
         .chat-input-area .md-icon-button.voice-active {
             background: var(--md-error);
             color: var(--md-on-error);
             animation: voicePulse 0.8s infinite;
         }
+
         @keyframes voicePulse {
+
             0%,
             100% {
                 box-shadow: 0 0 0 0 var(--md-error)60;
             }
+
             50% {
                 box-shadow: 0 0 0 12px var(--md-error)00;
             }
@@ -869,9 +982,11 @@
             gap: 4px;
             box-shadow: var(--md-elevation3);
         }
+
         .emoji-picker-3d.open {
             display: flex;
         }
+
         .emoji-picker-3d .emoji-3d-item {
             width: 34px;
             height: 34px;
@@ -883,6 +998,7 @@
             transition: all var(--md-transition);
             background: transparent;
         }
+
         .emoji-picker-3d .emoji-3d-item:hover {
             background: var(--md-surface-variant);
             transform: scale(1.05);
@@ -894,6 +1010,7 @@
             flex-wrap: wrap;
             padding: 0 16px 4px;
         }
+
         .file-preview-item {
             background: var(--md-surface-variant);
             padding: 4px 10px;
@@ -905,6 +1022,7 @@
             cursor: default;
             color: var(--md-on-surface-variant);
         }
+
         .file-preview-item .remove {
             cursor: pointer;
             color: var(--md-error);
@@ -920,15 +1038,18 @@
             height: 100%;
             overflow-y: auto;
         }
+
         .generation-panel h2 {
             font-size: 1.5rem;
             font-weight: 400;
             color: var(--md-on-surface);
         }
+
         .generation-panel p {
             color: var(--md-on-surface-variant);
             text-align: center;
         }
+
         .input-wrapper {
             background: var(--md-surface-variant);
             border-radius: var(--md-shape-sm);
@@ -939,9 +1060,11 @@
             width: 100%;
             max-width: 450px;
         }
+
         .input-wrapper:focus-within {
             border-color: var(--md-primary);
         }
+
         .input-wrapper input {
             flex: 1;
             border: none;
@@ -952,6 +1075,7 @@
             outline: none;
             font-family: inherit;
         }
+
         .gen-preview-img {
             max-width: 100%;
             border-radius: var(--md-shape-md);
@@ -963,15 +1087,19 @@
         .d-flex {
             display: flex;
         }
+
         .gap-2 {
             gap: 8px;
         }
+
         .mt-2 {
             margin-top: 8px;
         }
+
         .mt-3 {
             margin-top: 16px;
         }
+
         .spinner {
             display: inline-block;
             width: 20px;
@@ -981,6 +1109,7 @@
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
+
         @keyframes spin {
             to {
                 transform: rotate(360deg);
@@ -996,6 +1125,7 @@
             z-index: 100;
             box-shadow: var(--md-elevation2);
         }
+
         .nav-item {
             flex: 1;
             display: flex;
@@ -1015,16 +1145,20 @@
             padding: 4px 0;
             letter-spacing: 0.01em;
         }
+
         .nav-item .nav-icon {
             font-size: 1.4rem;
             transition: all var(--md-transition);
         }
+
         .nav-item.active {
             color: var(--md-primary);
         }
+
         .nav-item.active .nav-icon {
             transform: scale(1.05);
         }
+
         .nav-item.active::after {
             content: '';
             position: absolute;
@@ -1035,6 +1169,7 @@
             background: var(--md-primary);
             border-radius: 0 0 3px 3px;
         }
+
         .nav-item:hover {
             color: var(--md-on-surface);
         }
@@ -1050,17 +1185,21 @@
             justify-content: center;
             animation: fadeIn 0.2s ease;
         }
+
         .modal-overlay.hidden {
             display: none;
         }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
             }
+
             to {
                 opacity: 1;
             }
         }
+
         .modal {
             background: var(--md-surface);
             border-radius: var(--md-shape-lg);
@@ -1073,16 +1212,19 @@
             box-shadow: var(--md-elevation4);
             animation: modalSlide 0.3s ease;
         }
+
         @keyframes modalSlide {
             from {
                 transform: translateY(20px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
             }
         }
+
         .modal h2 {
             font-size: 1.2rem;
             font-weight: 500;
@@ -1092,6 +1234,7 @@
             gap: 8px;
             color: var(--md-on-surface);
         }
+
         .modal label {
             display: block;
             font-size: 0.8rem;
@@ -1099,6 +1242,7 @@
             color: var(--md-on-surface-variant);
             margin-bottom: 4px;
         }
+
         .modal input,
         .modal select {
             width: 100%;
@@ -1113,11 +1257,13 @@
             margin-bottom: 12px;
             transition: all var(--md-transition);
         }
+
         .modal input:focus,
         .modal select:focus {
             border-color: var(--md-primary);
             box-shadow: 0 0 0 2px var(--md-primary)30;
         }
+
         .modal .btn-row {
             display: flex;
             gap: 8px;
@@ -1125,6 +1271,7 @@
             margin-top: 8px;
             flex-wrap: wrap;
         }
+
         .btn {
             padding: 8px 20px;
             border-radius: var(--md-shape-full);
@@ -1135,24 +1282,30 @@
             transition: all var(--md-transition);
             font-family: var(--md-font);
         }
+
         .btn-primary {
             background: var(--md-primary);
             color: var(--md-on-primary);
         }
+
         .btn-primary:hover {
             filter: brightness(1.05);
             box-shadow: var(--md-elevation2);
         }
+
         .btn-secondary {
             background: var(--md-surface-variant);
             color: var(--md-on-surface-variant);
         }
+
         .btn-secondary:hover {
             background: color-mix(in srgb, var(--md-surface-variant) 92%, black);
         }
+
         .settings-section {
             margin-bottom: 16px;
         }
+
         .settings-section .section-title {
             font-size: 0.8rem;
             font-weight: 600;
@@ -1164,28 +1317,34 @@
             align-items: center;
             gap: 6px;
         }
+
         .model-refresh-row {
             display: flex;
             gap: 6px;
             align-items: center;
         }
+
         .model-refresh-row select {
             flex: 1;
             margin-bottom: 0;
         }
+
         .model-refresh-row .md-icon-button {
             width: 40px;
             height: 40px;
             flex-shrink: 0;
         }
+
         .model-refresh-row .md-icon-button.spinning i {
             animation: spin 0.8s linear infinite;
         }
+
         .settings-note {
             font-size: 0.7rem;
             color: var(--md-on-surface-variant);
             margin-top: 8px;
         }
+
         .settings-note a {
             color: var(--md-primary);
             text-decoration: none;
@@ -1202,6 +1361,7 @@
             pointer-events: none;
             max-width: 360px;
         }
+
         .toast {
             background: var(--md-surface);
             border: 1px solid var(--md-outline-variant);
@@ -1213,29 +1373,36 @@
             box-shadow: var(--md-elevation3);
             color: var(--md-on-surface);
         }
+
         .toast.success {
             border-left: 4px solid #4caf50;
         }
+
         .toast.error {
             border-left: 4px solid var(--md-error);
         }
+
         .toast.info {
             border-left: 4px solid #2196f3;
         }
+
         @keyframes toastIn {
             from {
                 transform: translateX(100%);
                 opacity: 0;
             }
+
             to {
                 transform: translateX(0);
                 opacity: 1;
             }
         }
+
         @keyframes toastOut {
             from {
                 opacity: 1;
             }
+
             to {
                 opacity: 0;
                 transform: translateY(-16px);
@@ -1245,6 +1412,7 @@
         .d-none {
             display: none !important;
         }
+
         #fileInput,
         #youtubePlayer {
             display: none;
@@ -1253,6 +1421,7 @@
         .gtranslate_wrapper {
             margin-bottom: 12px;
         }
+
         .gtranslate_wrapper select {
             width: 100%;
             background: var(--md-surface-variant);
@@ -1265,6 +1434,7 @@
             outline: none;
             cursor: pointer;
         }
+
         .gtranslate_wrapper select:focus {
             border-color: var(--md-primary);
         }
@@ -1272,19 +1442,24 @@
         .text-muted {
             color: var(--md-on-surface-variant);
         }
+
         .text-center {
             text-align: center;
         }
+
         .small {
             font-size: 0.875rem;
         }
+
         .flex-grow-1 {
             flex-grow: 1;
         }
+
         .btn-sm {
             padding: 2px 8px;
             font-size: 0.7rem;
         }
+
         .gap-1 {
             gap: 4px;
         }
@@ -1335,6 +1510,7 @@
             backdrop-filter: blur(4px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
+
         body.dark #musicPanel .yt-player-card {
             background: #242424;
             border-color: #3a3a3a;
@@ -1410,6 +1586,7 @@
             display: block;
             line-height: 1.3;
         }
+
         body.dark #musicPanel .yt-player-card #nowPlaying .song-title {
             color: #e6e0e9;
         }
@@ -1423,6 +1600,7 @@
             text-overflow: ellipsis;
             display: block;
         }
+
         body.dark #musicPanel .yt-player-card #nowPlaying .author-name {
             color: #cac4d0;
         }
@@ -1485,6 +1663,7 @@
             display: block;
             user-select: none;
         }
+
         body.dark #musicPanel .yt-player-card .progress-container .progress {
             background: #3a3a3a;
         }
@@ -1505,6 +1684,7 @@
             color: var(--text-on-surface-variant, #49454f);
             margin-top: 2px;
         }
+
         body.dark #musicPanel .yt-player-card .progress-container .time-display {
             color: #cac4d0;
         }
@@ -1534,6 +1714,7 @@
             overflow: visible;
             cursor: pointer;
         }
+
         body.dark #musicPanel .yt-player-card .volume-container .volume-bar-container {
             background: #3a3a3a;
         }
@@ -1561,6 +1742,7 @@
             z-index: 2;
             left: 70%;
         }
+
         body.dark #musicPanel .yt-player-card .volume-container .volume-bar-container .volume-thumb {
             background: #242424;
             border-color: var(--primary, #d0bcff);
@@ -1614,6 +1796,7 @@
             font-weight: 500;
             color: var(--text-on-surface-variant, #49454f);
         }
+
         body.dark #musicPanel .yt-player-card .extra-controls .auto-play-toggle,
         body.dark #musicPanel .yt-player-card .extra-controls .repeat-toggle {
             color: #cac4d0;
@@ -1643,6 +1826,7 @@
             transition: 0.3s;
             border-radius: 20px;
         }
+
         body.dark #musicPanel .yt-player-card .extra-controls .switch .slider {
             background: #444;
         }
@@ -1681,9 +1865,11 @@
             align-items: center;
             justify-content: center;
         }
+
         body.dark #musicPanel .yt-player-card #repeatBtn {
             background: #444;
         }
+
         body.dark #musicPanel .yt-player-card #repeatBtn.active {
             background: var(--primary, #d0bcff);
         }
@@ -1713,6 +1899,7 @@
             display: flex;
             flex-direction: column;
         }
+
         body.dark #musicPanel .yt-music-row .playlist-col .playlist-card {
             background: #242424;
             border-color: #3a3a3a;
@@ -1739,6 +1926,7 @@
             align-items: center;
             gap: 4px;
         }
+
         body.dark #musicPanel .playlist-toolbar .btn {
             color: #e6e0e9;
             border-color: #3a3a3a;
@@ -1772,6 +1960,7 @@
             padding: 2px 8px 2px 14px;
             transition: border-color 0.3s;
         }
+
         body.dark #musicPanel #playlistSearchContainer .input-group {
             background: #2a2a2a;
             border-color: #3a3a3a;
@@ -1790,6 +1979,7 @@
             font-size: 14px;
             color: var(--text-on-surface, #1d1b20);
         }
+
         body.dark #musicPanel #playlistSearchContainer .input-group input {
             color: #e6e0e9;
         }
@@ -1804,6 +1994,7 @@
             transition: background 0.2s;
             font-size: 16px;
         }
+
         body.dark #musicPanel #playlistSearchContainer .input-group button {
             color: #cac4d0;
         }
@@ -1851,6 +2042,7 @@
             background: transparent;
             color: var(--text-on-surface, #1d1b20);
         }
+
         body.dark #musicPanel #songList .list-group-item {
             border-color: #3a3a3a;
             color: #e6e0e9;
@@ -1859,6 +2051,7 @@
         #musicPanel #songList .list-group-item:hover {
             background: var(--hover-bg, rgba(0, 0, 0, 0.05));
         }
+
         body.dark #musicPanel #songList .list-group-item:hover {
             background: rgba(255, 255, 255, 0.05);
         }
@@ -1881,6 +2074,7 @@
             flex-shrink: 0;
             color: var(--text-on-surface-variant, #49454f);
         }
+
         body.dark #musicPanel #songList .song-number {
             color: #cac4d0;
         }
@@ -1903,6 +2097,7 @@
             min-width: 0;
             color: var(--text-on-surface-variant, #49454f);
         }
+
         body.dark #musicPanel #songList .author-column {
             color: #cac4d0;
         }
@@ -1928,6 +2123,7 @@
             justify-content: center;
             font-size: 14px;
         }
+
         body.dark #musicPanel #songList .song-action .remove-song-btn {
             color: #cac4d0;
         }
@@ -1944,6 +2140,7 @@
             font-size: 16px;
             flex-shrink: 0;
         }
+
         body.dark #musicPanel #songList .drag-handle {
             color: #cac4d0;
         }
@@ -1964,6 +2161,7 @@
             flex-direction: column;
             min-height: 200px;
         }
+
         body.dark #musicPanel #lyricsContainer {
             background: #242424;
             border-color: #3a3a3a;
@@ -2004,6 +2202,7 @@
             align-items: center;
             gap: 3px;
         }
+
         body.dark #musicPanel #lyricsContainer .lyrics-controls button {
             color: #e6e0e9;
             border-color: #3a3a3a;
@@ -2018,6 +2217,7 @@
             color: var(--text-on-surface-variant, #49454f);
             margin-bottom: 6px;
         }
+
         body.dark #musicPanel #lyricsContainer #lyricsMeta {
             color: #cac4d0;
         }
@@ -2066,6 +2266,7 @@
             text-align: right;
             flex-shrink: 0;
         }
+
         body.dark #musicPanel #lyricsContainer .lrc-line .lrc-time {
             color: #cac4d0;
         }
@@ -2095,6 +2296,7 @@
             border-left: 2px solid var(--primary, #6750a4);
             padding-left: 8px;
         }
+
         body.dark #musicPanel #lyricsContainer .lrc-line .lyrics-pair .translated-lyric {
             color: #cac4d0;
         }
@@ -2113,6 +2315,7 @@
             padding: 2px 6px 2px 14px;
             transition: border-color 0.3s;
         }
+
         body.dark #musicPanel #youtubeSearchSection .search-input-group {
             background: #2a2a2a;
             border-color: #3a3a3a;
@@ -2131,6 +2334,7 @@
             font-size: 14px;
             color: var(--text-on-surface, #1d1b20);
         }
+
         body.dark #musicPanel #youtubeSearchSection .search-input-group input {
             color: #e6e0e9;
         }
@@ -2183,6 +2387,7 @@
             margin: 2px 0;
             cursor: default;
         }
+
         body.dark #musicPanel #searchResults .list-group-item {
             border-color: #3a3a3a;
             color: #e6e0e9;
@@ -2210,6 +2415,7 @@
             margin: 0;
             color: var(--text-on-surface-variant, #49454f);
         }
+
         body.dark #musicPanel #searchResults .list-group-item .flex-grow-1 p {
             color: #cac4d0;
         }
@@ -2236,6 +2442,7 @@
             color: var(--text-on-surface-variant, #49454f);
             font-size: 14px;
         }
+
         body.dark #musicPanel #searchLoading {
             color: #cac4d0;
         }
@@ -2265,6 +2472,7 @@
             color: var(--text-on-surface, #1d1b20);
             font-size: 14px;
         }
+
         body.dark #musicPanel .playlist-import input {
             background: #2a2a2a;
             border-color: #3a3a3a;
@@ -2305,6 +2513,7 @@
             color: var(--text-on-surface, #1d1b20);
             font-size: 14px;
         }
+
         body.dark #translationServiceSelect {
             background: #2a2a2a;
             border-color: #3a3a3a;
@@ -2319,6 +2528,7 @@
             font-weight: 500;
             color: var(--text-on-surface-variant, #49454f);
         }
+
         body.dark #musicPanel .yt-player-card .extra-controls .sponsor-toggle {
             color: #cac4d0;
         }
@@ -2441,6 +2651,7 @@
             from {
                 transform: rotate(0deg);
             }
+
             to {
                 transform: rotate(360deg);
             }
@@ -2454,27 +2665,33 @@
             .chat-messages {
                 padding: 20px 10%;
             }
+
             .msg {
                 max-width: 70%;
             }
+
             .modal {
                 max-width: 520px;
             }
+
             .emoji-picker-3d {
                 max-width: 360px;
                 max-height: 280px;
             }
         }
+
         @media (min-width: 1024px) {
             .chat-messages {
                 padding: 24px 20%;
             }
+
             .msg {
                 max-width: 60%;
             }
         }
     </style>
 </head>
+
 <body>
 
     <header class="header">
@@ -2779,7 +2996,7 @@
                 <input type="password" id="geminiKeyInput" placeholder="Enter Gemini API key..." />
                 <div class="section-title" style="margin-top:8px;"><i class="fas fa-cubes"></i> Model</div>
                 <select id="geminiModelSelect">
-                    <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+                    <option value="gemini-3.1-flash-lite">gemini-3.1-flash-lite</option>
                     <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
                     <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
                 </select>
@@ -3083,7 +3300,12 @@
         }
 
         function escapeHTML(s) {
-            return s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+            return s.replace(/[&<>"]/g, c => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;'
+            })[c]);
         }
 
         function formatTime(sec) {
@@ -3124,7 +3346,9 @@
                 const parsed = new URL(url);
                 if (!['http:', 'https:'].includes(parsed.protocol)) return false;
                 return /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(parsed.pathname);
-            } catch { return false; }
+            } catch {
+                return false;
+            }
         }
 
         function removeArtistFromTitle(title, artist) {
@@ -3168,7 +3392,10 @@
                 const saved = localStorage.getItem('hexai_state');
                 if (saved) {
                     const parsed = JSON.parse(saved);
-                    STATE.settings = { ...STATE.settings, ...parsed.settings };
+                    STATE.settings = {
+                        ...STATE.settings,
+                        ...parsed.settings
+                    };
                     STATE.playlist = parsed.playlist || [];
                     STATE.currentTrackIndex = parsed.currentTrackIndex ?? -1;
                     STATE.chatHistory = parsed.chatHistory || [];
@@ -3177,7 +3404,9 @@
                     STATE.albumSpinEnabled = parsed.albumSpinEnabled ?? true;
                     STATE.messageIdCounter = parsed.messageIdCounter || 1;
                 }
-            } catch (e) { console.warn('loadState:', e); }
+            } catch (e) {
+                console.warn('loadState:', e);
+            }
         }
 
         function saveState() {
@@ -3192,7 +3421,9 @@
                     albumSpinEnabled: STATE.albumSpinEnabled,
                     messageIdCounter: STATE.messageIdCounter,
                 }));
-            } catch (e) { console.warn('saveState:', e); }
+            } catch (e) {
+                console.warn('saveState:', e);
+            }
         }
 
         // ────────────────────────────────────────────────────────────────
@@ -3208,7 +3439,9 @@
             localStorage.setItem('hexai_theme', theme);
         }
 
-        function getThemePreference() { return localStorage.getItem('hexai_theme') || 'system'; }
+        function getThemePreference() {
+            return localStorage.getItem('hexai_theme') || 'system';
+        }
 
         // ────────────────────────────────────────────────────────────────
         //  SETTINGS
@@ -3243,13 +3476,18 @@
 
         async function refreshOpenRouterModels() {
             const key = document.getElementById('openRouterKeyInput').value.trim();
-            if (!key) { showToast('⚠️ Enter OpenRouter API key first.', 'error'); return; }
+            if (!key) {
+                showToast('⚠️ Enter OpenRouter API key first.', 'error');
+                return;
+            }
             const btn = document.getElementById('refreshModelsBtn');
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
             try {
                 const resp = await fetch('https://openrouter.ai/api/v1/models', {
-                    headers: { 'Authorization': `Bearer ${key}` }
+                    headers: {
+                        'Authorization': `Bearer ${key}`
+                    }
                 });
                 if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
                 const data = await resp.json();
@@ -3366,10 +3604,15 @@
 
         function processMessageText(text) {
             if (!text) return '';
-            const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
+            const segmenter = new Intl.Segmenter('en', {
+                granularity: 'grapheme'
+            });
             const segments = [...segmenter.segment(text)];
             let result = '';
-            for (const { segment } of segments) {
+            for (const {
+                    segment
+                }
+                of segments) {
                 if (/\p{Emoji}/u.test(segment)) {
                     const cp = emojiToCodepointPath(segment);
                     result +=
@@ -3394,7 +3637,9 @@
         function createMessageElement(role, content, timestamp, id, images) {
             const div = document.createElement('div');
             div.className = `msg ${role}`;
-            if (!id) { id = 'msg-' + (STATE.messageIdCounter++); }
+            if (!id) {
+                id = 'msg-' + (STATE.messageIdCounter++);
+            }
             div.dataset.msgid = id;
 
             const isUser = role === 'user';
@@ -3499,7 +3744,9 @@
             if (!contentDiv) return;
             const text = contentDiv.innerText.trim();
             if (navigator.share) {
-                navigator.share({ text: text }).catch(() => {});
+                navigator.share({
+                    text: text
+                }).catch(() => {});
             } else {
                 copyMessage(wrapper);
                 showToast('Copied (share not supported)', 'success');
@@ -3507,8 +3754,10 @@
         }
 
         function handleChatKey(e) {
-            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault();
-                sendMessage(); }
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
             autoResizeTextarea(e.target);
         }
 
@@ -3541,11 +3790,13 @@
                 throw new Error('Gemini API key not configured. Please set it in Settings.');
             }
 
-            const model = STATE.settings.geminiModel || 'gemini-2.0-flash';
+            const model = STATE.settings.geminiModel || 'gemini-3.1-flash-lite';
             const url =
-                `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
 
-            const parts = [{ text: promptText || 'Describe this image in detail.' }];
+            const parts = [{
+                text: promptText || 'Describe this image in detail.'
+            }];
             if (imageBase64Data) {
                 parts.push({
                     inline_data: {
@@ -3563,7 +3814,9 @@
 
             const resp = await fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(body)
             });
 
@@ -3703,7 +3956,7 @@
             if (!apiKey || apiKey.length < 8) {
                 throw new Error('OpenRouter API key not configured.');
             }
-            const model = STATE.settings.chatModel || 'google/gemini-2.0-flash-001';
+            const model = STATE.settings.chatModel || 'google/gemini-3.1-flash-lite';
             const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
                 method: 'POST',
                 headers: {
@@ -3712,7 +3965,10 @@
                 },
                 body: JSON.stringify({
                     model: model,
-                    messages: [{ role: 'user', content: promptText }]
+                    messages: [{
+                        role: 'user',
+                        content: promptText
+                    }]
                 })
             });
             if (!resp.ok) {
@@ -3730,15 +3986,21 @@
             if (!apiKey || apiKey.length < 8) {
                 throw new Error('Gemini API key not configured.');
             }
-            const model = STATE.settings.geminiModel || 'gemini-2.0-flash';
+            const model = STATE.settings.geminiModel || 'gemini-3.1-flash-lite';
             const url =
                 `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
             const body = {
-                contents: [{ parts: [{ text: promptText }] }]
+                contents: [{
+                    parts: [{
+                        text: promptText
+                    }]
+                }]
             };
             const resp = await fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(body)
             });
             if (!resp.ok) {
@@ -3788,7 +4050,9 @@
                             `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&seed=${Date.now()}&nologo=true`;
                         const img = new Image();
                         img.onload = () => showPreview(url);
-                        img.onerror = () => { throw new Error('Failed to load image'); };
+                        img.onerror = () => {
+                            throw new Error('Failed to load image');
+                        };
                         img.src = url;
                     } catch (e) {
                         showToast('Image generation failed: ' + e.message, 'error');
@@ -3808,7 +4072,9 @@
                     try {
                         const res = await fetch(currentImageUrl);
                         const blob = await res.blob();
-                        const file = new File([blob], 'ai_art_' + Date.now() + '.png', { type: 'image/png' });
+                        const file = new File([blob], 'ai_art_' + Date.now() + '.png', {
+                            type: 'image/png'
+                        });
                         STATE.attachedFiles.push(file);
                         renderFilePreview();
                         showToast('AI image added to chat!', 'success');
@@ -3853,20 +4119,28 @@
             const clearVideoPreview = () => {
                 if (animationId) cancelAnimationFrame(animationId);
                 if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
-                if (videoPreview) { videoPreview.style.display = 'none';
-                    videoPreview.src = ''; }
-                if (canvas) { canvas.style.display = 'none';
-                    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); }
-                if (statusDiv) { statusDiv.style.display = 'block';
-                    statusDiv.innerHTML = '<i class="fas fa-film"></i> preview'; }
+                if (videoPreview) {
+                    videoPreview.style.display = 'none';
+                    videoPreview.src = '';
+                }
+                if (canvas) {
+                    canvas.style.display = 'none';
+                    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+                }
+                if (statusDiv) {
+                    statusDiv.style.display = 'block';
+                    statusDiv.innerHTML = '<i class="fas fa-film"></i> preview';
+                }
                 if (videoActions) videoActions.style.display = 'none';
                 currentVideoUrl = null;
                 recordedChunks = [];
             };
 
             const showVideoPreview = (url) => {
-                if (videoPreview) { videoPreview.src = url;
-                    videoPreview.style.display = 'block'; }
+                if (videoPreview) {
+                    videoPreview.src = url;
+                    videoPreview.style.display = 'block';
+                }
                 if (canvas) canvas.style.display = 'none';
                 if (statusDiv) statusDiv.style.display = 'none';
                 if (videoActions) videoActions.style.display = 'flex';
@@ -3889,7 +4163,9 @@
                 recordedChunks = [];
                 mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
                 mediaRecorder.onstop = () => {
-                    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                    const blob = new Blob(recordedChunks, {
+                        type: 'video/webm'
+                    });
                     const url = URL.createObjectURL(blob);
                     if (callback) callback(url);
                 };
@@ -3939,7 +4215,9 @@
                             animateImage(img, 5000, 24, canvas, (url) => showVideoPreview(url));
                             showToast('Animating scene...', 'info');
                         };
-                        img.onerror = () => { throw new Error('Image generation failed'); };
+                        img.onerror = () => {
+                            throw new Error('Image generation failed');
+                        };
                         img.src = imgUrl;
                     } catch (e) {
                         showToast('Video generation failed: ' + e.message, 'error');
@@ -3989,7 +4267,11 @@
         let syncInterval = null;
         let translationEnabled = false;
         let translatedLyrics = null;
-        let lyricsState = { status: "idle", artist: "", title: "" };
+        let lyricsState = {
+            status: "idle",
+            artist: "",
+            title: ""
+        };
         let currentLang = localStorage.getItem('translationTargetLang') || 'en';
         let sponsorVideoId = null;
         let sponsorSegments = [];
@@ -4046,7 +4328,11 @@
         function loadPlaylist() {
             const stored = localStorage.getItem('youtubeMusicPlaylist');
             if (stored) {
-                try { STATE.playlist = JSON.parse(stored); } catch { STATE.playlist = []; }
+                try {
+                    STATE.playlist = JSON.parse(stored);
+                } catch {
+                    STATE.playlist = [];
+                }
             }
             if (!STATE.playlist || STATE.playlist.length === 0) {
                 STATE.playlist = [{
@@ -4355,7 +4641,10 @@
 
             fetchSponsorTimes(videoId).then(segments => {
                 if (sponsorVideoId !== videoId) return;
-                sponsorSegments = segments.map(([start, end]) => ({ start, end }));
+                sponsorSegments = segments.map(([start, end]) => ({
+                    start,
+                    end
+                }));
                 skippedSegments.clear();
                 if (sponsorCheckInterval) {
                     clearInterval(sponsorCheckInterval);
@@ -4366,7 +4655,9 @@
                         let curVideoId = null;
                         try {
                             curVideoId = player.getVideoData().video_id;
-                        } catch (e) { return; }
+                        } catch (e) {
+                            return;
+                        }
                         if (curVideoId !== videoId) return;
                         if (!player || typeof player.getCurrentTime !== 'function') return;
                         const cur = player.getCurrentTime();
@@ -4638,7 +4929,7 @@
                     playing = false;
                     if (progressInterval) clearInterval(progressInterval);
                     if (albumArtDisplayMode === 'spin' && albumArtSpinEnabled) albumArt.classList.add(
-                    'rotate-paused');
+                        'rotate-paused');
                 } else {
                     player.playVideo();
                     this.innerHTML = ICON_PAUSE;
@@ -4760,7 +5051,10 @@
                 const match = line.match(regex);
                 if (match) {
                     const time = parseInt(match[1]) * 60 + parseInt(match[2]) + ((parseInt(match[3]) || 0) / 100);
-                    lines.push({ time, text: match[4].trim() });
+                    lines.push({
+                        time,
+                        text: match[4].trim()
+                    });
                 }
             });
             return lines;
@@ -4836,7 +5130,10 @@
                 const fb = rawTitle.match(/「(.+?)」/);
                 if (fb) extractedTrack = fb[1].trim();
             }
-            return { artist: extractedArtist, track: extractedTrack };
+            return {
+                artist: extractedArtist,
+                track: extractedTrack
+            };
         }
 
         async function translateViaOpenRouter(text, targetLang) {
@@ -4866,7 +5163,9 @@
             const res = await fetch(
                 `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({
                         contents: [{
                             parts: [{
@@ -4882,12 +5181,20 @@
         async function translateLyrics(text, sourceLang = 'auto', targetLang = currentLang === 'zh' ? 'zh' : 'en') {
             const service = STATE.settings.translationService || 'auto';
             if (service === 'openrouter') {
-                try { return await translateViaOpenRouter(text, targetLang); } catch (e) { console.warn(
-                        'OpenRouter translation failed', e); }
+                try {
+                    return await translateViaOpenRouter(text, targetLang);
+                } catch (e) {
+                    console.warn(
+                        'OpenRouter translation failed', e);
+                }
             }
             if (service === 'gemini') {
-                try { return await translateViaGemini(text, targetLang); } catch (e) { console.warn(
-                        'Gemini translation failed', e); }
+                try {
+                    return await translateViaGemini(text, targetLang);
+                } catch (e) {
+                    console.warn(
+                        'Gemini translation failed', e);
+                }
             }
             return text;
         }
@@ -4929,12 +5236,17 @@
                         }
                     } else if (src.name === 'Lyrics.ovh') {
                         if (data.lyrics) {
-                            const result = { plainLyrics: data.lyrics, timestamp: Date.now() };
+                            const result = {
+                                plainLyrics: data.lyrics,
+                                timestamp: Date.now()
+                            };
                             localStorage.setItem(cacheKey, JSON.stringify(result));
                             return result;
                         }
                     }
-                } catch (e) { console.warn(`${src.name} failed:`, e); }
+                } catch (e) {
+                    console.warn(`${src.name} failed:`, e);
+                }
             }
 
             try {
@@ -4955,7 +5267,10 @@
                             if (match) {
                                 const plain = match[1].replace(/<[^>]+>/g, '').trim();
                                 if (plain.length > 50) {
-                                    const result = { plainLyrics: plain, timestamp: Date.now() };
+                                    const result = {
+                                        plainLyrics: plain,
+                                        timestamp: Date.now()
+                                    };
                                     localStorage.setItem(cacheKey, JSON.stringify(result));
                                     return result;
                                 }
@@ -4963,15 +5278,24 @@
                         }
                     }
                 }
-            } catch (e) { console.warn('Genius fallback failed:', e); }
+            } catch (e) {
+                console.warn('Genius fallback failed:', e);
+            }
 
             return null;
         }
 
         async function fetchLyrics(title, artist) {
-            const { artist: cleanArtist, track: cleanTrack } = cleanTitleAndArtist(title, artist);
+            const {
+                artist: cleanArtist,
+                track: cleanTrack
+            } = cleanTitleAndArtist(title, artist);
 
-            lyricsState = { status: 'loading', artist: cleanArtist, title: cleanTrack };
+            lyricsState = {
+                status: 'loading',
+                artist: cleanArtist,
+                title: cleanTrack
+            };
             lyricsMeta.textContent = 'Searching...';
             lyricsText.textContent = 'Searching...';
 
@@ -4985,13 +5309,19 @@
                 const isLrc = /^\s*\[\d{1,2}:\d{2}/m.test(lyrics);
                 if (isLrc) {
                     const parsed = parseLrc(lyrics);
-                    lyricsData = { isLrc: true, lrcLines: parsed };
+                    lyricsData = {
+                        isLrc: true,
+                        lrcLines: parsed
+                    };
                     renderLrcLines(parsed);
                     lyricsMeta.textContent =
                         `Synced lyrics found for ${cleanArtist} – ${cleanTrack} (${data.syncedLyrics ? 'LRCLIB' : 'plain'})`;
                     lyricsState.status = 'synced';
                 } else {
-                    lyricsData = { isLrc: false, plain: lyrics };
+                    lyricsData = {
+                        isLrc: false,
+                        plain: lyrics
+                    };
                     const lines = lyrics.split(/\r?\n/).filter(l => l.trim().length > 0);
                     lyricsText.innerHTML = lines.map(line => `<div class="plain-line">${line}</div>`).join('');
                     lyricsMeta.textContent =
@@ -5081,7 +5411,10 @@
                                 const pRect = parent.getBoundingClientRect();
                                 const cRect = toHighlight.getBoundingClientRect();
                                 const offset = cRect.top - pRect.top - parent.clientHeight / 2 + cRect.height / 2;
-                                parent.scrollBy({ top: offset, behavior: 'smooth' });
+                                parent.scrollBy({
+                                    top: offset,
+                                    behavior: 'smooth'
+                                });
                             }
                         }
                     }
@@ -5090,7 +5423,10 @@
         }
 
         function loadLyricsFor(title, artist) {
-            const { artist: cleanArtist, track: cleanTrack } = cleanTitleAndArtist(title, artist);
+            const {
+                artist: cleanArtist,
+                track: cleanTrack
+            } = cleanTitleAndArtist(title, artist);
             fetchLyrics(cleanTrack, cleanArtist);
             startLyricsSync();
         }
@@ -5130,7 +5466,9 @@
 
         openRawBtn?.addEventListener('click', () => {
             if (!lyricsData) return alert('No lyrics loaded.');
-            const blob = new Blob([JSON.stringify(lyricsData, null, 2)], { type: 'application/json' });
+            const blob = new Blob([JSON.stringify(lyricsData, null, 2)], {
+                type: 'application/json'
+            });
             window.open(URL.createObjectURL(blob), '_blank');
         });
 
@@ -5149,13 +5487,20 @@
                             sponsorVideoId = vid;
                             fetchSponsorTimes(vid).then(segments => {
                                 if (sponsorVideoId !== vid) return;
-                                sponsorSegments = segments.map(([start, end]) => ({ start, end }));
+                                sponsorSegments = segments.map(([start, end]) => ({
+                                    start,
+                                    end
+                                }));
                                 skippedSegments.clear();
                                 if (sponsorCheckInterval) clearInterval(sponsorCheckInterval);
                                 sponsorCheckInterval = setInterval(() => {
                                     let curVideoId = null;
-                                    try { curVideoId = player.getVideoData().video_id; } catch (
-                                    e) { return; }
+                                    try {
+                                        curVideoId = player.getVideoData().video_id;
+                                    } catch (
+                                        e) {
+                                        return;
+                                    }
                                     if (curVideoId !== vid) return;
                                     if (!player || typeof player.getCurrentTime !== 'function')
                                         return;
@@ -5168,7 +5513,7 @@
                                                 skippedSegments.add(key);
                                                 console.log(
                                                     `Skipped sponsor segment ${seg.start} → ${seg.end}`
-                                                    );
+                                                );
                                             }
                                             break;
                                         }
@@ -5185,7 +5530,10 @@
         const CACHE_EXPIRY = 3600000;
 
         function cacheSearchResults(term, results) {
-            searchCache[term] = { results, timestamp: Date.now() };
+            searchCache[term] = {
+                results,
+                timestamp: Date.now()
+            };
             localStorage.setItem('ytSearchCache', JSON.stringify(searchCache));
         }
 
@@ -5274,7 +5622,12 @@
                 alert('This song is already in your playlist!');
                 return;
             }
-            const song = { videoId: vid, songName: title, authorName: author, albumArt: art };
+            const song = {
+                videoId: vid,
+                songName: title,
+                authorName: author,
+                albumArt: art
+            };
             STATE.playlist.push(song);
             savePlaylist();
             renderPlaylist(STATE.playlist);
@@ -5327,7 +5680,12 @@
                     const author = item.snippet.videoOwnerChannelTitle || item.snippet.channelTitle || 'Unknown';
                     const art = item.snippet.thumbnails?.high?.url || item.snippet.thumbnails?.default?.url ||
                         'https://via.placeholder.com/300';
-                    STATE.playlist.push({ videoId: vid, songName: title, authorName: author, albumArt: art });
+                    STATE.playlist.push({
+                        videoId: vid,
+                        songName: title,
+                        authorName: author,
+                        albumArt: art
+                    });
                     added++;
                 }
 
@@ -5604,8 +5962,10 @@
                 if (e.target === this) toggleSettings();
             });
             document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.key === ',') { e.preventDefault();
-                    toggleSettings(); }
+                if (e.ctrlKey && e.key === ',') {
+                    e.preventDefault();
+                    toggleSettings();
+                }
             });
 
             loadPlaylist();
@@ -5660,4 +6020,5 @@
     </script>
 
 </body>
+
 </html>
