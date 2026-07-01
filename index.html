@@ -3233,6 +3233,48 @@
 
     <script>
         // ────────────────────────────────────────────────────────────────
+        //  PAXSENIX API — New integration
+        // ────────────────────────────────────────────────────────────────
+
+        const API_BASE = 'https://lyrics.paxsenix.org';
+
+        /**
+         * Fetch lyrics for a YouTube video ID using paxsenix API
+         * @param {string} videoId - YouTube video ID
+         * @returns {Promise<Object>} - Lyrics data
+         */
+        async function fetchLyricsFromPaxsenix(videoId) {
+            const url = `${API_BASE}/api/lyrics?v=${encodeURIComponent(videoId)}`;
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`Lyrics HTTP ${res.status}`);
+                const data = await res.json();
+                return data;
+            } catch (err) {
+                console.error('Paxsenix lyrics error:', err);
+                throw err;
+            }
+        }
+
+        /**
+         * Search YouTube videos using paxsenix API
+         * @param {string} query - Search query
+         * @returns {Promise<Array>} - Array of video objects
+         */
+        async function searchYouTubeViaPaxsenix(query) {
+            const url = `${API_BASE}/youtube/search?q=${encodeURIComponent(query)}`;
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`Search HTTP ${res.status}`);
+                const data = await res.json();
+                return data;
+            } catch (err) {
+                console.error('Paxsenix search error:', err);
+                throw err;
+            }
+        }
+
+        // ────────────────────────────────────────────────────────────────
         //  STATE
         // ────────────────────────────────────────────────────────────────
         const STATE = {
@@ -4802,7 +4844,7 @@
             });
         }
 
-        // ─── LOAD NEW VIDEO (patched) ───
+        // ─── LOAD NEW VIDEO (patched with Paxsenix lyrics integration) ───
 
         function loadNewVideo(videoId, albumArtUrl, songObject = null) {
             if (player) player.setVolume(currentVolume);
@@ -4863,7 +4905,8 @@
                     }, 500);
                     lastAuthor = aName;
                 }
-                loadLyricsFor(sName, aName);
+                // Load lyrics — now using Paxsenix API first
+                loadLyricsFor(sName, aName, videoId);
             }
 
             if (errorTimeout) clearTimeout(errorTimeout);
@@ -5442,7 +5485,9 @@
             return text;
         }
 
-        async function fetchLyricsMultiSource(artist, title) {
+        // ─── NEW: fetchLyricsMultiSource with Paxsenix API as primary ───
+
+        async function fetchLyricsMultiSource(artist, title, videoId) {
             const cacheKey = `lyrics_${encodeURIComponent(artist)}_${encodeURIComponent(title)}`;
             const cached = localStorage.getItem(cacheKey);
             if (cached) {
@@ -5454,6 +5499,26 @@
                 } catch {}
             }
 
+            // First try Paxsenix API using video ID
+            if (videoId) {
+                try {
+                    const data = await fetchLyricsFromPaxsenix(videoId);
+                    if (data && (data.syncedLyrics || data.plainLyrics || data.lyrics || data.text)) {
+                        const result = {
+                            syncedLyrics: data.syncedLyrics || data.lyrics || data.text || null,
+                            plainLyrics: data.plainLyrics || data.lyrics || data.text || null,
+                            timestamp: Date.now(),
+                            source: 'paxsenix'
+                        };
+                        localStorage.setItem(cacheKey, JSON.stringify(result));
+                        return result;
+                    }
+                } catch (e) {
+                    console.warn('Paxsenix API failed:', e);
+                }
+            }
+
+            // Fallback to LRCLIB
             const sources = [{
                     name: 'LRCLIB',
                     url: `https://lrclib.net/api/get?artist_name=${encodeURIComponent(artist)}&track_name=${encodeURIComponent(title)}`
@@ -5474,6 +5539,7 @@
                     if (src.name === 'LRCLIB') {
                         if (data.syncedLyrics || data.plainLyrics) {
                             data.timestamp = Date.now();
+                            data.source = src.name;
                             localStorage.setItem(cacheKey, JSON.stringify(data));
                             return data;
                         }
@@ -5481,7 +5547,8 @@
                         if (data.lyrics) {
                             const result = {
                                 plainLyrics: data.lyrics,
-                                timestamp: Date.now()
+                                timestamp: Date.now(),
+                                source: src.name
                             };
                             localStorage.setItem(cacheKey, JSON.stringify(result));
                             return result;
@@ -5492,6 +5559,7 @@
                 }
             }
 
+            // Last resort: Genius fallback
             try {
                 const geniusUrl =
                     `https://api.codetabs.com/v1/proxy?quest=https://genius.com/api/search?q=${encodeURIComponent(artist + ' ' + title)}`;
@@ -5512,7 +5580,8 @@
                                 if (plain.length > 50) {
                                     const result = {
                                         plainLyrics: plain,
-                                        timestamp: Date.now()
+                                        timestamp: Date.now(),
+                                        source: 'Genius'
                                     };
                                     localStorage.setItem(cacheKey, JSON.stringify(result));
                                     return result;
@@ -5528,7 +5597,9 @@
             return null;
         }
 
-        async function fetchLyrics(title, artist) {
+        // ─── Updated fetchLyrics with videoId ───
+
+        async function fetchLyrics(title, artist, videoId) {
             const {
                 artist: cleanArtist,
                 track: cleanTrack
@@ -5543,7 +5614,7 @@
             lyricsText.textContent = 'Searching...';
 
             try {
-                const data = await fetchLyricsMultiSource(cleanArtist, cleanTrack);
+                const data = await fetchLyricsMultiSource(cleanArtist, cleanTrack, videoId);
                 if (!data) throw new Error('No lyrics found from any source');
 
                 const lyrics = data.syncedLyrics || data.plainLyrics;
@@ -5557,8 +5628,9 @@
                         lrcLines: parsed
                     };
                     renderLrcLines(parsed);
+                    const source = data.source || 'LRCLIB';
                     lyricsMeta.textContent =
-                        `Synced lyrics found for ${cleanArtist} – ${cleanTrack} (${data.syncedLyrics ? 'LRCLIB' : 'plain'})`;
+                        `Synced lyrics found for ${cleanArtist} – ${cleanTrack} (${source})`;
                     lyricsState.status = 'synced';
                 } else {
                     lyricsData = {
@@ -5567,8 +5639,9 @@
                     };
                     const lines = lyrics.split(/\r?\n/).filter(l => l.trim().length > 0);
                     lyricsText.innerHTML = lines.map(line => `<div class="plain-line">${line}</div>`).join('');
+                    const source = data.source || 'Lyrics.ovh/Genius';
                     lyricsMeta.textContent =
-                        `Plain lyrics found for ${cleanArtist} – ${cleanTrack} (${data.plainLyrics ? 'Lyrics.ovh/Genius' : 'LRCLIB'})`;
+                        `Plain lyrics found for ${cleanArtist} – ${cleanTrack} (${source})`;
                     lyricsState.status = 'plain';
                 }
                 window.currentSongArtist = cleanArtist;
@@ -5665,12 +5738,12 @@
             }, 500);
         }
 
-        function loadLyricsFor(title, artist) {
+        function loadLyricsFor(title, artist, videoId) {
             const {
                 artist: cleanArtist,
                 track: cleanTrack
             } = cleanTitleAndArtist(title, artist);
-            fetchLyrics(cleanTrack, cleanArtist);
+            fetchLyrics(cleanTrack, cleanArtist, videoId);
             startLyricsSync();
         }
 
@@ -5704,7 +5777,8 @@
         refreshLyricsBtn?.addEventListener('click', async () => {
             const title = document.querySelector("#nowPlaying .song-title")?.textContent || '';
             const artist = document.querySelector("#nowPlaying .author-name")?.textContent || '';
-            if (title && artist) await loadLyricsFor(title, artist);
+            const vid = player ? player.getVideoData?.()?.video_id : selectedVideoId;
+            if (title && artist && vid) await loadLyricsFor(title, artist, vid);
         });
 
         openRawBtn?.addEventListener('click', () => {
@@ -5715,7 +5789,7 @@
             window.open(URL.createObjectURL(blob), '_blank');
         });
 
-        // ─── SEARCH ───
+        // ─── SEARCH (with Paxsenix API as primary) ───
 
         const searchCache = JSON.parse(localStorage.getItem('ytSearchCache') || '{}');
         const CACHE_EXPIRY = 3600000;
@@ -5747,15 +5821,31 @@
                 return;
             }
 
+            // First try Paxsenix API (no key needed)
+            searchLoading.classList.remove('d-none');
+            try {
+                const data = await searchYouTubeViaPaxsenix(term);
+                searchLoading.classList.add('d-none');
+                if (data && data.items && data.items.length > 0) {
+                    cacheSearchResults(term, data);
+                    searchResults.classList.remove('d-none');
+                    displaySearchResults(data);
+                    return;
+                }
+            } catch (e) {
+                console.warn('Paxsenix search failed, falling back to YouTube API:', e);
+            }
+
+            // Fallback to YouTube Data API v3
             const YT_KEY = STATE.settings.ytApiKey || '';
             if (!YT_KEY || YT_KEY.length < 10) {
                 searchError.innerHTML =
                     `<i class="fas fa-exclamation-circle"></i> YouTube API Key not configured. Please set it in Settings.`;
                 searchError.classList.remove('d-none');
+                searchLoading.classList.add('d-none');
                 return;
             }
 
-            searchLoading.classList.remove('d-none');
             try {
                 const url =
                     `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(term)}&type=video&maxResults=10&key=${YT_KEY}`;
@@ -5775,21 +5865,29 @@
 
         function displaySearchResults(data) {
             searchResults.classList.remove('d-none');
-            if (data.items && data.items.length > 0) {
-                data.items.forEach(item => {
-                    if (!item.id.videoId) return;
+            // Handle both Paxsenix and YouTube API response formats
+            const items = data.items || data.data || [];
+            if (items && items.length > 0) {
+                items.forEach(item => {
+                    // Handle Paxsenix format vs YouTube API format
+                    const videoId = item.id?.videoId || item.id || item.videoId;
+                    const title = item.snippet?.title || item.title || item.name || 'Unknown';
+                    const channelTitle = item.snippet?.channelTitle || item.author || item.channel || 'Unknown';
+                    const thumbnail = item.snippet?.thumbnails?.high?.url || item.thumbnail || item.thumb || 'https://via.placeholder.com/120';
+
+                    if (!videoId) return;
                     const div = document.createElement('div');
                     div.className = 'list-group-item';
                     div.innerHTML = `
-                  <img src="${item.snippet.thumbnails.high.url}" alt="${item.snippet.title}">
+                  <img src="${thumbnail}" alt="${title}">
                   <div class="flex-grow-1">
-                    <h6>${item.snippet.title}</h6>
-                    <p><small>${item.snippet.channelTitle}</small></p>
+                    <h6>${title}</h6>
+                    <p><small>${channelTitle}</small></p>
                   </div>
-                  <button class="add-from-search-btn" data-video-id="${item.id.videoId}" 
-                          data-song-title="${item.snippet.title.replace(/"/g, '&quot;')}" 
-                          data-author-name="${item.snippet.channelTitle.replace(/"/g, '&quot;')}" 
-                          data-album-art="${item.snippet.thumbnails.high.url}">
+                  <button class="add-from-search-btn" data-video-id="${videoId}" 
+                          data-song-title="${title.replace(/"/g, '&quot;')}" 
+                          data-author-name="${channelTitle.replace(/"/g, '&quot;')}" 
+                          data-album-art="${thumbnail}">
                     <i class="fas fa-plus"></i> Add
                   </button>
                 `;
@@ -5990,7 +6088,7 @@
                                 if (titleEl) titleEl.textContent = removeArtistFromTitle(song.songName, song
                                     .authorName);
                                 if (authorEl) authorEl.textContent = song.authorName;
-                                loadLyricsFor(song.songName, song.authorName);
+                                loadLyricsFor(song.songName, song.authorName, videoId);
                             }
                             setTimeout(updateProgressBar, 500);
                             applyAlbumArtDisplayMode();
@@ -6257,7 +6355,7 @@
             initImageGenerator();
             initVideoGenerator();
 
-            console.log('⬡ HEX AI — Material 3 Edition with sb.js SponsorBlock ⬡');
+            console.log('⬡ HEX AI — Material 3 Edition with sb.js SponsorBlock & Paxsenix API ⬡');
         }
 
         document.addEventListener('DOMContentLoaded', init);
@@ -6271,4 +6369,5 @@
         });
     </script>
 </body>
+
 </html>
