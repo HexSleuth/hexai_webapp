@@ -5551,7 +5551,7 @@
         function offlineUpdateTabTitle() {
             if (STATE.offlineCurrentSongIndex !== -1 && STATE.offlinePlaylist[STATE.offlineCurrentSongIndex]) {
                 const s = STATE.offlinePlaylist[STATE.offlineCurrentSongIndex];
-                document.title = `${STATE.offlineIsPlaying ? '▶️' : '⏸️'} ${s.name} - Music Player`;
+                document.title = `${STATE.offlineIsPlaying ? '⬡' : '⏸️'} ${s.name} - Music Player`;
             } else {
                 document.title = '🎵 Music Player';
             }
