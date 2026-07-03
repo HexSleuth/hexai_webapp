@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>⬡ HEX AI – Music Player</title>
-
     <script>
         (function() {
             const stored = localStorage.getItem('dark');
@@ -14,17 +12,13 @@
             document.body.classList.toggle('dark', isDark);
         })();
     </script>
-    <!-- Google Analytics (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){ dataLayer.push(arguments); }
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-        gtag('config', 'G-BTK7ZL9PR8', {
-            page_path: location.pathname,
-            page_title: document.title,
-            page_referrer: document.referrer || undefined
-        });
+        gtag('config', 'G-BTK7ZL9PR8', { page_path: location.pathname, page_title: document.title, page_referrer: document
+                    .referrer || undefined });
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
@@ -76,7 +70,6 @@
             --md-transition: 0.2s cubic-bezier(0.2, 0, 0, 1);
             --md-nav-height: 72px;
         }
-
         body.dark {
             --md-primary: #d0bcff;
             --md-on-primary: #381e72;
@@ -110,20 +103,16 @@
             --md-elevation4: 0 6px 10px 4px #0000004d, 0 2px 3px 0 #00000066;
             --md-elevation5: 0 8px 12px 6px #0000004d, 0 2px 4px 0 #00000066;
         }
-
-        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         html {
             font-size: 16px;
             scroll-behavior: smooth;
             -webkit-text-size-adjust: 100%;
         }
-
         body {
             font-family: var(--md-font);
             background: var(--md-background);
@@ -138,7 +127,6 @@
             -webkit-font-smoothing: antialiased;
             transition: background 0.25s, color 0.25s;
         }
-
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -153,8 +141,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--md-outline);
         }
-
-        /* ===== TYPOGRAPHY & UTILITIES ===== */
         .md-headline-large {
             font-size: 2rem;
             font-weight: 400;
@@ -223,7 +209,6 @@
             line-height: 1.4;
             letter-spacing: 0.015em;
         }
-
         .md-elevation-1 {
             box-shadow: var(--md-elevation1);
         }
@@ -257,7 +242,6 @@
         .md-shape-full {
             border-radius: var(--md-shape-full);
         }
-
         .md-button {
             display: inline-flex;
             align-items: center;
@@ -327,7 +311,6 @@
             opacity: 0.38;
             pointer-events: none;
         }
-
         .md-icon-button {
             display: inline-flex;
             align-items: center;
@@ -370,7 +353,6 @@
         .md-icon-button.outlined:hover {
             border-color: var(--md-primary);
         }
-
         .md-card {
             background: var(--md-surface);
             color: var(--md-on-surface);
@@ -390,7 +372,6 @@
         .md-card.outlined:hover {
             border-color: var(--md-outline);
         }
-
         .md-text-field {
             display: flex;
             flex-direction: column;
@@ -739,7 +720,6 @@
             background: color-mix(in srgb, var(--md-primary) 85%, black);
             color: var(--md-on-primary);
         }
-
         .typing-indicator {
             display: flex;
             gap: 4px;
@@ -975,7 +955,6 @@
             max-height: 400px;
             object-fit: contain;
         }
-
         .d-flex {
             display: flex;
         }
@@ -1208,7 +1187,6 @@
             color: var(--md-primary);
             text-decoration: none;
         }
-
         .toast-container {
             position: fixed;
             top: 16px;
@@ -1259,7 +1237,6 @@
                 transform: translateY(-16px);
             }
         }
-
         .d-none {
             display: none !important;
         }
@@ -1279,9 +1256,7 @@
             gap: 4px;
         }
 
-        /* ============================================================
-           MUSIC PANEL – YOUTUBE & OFFLINE TABS
-           ============================================================ */
+        /* ===== MUSIC PANEL – YOUTUBE & OFFLINE TABS ===== */
         #musicPanel {
             display: flex;
             flex-direction: column;
@@ -1290,7 +1265,6 @@
             overflow-y: auto;
             padding: 8px 12px;
         }
-
         .music-tabs {
             display: flex;
             gap: 8px;
@@ -1302,7 +1276,6 @@
             flex: 1;
             max-width: 200px;
         }
-
         .music-section {
             display: none;
             flex-direction: column;
@@ -1313,7 +1286,7 @@
             display: flex;
         }
 
-        /* ----- YOUTUBE SECTION (kept intact) ----- */
+        /* ----- YOUTUBE SECTION ----- */
         #yt-section .yt-music-container {
             width: 100%;
             max-width: 1000px;
@@ -2233,7 +2206,9 @@
             display: none !important;
         }
 
-        /* ----- OFFLINE SECTION (MP3 player) ----- */
+        /* ============================================================
+               OFFLINE SECTION – ENHANCED with PiP, Visualizer, etc.
+               ============================================================ */
         #offline-section {
             padding: 0 4px;
             overflow-y: auto;
@@ -2245,8 +2220,6 @@
             flex-direction: column;
             gap: 12px;
         }
-
-        /* Offline Upload Area */
         .offline-upload-area {
             border: 2px dashed var(--md-outline);
             border-radius: var(--md-shape-md);
@@ -2283,8 +2256,6 @@
         .offline-file-input {
             display: none;
         }
-
-        /* Offline Current Song */
         .offline-current-song {
             text-align: center;
             padding: 6px 0 12px;
@@ -2297,8 +2268,6 @@
             font: var(--md-body-medium);
             color: var(--md-on-surface-variant);
         }
-
-        /* Offline Album Art */
         .offline-album-art {
             display: block;
             margin: 0 auto 12px;
@@ -2313,8 +2282,6 @@
         .offline-album-art[hidden] {
             display: none;
         }
-
-        /* Offline Controls */
         .offline-controls {
             display: flex;
             justify-content: center;
@@ -2370,8 +2337,6 @@
         .offline-controls .md-icon-button.active .shuffle-indicator {
             opacity: 1;
         }
-
-        /* Offline Progress */
         .offline-progress-container {
             margin: 8px 0 12px;
         }
@@ -2398,8 +2363,6 @@
             font: var(--md-body-small);
             color: var(--md-on-surface-variant);
         }
-
-        /* Offline Volume */
         .offline-volume-container {
             display: flex;
             align-items: center;
@@ -2435,7 +2398,7 @@
             border: none;
         }
 
-        /* Offline Playlist */
+        /* ---- Offline Playlist ---- */
         .offline-playlist {
             background: var(--md-surface);
             border-radius: var(--md-shape-lg);
@@ -2535,7 +2498,199 @@
             font: var(--md-body-medium);
         }
 
-        /* ----- RESPONSIVE ----- */
+        /* ===== PiP & Visualizer Elements ===== */
+        #pipContent {
+            display: none;
+        }
+        #pipAnchor {
+            display: none;
+        }
+        .pip-mode #pipContent {
+            display: block;
+        }
+        #pipVisualizer {
+            width: 100%;
+            height: 60px;
+            border-radius: var(--md-shape-sm);
+            background: var(--md-surface-variant);
+            margin-top: 6px;
+        }
+        #pipQueueText {
+            font: var(--md-body-small);
+            color: var(--md-on-surface-variant);
+            text-align: center;
+            padding: 2px 0;
+        }
+        #pipBtn {
+            /* visible in offline controls */
+        }
+        .pip-mode .offline-controls .md-icon-button {
+            /* adapt */
+        }
+
+        /* ===== Warning Bar & Popup ===== */
+        .warning-bar {
+            background: #ffcc00;
+            color: #111;
+            padding: 8px 16px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 999;
+            display: none;
+        }
+        body.warning-bar-active .warning-bar {
+            display: block;
+        }
+        .warning-bar-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .warning-bar-close {
+            background: transparent;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #111;
+            padding: 0 4px;
+        }
+        .warning-popup {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .warning-popup-content {
+            background: var(--md-surface);
+            border-radius: var(--md-shape-lg);
+            padding: 24px;
+            max-width: 440px;
+            width: 92%;
+            box-shadow: var(--md-elevation4);
+            border: 1px solid var(--md-outline-variant);
+            color: var(--md-on-surface);
+        }
+        .warning-popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .warning-popup-header h2 {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        .warning-popup-close {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--md-on-surface-variant);
+        }
+        .warning-popup-body {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .warning-popup-body ul {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+        .warning-popup-footer {
+            margin-top: 16px;
+            text-align: right;
+        }
+        .warning-popup-btn {
+            background: var(--md-primary);
+            color: var(--md-on-primary);
+            border: none;
+            border-radius: var(--md-shape-full);
+            padding: 8px 24px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: var(--md-font);
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .warning-popup-btn:hover {
+            filter: brightness(1.05);
+        }
+
+        /* ===== Update Log ===== */
+        .update-log {
+            position: fixed;
+            inset: 0;
+            z-index: 1001;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .update-log-content {
+            background: var(--md-surface);
+            border-radius: var(--md-shape-lg);
+            padding: 24px;
+            max-width: 480px;
+            width: 92%;
+            box-shadow: var(--md-elevation4);
+            border: 1px solid var(--md-outline-variant);
+            color: var(--md-on-surface);
+        }
+        .update-log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .update-log-header h2 {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        .update-log-close {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--md-on-surface-variant);
+        }
+        .update-log-body {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .update-log-body ul {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+        .update-log-footer {
+            margin-top: 16px;
+            text-align: right;
+        }
+        .update-log-btn {
+            background: var(--md-primary);
+            color: var(--md-on-primary);
+            border: none;
+            border-radius: var(--md-shape-full);
+            padding: 8px 24px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: var(--md-font);
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .update-log-btn:hover {
+            filter: brightness(1.05);
+        }
+
+        /* ===== Responsive ===== */
         @media (max-width: 640px) {
             .header {
                 flex-direction: column;
@@ -2551,26 +2706,6 @@
             #yt-section .yt-music-row>div {
                 flex: 1 1 100%;
                 min-width: 0;
-            }
-            #yt-section .yt-player-card .controls button {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
-            #yt-section .yt-player-card .controls button i {
-                font-size: 20px;
-            }
-            #yt-section .yt-player-card .album-art-container {
-                max-width: 180px;
-            }
-            #yt-section .yt-player-card #albumArt {
-                max-width: 180px;
-            }
-            #yt-section .yt-player-card #videoPlayerInAlbumArt {
-                max-width: 180px;
-            }
-            #yt-section .yt-player-card #videoPlayerInAlbumArt iframe {
-                min-height: 180px;
             }
             .offline-controls .md-icon-button {
                 width: 38px;
@@ -2590,71 +2725,13 @@
                 max-height: 120px;
             }
         }
-
         @media (max-width: 480px) {
             #yt-section .yt-player-card .album-art-container {
                 max-width: 140px;
             }
-            #yt-section .yt-player-card #albumArt {
-                max-width: 140px;
-            }
-            #yt-section .yt-player-card #videoPlayerInAlbumArt {
-                max-width: 140px;
-            }
-            #yt-section .yt-player-card #videoPlayerInAlbumArt iframe {
-                min-height: 140px;
-            }
-            #yt-section .yt-player-card #nowPlaying .song-title {
-                font-size: 15px;
-            }
-            #yt-section .yt-player-card #nowPlaying .author-name {
-                font-size: 12px;
-            }
-        }
-
-        /* ===== GLOBAL UTILITY ===== */
-        #fileInput,
-        #youtubePlayer {
-            display: none;
-        }
-        .gtranslate_wrapper {
-            margin-bottom: 12px;
-        }
-        .gtranslate_wrapper select {
-            width: 100%;
-            background: var(--md-surface-variant);
-            border: 1px solid var(--md-outline-variant);
-            border-radius: var(--md-shape-sm);
-            padding: 8px 12px;
-            color: var(--md-on-surface);
-            font-family: var(--md-font);
-            font-size: 0.9rem;
-            outline: none;
-            cursor: pointer;
-        }
-        .gtranslate_wrapper select:focus {
-            border-color: var(--md-primary);
-        }
-        .btn-sm {
-            padding: 2px 8px;
-            font-size: 0.7rem;
-        }
-        .album-art-display-toggle .btn-group .btn {
-            font-size: 11px;
-            padding: 2px 10px;
-        }
-        .album-art-display-toggle .btn-group .btn.active {
-            background: var(--md-primary);
-            color: var(--md-on-primary);
-            border-color: var(--md-primary);
-        }
-        .album-art-display-toggle .btn-group .btn-outline-primary {
-            border-color: var(--md-primary);
-            color: var(--md-primary);
         }
     </style>
 </head>
-
 <body>
 
     <header class="header">
@@ -2769,7 +2846,7 @@
             </div>
         </div>
 
-        <!-- MUSIC PANEL (NEW TABS: YOUTUBE & OFFLINE) -->
+        <!-- MUSIC PANEL -->
         <div class="panel" id="panel-music">
             <div id="musicPanel">
                 <div class="music-tabs">
@@ -2898,7 +2975,7 @@
                     </div>
                 </div>
 
-                <!-- OFFLINE MP3 SECTION -->
+                <!-- OFFLINE MP3 SECTION – ENHANCED -->
                 <div class="music-section" id="offline-section">
                     <div class="offline-container">
                         <!-- Upload -->
@@ -2929,7 +3006,7 @@
                         <!-- Album Art -->
                         <img id="offlineAlbumArt" class="offline-album-art" alt="" hidden>
 
-                        <!-- Controls -->
+                        <!-- Controls (with PiP button added) -->
                         <div class="offline-controls">
                             <button class="md-icon-button" data-action="prev" onclick="offlinePrevSong()" title="Previous">
                                 <i class="fa-solid fa-backward-step"></i>
@@ -2953,6 +3030,10 @@
                             <button class="md-icon-button" id="offlineShuffleBtn" onclick="offlineToggleShuffle()" title="Shuffle">
                                 <i class="fa-solid fa-shuffle"></i>
                                 <span class="shuffle-indicator"></span>
+                            </button>
+                            <!-- PiP Toggle -->
+                            <button class="md-icon-button" id="pipBtn" onclick="togglePiP()" title="Picture-in-Picture">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
                             </button>
                         </div>
 
@@ -2985,6 +3066,16 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- PiP Content (hidden, cloned into PiP window) -->
+                        <div id="pipContent" style="display:none;">
+                            <!-- Will be populated dynamically -->
+                        </div>
+                        <div id="pipAnchor" style="display:none;"></div>
+
+                        <!-- Visualizer Canvas (visible only in PiP mode) -->
+                        <canvas id="pipVisualizer" style="display:none; width:100%; height:60px; border-radius:var(--md-shape-sm); background:var(--md-surface-variant); margin-top:6px;"></canvas>
+                        <div id="pipQueueText" style="display:none; font:var(--md-body-small); color:var(--md-on-surface-variant); text-align:center; padding:2px 0;"></div>
                     </div>
                 </div>
             </div>
@@ -3261,26 +3352,62 @@
     </div>
 
     <div class="toast-container" id="toastContainer"></div>
-
     <div id="youtubePlayer"></div>
 
-    <script>
-        window.gtranslateSettings = {
-            "default_language": "en",
-            "detect_browser_language": true,
-            "wrapper_selector": ".gtranslate_wrapper"
-        };
-    </script>
+    <!-- Warning Bar & Popup (hidden by default, controlled by JS) -->
+    <div class="warning-bar" style="display:none;">
+        <div class="warning-bar-content">
+            ⚠️ Some features are currently disabled or experiencing issues
+            <button class="warning-bar-close" onclick="closeWarningBar()">×</button>
+        </div>
+    </div>
+    <div class="warning-popup" style="display:none;">
+        <div class="warning-popup-content">
+            <div class="warning-popup-header">
+                <h2>⚠️ Feature Status</h2>
+                <button class="warning-popup-close" onclick="closeWarningPopup()">×</button>
+            </div>
+            <div class="warning-popup-body">
+                <p><strong>Currently Experiencing Issues:</strong></p>
+                <ul>
+                    <li>Some optional features are under development</li>
+                </ul>
+                <p style="margin-top:15px; font-size:0.9rem; color:var(--md-on-surface-variant);">
+                    The core music player functionality (uploading and playing local files) is working normally.
+                </p>
+            </div>
+            <div class="warning-popup-footer">
+                <button class="warning-popup-btn" onclick="closeWarningPopup()">Got it</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Log (hidden by default, controlled by JS) -->
+    <div class="update-log" style="display:none;">
+        <div class="update-log-content">
+            <div class="update-log-header">
+                <h2 data-update-log-title>Latest Updates</h2>
+                <button class="update-log-close" onclick="closeUpdateLog()">×</button>
+            </div>
+            <div class="update-log-body">
+                <p data-update-log-version style="font-weight:500;margin-bottom:8px;"></p>
+                <ul data-update-log-items></ul>
+            </div>
+            <div class="update-log-footer">
+                <button class="update-log-btn" onclick="closeUpdateLog()">Got it</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer>
     </script>
 
     <script>
         // ════════════════════════════════════════════════════════════════
-        //  GLOBAL STATE (merged: HEX AI + Offline MP3)
+        //  GLOBAL STATE (merged: HEX AI + Offline MP3 + PiP / Visualizer)
         // ════════════════════════════════════════════════════════════════
 
         const STATE = {
-            // --- HEX AI ---
             activePanel: 'chat',
             settings: {
                 provider: 'openrouter',
@@ -3314,22 +3441,38 @@
             playerReady: false,
             messageIdCounter: 1,
             isProcessing: false,
-            // --- Offline MP3 ---
+            // Offline
             offlinePlaylist: [],
             offlineCurrentSongIndex: -1,
             offlineIsPlaying: false,
             offlineIsRepeating: false,
             offlineIsShuffling: false,
             offlinePlayHistory: [],
+            // PiP
+            pipWindow: null,
+            pipOpening: false,
+            pipAutoOpened: false,
+            pipUserClosed: false,
+            pipManualOpened: false,
+            pipContentClone: null,
+            pipCloneObserver: null,
+            pipCloneSyncQueued: false,
+            pipDelegatesActive: false,
+            pipKeydownHandler: null,
+            pipKeyupHandler: null,
+            pipDelegateHandlers: null,
+            // Visualizer
             offlineAudioContext: null,
             offlineAnalyser: null,
             offlineAnalyserData: null,
             offlineVisualizerRaf: null,
             offlineVisualizerActive: false,
+            // Settings DB
+            settingsDb: null,
         };
 
         let domRefs = {};
-        let player = null; // YouTube player
+        let player = null;
         let playing = false;
         let songUnavailable = false;
         let progressInterval = null;
@@ -3356,9 +3499,31 @@
         let skippedSegments = new Set();
         let sponsorCheckInterval = null;
         let selectedVideoId = null;
+        let updateLogSignature = '';
+        const SETTINGS_DB_NAME = 'hexai_offline_settings';
+        const SETTINGS_DB_VERSION = 1;
+        const SETTINGS_STORE = 'settings';
+        let settingsDbPromise = null;
+        const PIP_DIMENSIONS = { width: 300, height: 350 };
+        const SITE_VERSION = 'v2.0.0';
+        const UPDATE_LOG_CONFIG = {
+            enabled: true,
+            version: 'v2.0.0',
+            displayDate: 'Mar 26, 2026',
+            title: 'Latest Updates',
+            items: [
+                'PiP mode for offline player (no button due to issues with functions not working with the site).',
+                'Visualizer for PiP window.',
+                'Warning bar/popup system with backend control.',
+                'IndexedDB settings storage.',
+                'Enhanced keyboard shortcuts (Space, Arrow keys, R, S).'
+            ]
+        };
+        const WARNING_CONFIG = { bar: 'active', popup: 'inactive' };
+        const WARNING_SOURCES = { bar: 'bar.html', popup: 'popup.html' };
 
         // ════════════════════════════════════════════════════════════════
-        //  HEX AI – HELPER FUNCTIONS (abridged, keep core)
+        //  HEX AI – HELPER FUNCTIONS
         // ════════════════════════════════════════════════════════════════
 
         function emojiToCodepointPath(emoji) {
@@ -3453,10 +3618,6 @@
             return `${h12}:${m.toString().padStart(2,'0')} ${ampm}`;
         }
 
-        // ════════════════════════════════════════════════════════════════
-        //  STATE PERSISTENCE (shared)
-        // ════════════════════════════════════════════════════════════════
-
         function loadState() {
             try {
                 const saved = localStorage.getItem('hexai_state');
@@ -3470,7 +3631,6 @@
                     STATE.lyricsEnabled = parsed.lyricsEnabled ?? false;
                     STATE.albumSpinEnabled = parsed.albumSpinEnabled ?? true;
                     STATE.messageIdCounter = parsed.messageIdCounter || 1;
-                    // offline state
                     STATE.offlinePlaylist = parsed.offlinePlaylist || [];
                     STATE.offlineCurrentSongIndex = parsed.offlineCurrentSongIndex ?? -1;
                     STATE.offlineIsPlaying = parsed.offlineIsPlaying || false;
@@ -3501,10 +3661,6 @@
                 }));
             } catch (e) { console.warn('saveState:', e); }
         }
-
-        // ════════════════════════════════════════════════════════════════
-        //  THEME, SETTINGS, PANEL SWITCHING (HEX AI)
-        // ════════════════════════════════════════════════════════════════
 
         function applyTheme(theme) {
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -3688,7 +3844,7 @@
         }
 
         // ════════════════════════════════════════════════════════════════
-        //  CHAT (abridged – keep core send/render)
+        //  CHAT (abridged)
         // ════════════════════════════════════════════════════════════════
 
         function handleChatKey(e) {
@@ -4012,10 +4168,6 @@
             return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || 'No response from Gemini.';
         }
 
-        // ════════════════════════════════════════════════════════════════
-        //  EMOJI PICKER
-        // ════════════════════════════════════════════════════════════════
-
         function toggleEmojiPicker() {
             const picker = document.getElementById('emojiPicker3D');
             if (picker) {
@@ -4112,10 +4264,6 @@
             });
         }
 
-        // ════════════════════════════════════════════════════════════════
-        //  VOICE INPUT
-        // ════════════════════════════════════════════════════════════════
-
         function setupVoiceRecognition() {
             const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SR) { const voiceBtn = document.getElementById('voiceBtn'); if (voiceBtn) voiceBtn.style.display = 'none'; return; }
@@ -4161,7 +4309,7 @@
         }
 
         // ════════════════════════════════════════════════════════════════
-        //  YOUTUBE MUSIC (kept intact from provided code)
+        //  YOUTUBE MUSIC (kept intact)
         // ════════════════════════════════════════════════════════════════
 
         const API_BASE = 'https://lyrics.paxsenix.org';
@@ -4211,7 +4359,6 @@
         const importPlaylistBtn = document.getElementById('importPlaylistBtn');
         const sponsorToggle = document.getElementById('sponsorBlockToggle');
 
-        // YT load & render
         function loadPlaylist() {
             const stored = localStorage.getItem('youtubeMusicPlaylist');
             if (stored) {
@@ -4806,7 +4953,6 @@
             }
         }
 
-        // ─── LYRICS (abridged, keep core) ───
         function parseLrc(text) {
             const lines = [];
             const regex = /\[(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?\](.*)/;
@@ -5060,7 +5206,6 @@
             window.open(URL.createObjectURL(blob), '_blank');
         });
 
-        // ─── SponsorBlock (SB) ───
         const SB = {
             categories: ["sponsor", "selfpromo", "interaction", "intro", "outro", "preview", "music_offtopic",
                 "exclusive_access", "poi_highlight"
@@ -5247,8 +5392,6 @@
                 localStorage.setItem('sponsorBlockEnabled', JSON.stringify(enabled));
             });
         }
-
-        // ─── YT Search & Import ───
 
         const searchCache = JSON.parse(localStorage.getItem('ytSearchCache') || '{}');
         const CACHE_EXPIRY = 3600000;
@@ -5516,13 +5659,63 @@
         };
 
         // ════════════════════════════════════════════════════════════════
-        //  OFFLINE MP3 PLAYER – FIXED FULL IMPLEMENTATION
+        //  OFFLINE MP3 PLAYER – ENHANCED with PiP, Visualizer, Settings DB
         // ════════════════════════════════════════════════════════════════
 
         const offlineAudio = new Audio();
         offlineAudio.id = 'offlineAudio';
         offlineAudio.style.display = 'none';
         document.body.appendChild(offlineAudio);
+
+        // ─── Settings DB ───
+        function initSettingsDb() {
+            if (!('indexedDB' in window)) return Promise.resolve(null);
+            if (settingsDbPromise) return settingsDbPromise;
+            settingsDbPromise = new Promise((resolve, reject) => {
+                const request = indexedDB.open(SETTINGS_DB_NAME, SETTINGS_DB_VERSION);
+                request.onupgradeneeded = () => {
+                    const db = request.result;
+                    if (!db.objectStoreNames.contains(SETTINGS_STORE)) {
+                        db.createObjectStore(SETTINGS_STORE);
+                    }
+                };
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+            return settingsDbPromise;
+        }
+
+        async function getSetting(key) {
+            try {
+                const db = await initSettingsDb();
+                if (!db) return null;
+                return await new Promise((resolve) => {
+                    const tx = db.transaction(SETTINGS_STORE, 'readonly');
+                    const store = tx.objectStore(SETTINGS_STORE);
+                    const req = store.get(key);
+                    req.onsuccess = () => resolve(req.result ?? null);
+                    req.onerror = () => resolve(null);
+                });
+            } catch (error) {
+                return null;
+            }
+        }
+
+        async function setSetting(key, value) {
+            try {
+                const db = await initSettingsDb();
+                if (!db) return;
+                await new Promise((resolve) => {
+                    const tx = db.transaction(SETTINGS_STORE, 'readwrite');
+                    const store = tx.objectStore(SETTINGS_STORE);
+                    const req = store.put(value, key);
+                    req.onsuccess = () => resolve();
+                    req.onerror = () => resolve();
+                });
+            } catch (error) {
+                // Ignore
+            }
+        }
 
         // ─── Offline Render ───
         function offlineRenderPlaylist() {
@@ -5553,7 +5746,6 @@
             if (index < 0 || index >= STATE.offlinePlaylist.length) return;
             STATE.offlineCurrentSongIndex = index;
             const song = STATE.offlinePlaylist[index];
-            // Properly set up audio
             offlineAudio.pause();
             offlineAudio.src = song.url;
             offlineAudio.load();
@@ -5563,7 +5755,6 @@
             offlineUpdateTabTitle();
             offlineRenderPlaylist();
 
-            // Show album art if available (try to extract from file metadata – fallback hidden)
             const art = document.getElementById('offlineAlbumArt');
             art.hidden = true;
 
@@ -5575,7 +5766,6 @@
             }
         }
 
-        // ─── Offline Update Tab Title ───
         function offlineUpdateTabTitle() {
             if (STATE.offlineCurrentSongIndex !== -1 && STATE.offlinePlaylist[STATE.offlineCurrentSongIndex]) {
                 const s = STATE.offlinePlaylist[STATE.offlineCurrentSongIndex];
@@ -5585,7 +5775,6 @@
             }
         }
 
-        // ─── Offline Toggle Play ───
         function offlineTogglePlay() {
             if (STATE.offlinePlaylist.length === 0) {
                 showToast('Add some songs first!', 'info');
@@ -5593,12 +5782,13 @@
             }
             if (STATE.offlineCurrentSongIndex === -1) {
                 offlineLoadSong(0);
-                // After loading, play
                 setTimeout(() => {
                     offlineAudio.play().then(() => {
                         STATE.offlineIsPlaying = true;
                         document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
                         offlineUpdateTabTitle();
+                        ensureOfflineAudioContext();
+                        if (STATE.pipWindow) startOfflineVisualizer();
                     }).catch(() => {
                         STATE.offlineIsPlaying = false;
                         document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
@@ -5610,10 +5800,13 @@
                 offlineAudio.pause();
                 document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
                 STATE.offlineIsPlaying = false;
+                stopOfflineVisualizer();
             } else {
                 offlineAudio.play().then(() => {
                     document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
                     STATE.offlineIsPlaying = true;
+                    ensureOfflineAudioContext();
+                    if (STATE.pipWindow) startOfflineVisualizer();
                 }).catch(() => {
                     document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
                     STATE.offlineIsPlaying = false;
@@ -5622,7 +5815,6 @@
             offlineUpdateTabTitle();
         }
 
-        // ─── Offline Repeat ───
         function offlineToggleRepeat() {
             STATE.offlineIsRepeating = !STATE.offlineIsRepeating;
             document.getElementById('offlineRepeatBtn').classList.toggle('active', STATE.offlineIsRepeating);
@@ -5630,7 +5822,6 @@
             offlineUpdateSongInfo();
         }
 
-        // ─── Offline Shuffle ───
         function offlineToggleShuffle() {
             STATE.offlineIsShuffling = !STATE.offlineIsShuffling;
             document.getElementById('offlineShuffleBtn').classList.toggle('active', STATE.offlineIsShuffling);
@@ -5643,6 +5834,8 @@
                     offlineAudio.play().then(() => {
                         document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
                         STATE.offlineIsPlaying = true;
+                        ensureOfflineAudioContext();
+                        if (STATE.pipWindow) startOfflineVisualizer();
                     }).catch(() => {
                         STATE.offlineIsPlaying = false;
                         document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
@@ -5654,7 +5847,6 @@
             offlineUpdateSongInfo();
         }
 
-        // ─── Offline Next Shuffle Index ───
         function offlineGetNextShuffleIndex() {
             if (STATE.offlinePlaylist.length <= 1) return 0;
             const unplayed = [];
@@ -5673,7 +5865,6 @@
             return next;
         }
 
-        // ─── Offline Handle Song End ───
         function offlineHandleSongEnd() {
             if (STATE.offlineIsRepeating) {
                 offlineAudio.play().catch(() => {});
@@ -5682,7 +5873,6 @@
             offlineNextSong();
         }
 
-        // ─── Offline Prev ───
         function offlinePrevSong() {
             if (STATE.offlinePlaylist.length === 0) return;
             if (STATE.offlineIsShuffling && STATE.offlinePlayHistory.length > 1) {
@@ -5711,7 +5901,6 @@
             }
         }
 
-        // ─── Offline Next ───
         function offlineNextSong() {
             if (STATE.offlinePlaylist.length === 0) return;
             let ni;
@@ -5733,7 +5922,6 @@
             }
         }
 
-        // ─── Offline Rewind / Forward ───
         function offlineRewind15() {
             offlineAudio.currentTime = Math.max(0, offlineAudio.currentTime - 15);
         }
@@ -5742,7 +5930,6 @@
             offlineAudio.currentTime = Math.min(offlineAudio.duration || 0, offlineAudio.currentTime + 15);
         }
 
-        // ─── Offline Seek ───
         function offlineSeekTo(e) {
             const bar = document.getElementById('offlineProgressBar');
             if (!bar) return;
@@ -5753,7 +5940,6 @@
             }
         }
 
-        // ─── Offline Update Progress ───
         function offlineUpdateProgress() {
             if (offlineAudio.duration) {
                 const pct = (offlineAudio.currentTime / offlineAudio.duration) * 100;
@@ -5763,7 +5949,6 @@
             }
         }
 
-        // ─── Offline Update Song Info ───
         function offlineUpdateSongInfo() {
             if (STATE.offlineCurrentSongIndex !== -1) {
                 const modes = [];
@@ -5778,7 +5963,6 @@
             }
         }
 
-        // ─── Offline Format Time ───
         function offlineFormatTime(seconds) {
             if (!seconds || isNaN(seconds) || seconds < 0) return '0:00';
             const m = Math.floor(seconds / 60);
@@ -5786,7 +5970,6 @@
             return `${m}:${s.toString().padStart(2, '0')}`;
         }
 
-        // ─── Offline Remove Song ───
         function offlineRemoveSong(event, index) {
             event.stopPropagation();
             URL.revokeObjectURL(STATE.offlinePlaylist[index].url);
@@ -5803,6 +5986,7 @@
                     STATE.offlineIsPlaying = false;
                     STATE.offlinePlayHistory = [];
                     offlineUpdateTabTitle();
+                    stopOfflineVisualizer();
                 } else {
                     const ni = index >= STATE.offlinePlaylist.length ? 0 : index;
                     STATE.offlineCurrentSongIndex = ni - 1;
@@ -5814,7 +5998,6 @@
             offlineRenderPlaylist();
         }
 
-        // ─── Offline Add Files ───
         function offlineAddFilesToPlaylist(files) {
             const audioFiles = files.filter(file =>
                 (file.type.startsWith('audio/') ||
@@ -5836,7 +6019,6 @@
                 };
                 STATE.offlinePlaylist.push(song);
                 added++;
-                // Load metadata to get duration
                 const temp = new Audio(url);
                 temp.addEventListener('loadedmetadata', () => {
                     song.duration = offlineFormatTime(temp.duration);
@@ -5847,7 +6029,6 @@
                     song.duration = '0:00';
                     offlineRenderPlaylist();
                 });
-                // If metadata doesn't load, set a fallback
                 setTimeout(() => {
                     if (song.duration === '0:00' && temp.duration && !isNaN(temp.duration)) {
                         song.duration = offlineFormatTime(temp.duration);
@@ -5862,7 +6043,6 @@
             showToast(`Added ${added} song(s)!`, 'success');
         }
 
-        // ─── Offline Clear ───
         function openOfflineClearConfirm() {
             if (STATE.offlinePlaylist.length === 0) return;
             if (confirm('Clear all offline songs? This cannot be undone.')) {
@@ -5881,11 +6061,12 @@
                 document.getElementById('offlineTotalTime').textContent = '0:00';
                 offlineRenderPlaylist();
                 offlineUpdateTabTitle();
+                stopOfflineVisualizer();
                 showToast('Playlist cleared.', 'info');
             }
         }
 
-        // ─── Offline Event Listeners ───
+        // ─── Offline Audio Events ───
         offlineAudio.addEventListener('loadedmetadata', () => {
             offlineUpdateSongInfo();
             offlineUpdateProgress();
@@ -5893,20 +6074,17 @@
         offlineAudio.addEventListener('timeupdate', offlineUpdateProgress);
         offlineAudio.addEventListener('ended', offlineHandleSongEnd);
 
-        // Volume
         document.getElementById('offlineVolumeSlider').addEventListener('input', (e) => {
             offlineAudio.volume = e.target.value / 100;
         });
         offlineAudio.volume = 0.5;
 
-        // File input
         document.getElementById('offlineFileInput').addEventListener('change', function(e) {
             const files = Array.from(e.target.files);
             offlineAddFilesToPlaylist(files);
             this.value = '';
         });
 
-        // Drag & drop
         document.getElementById('offlineUploadArea').addEventListener('dragover', (e) => {
             e.preventDefault();
             document.getElementById('offlineUploadArea').classList.add('dragover');
@@ -5920,6 +6098,89 @@
             const files = Array.from(e.dataTransfer.files);
             offlineAddFilesToPlaylist(files);
         });
+
+        // ─── Offline Audio Context + Visualizer ───
+        function ensureOfflineAudioContext() {
+            if (!STATE.offlineAudioContext) {
+                STATE.offlineAudioContext = new AudioContext();
+                const source = STATE.offlineAudioContext.createMediaElementSource(offlineAudio);
+                STATE.offlineAnalyser = STATE.offlineAudioContext.createAnalyser();
+                STATE.offlineAnalyser.fftSize = 256;
+                STATE.offlineAnalyser.smoothingTimeConstant = 0.85;
+                source.connect(STATE.offlineAnalyser);
+                STATE.offlineAnalyser.connect(STATE.offlineAudioContext.destination);
+                STATE.offlineAnalyserData = new Uint8Array(STATE.offlineAnalyser.frequencyBinCount);
+            }
+            if (STATE.offlineAudioContext.state === 'suspended') {
+                STATE.offlineAudioContext.resume().catch(() => {});
+            }
+        }
+
+        function startOfflineVisualizer() {
+            const canvas = document.getElementById('pipVisualizer');
+            if (!canvas || !STATE.offlineAnalyser || STATE.offlineVisualizerRaf) return;
+            if (!STATE.pipWindow) return;
+            canvas.style.display = 'block';
+            STATE.offlineVisualizerActive = true;
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.getBoundingClientRect();
+            const ratio = window.devicePixelRatio || 1;
+            canvas.width = Math.floor(rect.width * ratio);
+            canvas.height = Math.floor(rect.height * ratio);
+
+            const draw = () => {
+                if (!STATE.offlineVisualizerActive || !STATE.pipWindow) return;
+                STATE.offlineAnalyser.getByteFrequencyData(STATE.offlineAnalyserData);
+                const { width, height } = canvas;
+                ctx.clearRect(0, 0, width, height);
+                const barCount = Math.min(48, STATE.offlineAnalyserData.length);
+                const barWidth = width / barCount;
+                for (let i = 0; i < barCount; i++) {
+                    const value = STATE.offlineAnalyserData[i] / 255;
+                    const barHeight = Math.max(4, value * height);
+                    const x = i * barWidth;
+                    const y = height - barHeight;
+                    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--md-primary').trim() ||
+                        '#6750a4';
+                    ctx.fillRect(x + 1, y, barWidth - 2, barHeight);
+                }
+                STATE.offlineVisualizerRaf = requestAnimationFrame(draw);
+            };
+            draw();
+        }
+
+        function stopOfflineVisualizer() {
+            STATE.offlineVisualizerActive = false;
+            if (STATE.offlineVisualizerRaf) {
+                cancelAnimationFrame(STATE.offlineVisualizerRaf);
+                STATE.offlineVisualizerRaf = null;
+            }
+            const canvas = document.getElementById('pipVisualizer');
+            if (canvas) canvas.style.display = 'none';
+        }
+
+        function updateMiniQueue() {
+            const el = document.getElementById('pipQueueText');
+            if (!el) return;
+            if (!STATE.offlinePlaylist.length) {
+                el.textContent = 'No tracks queued';
+                return;
+            }
+            if (STATE.offlineIsRepeating && STATE.offlineCurrentSongIndex !== -1) {
+                el.textContent = `Repeating: ${STATE.offlinePlaylist[STATE.offlineCurrentSongIndex].name}`;
+                return;
+            }
+            if (STATE.offlineIsShuffling) {
+                const remaining = STATE.offlinePlaylist.length - STATE.offlinePlayHistory.length;
+                el.textContent = `Shuffle mode • ${Math.max(0, remaining)} remaining`;
+                return;
+            }
+            const nextIndex = STATE.offlineCurrentSongIndex === -1 ?
+                0 :
+                (STATE.offlineCurrentSongIndex < STATE.offlinePlaylist.length - 1 ? STATE.offlineCurrentSongIndex + 1 : 0);
+            const nextTrack = STATE.offlinePlaylist[nextIndex];
+            el.textContent = nextTrack ? `Next: ${nextTrack.name}` : 'No tracks queued';
+        }
 
         // ─── Offline Init ───
         function offlineInit() {
@@ -5938,7 +6199,6 @@
                     });
                 }
             }
-            // Restore loop state
             offlineAudio.loop = STATE.offlineIsRepeating;
             if (STATE.offlineIsRepeating) {
                 document.getElementById('offlineRepeatBtn').classList.add('active');
@@ -5946,10 +6206,517 @@
             if (STATE.offlineIsShuffling) {
                 document.getElementById('offlineShuffleBtn').classList.add('active');
             }
+            updateMiniQueue();
         }
 
         // ════════════════════════════════════════════════════════════════
-        //  IMAGE & VIDEO GENERATORS (keep minimal)
+        //  PICTURE-IN-PICTURE (PiP) FOR OFFLINE PLAYER
+        // ════════════════════════════════════════════════════════════════
+
+        function initializePiPButton() {
+            const btn = document.getElementById('pipBtn');
+            if (!btn) return;
+            const supported = 'documentPictureInPicture' in window && documentPictureInPicture.requestWindow;
+            if (!supported) {
+                btn.disabled = true;
+                btn.title = 'PiP not supported in this browser';
+            }
+            updatePiPButtonState(Boolean(STATE.pipWindow));
+        }
+
+        function updatePiPButtonState(isOpen) {
+            const btn = document.getElementById('pipBtn');
+            if (btn) {
+                btn.classList.toggle('active', isOpen);
+                btn.setAttribute('aria-pressed', isOpen ? 'true' : 'false');
+            }
+        }
+
+        function togglePiP() {
+            if (STATE.pipWindow) {
+                closePiPWindow({ reason: 'manual' });
+                return;
+            }
+            openPiPWindow({ reason: 'manual' });
+        }
+
+        async function openPiPWindow({ reason } = {}) {
+            if (STATE.pipWindow || STATE.pipOpening) return;
+            STATE.pipOpening = true;
+            STATE.pipManualOpened = reason === 'manual';
+
+            try {
+                if (!('documentPictureInPicture' in window) || !documentPictureInPicture.requestWindow) {
+                    console.warn('Document PiP not supported.');
+                    return;
+                }
+                const pip = await documentPictureInPicture.requestWindow({
+                    width: PIP_DIMENSIONS.width,
+                    height: PIP_DIMENSIONS.height
+                });
+                STATE.pipAutoOpened = reason === 'visibility';
+                STATE.pipUserClosed = false;
+                setupPiPWindow(pip);
+            } catch (error) {
+                console.warn('PiP unavailable:', error);
+            } finally {
+                STATE.pipOpening = false;
+            }
+        }
+
+        function setupPiPWindow(pip) {
+            STATE.pipWindow = pip;
+            STATE.pipDelegatesActive = false;
+
+            // Attach functions to the PiP window
+            pip.offlineTogglePlay = offlineTogglePlay;
+            pip.offlinePrevSong = offlinePrevSong;
+            pip.offlineNextSong = offlineNextSong;
+            pip.offlineRewind15 = offlineRewind15;
+            pip.offlineForward15 = offlineForward15;
+            pip.offlineToggleRepeat = offlineToggleRepeat;
+            pip.offlineToggleShuffle = offlineToggleShuffle;
+            pip.offlineSeekTo = offlineSeekTo;
+            pip.offlineLoadSong = offlineLoadSong;
+            pip.offlineRemoveSong = offlineRemoveSong;
+            pip.togglePiP = togglePiP;
+            pip.openOfflineClearConfirm = openOfflineClearConfirm;
+
+            const baseTag = pip.document.createElement('base');
+            baseTag.href = document.baseURI;
+            pip.document.head.appendChild(baseTag);
+
+            // Inject styles
+            injectPiPStyles();
+
+            const pipStyle = pip.document.createElement('style');
+            pipStyle.textContent = 'body{margin:0;overflow:auto;}';
+            pip.document.head.appendChild(pipStyle);
+
+            pip.document.title = 'Music Player';
+            pip.document.documentElement.classList.add('pip-mode');
+            pip.document.body.classList.add('pip-mode');
+
+            // Clone the offline player content
+            const contentForPiP = document.getElementById('pipContent');
+            if (!contentForPiP) return;
+
+            // Build PiP content
+            const pipContentDiv = pip.document.createElement('div');
+            pipContentDiv.id = 'pipContent';
+            pipContentDiv.style.display = 'block';
+            pipContentDiv.style.padding = '12px';
+            pipContentDiv.style.background = 'var(--md-surface)';
+            pipContentDiv.style.color = 'var(--md-on-surface)';
+            pipContentDiv.style.fontFamily = 'var(--md-font)';
+
+            // Copy current song info
+            const title = document.getElementById('offlineSongTitle')?.textContent || 'No song';
+            const info = document.getElementById('offlineSongInfo')?.textContent || 'Select a song';
+
+            pipContentDiv.innerHTML = `
+                <div style="text-align:center;margin-bottom:8px;">
+                    <div style="font-size:1rem;font-weight:500;">${escapeHTML(title)}</div>
+                    <div style="font-size:0.8rem;color:var(--md-on-surface-variant);">${escapeHTML(info)}</div>
+                </div>
+                <div class="offline-controls" style="display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;">
+                    <button class="md-icon-button" data-action="prev" style="width:36px;height:36px;font-size:0.9rem;background:var(--md-surface-variant);color:var(--md-on-surface-variant);border-radius:50%;border:none;cursor:pointer;"><i class="fa-solid fa-backward-step"></i></button>
+                    <button class="md-icon-button" data-action="rewind" style="width:36px;height:36px;font-size:0.9rem;background:var(--md-surface-variant);color:var(--md-on-surface-variant);border-radius:50%;border:none;cursor:pointer;"><i class="fa-solid fa-backward"></i></button>
+                    <button class="md-icon-button play-pause-btn" id="offlinePlayPauseBtn" style="width:44px;height:44px;font-size:1.2rem;background:var(--md-primary);color:var(--md-on-primary);border-radius:50%;border:none;cursor:pointer;">
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+                    <button class="md-icon-button" data-action="forward" style="width:36px;height:36px;font-size:0.9rem;background:var(--md-surface-variant);color:var(--md-on-surface-variant);border-radius:50%;border:none;cursor:pointer;"><i class="fa-solid fa-forward"></i></button>
+                    <button class="md-icon-button" data-action="next" style="width:36px;height:36px;font-size:0.9rem;background:var(--md-surface-variant);color:var(--md-on-surface-variant);border-radius:50%;border:none;cursor:pointer;"><i class="fa-solid fa-forward-step"></i></button>
+                    <button class="md-icon-button" id="offlineRepeatBtn" style="width:36px;height:36px;font-size:0.9rem;background:var(--md-surface-variant);color:var(--md-on-surface-variant);border-radius:50%;border:none;cursor:pointer;"><i class="fa-solid fa-rotate-right"></i></button>
+                    <button class="md-icon-button" id="offlineShuffleBtn" style="width:36px;height:36px;font-size:0.9rem;background:var(--md-surface-variant);color:var(--md-on-surface-variant);border-radius:50%;border:none;cursor:pointer;"><i class="fa-solid fa-shuffle"></i></button>
+                    <button class="md-icon-button" id="pipBtn" style="width:36px;height:36px;font-size:0.9rem;background:var(--md-surface-variant);color:var(--md-on-surface-variant);border-radius:50%;border:none;cursor:pointer;"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+                </div>
+                <div class="offline-progress-container" style="margin:6px 0;">
+                    <div class="offline-progress-bar" id="offlineProgressBar" style="width:100%;height:4px;background:var(--md-outline-variant);border-radius:var(--md-shape-full);cursor:pointer;position:relative;">
+                        <div class="offline-progress-fill" id="offlineProgressFill" style="height:100%;background:var(--md-primary);border-radius:var(--md-shape-full);width:0%;"></div>
+                    </div>
+                    <div class="offline-time-display" style="display:flex;justify-content:space-between;font-size:0.7rem;color:var(--md-on-surface-variant);margin-top:2px;">
+                        <span id="offlineCurrentTime">0:00</span>
+                        <span id="offlineTotalTime">0:00</span>
+                    </div>
+                </div>
+                <canvas id="pipVisualizer" style="display:block;width:100%;height:40px;border-radius:var(--md-shape-sm);background:var(--md-surface-variant);margin-top:4px;"></canvas>
+                <div id="pipQueueText" style="font-size:0.7rem;color:var(--md-on-surface-variant);text-align:center;padding:2px 0;"></div>
+            `;
+
+            pip.document.body.appendChild(pipContentDiv);
+
+            // Bind PiP controls
+            attachPiPDelegates();
+
+            // Start visualizer in PiP
+            ensureOfflineAudioContext();
+            if (STATE.offlineIsPlaying) {
+                setTimeout(() => startOfflineVisualizer(), 200);
+            }
+
+            updatePiPButtonState(true);
+            updateMiniQueue();
+
+            pip.addEventListener('pagehide', restorePiPContent);
+            pip.addEventListener('beforeunload', restorePiPContent);
+            attachPiPShortcuts();
+        }
+
+        function injectPiPStyles() {
+            if (!STATE.pipWindow || !STATE.pipWindow.document) return;
+            const head = STATE.pipWindow.document.head;
+            document.querySelectorAll('link[rel="stylesheet"]').forEach((link) => {
+                head.appendChild(link.cloneNode(true));
+            });
+            document.querySelectorAll('style').forEach((styleTag) => {
+                head.appendChild(styleTag.cloneNode(true));
+            });
+            const cssText = collectLocalCssText();
+            if (cssText) {
+                const inlineStyle = STATE.pipWindow.document.createElement('style');
+                inlineStyle.textContent = cssText;
+                head.appendChild(inlineStyle);
+            }
+        }
+
+        function collectLocalCssText() {
+            const chunks = [];
+            Array.from(document.styleSheets).forEach((sheet) => {
+                try {
+                    if (!sheet.cssRules) return;
+                    Array.from(sheet.cssRules).forEach((rule) => {
+                        chunks.push(rule.cssText);
+                    });
+                } catch (error) { /* ignore cross-origin */ }
+            });
+            return chunks.length ? chunks.join('\n') : '';
+        }
+
+        function restorePiPContent() {
+            STATE.pipWindow = null;
+            STATE.pipManualOpened = false;
+            STATE.pipDelegatesActive = false;
+            stopOfflineVisualizer();
+            updatePiPButtonState(false);
+        }
+
+        function closePiPWindow({ reason } = {}) {
+            if (!STATE.pipWindow) return;
+            try {
+                STATE.pipWindow.close();
+            } catch (error) {
+                console.warn('PiP close failed:', error);
+            }
+            if (reason !== 'visibility') {
+                STATE.pipUserClosed = true;
+            }
+            STATE.pipAutoOpened = false;
+            restorePiPContent();
+        }
+
+        function attachPiPShortcuts() {
+            if (!STATE.pipWindow || !STATE.pipWindow.document || STATE.pipKeydownHandler) return;
+            const doc = STATE.pipWindow.document;
+            STATE.pipKeydownHandler = (e) => {
+                const tag = e.target.tagName;
+                if (tag === 'INPUT' || tag === 'TEXTAREA' || e.target.isContentEditable) return;
+                switch (e.code) {
+                    case 'Space':
+                        e.preventDefault();
+                        e.stopPropagation();
+                        offlineTogglePlay();
+                        break;
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        offlineRewind15();
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        offlineForward15();
+                        break;
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        offlinePrevSong();
+                        break;
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        offlineNextSong();
+                        break;
+                    case 'KeyR':
+                        e.preventDefault();
+                        offlineToggleRepeat();
+                        break;
+                    case 'KeyS':
+                        e.preventDefault();
+                        offlineToggleShuffle();
+                        break;
+                }
+            };
+            STATE.pipKeyupHandler = (e) => {
+                const tag = e.target.tagName;
+                if (tag === 'INPUT' || tag === 'TEXTAREA' || e.target.isContentEditable) return;
+                if (e.code === 'Space') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            };
+            doc.addEventListener('keydown', STATE.pipKeydownHandler, { capture: true });
+            doc.addEventListener('keyup', STATE.pipKeyupHandler, { capture: true });
+        }
+
+        function detachPiPShortcuts() {
+            if (!STATE.pipWindow || !STATE.pipWindow.document) return;
+            if (STATE.pipKeydownHandler) {
+                STATE.pipWindow.document.removeEventListener('keydown', STATE.pipKeydownHandler, { capture: true });
+                STATE.pipKeydownHandler = null;
+            }
+            if (STATE.pipKeyupHandler) {
+                STATE.pipWindow.document.removeEventListener('keyup', STATE.pipKeyupHandler, { capture: true });
+                STATE.pipKeyupHandler = null;
+            }
+        }
+
+        function attachPiPDelegates() {
+            if (!STATE.pipWindow || !STATE.pipWindow.document || STATE.pipDelegateHandlers) return;
+            const doc = STATE.pipWindow.document;
+            const onClick = (e) => {
+                const target = e.target;
+                if (!target || !doc.body) return;
+
+                const actionMap = [
+                    ['[data-action="prev"]', offlinePrevSong],
+                    ['[data-action="rewind"]', offlineRewind15],
+                    ['[data-action="forward"]', offlineForward15],
+                    ['[data-action="next"]', offlineNextSong],
+                    ['#offlinePlayPauseBtn', offlineTogglePlay],
+                    ['#offlineRepeatBtn', offlineToggleRepeat],
+                    ['#offlineShuffleBtn', offlineToggleShuffle],
+                    ['#pipBtn', togglePiP],
+                ];
+                for (const [selector, handler] of actionMap) {
+                    if (target.closest(selector)) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        handler(e);
+                        return;
+                    }
+                }
+                const progressBar = target.closest('#offlineProgressBar');
+                if (progressBar) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    offlineSeekTo(e);
+                    return;
+                }
+            };
+            doc.addEventListener('click', onClick, true);
+            STATE.pipDelegateHandlers = { onClick };
+        }
+
+        function detachPiPDelegates() {
+            if (!STATE.pipWindow || !STATE.pipWindow.document || !STATE.pipDelegateHandlers) {
+                STATE.pipDelegateHandlers = null;
+                return;
+            }
+            const doc = STATE.pipWindow.document;
+            doc.removeEventListener('click', STATE.pipDelegateHandlers.onClick, true);
+            STATE.pipDelegateHandlers = null;
+        }
+
+        // ════════════════════════════════════════════════════════════════
+        //  WARNING BAR & POPUP
+        // ════════════════════════════════════════════════════════════════
+
+        function isWarningEnabled(value) {
+            return value === true || value === 'active';
+        }
+
+        function syncWarningTheme() {
+            const theme = document.documentElement.getAttribute('data-theme');
+            document.querySelectorAll('[data-warning-fragment]').forEach((fragment) => {
+                if (theme) {
+                    fragment.setAttribute('data-theme', theme);
+                } else {
+                    fragment.removeAttribute('data-theme');
+                }
+            });
+        }
+
+        function removeWarningFragment(kind) {
+            const existing = document.querySelector(`[data-warning-fragment="${kind}"]`);
+            if (existing) existing.remove();
+        }
+
+        async function loadWarningFragment(kind) {
+            const source = WARNING_SOURCES[kind];
+            if (!source) return null;
+            const existing = document.querySelector(`[data-warning-fragment="${kind}"]`);
+            if (existing) return existing;
+            try {
+                const response = await fetch(source, { cache: 'no-store' });
+                if (!response.ok) {
+                    console.warn(`Warning fragment failed to load: ${source}`);
+                    return null;
+                }
+                const html = await response.text();
+                const wrapper = document.createElement('div');
+                wrapper.dataset.warningFragment = kind;
+                wrapper.className = 'warning-fragment';
+                wrapper.innerHTML = html;
+                const theme = document.documentElement.getAttribute('data-theme');
+                if (theme) wrapper.setAttribute('data-theme', theme);
+                if (kind === 'bar') {
+                    document.body.prepend(wrapper);
+                } else {
+                    document.body.appendChild(wrapper);
+                }
+                wrapper.querySelectorAll('style, link[rel="stylesheet"]').forEach((node) => {
+                    document.head.appendChild(node);
+                });
+                wrapper.querySelectorAll('script').forEach((script) => {
+                    const injected = document.createElement('script');
+                    for (const attr of script.attributes) {
+                        injected.setAttribute(attr.name, attr.value);
+                    }
+                    injected.textContent = script.textContent;
+                    document.body.appendChild(injected);
+                    script.remove();
+                });
+                syncWarningTheme();
+                return wrapper;
+            } catch (err) {
+                console.warn(`Warning fragment failed to load: ${source}`, err);
+                return null;
+            }
+        }
+
+        async function initializeWarningElements() {
+            const barActive = isWarningEnabled(WARNING_CONFIG.bar);
+            const popupActive = isWarningEnabled(WARNING_CONFIG.popup);
+            const pathname = (window.location && window.location.pathname) ? window.location.pathname.toLowerCase() : '';
+            const popupDisabledPages = new Set(['changelog.html', 'contact.html', 'features.html']);
+            const popupAllowed = !popupDisabledPages.has(pathname.split('/').pop());
+
+            document.body.classList.toggle('warning-bar-active', barActive);
+
+            if (barActive) {
+                await loadWarningFragment('bar');
+            } else {
+                removeWarningFragment('bar');
+            }
+
+            if (popupActive && popupAllowed) {
+                await loadWarningFragment('popup');
+            } else {
+                removeWarningFragment('popup');
+            }
+        }
+
+        function closeWarningBar() {
+            const warningBar = document.querySelector('.warning-bar');
+            if (warningBar) {
+                warningBar.style.display = 'none';
+                document.body.classList.remove('warning-bar-active');
+            }
+        }
+
+        function showWarningBar() {
+            const warningBar = document.querySelector('.warning-bar');
+            if (warningBar) {
+                warningBar.style.display = 'block';
+                document.body.classList.add('warning-bar-active');
+            }
+        }
+
+        function showWarningPopup() {
+            const popup = document.querySelector('.warning-popup');
+            if (popup) popup.style.display = 'flex';
+        }
+
+        function closeWarningPopup() {
+            const popup = document.querySelector('.warning-popup');
+            if (popup) popup.style.display = 'none';
+        }
+
+        // ════════════════════════════════════════════════════════════════
+        //  UPDATE LOG
+        // ════════════════════════════════════════════════════════════════
+
+        function getUpdateLogSignature(payload) {
+            return payload.join('|');
+        }
+
+        async function initializeUpdateLog() {
+            const updateLog = document.querySelector('.update-log');
+            if (!updateLog) return;
+            const title = updateLog.querySelector('[data-update-log-title]');
+            const version = updateLog.querySelector('[data-update-log-version]');
+            const list = updateLog.querySelector('[data-update-log-items]');
+
+            const fallbackTitle = title ? title.textContent.trim() : '';
+            const fallbackVersion = version ? version.textContent.trim() : '';
+            const fallbackItems = list ? Array.from(list.querySelectorAll('li')).map(item => item.textContent.trim())
+                .filter(Boolean) : [];
+
+            const useConfig = UPDATE_LOG_CONFIG && UPDATE_LOG_CONFIG.enabled;
+            const appliedTitle = fallbackTitle || (useConfig ? UPDATE_LOG_CONFIG.title : '');
+            const appliedVersion = fallbackVersion || (useConfig ? UPDATE_LOG_CONFIG.displayDate : '');
+            const appliedItems = fallbackItems.length ? fallbackItems : (useConfig && Array.isArray(UPDATE_LOG_CONFIG
+                .items) ? UPDATE_LOG_CONFIG.items : []);
+
+            const signature = getUpdateLogSignature([appliedTitle, appliedVersion, ...appliedItems]);
+            updateLogSignature = signature;
+
+            const updateLogKey = updateLog.dataset.updateLogKey || 'update_log_seen';
+            const stored = await getSetting(updateLogKey);
+            const cookieSeen = getCookieValue(updateLogKey);
+            const shouldShow = UPDATE_LOG_CONFIG && UPDATE_LOG_CONFIG.enabled &&
+                stored !== signature && cookieSeen !== signature;
+
+            if (title && appliedTitle) title.textContent = appliedTitle;
+            if (version && appliedVersion) version.textContent = appliedVersion;
+            if (list) {
+                list.innerHTML = appliedItems.map(item => `<li>${item}</li>`).join('');
+            }
+            updateLog.style.display = shouldShow ? 'flex' : 'none';
+        }
+
+        function getCookieValue(name) {
+            const cookies = document.cookie ? document.cookie.split('; ') : [];
+            for (const cookie of cookies) {
+                const [cookieName, ...rest] = cookie.split('=');
+                if (cookieName === name) {
+                    return decodeURIComponent(rest.join('='));
+                }
+            }
+            return '';
+        }
+
+        function setCookieValue(name, value, days) {
+            const maxAge = days * 24 * 60 * 60;
+            document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${maxAge}; path=/; samesite=lax`;
+        }
+
+        function closeUpdateLog() {
+            const updateLog = document.querySelector('.update-log');
+            if (!updateLog) return;
+            updateLog.style.display = 'none';
+            const updateLogKey = updateLog.dataset.updateLogKey || 'update_log_seen';
+            const signature = updateLogSignature || '';
+            if (signature) {
+                setCookieValue(updateLogKey, signature, 365);
+                setSetting(updateLogKey, signature);
+            }
+        }
+
+        function initializeSiteVersion() {
+            const versionBadge = document.querySelector('[data-site-version]');
+            if (versionBadge) versionBadge.textContent = SITE_VERSION;
+        }
+
+        // ════════════════════════════════════════════════════════════════
+        //  IMAGE & VIDEO GENERATORS
         // ════════════════════════════════════════════════════════════════
 
         function initImageGenerator() {
@@ -6141,6 +6908,62 @@
         }
 
         // ════════════════════════════════════════════════════════════════
+        //  KEYBOARD SHORTCUTS (global)
+        // ════════════════════════════════════════════════════════════════
+
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+            const panel = document.getElementById('panel-music');
+            if (!panel.classList.contains('active')) return;
+            const offlineSection = document.getElementById('offline-section');
+            if (!offlineSection.classList.contains('active')) return;
+
+            switch (e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    e.stopPropagation();
+                    offlineTogglePlay();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    offlineRewind15();
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    offlineForward15();
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    offlinePrevSong();
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    offlineNextSong();
+                    break;
+                case 'KeyR':
+                    e.preventDefault();
+                    offlineToggleRepeat();
+                    break;
+                case 'KeyS':
+                    e.preventDefault();
+                    offlineToggleShuffle();
+                    break;
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+            const panel = document.getElementById('panel-music');
+            if (!panel.classList.contains('active')) return;
+            const offlineSection = document.getElementById('offline-section');
+            if (!offlineSection.classList.contains('active')) return;
+            if (e.code === 'Space') {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+
+        // ════════════════════════════════════════════════════════════════
         //  BOOT
         // ════════════════════════════════════════════════════════════════
 
@@ -6207,11 +7030,17 @@
 
             // Offline init
             offlineInit();
+            initializePiPButton();
+
+            // Warning & Update Log
+            initializeWarningElements();
+            initializeUpdateLog();
+            initializeSiteVersion();
 
             // Ensure Music tab default: YouTube active
             switchMusicTab('yt');
 
-            console.log('⬡ HEX AI — Material 3 Edition with Offline MP3 Player ⬡');
+            console.log('⬡ HEX AI — Material 3 Edition with Enhanced Offline MP3 Player ⬡');
         }
 
         document.addEventListener('DOMContentLoaded', init);
@@ -6222,9 +7051,13 @@
             if (progressInterval) clearInterval(progressInterval);
             if (syncInterval) clearInterval(syncInterval);
             if (SB.checkInterval) clearInterval(SB.checkInterval);
+            stopOfflineVisualizer();
+            if (STATE.pipWindow) {
+                try { STATE.pipWindow.close(); } catch {}
+            }
         });
 
-        // Expose offline functions globally for onclick
+        // Expose offline & PiP functions globally
         window.offlineTogglePlay = offlineTogglePlay;
         window.offlinePrevSong = offlinePrevSong;
         window.offlineNextSong = offlineNextSong;
@@ -6236,6 +7069,12 @@
         window.offlineToggleShuffle = offlineToggleShuffle;
         window.offlineSeekTo = offlineSeekTo;
         window.openOfflineClearConfirm = openOfflineClearConfirm;
+        window.togglePiP = togglePiP;
+        window.closeWarningBar = closeWarningBar;
+        window.showWarningBar = showWarningBar;
+        window.closeWarningPopup = closeWarningPopup;
+        window.showWarningPopup = showWarningPopup;
+        window.closeUpdateLog = closeUpdateLog;
         window.switchMusicTab = switchMusicTab;
         window.switchPanel = switchPanel;
         window.toggleSettings = toggleSettings;
