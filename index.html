@@ -2297,6 +2297,10 @@
             box-shadow: var(--md-elevation2);
             background: var(--md-surface-variant);
             object-fit: cover;
+            transition: opacity 0.4s;
+        }
+        .offline-album-art[hidden] {
+            display: none;
         }
 
         /* Offline Controls */
@@ -2314,6 +2318,7 @@
             background: var(--md-surface-variant);
             color: var(--md-on-surface-variant);
             box-shadow: var(--md-elevation1);
+            transition: all var(--md-transition);
         }
         .offline-controls .md-icon-button:hover {
             background: var(--md-primary-container);
@@ -3643,7 +3648,6 @@
             const navItem = document.querySelector(`.nav-item[data-panel="${name}"]`);
             if (navItem) navItem.classList.add('active');
             if (name === 'music') {
-                // Ensure the active music sub-tab is visible
                 const activeTab = document.querySelector('.music-section.active');
                 if (!activeTab) {
                     document.getElementById('yt-section').classList.add('active');
@@ -3666,10 +3670,8 @@
             offlineTab.classList.toggle('filled', tab === 'offline');
 
             if (tab === 'yt') {
-                // Refresh YouTube playlist if needed
                 if (typeof renderPlaylist === 'function') renderPlaylist(STATE.playlist);
             } else {
-                // Refresh offline playlist
                 offlineRenderPlaylist();
             }
         }
@@ -5503,14 +5505,15 @@
         };
 
         // ════════════════════════════════════════════════════════════════
-        //  OFFLINE MP3 PLAYER (full implementation)
+        //  OFFLINE MP3 PLAYER – FIXED FULL IMPLEMENTATION
         // ════════════════════════════════════════════════════════════════
 
-        const offlineAudio = document.createElement('audio');
+        const offlineAudio = new Audio();
         offlineAudio.id = 'offlineAudio';
         offlineAudio.style.display = 'none';
         document.body.appendChild(offlineAudio);
 
+        // ─── Offline Render ───
         function offlineRenderPlaylist() {
             const container = document.getElementById('offlinePlaylistContainer');
             if (STATE.offlinePlaylist.length === 0) {
@@ -5518,36 +5521,50 @@
                     `<div class="offline-empty-playlist"><i class="fa-regular fa-circle-plus"></i> Your playlist is empty. Add some music!</div>`;
                 return;
             }
-            const html = STATE.offlinePlaylist.map((song, index) =>
-                `<div class="offline-playlist-item ${index === STATE.offlineCurrentSongIndex ? 'active' : ''}" data-index="${index}" onclick="offlineLoadSong(${index})">
+            const html = STATE.offlinePlaylist.map((song, index) => {
+                const isActive = index === STATE.offlineCurrentSongIndex;
+                return `<div class="offline-playlist-item ${isActive ? 'active' : ''}" data-index="${index}" onclick="offlineLoadSong(${index})">
                     <div class="offline-song-number">${index + 1}</div>
                     <div class="offline-song-details">
-                        <div class="offline-song-name">${song.name}</div>
+                        <div class="offline-song-name">${escapeHTML(song.name)}</div>
                         <div class="offline-song-duration">${song.duration || '0:00'}</div>
                     </div>
                     <button class="offline-remove-btn" data-index="${index}" onclick="offlineRemoveSong(event, ${index})">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
-                </div>`
-            ).join('');
+                </div>`;
+            }).join('');
             container.innerHTML = html;
         }
 
+        // ─── Offline Load Song ───
         function offlineLoadSong(index) {
             if (index < 0 || index >= STATE.offlinePlaylist.length) return;
             STATE.offlineCurrentSongIndex = index;
             const song = STATE.offlinePlaylist[index];
+            // Properly set up audio
+            offlineAudio.pause();
             offlineAudio.src = song.url;
+            offlineAudio.load();
+
             document.getElementById('offlineSongTitle').textContent = song.name;
             offlineUpdateSongInfo();
             offlineUpdateTabTitle();
             offlineRenderPlaylist();
-            if (STATE.offlineIsPlaying) offlineAudio.play();
-            // Try to show album art from file metadata? Skipped for simplicity.
+
+            // Show album art if available (try to extract from file metadata – fallback hidden)
             const art = document.getElementById('offlineAlbumArt');
             art.hidden = true;
+
+            if (STATE.offlineIsPlaying) {
+                offlineAudio.play().catch(() => {
+                    STATE.offlineIsPlaying = false;
+                    document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
+                });
+            }
         }
 
+        // ─── Offline Update Tab Title ───
         function offlineUpdateTabTitle() {
             if (STATE.offlineCurrentSongIndex !== -1 && STATE.offlinePlaylist[STATE.offlineCurrentSongIndex]) {
                 const s = STATE.offlinePlaylist[STATE.offlineCurrentSongIndex];
@@ -5557,28 +5574,52 @@
             }
         }
 
+        // ─── Offline Toggle Play ───
         function offlineTogglePlay() {
-            if (STATE.offlinePlaylist.length === 0) return;
-            if (STATE.offlineCurrentSongIndex === -1) offlineLoadSong(0);
+            if (STATE.offlinePlaylist.length === 0) {
+                showToast('Add some songs first!', 'info');
+                return;
+            }
+            if (STATE.offlineCurrentSongIndex === -1) {
+                offlineLoadSong(0);
+                // After loading, play
+                setTimeout(() => {
+                    offlineAudio.play().then(() => {
+                        STATE.offlineIsPlaying = true;
+                        document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
+                        offlineUpdateTabTitle();
+                    }).catch(() => {
+                        STATE.offlineIsPlaying = false;
+                        document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
+                    });
+                }, 100);
+                return;
+            }
             if (STATE.offlineIsPlaying) {
                 offlineAudio.pause();
                 document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
                 STATE.offlineIsPlaying = false;
             } else {
-                offlineAudio.play();
-                document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
-                STATE.offlineIsPlaying = true;
+                offlineAudio.play().then(() => {
+                    document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
+                    STATE.offlineIsPlaying = true;
+                }).catch(() => {
+                    document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
+                    STATE.offlineIsPlaying = false;
+                });
             }
             offlineUpdateTabTitle();
         }
 
+        // ─── Offline Repeat ───
         function offlineToggleRepeat() {
             STATE.offlineIsRepeating = !STATE.offlineIsRepeating;
             document.getElementById('offlineRepeatBtn').classList.toggle('active', STATE.offlineIsRepeating);
-            if (offlineAudio) offlineAudio.loop = STATE.offlineIsRepeating;
+            offlineAudio.loop = STATE.offlineIsRepeating;
             offlineUpdateSongInfo();
         }
 
+        // ─── Offline Shuffle ───
         function offlineToggleShuffle() {
             STATE.offlineIsShuffling = !STATE.offlineIsShuffling;
             document.getElementById('offlineShuffleBtn').classList.toggle('active', STATE.offlineIsShuffling);
@@ -5588,9 +5629,13 @@
                     const ri = Math.floor(Math.random() * STATE.offlinePlaylist.length);
                     STATE.offlinePlayHistory.push(ri);
                     offlineLoadSong(ri);
-                    offlineAudio.play();
-                    document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
-                    STATE.offlineIsPlaying = true;
+                    offlineAudio.play().then(() => {
+                        document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
+                        STATE.offlineIsPlaying = true;
+                    }).catch(() => {
+                        STATE.offlineIsPlaying = false;
+                        document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
+                    });
                 }
             } else {
                 STATE.offlinePlayHistory = [];
@@ -5598,6 +5643,7 @@
             offlineUpdateSongInfo();
         }
 
+        // ─── Offline Next Shuffle Index ───
         function offlineGetNextShuffleIndex() {
             if (STATE.offlinePlaylist.length <= 1) return 0;
             const unplayed = [];
@@ -5616,23 +5662,45 @@
             return next;
         }
 
+        // ─── Offline Handle Song End ───
         function offlineHandleSongEnd() {
-            if (STATE.offlineIsRepeating) return;
+            if (STATE.offlineIsRepeating) {
+                offlineAudio.play().catch(() => {});
+                return;
+            }
             offlineNextSong();
         }
 
+        // ─── Offline Prev ───
         function offlinePrevSong() {
             if (STATE.offlinePlaylist.length === 0) return;
             if (STATE.offlineIsShuffling && STATE.offlinePlayHistory.length > 1) {
                 STATE.offlinePlayHistory.pop();
                 offlineLoadSong(STATE.offlinePlayHistory[STATE.offlinePlayHistory.length - 1]);
-            } else {
-                const ni = STATE.offlineCurrentSongIndex > 0 ? STATE.offlineCurrentSongIndex - 1 : STATE.offlinePlaylist
-                    .length - 1;
-                offlineLoadSong(ni);
+                offlineAudio.play().catch(() => {
+                    STATE.offlineIsPlaying = false;
+                    document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
+                });
+                if (STATE.offlineIsPlaying) {
+                    document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
+                }
+                return;
+            }
+            const ni = STATE.offlineCurrentSongIndex > 0 ? STATE.offlineCurrentSongIndex - 1 : STATE.offlinePlaylist.length -
+                1;
+            offlineLoadSong(ni);
+            if (STATE.offlineIsPlaying) {
+                offlineAudio.play().catch(() => {
+                    STATE.offlineIsPlaying = false;
+                    document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
+                });
+            }
+            if (STATE.offlineIsPlaying) {
+                document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
             }
         }
 
+        // ─── Offline Next ───
         function offlineNextSong() {
             if (STATE.offlinePlaylist.length === 0) return;
             let ni;
@@ -5643,24 +5711,38 @@
                     0;
             }
             offlineLoadSong(ni);
+            if (STATE.offlineIsPlaying) {
+                offlineAudio.play().catch(() => {
+                    STATE.offlineIsPlaying = false;
+                    document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
+                });
+            }
+            if (STATE.offlineIsPlaying) {
+                document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
+            }
         }
 
+        // ─── Offline Rewind / Forward ───
         function offlineRewind15() {
             offlineAudio.currentTime = Math.max(0, offlineAudio.currentTime - 15);
         }
 
         function offlineForward15() {
-            offlineAudio.currentTime = Math.min(offlineAudio.duration, offlineAudio.currentTime + 15);
+            offlineAudio.currentTime = Math.min(offlineAudio.duration || 0, offlineAudio.currentTime + 15);
         }
 
+        // ─── Offline Seek ───
         function offlineSeekTo(e) {
             const bar = document.getElementById('offlineProgressBar');
             if (!bar) return;
             const rect = bar.getBoundingClientRect();
-            const pct = (e.clientX - rect.left) / rect.width;
-            offlineAudio.currentTime = pct * offlineAudio.duration;
+            const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+            if (offlineAudio.duration) {
+                offlineAudio.currentTime = pct * offlineAudio.duration;
+            }
         }
 
+        // ─── Offline Update Progress ───
         function offlineUpdateProgress() {
             if (offlineAudio.duration) {
                 const pct = (offlineAudio.currentTime / offlineAudio.duration) * 100;
@@ -5670,6 +5752,7 @@
             }
         }
 
+        // ─── Offline Update Song Info ───
         function offlineUpdateSongInfo() {
             if (STATE.offlineCurrentSongIndex !== -1) {
                 const modes = [];
@@ -5684,13 +5767,15 @@
             }
         }
 
+        // ─── Offline Format Time ───
         function offlineFormatTime(seconds) {
-            if (isNaN(seconds)) return '0:00';
+            if (!seconds || isNaN(seconds) || seconds < 0) return '0:00';
             const m = Math.floor(seconds / 60);
             const s = Math.floor(seconds % 60);
             return `${m}:${s.toString().padStart(2, '0')}`;
         }
 
+        // ─── Offline Remove Song ───
         function offlineRemoveSong(event, index) {
             event.stopPropagation();
             URL.revokeObjectURL(STATE.offlinePlaylist[index].url);
@@ -5699,6 +5784,7 @@
             if (index === STATE.offlineCurrentSongIndex) {
                 if (STATE.offlinePlaylist.length === 0) {
                     STATE.offlineCurrentSongIndex = -1;
+                    offlineAudio.pause();
                     offlineAudio.src = '';
                     document.getElementById('offlineSongTitle').textContent = 'No song selected';
                     document.getElementById('offlineSongInfo').textContent = 'Select a song to start playing';
@@ -5717,55 +5803,55 @@
             offlineRenderPlaylist();
         }
 
-        // Offline upload & file handling
-        document.getElementById('offlineFileInput').addEventListener('change', function(e) {
-            const files = Array.from(e.target.files);
-            offlineAddFilesToPlaylist(files);
-        });
-
-        document.getElementById('offlineUploadArea').addEventListener('dragover', (e) => {
-            e.preventDefault();
-            document.getElementById('offlineUploadArea').classList.add('dragover');
-        });
-        document.getElementById('offlineUploadArea').addEventListener('dragleave', () => {
-            document.getElementById('offlineUploadArea').classList.remove('dragover');
-        });
-        document.getElementById('offlineUploadArea').addEventListener('drop', (e) => {
-            e.preventDefault();
-            document.getElementById('offlineUploadArea').classList.remove('dragover');
-            const files = Array.from(e.dataTransfer.files);
-            offlineAddFilesToPlaylist(files);
-        });
-
+        // ─── Offline Add Files ───
         function offlineAddFilesToPlaylist(files) {
             const audioFiles = files.filter(file =>
                 (file.type.startsWith('audio/') ||
                     file.name.match(/\.(mp3|wav|ogg|m4a|flac|opus)$/i)) &&
                 file.size < 100 * 1024 * 1024
             );
+            if (audioFiles.length === 0) {
+                showToast('No valid audio files found.', 'error');
+                return;
+            }
+            let added = 0;
             audioFiles.forEach(file => {
                 const url = URL.createObjectURL(file);
                 const song = {
-                    name: file.name.replace(/\.(mp3|wav|ogg|m4a|flac)$/i, ''),
+                    name: file.name.replace(/\.(mp3|wav|ogg|m4a|flac|opus)$/i, ''),
                     url: url,
                     file: file,
                     duration: '0:00'
                 };
                 STATE.offlinePlaylist.push(song);
+                added++;
+                // Load metadata to get duration
                 const temp = new Audio(url);
                 temp.addEventListener('loadedmetadata', () => {
                     song.duration = offlineFormatTime(temp.duration);
                     URL.revokeObjectURL(temp.src);
                     offlineRenderPlaylist();
                 });
+                temp.addEventListener('error', () => {
+                    song.duration = '0:00';
+                    offlineRenderPlaylist();
+                });
+                // If metadata doesn't load, set a fallback
+                setTimeout(() => {
+                    if (song.duration === '0:00' && temp.duration && !isNaN(temp.duration)) {
+                        song.duration = offlineFormatTime(temp.duration);
+                        offlineRenderPlaylist();
+                    }
+                }, 2000);
             });
             offlineRenderPlaylist();
             if (STATE.offlineCurrentSongIndex === -1 && STATE.offlinePlaylist.length > 0) {
                 offlineLoadSong(0);
             }
+            showToast(`Added ${added} song(s)!`, 'success');
         }
 
-        // Offline clear modal
+        // ─── Offline Clear ───
         function openOfflineClearConfirm() {
             if (STATE.offlinePlaylist.length === 0) return;
             if (confirm('Clear all offline songs? This cannot be undone.')) {
@@ -5784,17 +5870,72 @@
                 document.getElementById('offlineTotalTime').textContent = '0:00';
                 offlineRenderPlaylist();
                 offlineUpdateTabTitle();
+                showToast('Playlist cleared.', 'info');
             }
         }
 
-        // Offline event listeners
-        offlineAudio.addEventListener('loadedmetadata', offlineUpdateSongInfo);
+        // ─── Offline Event Listeners ───
+        offlineAudio.addEventListener('loadedmetadata', () => {
+            offlineUpdateSongInfo();
+            offlineUpdateProgress();
+        });
         offlineAudio.addEventListener('timeupdate', offlineUpdateProgress);
         offlineAudio.addEventListener('ended', offlineHandleSongEnd);
+
+        // Volume
         document.getElementById('offlineVolumeSlider').addEventListener('input', (e) => {
             offlineAudio.volume = e.target.value / 100;
         });
         offlineAudio.volume = 0.5;
+
+        // File input
+        document.getElementById('offlineFileInput').addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            offlineAddFilesToPlaylist(files);
+            this.value = '';
+        });
+
+        // Drag & drop
+        document.getElementById('offlineUploadArea').addEventListener('dragover', (e) => {
+            e.preventDefault();
+            document.getElementById('offlineUploadArea').classList.add('dragover');
+        });
+        document.getElementById('offlineUploadArea').addEventListener('dragleave', () => {
+            document.getElementById('offlineUploadArea').classList.remove('dragover');
+        });
+        document.getElementById('offlineUploadArea').addEventListener('drop', (e) => {
+            e.preventDefault();
+            document.getElementById('offlineUploadArea').classList.remove('dragover');
+            const files = Array.from(e.dataTransfer.files);
+            offlineAddFilesToPlaylist(files);
+        });
+
+        // ─── Offline Init ───
+        function offlineInit() {
+            offlineRenderPlaylist();
+            if (STATE.offlineCurrentSongIndex !== -1 && STATE.offlinePlaylist[STATE.offlineCurrentSongIndex]) {
+                const song = STATE.offlinePlaylist[STATE.offlineCurrentSongIndex];
+                offlineAudio.src = song.url;
+                offlineAudio.load();
+                document.getElementById('offlineSongTitle').textContent = song.name;
+                offlineUpdateSongInfo();
+                offlineUpdateTabTitle();
+                if (STATE.offlineIsPlaying) {
+                    offlineAudio.play().catch(() => {
+                        STATE.offlineIsPlaying = false;
+                        document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
+                    });
+                }
+            }
+            // Restore loop state
+            offlineAudio.loop = STATE.offlineIsRepeating;
+            if (STATE.offlineIsRepeating) {
+                document.getElementById('offlineRepeatBtn').classList.add('active');
+            }
+            if (STATE.offlineIsShuffling) {
+                document.getElementById('offlineShuffleBtn').classList.add('active');
+            }
+        }
 
         // ════════════════════════════════════════════════════════════════
         //  IMAGE & VIDEO GENERATORS (keep minimal)
@@ -6053,8 +6194,8 @@
             initImageGenerator();
             initVideoGenerator();
 
-            // Offline initial render
-            offlineRenderPlaylist();
+            // Offline init
+            offlineInit();
 
             // Ensure Music tab default: YouTube active
             switchMusicTab('yt');
@@ -6096,6 +6237,7 @@
         window.handleChatKey = handleChatKey;
         window.sendMessage = sendMessage;
         window.renderFilePreview = renderFilePreview;
+        window.offlineAddFilesToPlaylist = offlineAddFilesToPlaylist;
     </script>
 
 </body>
