@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>⬡ HEX AI – Music Player</title>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8"></script>
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -2230,7 +2231,7 @@
             display: none !important;
         }
 
-        /* ----- OFFLINE SECTION (MP3 player) ----- */
+        /* ===== OFFLINE SECTION (MP3 player) ===== */
         #offline-section {
             padding: 0 4px;
             overflow-y: auto;
@@ -2243,7 +2244,6 @@
             gap: 12px;
         }
 
-        /* Offline Upload Area */
         .offline-upload-area {
             border: 2px dashed var(--md-outline);
             border-radius: var(--md-shape-md);
@@ -2281,7 +2281,6 @@
             display: none;
         }
 
-        /* Offline Current Song */
         .offline-current-song {
             text-align: center;
             padding: 6px 0 12px;
@@ -2295,7 +2294,6 @@
             color: var(--md-on-surface-variant);
         }
 
-        /* Offline Album Art */
         .offline-album-art {
             display: block;
             margin: 0 auto 12px;
@@ -2307,7 +2305,6 @@
             object-fit: cover;
         }
 
-        /* Offline Controls */
         .offline-controls {
             display: flex;
             justify-content: center;
@@ -2363,7 +2360,6 @@
             opacity: 1;
         }
 
-        /* Offline Progress */
         .offline-progress-container {
             margin: 8px 0 12px;
         }
@@ -2391,7 +2387,6 @@
             color: var(--md-on-surface-variant);
         }
 
-        /* Offline Volume */
         .offline-volume-container {
             display: flex;
             align-items: center;
@@ -2427,7 +2422,6 @@
             border: none;
         }
 
-        /* Offline Playlist */
         .offline-playlist {
             background: var(--md-surface);
             border-radius: var(--md-shape-lg);
@@ -2527,7 +2521,7 @@
             font: var(--md-body-medium);
         }
 
-        /* ----- RESPONSIVE ----- */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 640px) {
             .header {
                 flex-direction: column;
@@ -2893,7 +2887,6 @@
                 <!-- OFFLINE MP3 SECTION -->
                 <div class="music-section" id="offline-section">
                     <div class="offline-container">
-                        <!-- Upload -->
                         <div class="offline-upload-area" id="offlineUploadArea">
                             <div class="offline-upload-text">
                                 <i class="fa-regular fa-file-audio"></i>
@@ -2910,7 +2903,6 @@
                             </div>
                         </div>
 
-                        <!-- Current Song -->
                         <div class="offline-current-song" id="offlineCurrentSong">
                             <div class="offline-song-title" id="offlineSongTitle">
                                 <i class="fa-regular fa-circle-play"></i> No song selected
@@ -2918,10 +2910,8 @@
                             <div class="offline-song-info" id="offlineSongInfo">Select a song to start playing</div>
                         </div>
 
-                        <!-- Album Art -->
                         <img id="offlineAlbumArt" class="offline-album-art" alt="" hidden>
 
-                        <!-- Controls -->
                         <div class="offline-controls">
                             <button class="md-icon-button" data-action="prev" onclick="offlinePrevSong()" title="Previous">
                                 <i class="fa-solid fa-backward-step"></i>
@@ -2948,7 +2938,6 @@
                             </button>
                         </div>
 
-                        <!-- Progress -->
                         <div class="offline-progress-container">
                             <div class="offline-progress-bar" id="offlineProgressBar" onclick="offlineSeekTo(event)">
                                 <div class="offline-progress-fill" id="offlineProgressFill"></div>
@@ -2959,14 +2948,12 @@
                             </div>
                         </div>
 
-                        <!-- Volume -->
                         <div class="offline-volume-container">
                             <i class="fa-solid fa-volume-low"></i>
                             <input type="range" class="offline-volume-slider" id="offlineVolumeSlider" min="0" max="100" value="50">
                             <i class="fa-solid fa-volume-high"></i>
                         </div>
 
-                        <!-- Playlist -->
                         <div class="offline-playlist">
                             <div class="offline-playlist-title">
                                 <i class="fa-regular fa-list"></i> Offline Playlist
@@ -3350,7 +3337,7 @@
         let selectedVideoId = null;
 
         // ════════════════════════════════════════════════════════════════
-        //  HEX AI – HELPER FUNCTIONS (abridged, keep core)
+        //  HEX AI – HELPER FUNCTIONS
         // ════════════════════════════════════════════════════════════════
 
         function emojiToCodepointPath(emoji) {
@@ -3651,7 +3638,6 @@
             const navItem = document.querySelector(`.nav-item[data-panel="${name}"]`);
             if (navItem) navItem.classList.add('active');
             if (name === 'music') {
-                // Ensure the active music sub-tab is visible
                 const activeTab = document.querySelector('.music-section.active');
                 if (!activeTab) {
                     document.getElementById('yt-section').classList.add('active');
@@ -3674,16 +3660,14 @@
             offlineTab.classList.toggle('filled', tab === 'offline');
 
             if (tab === 'yt') {
-                // Refresh YouTube playlist if needed
                 if (typeof renderPlaylist === 'function') renderPlaylist(STATE.playlist);
             } else {
-                // Refresh offline playlist
                 offlineRenderPlaylist();
             }
         }
 
         // ════════════════════════════════════════════════════════════════
-        //  CHAT (abridged – keep core send/render)
+        //  CHAT (core)
         // ════════════════════════════════════════════════════════════════
 
         function handleChatKey(e) {
@@ -4801,7 +4785,7 @@
             }
         }
 
-        // ─── LYRICS (abridged, keep core) ───
+        // ─── LYRICS ───
         function parseLrc(text) {
             const lines = [];
             const regex = /\[(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?\](.*)/;
@@ -5228,7 +5212,10 @@
 
             toggle: function(enabled) {
                 this.enabled = enabled;
-                if (enabled) { const vid = this.getVideoId(); if (vid) this.start(vid); } else this.stop();
+                if (enabled) { const vid = this.getVideoId(); if (vid) this.start(vid);
+                    showToast('SponsorBlock enabled', 'success'); } else { this.stop();
+                    showToast('SponsorBlock disabled', 'info'); }
+                localStorage.setItem('sponsorBlockEnabled', JSON.stringify(enabled));
             }
         };
 
@@ -5519,138 +5506,256 @@
         offlineAudio.style.display = 'none';
         document.body.appendChild(offlineAudio);
 
+        // DOM elements for offline player
+        const offlinePlayPauseBtn = document.getElementById('offlinePlayPauseBtn');
+        const offlineRepeatBtn = document.getElementById('offlineRepeatBtn');
+        const offlineShuffleBtn = document.getElementById('offlineShuffleBtn');
+        const offlineSongTitle = document.getElementById('offlineSongTitle');
+        const offlineSongInfo = document.getElementById('offlineSongInfo');
+        const offlineProgressBar = document.getElementById('offlineProgressBar');
+        const offlineProgressFill = document.getElementById('offlineProgressFill');
+        const offlineCurrentTime = document.getElementById('offlineCurrentTime');
+        const offlineTotalTime = document.getElementById('offlineTotalTime');
+        const offlineVolumeSlider = document.getElementById('offlineVolumeSlider');
+        const offlinePlaylistContainer = document.getElementById('offlinePlaylistContainer');
+        const offlineUploadArea = document.getElementById('offlineUploadArea');
+        const offlineFileInput = document.getElementById('offlineFileInput');
+        const offlineAlbumArt = document.getElementById('offlineAlbumArt');
+
+        let offlinePlaylist = STATE.offlinePlaylist;
+        let offlineCurrentSongIndex = STATE.offlineCurrentSongIndex;
+        let offlineIsPlaying = STATE.offlineIsPlaying;
+        let offlineIsRepeating = STATE.offlineIsRepeating;
+        let offlineIsShuffling = STATE.offlineIsShuffling;
+        let offlinePlayHistory = STATE.offlinePlayHistory;
+        let offlineAudioContext = null;
+        let offlineAnalyser = null;
+        let offlineAnalyserData = null;
+        let offlineVisualizerRaf = null;
+        let offlineVisualizerActive = false;
+
+        // Initialize offline audio
+        if (offlineAudio) {
+            offlineAudio.volume = 0.5;
+
+            offlineAudio.addEventListener('loadedmetadata', offlineUpdateSongInfo);
+            offlineAudio.addEventListener('timeupdate', offlineUpdateProgress);
+            offlineAudio.addEventListener('ended', offlineHandleSongEnd);
+
+            offlineVolumeSlider.addEventListener('input', (e) => {
+                offlineAudio.volume = e.target.value / 100;
+            });
+
+            offlineFileInput.addEventListener('change', offlineHandleFileSelect);
+
+            offlineUploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                offlineUploadArea.classList.add('dragover');
+            });
+
+            offlineUploadArea.addEventListener('dragleave', () => {
+                offlineUploadArea.classList.remove('dragover');
+            });
+
+            offlineUploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                offlineUploadArea.classList.remove('dragover');
+                const files = Array.from(e.dataTransfer.files);
+                offlineAddFilesToPlaylist(files);
+            });
+        }
+
+        function offlineHandleFileSelect(e) {
+            const files = Array.from(e.target.files);
+            offlineAddFilesToPlaylist(files);
+        }
+
+        function offlineAddFilesToPlaylist(files) {
+            const audioFiles = files.filter(file =>
+                file.type.startsWith('audio/') ||
+                file.name.match(/\.(mp3|wav|ogg|m4a|flac)$/i)
+            );
+
+            audioFiles.forEach(file => {
+                const url = URL.createObjectURL(file);
+                const song = {
+                    name: file.name.replace(/\.(mp3|wav|ogg|m4a|flac)$/i, ''),
+                    url: url,
+                    file: file,
+                    duration: '0:00'
+                };
+
+                offlinePlaylist.push(song);
+
+                const tempAudio = new Audio(url);
+                tempAudio.addEventListener('loadedmetadata', () => {
+                    song.duration = offlineFormatTime(tempAudio.duration);
+                    offlineRenderPlaylist();
+                });
+            });
+
+            offlineRenderPlaylist();
+
+            if (offlineCurrentSongIndex === -1 && offlinePlaylist.length > 0) {
+                offlineLoadSong(0);
+            }
+        }
+
         function offlineRenderPlaylist() {
-            const container = document.getElementById('offlinePlaylistContainer');
-            if (STATE.offlinePlaylist.length === 0) {
-                container.innerHTML =
-                    `<div class="offline-empty-playlist"><i class="fa-regular fa-circle-plus"></i> Your playlist is empty. Add some music!</div>`;
+            if (offlinePlaylist.length === 0) {
+                offlinePlaylistContainer.innerHTML =
+                    '<div class="offline-empty-playlist">Your playlist is empty. Add some music to get started!</div>';
                 return;
             }
-            const html = STATE.offlinePlaylist.map((song, index) =>
-                `<div class="offline-playlist-item ${index === STATE.offlineCurrentSongIndex ? 'active' : ''}" data-index="${index}" onclick="offlineLoadSong(${index})">
+
+            const playlistHTML = offlinePlaylist.map((song, index) => `
+                <div class="offline-playlist-item ${index === offlineCurrentSongIndex ? 'active' : ''}" data-index="${index}" onclick="offlineLoadSong(${index})">
                     <div class="offline-song-number">${index + 1}</div>
                     <div class="offline-song-details">
                         <div class="offline-song-name">${song.name}</div>
-                        <div class="offline-song-duration">${song.duration || '0:00'}</div>
+                        <div class="offline-song-duration">${song.duration}</div>
                     </div>
-                    <button class="offline-remove-btn" data-index="${index}" onclick="offlineRemoveSong(event, ${index})">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>`
-            ).join('');
-            container.innerHTML = html;
+                    <button class="offline-remove-btn" data-index="${index}" onclick="offlineRemoveSong(event, ${index})">×</button>
+                </div>
+            `).join('');
+
+            offlinePlaylistContainer.innerHTML = playlistHTML;
         }
 
         function offlineLoadSong(index) {
-            if (index < 0 || index >= STATE.offlinePlaylist.length) return;
-            STATE.offlineCurrentSongIndex = index;
-            const song = STATE.offlinePlaylist[index];
+            if (index < 0 || index >= offlinePlaylist.length) return;
+
+            offlineCurrentSongIndex = index;
+            const song = offlinePlaylist[index];
+
             offlineAudio.src = song.url;
-            document.getElementById('offlineSongTitle').textContent = song.name;
+            offlineSongTitle.textContent = song.name;
             offlineUpdateSongInfo();
             offlineUpdateTabTitle();
             offlineRenderPlaylist();
-            if (STATE.offlineIsPlaying) offlineAudio.play();
-            // Try to show album art from file metadata? Skipped for simplicity.
-            const art = document.getElementById('offlineAlbumArt');
-            art.hidden = true;
+
+            if (offlineIsPlaying) {
+                offlineAudio.play();
+            }
         }
 
         function offlineUpdateTabTitle() {
-            if (STATE.offlineCurrentSongIndex !== -1 && STATE.offlinePlaylist[STATE.offlineCurrentSongIndex]) {
-                const s = STATE.offlinePlaylist[STATE.offlineCurrentSongIndex];
-                document.title = `${STATE.offlineIsPlaying ? '▶️' : '⏸️'} ${s.name} - Music Player`;
+            if (offlineCurrentSongIndex !== -1 && offlinePlaylist[offlineCurrentSongIndex]) {
+                const song = offlinePlaylist[offlineCurrentSongIndex];
+                const playingStatus = offlineIsPlaying ? '▶️' : '⏸️';
+                document.title = `${playingStatus} ${song.name} - Music Player`;
             } else {
                 document.title = '🎵 Music Player';
             }
         }
 
         function offlineTogglePlay() {
-            if (STATE.offlinePlaylist.length === 0) return;
-            if (STATE.offlineCurrentSongIndex === -1) offlineLoadSong(0);
-            if (STATE.offlineIsPlaying) {
+            if (offlinePlaylist.length === 0) return;
+
+            if (offlineCurrentSongIndex === -1) {
+                offlineLoadSong(0);
+            }
+
+            if (offlineIsPlaying) {
                 offlineAudio.pause();
-                document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
-                STATE.offlineIsPlaying = false;
+                offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+                offlineIsPlaying = false;
             } else {
                 offlineAudio.play();
-                document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
-                STATE.offlineIsPlaying = true;
+                offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                offlineIsPlaying = true;
             }
+
             offlineUpdateTabTitle();
         }
 
         function offlineToggleRepeat() {
-            STATE.offlineIsRepeating = !STATE.offlineIsRepeating;
-            document.getElementById('offlineRepeatBtn').classList.toggle('active', STATE.offlineIsRepeating);
-            if (offlineAudio) offlineAudio.loop = STATE.offlineIsRepeating;
+            offlineIsRepeating = !offlineIsRepeating;
+            offlineRepeatBtn.classList.toggle('active', offlineIsRepeating);
+            if (offlineAudio) {
+                offlineAudio.loop = offlineIsRepeating;
+            }
             offlineUpdateSongInfo();
         }
 
         function offlineToggleShuffle() {
-            STATE.offlineIsShuffling = !STATE.offlineIsShuffling;
-            document.getElementById('offlineShuffleBtn').classList.toggle('active', STATE.offlineIsShuffling);
-            if (STATE.offlineIsShuffling) {
-                STATE.offlinePlayHistory = [];
-                if (STATE.offlinePlaylist.length > 0) {
-                    const ri = Math.floor(Math.random() * STATE.offlinePlaylist.length);
-                    STATE.offlinePlayHistory.push(ri);
-                    offlineLoadSong(ri);
+            offlineIsShuffling = !offlineIsShuffling;
+            offlineShuffleBtn.classList.toggle('active', offlineIsShuffling);
+
+            if (offlineIsShuffling) {
+                offlinePlayHistory = [];
+
+                if (offlinePlaylist.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * offlinePlaylist.length);
+                    offlinePlayHistory.push(randomIndex);
+                    offlineLoadSong(randomIndex);
+
                     offlineAudio.play();
-                    document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
-                    STATE.offlineIsPlaying = true;
+                    offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                    offlineIsPlaying = true;
                 }
             } else {
-                STATE.offlinePlayHistory = [];
+                offlinePlayHistory = [];
             }
+
             offlineUpdateSongInfo();
         }
 
         function offlineGetNextShuffleIndex() {
-            if (STATE.offlinePlaylist.length <= 1) return 0;
-            const unplayed = [];
-            for (let i = 0; i < STATE.offlinePlaylist.length; i++) {
-                if (!STATE.offlinePlayHistory.includes(i)) unplayed.push(i);
-            }
-            if (unplayed.length === 0) {
-                STATE.offlinePlayHistory = [STATE.offlineCurrentSongIndex];
-                for (let i = 0; i < STATE.offlinePlaylist.length; i++) {
-                    if (i !== STATE.offlineCurrentSongIndex) unplayed.push(i);
+            if (offlinePlaylist.length <= 1) return 0;
+
+            const unplayedIndices = [];
+            for (let i = 0; i < offlinePlaylist.length; i++) {
+                if (!offlinePlayHistory.includes(i)) {
+                    unplayedIndices.push(i);
                 }
             }
-            const ri = Math.floor(Math.random() * unplayed.length);
-            const next = unplayed[ri];
-            STATE.offlinePlayHistory.push(next);
-            return next;
+
+            if (unplayedIndices.length === 0) {
+                offlinePlayHistory = [offlineCurrentSongIndex];
+                for (let i = 0; i < offlinePlaylist.length; i++) {
+                    if (i !== offlineCurrentSongIndex) {
+                        unplayedIndices.push(i);
+                    }
+                }
+            }
+
+            const randomIndex = Math.floor(Math.random() * unplayedIndices.length);
+            const nextIndex = unplayedIndices[randomIndex];
+
+            offlinePlayHistory.push(nextIndex);
+            return nextIndex;
         }
 
         function offlineHandleSongEnd() {
-            if (STATE.offlineIsRepeating) return;
+            if (offlineIsRepeating) return;
             offlineNextSong();
         }
 
         function offlinePrevSong() {
-            if (STATE.offlinePlaylist.length === 0) return;
-            if (STATE.offlineIsShuffling && STATE.offlinePlayHistory.length > 1) {
-                STATE.offlinePlayHistory.pop();
-                offlineLoadSong(STATE.offlinePlayHistory[STATE.offlinePlayHistory.length - 1]);
+            if (offlinePlaylist.length === 0) return;
+
+            if (offlineIsShuffling && offlinePlayHistory.length > 1) {
+                offlinePlayHistory.pop();
+                const prevIndex = offlinePlayHistory[offlinePlayHistory.length - 1];
+                offlineLoadSong(prevIndex);
             } else {
-                const ni = STATE.offlineCurrentSongIndex > 0 ? STATE.offlineCurrentSongIndex - 1 : STATE.offlinePlaylist
-                    .length - 1;
-                offlineLoadSong(ni);
+                const newIndex = offlineCurrentSongIndex > 0 ? offlineCurrentSongIndex - 1 : offlinePlaylist.length - 1;
+                offlineLoadSong(newIndex);
             }
         }
 
         function offlineNextSong() {
-            if (STATE.offlinePlaylist.length === 0) return;
-            let ni;
-            if (STATE.offlineIsShuffling) {
-                ni = offlineGetNextShuffleIndex();
+            if (offlinePlaylist.length === 0) return;
+
+            let newIndex;
+            if (offlineIsShuffling) {
+                newIndex = offlineGetNextShuffleIndex();
             } else {
-                ni = STATE.offlineCurrentSongIndex < STATE.offlinePlaylist.length - 1 ? STATE.offlineCurrentSongIndex + 1 :
-                    0;
+                newIndex = offlineCurrentSongIndex < offlinePlaylist.length - 1 ? offlineCurrentSongIndex + 1 : 0;
             }
-            offlineLoadSong(ni);
+
+            offlineLoadSong(newIndex);
         }
 
         function offlineRewind15() {
@@ -5662,150 +5767,168 @@
         }
 
         function offlineSeekTo(e) {
-            const bar = document.getElementById('offlineProgressBar');
-            if (!bar) return;
-            const rect = bar.getBoundingClientRect();
-            const pct = (e.clientX - rect.left) / rect.width;
-            offlineAudio.currentTime = pct * offlineAudio.duration;
+            if (!offlineProgressBar) return;
+            const rect = offlineProgressBar.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            offlineAudio.currentTime = percent * offlineAudio.duration;
         }
 
         function offlineUpdateProgress() {
             if (offlineAudio.duration) {
-                const pct = (offlineAudio.currentTime / offlineAudio.duration) * 100;
-                document.getElementById('offlineProgressFill').style.width = pct + '%';
-                document.getElementById('offlineCurrentTime').textContent = offlineFormatTime(offlineAudio.currentTime);
-                document.getElementById('offlineTotalTime').textContent = offlineFormatTime(offlineAudio.duration);
+                const percent = (offlineAudio.currentTime / offlineAudio.duration) * 100;
+                offlineProgressFill.style.width = percent + '%';
+                offlineCurrentTime.textContent = offlineFormatTime(offlineAudio.currentTime);
             }
         }
 
         function offlineUpdateSongInfo() {
-            if (STATE.offlineCurrentSongIndex !== -1) {
+            if (offlineCurrentSongIndex !== -1) {
                 const modes = [];
-                if (STATE.offlineIsRepeating) modes.push('Repeating');
-                if (STATE.offlineIsShuffling) modes.push('Shuffling');
-                const mt = modes.length > 0 ? ' • ' + modes.join(' • ') : '';
-                document.getElementById('offlineSongInfo').textContent =
-                    `Track ${STATE.offlineCurrentSongIndex + 1} of ${STATE.offlinePlaylist.length}${mt}`;
+                if (offlineIsRepeating) modes.push('Repeating');
+                if (offlineIsShuffling) modes.push('Shuffling');
+                const modeText = modes.length > 0 ? ' • ' + modes.join(' • ') : '';
+                offlineSongInfo.textContent = `Track ${offlineCurrentSongIndex + 1} of ${offlinePlaylist.length}${modeText}`;
             }
-            if (offlineAudio.duration) {
-                document.getElementById('offlineTotalTime').textContent = offlineFormatTime(offlineAudio.duration);
-            }
-        }
 
-        function offlineFormatTime(seconds) {
-            if (isNaN(seconds)) return '0:00';
-            const m = Math.floor(seconds / 60);
-            const s = Math.floor(seconds % 60);
-            return `${m}:${s.toString().padStart(2, '0')}`;
+            if (offlineAudio.duration) {
+                offlineTotalTime.textContent = offlineFormatTime(offlineAudio.duration);
+            }
         }
 
         function offlineRemoveSong(event, index) {
             event.stopPropagation();
-            URL.revokeObjectURL(STATE.offlinePlaylist[index].url);
-            STATE.offlinePlaylist.splice(index, 1);
-            STATE.offlinePlayHistory = STATE.offlinePlayHistory.filter(i => i !== index).map(i => i > index ? i - 1 : i);
-            if (index === STATE.offlineCurrentSongIndex) {
-                if (STATE.offlinePlaylist.length === 0) {
-                    STATE.offlineCurrentSongIndex = -1;
+
+            URL.revokeObjectURL(offlinePlaylist[index].url);
+
+            offlinePlaylist.splice(index, 1);
+
+            offlinePlayHistory = offlinePlayHistory.filter(i => i !== index).map(i => i > index ? i - 1 : i);
+
+            if (index === offlineCurrentSongIndex) {
+                if (offlinePlaylist.length === 0) {
+                    offlineCurrentSongIndex = -1;
                     offlineAudio.src = '';
-                    document.getElementById('offlineSongTitle').textContent = 'No song selected';
-                    document.getElementById('offlineSongInfo').textContent = 'Select a song to start playing';
-                    document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
-                    STATE.offlineIsPlaying = false;
-                    STATE.offlinePlayHistory = [];
+                    offlineSongTitle.textContent = 'No song selected';
+                    offlineSongInfo.textContent = 'Select a song to start playing';
+                    offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+                    offlineIsPlaying = false;
+                    offlinePlayHistory = [];
                     offlineUpdateTabTitle();
                 } else {
-                    const ni = index >= STATE.offlinePlaylist.length ? 0 : index;
-                    STATE.offlineCurrentSongIndex = ni - 1;
-                    offlineLoadSong(ni);
+                    const newIndex = index >= offlinePlaylist.length ? 0 : index;
+                    offlineCurrentSongIndex = newIndex - 1;
+                    offlineLoadSong(newIndex);
                 }
-            } else if (index < STATE.offlineCurrentSongIndex) {
-                STATE.offlineCurrentSongIndex--;
+            } else if (index < offlineCurrentSongIndex) {
+                offlineCurrentSongIndex--;
             }
+
             offlineRenderPlaylist();
         }
 
-        // Offline upload & file handling
-        document.getElementById('offlineFileInput').addEventListener('change', function(e) {
-            const files = Array.from(e.target.files);
-            offlineAddFilesToPlaylist(files);
-        });
+        function offlineFormatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
 
-        document.getElementById('offlineUploadArea').addEventListener('dragover', (e) => {
-            e.preventDefault();
-            document.getElementById('offlineUploadArea').classList.add('dragover');
-        });
-        document.getElementById('offlineUploadArea').addEventListener('dragleave', () => {
-            document.getElementById('offlineUploadArea').classList.remove('dragover');
-        });
-        document.getElementById('offlineUploadArea').addEventListener('drop', (e) => {
-            e.preventDefault();
-            document.getElementById('offlineUploadArea').classList.remove('dragover');
-            const files = Array.from(e.dataTransfer.files);
-            offlineAddFilesToPlaylist(files);
-        });
-
-        function offlineAddFilesToPlaylist(files) {
-            const audioFiles = files.filter(file =>
-                (file.type.startsWith('audio/') ||
-                    file.name.match(/\.(mp3|wav|ogg|m4a|flac|opus)$/i)) &&
-                file.size < 100 * 1024 * 1024
-            );
-            audioFiles.forEach(file => {
-                const url = URL.createObjectURL(file);
-                const song = {
-                    name: file.name.replace(/\.(mp3|wav|ogg|m4a|flac)$/i, ''),
-                    url: url,
-                    file: file,
-                    duration: '0:00'
-                };
-                STATE.offlinePlaylist.push(song);
-                const temp = new Audio(url);
-                temp.addEventListener('loadedmetadata', () => {
-                    song.duration = offlineFormatTime(temp.duration);
-                    URL.revokeObjectURL(temp.src);
-                    offlineRenderPlaylist();
-                });
-            });
-            offlineRenderPlaylist();
-            if (STATE.offlineCurrentSongIndex === -1 && STATE.offlinePlaylist.length > 0) {
-                offlineLoadSong(0);
-            }
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
         }
 
-        // Offline clear modal
+        // Keyboard shortcuts for offline player
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.contentEditable === 'true')
+                return;
+
+            // Only respond if offline section is active
+            const offlineSection = document.getElementById('offline-section');
+            if (!offlineSection || !offlineSection.classList.contains('active')) return;
+
+            switch (e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    e.stopPropagation();
+                    offlineTogglePlay();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    offlineRewind15();
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    offlineForward15();
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    offlinePrevSong();
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    offlineNextSong();
+                    break;
+                case 'KeyR':
+                    e.preventDefault();
+                    offlineToggleRepeat();
+                    break;
+                case 'KeyS':
+                    e.preventDefault();
+                    offlineToggleShuffle();
+                    break;
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.contentEditable === 'true')
+                return;
+
+            const offlineSection = document.getElementById('offline-section');
+            if (!offlineSection || !offlineSection.classList.contains('active')) return;
+
+            if (e.code === 'Space') {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+
+        // Offline clear confirm (simplified)
         function openOfflineClearConfirm() {
-            if (STATE.offlinePlaylist.length === 0) return;
+            if (offlinePlaylist.length === 0) return;
             if (confirm('Clear all offline songs? This cannot be undone.')) {
-                STATE.offlinePlaylist.forEach(s => { if (s.url) URL.revokeObjectURL(s.url); });
-                STATE.offlinePlaylist = [];
-                STATE.offlineCurrentSongIndex = -1;
-                STATE.offlineIsPlaying = false;
-                STATE.offlinePlayHistory = [];
-                offlineAudio.pause();
-                offlineAudio.src = '';
-                document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
-                document.getElementById('offlineSongTitle').textContent = 'No song selected';
-                document.getElementById('offlineSongInfo').textContent = 'Select a song to start playing';
-                document.getElementById('offlineProgressFill').style.width = '0%';
-                document.getElementById('offlineCurrentTime').textContent = '0:00';
-                document.getElementById('offlineTotalTime').textContent = '0:00';
-                offlineRenderPlaylist();
-                offlineUpdateTabTitle();
+                offlineClearAllSongs();
             }
         }
 
-        // Offline event listeners
-        offlineAudio.addEventListener('loadedmetadata', offlineUpdateSongInfo);
-        offlineAudio.addEventListener('timeupdate', offlineUpdateProgress);
-        offlineAudio.addEventListener('ended', offlineHandleSongEnd);
-        document.getElementById('offlineVolumeSlider').addEventListener('input', (e) => {
-            offlineAudio.volume = e.target.value / 100;
-        });
-        offlineAudio.volume = 0.5;
+        function offlineClearAllSongs() {
+            if (offlinePlaylist.length === 0) {
+                offlineRenderPlaylist();
+                return;
+            }
+
+            offlinePlaylist.forEach(song => {
+                if (song.url) {
+                    URL.revokeObjectURL(song.url);
+                }
+            });
+
+            offlinePlaylist = [];
+            offlineCurrentSongIndex = -1;
+            offlineIsPlaying = false;
+            offlinePlayHistory = [];
+
+            offlineAudio.pause();
+            offlineAudio.src = '';
+            offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            offlineSongTitle.textContent = 'No song selected';
+            offlineSongInfo.textContent = 'Select a song to start playing';
+            offlineProgressFill.style.width = '0%';
+            offlineCurrentTime.textContent = '0:00';
+            offlineTotalTime.textContent = '0:00';
+
+            offlineRenderPlaylist();
+            offlineUpdateTabTitle();
+        }
 
         // ════════════════════════════════════════════════════════════════
-        //  IMAGE & VIDEO GENERATORS (keep minimal)
+        //  IMAGE & VIDEO GENERATORS
         // ════════════════════════════════════════════════════════════════
 
         function initImageGenerator() {
@@ -6107,4 +6230,5 @@
     </script>
 
 </body>
+
 </html>
