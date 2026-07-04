@@ -6,9 +6,11 @@
     <title>⬡ HEX AI – Music Player</title>
 
     <!-- Google Analytics (GA4) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8">
+    </script>
     <script>
         window.dataLayer = window.dataLayer || [];
+
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-BTK7ZL9PR8', {
@@ -3667,11 +3669,80 @@
             ytTab.classList.toggle('filled', tab === 'yt');
             offlineTab.classList.toggle('filled', tab === 'offline');
 
+            // 🛡️ BLOCK / UNBLOCK NETWORK FOR OFFLINE MODE
+            if (tab === 'offline') {
+                enableOfflineNetworkBlock();
+            } else {
+                disableOfflineNetworkBlock();
+            }
+
             if (tab === 'yt') {
                 if (typeof renderPlaylist === 'function') renderPlaylist(STATE.playlist);
             } else {
                 offlineRenderPlaylist();
             }
+        }
+
+        // ════════════════════════════════════════════════════════════════
+        //  🛡️ OFFLINE NETWORK BLOCKER — stops all fetch/XHR when offline mode is active
+        // ════════════════════════════════════════════════════════════════
+
+        let __originalFetch = window.fetch;
+        let __originalXHROpen = XMLHttpRequest.prototype.open;
+        let __originalXHRSend = XMLHttpRequest.prototype.send;
+        let __offlineBlockActive = false;
+
+        function enableOfflineNetworkBlock() {
+            if (__offlineBlockActive) return;
+            __offlineBlockActive = true;
+            console.log('⬡ [OFFLINE] 🔒 Network blocker ENABLED — all web requests blocked.');
+
+            // Block fetch
+            window.fetch = function(...args) {
+                if (__offlineBlockActive) {
+                    const url = typeof args[0] === 'string' ? args[0] : args[0]?.url || 'unknown';
+                    console.warn('⬡ [OFFLINE] 🚫 Blocked fetch:', url);
+                    return Promise.reject(new Error('🚫 Offline mode: network requests are blocked.'));
+                }
+                return __originalFetch.apply(this, args);
+            };
+
+            // Block XHR
+            XMLHttpRequest.prototype.open = function(method, url, ...rest) {
+                this._offlineUrl = url;
+                return __originalXHROpen.apply(this, [method, url, ...rest]);
+            };
+            XMLHttpRequest.prototype.send = function(...args) {
+                if (__offlineBlockActive) {
+                    console.warn('⬡ [OFFLINE] 🚫 Blocked XHR:', this._offlineUrl || 'unknown');
+                    // Abort the request
+                    this.abort();
+                    // Trigger error event
+                    const ev = new ProgressEvent('error');
+                    this.dispatchEvent(ev);
+                    return;
+                }
+                return __originalXHRSend.apply(this, args);
+            };
+
+            showToast('🔒 Offline mode: network blocked', 'info');
+        }
+
+        function disableOfflineNetworkBlock() {
+            if (!__offlineBlockActive) return;
+            __offlineBlockActive = false;
+            console.log('⬡ [OFFLINE] 🔓 Network blocker DISABLED — web requests allowed.');
+
+            // Restore fetch
+            if (window.fetch !== __originalFetch) {
+                window.fetch = __originalFetch;
+            }
+
+            // Restore XHR
+            XMLHttpRequest.prototype.open = __originalXHROpen;
+            XMLHttpRequest.prototype.send = __originalXHRSend;
+
+            showToast('🔓 Network unblocked', 'info');
         }
 
         // ════════════════════════════════════════════════════════════════
@@ -4871,12 +4942,18 @@
             return { artist: extractedArtist, track: extractedTrack };
         }
 
+        // ════════════════════════════════════════════════════════════════
+        //  🔧 FIXED YOUTUBE LYRICS FETCHING — robust multi-source with retry
+        // ════════════════════════════════════════════════════════════════
+
         async function fetchLyricsMultiSource(artist, title, videoId) {
             const cacheKey = `lyrics_${encodeURIComponent(artist)}_${encodeURIComponent(title)}`;
             const cached = localStorage.getItem(cacheKey);
             if (cached) {
                 try { const json = JSON.parse(cached); if (json.syncedLyrics || json.plainLyrics) return json; } catch {}
             }
+
+            // Try Paxsenix first (most reliable for YouTube)
             if (videoId) {
                 try {
                     const data = await fetchLyricsFromPaxsenix(videoId);
@@ -4889,19 +4966,47 @@
                     }
                 } catch (e) { console.warn('Paxsenix API failed:', e); }
             }
-            const sources = [{ name: 'LRCLIB', url: `https://lrclib.net/api/get?artist_name=${encodeURIComponent(artist)}&track_name=${encodeURIComponent(title)}` },
-                { name: 'Lyrics.ovh', url: `https://api.lyrics.ovh/v1/${encodeURIComponent(artist)}/${encodeURIComponent(title)}` }
+
+            // Fallback sources with retry
+            const sources = [
+                { name: 'LRCLIB', url: `https://lrclib.net/api/get?artist_name=${encodeURIComponent(artist)}&track_name=${encodeURIComponent(title)}` },
+                { name: 'Lyrics.ovh', url: `https://api.lyrics.ovh/v1/${encodeURIComponent(artist)}/${encodeURIComponent(title)}` },
+                { name: 'Genius (via LRCLIB)', url: `https://lrclib.net/api/search?q=${encodeURIComponent(artist + ' ' + title)}` }
             ];
+
             for (const src of sources) {
                 try {
-                    const proxied = `${CORS_PROXY_URL}${encodeURIComponent(src.url)}`;
-                    const res = await fetch(proxied);
-                    if (!res.ok) continue;
-                    const data = await res.json();
-                    if (src.name === 'LRCLIB') {
-                        if (data.syncedLyrics || data.plainLyrics) { data.timestamp = Date.now();
-                            data.source = src.name;
-                            localStorage.setItem(cacheKey, JSON.stringify(data)); return data; }
+                    // Use multiple proxy fallbacks
+                    let data = null;
+                    const proxies = [
+                        `${CORS_PROXY_URL}${encodeURIComponent(src.url)}`,
+                        `https://corsproxy.io/?${encodeURIComponent(src.url)}`,
+                        `https://api.allorigins.win/raw?url=${encodeURIComponent(src.url)}`
+                    ];
+                    for (const proxy of proxies) {
+                        try {
+                            const res = await fetch(proxy, { signal: AbortSignal.timeout(5000) });
+                            if (res.ok) {
+                                data = await res.json();
+                                break;
+                            }
+                        } catch (e) { continue; }
+                    }
+                    if (!data) continue;
+
+                    if (src.name === 'LRCLIB' || src.name === 'Genius (via LRCLIB)') {
+                        let lyrics = data.syncedLyrics || data.plainLyrics || data.lyrics || data.text;
+                        if (!lyrics && Array.isArray(data)) {
+                            // Search response
+                            const first = data.find(item => item.syncedLyrics || item.plainLyrics);
+                            if (first) lyrics = first.syncedLyrics || first.plainLyrics;
+                        }
+                        if (lyrics) {
+                            const result = { syncedLyrics: lyrics, plainLyrics: lyrics, timestamp: Date.now(),
+                                source: src.name };
+                            localStorage.setItem(cacheKey, JSON.stringify(result));
+                            return result;
+                        }
                     } else if (src.name === 'Lyrics.ovh') {
                         if (data.lyrics) {
                             const result = { plainLyrics: data.lyrics, timestamp: Date.now(), source: src.name };
@@ -4911,13 +5016,32 @@
                     }
                 } catch (e) { console.warn(`${src.name} failed:`, e); }
             }
+
+            // Last resort: try to fetch from YouTube video description via Paxsenix
+            if (videoId) {
+                try {
+                    const url = `${API_BASE}/api/lyrics?v=${encodeURIComponent(videoId)}&source=description`;
+                    const res = await fetch(url);
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data && (data.syncedLyrics || data.plainLyrics || data.lyrics || data.text)) {
+                            const result = { syncedLyrics: data.syncedLyrics || data.lyrics || data.text || null,
+                                plainLyrics: data.plainLyrics || data.lyrics || data.text || null, timestamp: Date
+                                    .now(), source: 'paxsenix-desc' };
+                            localStorage.setItem(cacheKey, JSON.stringify(result));
+                            return result;
+                        }
+                    }
+                } catch (e) { console.warn('Description fallback failed:', e); }
+            }
+
             return null;
         }
 
         async function fetchLyricsFromPaxsenix(videoId) {
             const url = `${API_BASE}/api/lyrics?v=${encodeURIComponent(videoId)}`;
             try {
-                const res = await fetch(url);
+                const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
                 if (!res.ok) throw new Error(`Lyrics HTTP ${res.status}`);
                 const data = await res.json();
                 return data;
