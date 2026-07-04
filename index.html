@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>⬡ HEX AI – Music Player</title>
 
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-BTK7ZL9PR8', {
+            page_path: location.pathname,
+            page_title: document.title,
+            page_referrer: document.referrer || undefined
+        });
+    </script>
+
     <script>
         (function() {
             const stored = localStorage.getItem('hexai_theme');
@@ -13,14 +26,7 @@
             document.body.classList.toggle('dark', isDark);
         })();
     </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-BTK7ZL9PR8', { page_path: location.pathname, page_title: document.title, page_referrer: document
-                    .referrer || undefined });
-    </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
     </script>
@@ -2510,6 +2516,81 @@
             font: var(--md-body-medium);
         }
 
+        /* ============================================================
+           GRID / LIST VIEW FOR YOUTUBE SEARCH RESULTS
+           ============================================================ */
+        #video-container {
+            display: grid;
+            gap: 20px;
+            padding: 20px;
+        }
+        #video-container.grid-view {
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        }
+        #video-container.grid-view .video-card {
+            display: flex;
+            flex-direction: column;
+        }
+        #video-container.list-view {
+            display: flex;
+            flex-direction: column;
+        }
+        #video-container.list-view .video-card {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        #video-container.list-view .video-card img {
+            width: 200px;
+            margin-right: 20px;
+        }
+        .video-card {
+            background: var(--md-surface-variant);
+            border-radius: var(--md-shape-md);
+            padding: 12px;
+            transition: all var(--md-transition);
+            border: 1px solid var(--md-outline-variant);
+        }
+        .video-card:hover {
+            box-shadow: var(--md-elevation2);
+            transform: translateY(-2px);
+        }
+        .video-card img {
+            width: 100%;
+            border-radius: var(--md-shape-sm);
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+        .video-card .video-info h3 {
+            font-size: 0.95rem;
+            margin: 8px 0 4px;
+            color: var(--md-on-surface);
+        }
+        .video-card .video-info a {
+            color: var(--md-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+        .video-card .video-info a:hover {
+            text-decoration: underline;
+        }
+        .view-controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .view-controls .md-button {
+            padding: 6px 16px;
+            font-size: 0.8rem;
+        }
+        .view-controls .md-button.active {
+            background: var(--md-primary);
+            color: var(--md-on-primary);
+        }
+
         /* ===== Toast ===== */
         .toast-container {
             position: fixed;
@@ -2795,6 +2876,11 @@
                                         <ul id="songList"></ul>
                                     </div>
                                     <div id="youtubeSearchSection" style="margin-top:8px;">
+                                        <!-- View Controls -->
+                                        <div class="view-controls">
+                                            <button class="md-button filled" id="gridViewBtn" onclick="setView('grid')">Grid View</button>
+                                            <button class="md-button" id="listViewBtn" onclick="setView('list')">List View</button>
+                                        </div>
                                         <div class="search-input-group">
                                             <input type="text" id="youtubeSearchInput" placeholder="Search YouTube for songs..." />
                                             <button id="youtubeSearchBtn"><i class="fas fa-search"></i> Search</button>
@@ -2827,7 +2913,6 @@
                 <!-- OFFLINE MP3 SECTION -->
                 <div class="music-section" id="offline-section">
                     <div class="offline-container">
-                        <!-- Upload -->
                         <div class="offline-upload-area" id="offlineUploadArea">
                             <div class="offline-upload-text">
                                 <i class="fa-regular fa-file-audio"></i>
@@ -2843,19 +2928,13 @@
                                 <input type="file" id="offlineFileInput" class="offline-file-input" accept=".mp3,.wav,.ogg,.m4a,.flac" multiple>
                             </div>
                         </div>
-
-                        <!-- Current Song -->
                         <div class="offline-current-song" id="offlineCurrentSong">
                             <div class="offline-song-title" id="offlineSongTitle">
                                 <i class="fa-regular fa-circle-play"></i> No song selected
                             </div>
                             <div class="offline-song-info" id="offlineSongInfo">Select a song to start playing</div>
                         </div>
-
-                        <!-- Album Art -->
                         <img id="offlineAlbumArt" class="offline-album-art" alt="" hidden>
-
-                        <!-- Controls -->
                         <div class="offline-controls">
                             <button class="md-icon-button" data-action="prev" onclick="offlinePrevSong()" title="Previous">
                                 <i class="fa-solid fa-backward-step"></i>
@@ -2881,8 +2960,6 @@
                                 <span class="shuffle-indicator"></span>
                             </button>
                         </div>
-
-                        <!-- Progress (FIXED: proper click/drag support) -->
                         <div class="offline-progress-container">
                             <div class="offline-progress-bar" id="offlineProgressBar" onclick="offlineSeekTo(event)">
                                 <div class="offline-progress-fill" id="offlineProgressFill"></div>
@@ -2892,15 +2969,11 @@
                                 <span id="offlineTotalTime">0:00</span>
                             </div>
                         </div>
-
-                        <!-- Volume -->
                         <div class="offline-volume-container">
                             <i class="fa-solid fa-volume-low"></i>
                             <input type="range" class="offline-volume-slider" id="offlineVolumeSlider" min="0" max="100" value="50">
                             <i class="fa-solid fa-volume-high"></i>
                         </div>
-
-                        <!-- Playlist -->
                         <div class="offline-playlist">
                             <div class="offline-playlist-title">
                                 <i class="fa-regular fa-list"></i> Offline Playlist
@@ -3249,6 +3322,7 @@
             offlineAnalyserData: null,
             offlineVisualizerRaf: null,
             offlineVisualizerActive: false,
+            searchView: 'grid',
         };
 
         let player = null;
@@ -4115,6 +4189,11 @@
         const playlistImportInput = document.getElementById('playlistImportInput');
         const importPlaylistBtn = document.getElementById('importPlaylistBtn');
         const sponsorToggle = document.getElementById('sponsorBlockToggle');
+        const gridViewBtn = document.getElementById('gridViewBtn');
+        const listViewBtn = document.getElementById('listViewBtn');
+        const videoContainer = document.getElementById('video-container');
+
+        let YT_API_KEY = '';
 
         function loadPlaylist() {
             const stored = localStorage.getItem('youtubeMusicPlaylist');
@@ -5155,6 +5234,306 @@
         }
 
         // ════════════════════════════════════════════════════════════════
+        //  YOUTUBE SEARCH – GRID / LIST VIEW
+        // ════════════════════════════════════════════════════════════════
+
+        function setView(view) {
+            STATE.searchView = view;
+            if (videoContainer) {
+                videoContainer.className = view === 'grid' ? 'grid-view' : 'list-view';
+            }
+            gridViewBtn.classList.toggle('filled', view === 'grid');
+            gridViewBtn.classList.toggle('md-button', true);
+            listViewBtn.classList.toggle('filled', view === 'list');
+            listViewBtn.classList.toggle('md-button', true);
+            localStorage.setItem('hexai_search_view', view);
+        }
+
+        // Load saved view preference
+        const savedView = localStorage.getItem('hexai_search_view') || 'grid';
+        setView(savedView);
+
+        const searchCache = JSON.parse(localStorage.getItem('ytSearchCache') || '{}');
+        const CACHE_EXPIRY = 3600000;
+
+        function cacheSearchResults(term, results) {
+            searchCache[term] = { results, timestamp: Date.now() };
+            localStorage.setItem('ytSearchCache', JSON.stringify(searchCache));
+        }
+
+        function getCachedResults(term) {
+            const cached = searchCache[term];
+            if (cached && (Date.now() - cached.timestamp < CACHE_EXPIRY)) return cached.results;
+            return null;
+        }
+
+        async function searchYouTube() {
+            const term = youtubeSearchInput?.value?.trim();
+            if (!term) {
+                showToast('Please enter a search term.', 'info');
+                return;
+            }
+            searchResultsList.innerHTML = '';
+            searchError.classList.add('d-none');
+            searchResults.classList.add('d-none');
+
+            const cached = getCachedResults(term);
+            if (cached) { displaySearchResults(cached); return; }
+
+            searchLoading.classList.remove('d-none');
+            try {
+                // First try Paxsenix API
+                const data = await searchYouTubeViaPaxsenix(term);
+                searchLoading.classList.add('d-none');
+                if (data && data.items && data.items.length > 0) {
+                    cacheSearchResults(term, data);
+                    searchResults.classList.remove('d-none');
+                    displaySearchResults(data);
+                    return;
+                }
+            } catch (e) { console.warn('Paxsenix search failed, falling back to YouTube API:', e); }
+
+            // Fallback to YouTube Data API v3
+            const YT_KEY = STATE.settings.ytApiKey || '';
+            if (!YT_KEY || YT_KEY.length < 10) {
+                searchError.innerHTML =
+                    `<i class="fas fa-exclamation-circle"></i> YouTube API Key not configured. Please set it in Settings.`;
+                searchError.classList.remove('d-none');
+                searchLoading.classList.add('d-none');
+                return;
+            }
+            try {
+                const url =
+                    `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(term)}&type=video&maxResults=12&key=${YT_KEY}`;
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                cacheSearchResults(term, data);
+                searchLoading.classList.add('d-none');
+                searchResults.classList.remove('d-none');
+                displaySearchResults(data);
+            } catch (e) {
+                searchLoading.classList.add('d-none');
+                searchError.innerHTML = `<i class="fas fa-exclamation-circle"></i> Search failed: ${e.message}`;
+                searchError.classList.remove('d-none');
+            }
+        }
+
+        async function searchYouTubeViaPaxsenix(query) {
+            const url = `${API_BASE}/youtube/search?q=${encodeURIComponent(query)}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`Search HTTP ${res.status}`);
+            const data = await res.json();
+            return data;
+        }
+
+        function displaySearchResults(data) {
+            searchResults.classList.remove('d-none');
+            const items = data.items || data.data || [];
+            if (items && items.length > 0) {
+                // Apply current view
+                const viewClass = STATE.searchView === 'grid' ? 'grid-view' : 'list-view';
+                videoContainer.className = viewClass;
+
+                items.forEach(item => {
+                    const videoId = item.id?.videoId || item.id || item.videoId;
+                    const title = item.snippet?.title || item.title || item.name || 'Unknown';
+                    const channelTitle = item.snippet?.channelTitle || item.author || item.channel || 'Unknown';
+                    const thumbnail = item.snippet?.thumbnails?.high?.url || item.thumbnail || item.thumb ||
+                        'https://via.placeholder.com/120';
+                    if (!videoId) return;
+                    const div = document.createElement('div');
+                    div.className = 'video-card';
+                    div.innerHTML = `
+                        <img src="${thumbnail}" alt="${title}" loading="lazy">
+                        <div class="video-info">
+                            <h3>${title}</h3>
+                            <p style="font-size:0.8rem;color:var(--md-on-surface-variant);">${channelTitle}</p>
+                            <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">Watch Video</a>
+                            <button class="add-from-search-btn" data-video-id="${videoId}" 
+                                    data-song-title="${title.replace(/"/g, '&quot;')}" 
+                                    data-author-name="${channelTitle.replace(/"/g, '&quot;')}" 
+                                    data-album-art="${thumbnail}"
+                                    style="display:block;margin-top:6px;padding:4px 12px;border-radius:var(--md-shape-full);border:none;background:var(--md-primary);color:var(--md-on-primary);cursor:pointer;font-weight:500;font-size:0.8rem;">
+                                <i class="fas fa-plus"></i> Add to Playlist
+                            </button>
+                        </div>
+                    `;
+                    searchResultsList.appendChild(div);
+                });
+                searchResultsList.querySelectorAll('.add-from-search-btn').forEach(btn => {
+                    btn.addEventListener('click', addSongFromSearch);
+                });
+            } else {
+                searchResultsList.innerHTML = `<p class="text-center text-muted">No results found.</p>`;
+            }
+        }
+
+        function addSongFromSearch(e) {
+            const btn = e.currentTarget;
+            const vid = btn.dataset.videoId;
+            const title = btn.dataset.songTitle;
+            const author = btn.dataset.authorName;
+            const art = btn.dataset.albumArt;
+            if (STATE.playlist.some(s => s.videoId === vid)) {
+                showToast('This song is already in your playlist!', 'info');
+                return;
+            }
+            const song = { videoId: vid, songName: title, authorName: author, albumArt: art };
+            STATE.playlist.push(song);
+            savePlaylist();
+            renderPlaylist(STATE.playlist);
+            if (STATE.playlist.length === 1) loadNewVideo(vid, art, song);
+            showToast('Added to playlist!', 'success');
+        }
+
+        youtubeSearchBtn?.addEventListener('click', searchYouTube);
+        youtubeSearchInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') searchYouTube(); });
+
+        async function importPlaylistFromUrl(overrideUrl = null) {
+            let input = overrideUrl || playlistImportInput.value.trim();
+            if (!input) { showToast('Please enter a YouTube Music playlist URL or ID.', 'error'); return; }
+            let playlistId = input;
+            const match = input.match(/[&?]list=([^&]+)/);
+            if (match) playlistId = match[1];
+            else if (input.includes('/playlist?list=')) {
+                const p = input.split('list=')[1]?.split('&')[0];
+                if (p) playlistId = p;
+            }
+            const YT_KEY = STATE.settings.ytApiKey || '';
+            if (!YT_KEY || YT_KEY.length < 10) { showToast('YouTube API Key required. Set it in Settings.', 'error'); return; }
+            importPlaylistBtn.disabled = true;
+            importPlaylistBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            try {
+                const url =
+                    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${YT_KEY}`;
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                if (!data.items || data.items.length === 0) { showToast('No items found in this playlist.', 'error'); return; }
+                let added = 0;
+                for (const item of data.items) {
+                    const vid = item.snippet.resourceId.videoId;
+                    if (!vid) continue;
+                    if (STATE.playlist.some(s => s.videoId === vid)) continue;
+                    const title = item.snippet.title;
+                    const author = item.snippet.videoOwnerChannelTitle || item.snippet.channelTitle || 'Unknown';
+                    const art = item.snippet.thumbnails?.high?.url || item.snippet.thumbnails?.default?.url ||
+                        'https://via.placeholder.com/300';
+                    STATE.playlist.push({ videoId: vid, songName: title, authorName: author, albumArt: art });
+                    added++;
+                }
+                if (added === 0) { showToast('All songs already in playlist.', 'info'); } else {
+                    savePlaylist();
+                    renderPlaylist(STATE.playlist);
+                    showToast(`Imported ${added} songs!`, 'success');
+                    if (STATE.playlist.length === added && added > 0) {
+                        const first = STATE.playlist[0];
+                        loadNewVideo(first.videoId, first.albumArt, first);
+                    }
+                }
+            } catch (e) { showToast('Import failed: ' + e.message, 'error'); } finally {
+                importPlaylistBtn.disabled = false;
+                importPlaylistBtn.innerHTML = '<i class="fas fa-import"></i> Import';
+            }
+        }
+
+        importPlaylistBtn?.addEventListener('click', () => importPlaylistFromUrl());
+
+        async function autoImportDefaultPlaylist() {
+            const defaultUrl = 'https://music.youtube.com/playlist?list=PLw-ydWKI15cpWj-H499Ui_2UdCubVNAcK';
+            if (STATE.playlist.length === 0 && !localStorage.getItem('defaultPlaylistImported')) {
+                showToast('Importing default playlist...', 'info');
+                if (playlistImportInput) playlistImportInput.value = defaultUrl;
+                await importPlaylistFromUrl(defaultUrl);
+            }
+        }
+
+        searchPlaylistInput?.addEventListener('input', function() {
+            const term = this.value.toLowerCase();
+            clearPlaylistSearchBtn?.classList.toggle('d-none', term.trim().length === 0);
+            const filtered = STATE.playlist.filter(s =>
+                s.songName.toLowerCase().includes(term) || s.authorName.toLowerCase().includes(term)
+            );
+            renderPlaylist(filtered);
+        });
+        clearPlaylistSearchBtn?.addEventListener('click', function() {
+            searchPlaylistInput.value = '';
+            this.classList.add('d-none');
+            renderPlaylist(STATE.playlist);
+            searchPlaylistInput.focus();
+        });
+
+        showSongListBtn?.addEventListener('click', function() {
+            if (!songListContainer.classList.contains('d-none')) return;
+            songListContainer.classList.remove('d-none');
+            playlistSearchContainer.classList.remove('d-none');
+            lyricsContainer.classList.add('d-none');
+            this.classList.add('active');
+            this.classList.remove('btn-outline-primary');
+            showLyricsBtn.classList.remove('active');
+            showLyricsBtn.classList.add('btn-outline-primary');
+        });
+        showLyricsBtn?.addEventListener('click', function() {
+            if (!lyricsContainer.classList.contains('d-none')) return;
+            lyricsContainer.classList.remove('d-none');
+            songListContainer.classList.add('d-none');
+            playlistSearchContainer.classList.add('d-none');
+            this.classList.add('active');
+            this.classList.remove('btn-outline-primary');
+            showSongListBtn.classList.remove('active');
+            showSongListBtn.classList.add('btn-outline-primary');
+        });
+
+        window.onYouTubeIframeAPIReady = function() {
+            console.log('⬡ YouTube IFrame API ready');
+            if (STATE.playlist.length === 0) return;
+            let videoId = selectedVideoId;
+            if (!videoId) { const first = STATE.playlist[0];
+                videoId = first.videoId;
+                selectedVideoId = videoId; }
+            const song = STATE.playlist.find(s => s.videoId === videoId) || STATE.playlist[0];
+            if (!player) {
+                playerContainer.innerHTML = `<div id="player"></div>`;
+                player = new YT.Player('player', {
+                    videoId: videoId,
+                    playerVars: { autoplay: 0, controls: 0, modestbranding: 1, showinfo: 0, rel: 0, fs: 0,
+                        iv_load_policy: 3, start: 0 },
+                    events: {
+                        onReady: (e) => {
+                            e.target.setVolume(currentVolume);
+                            updateVolumeUI(currentVolume);
+                            if (song) {
+                                const art = document.getElementById('albumArt');
+                                if (song.albumArt && isValidImageUrl(song.albumArt)) art.src = song
+                                .albumArt;
+                                const titleEl = document.querySelector("#nowPlaying .song-title");
+                                const authorEl = document.querySelector("#nowPlaying .author-name");
+                                if (titleEl) titleEl.textContent = removeArtistFromTitle(song.songName, song
+                                    .authorName);
+                                if (authorEl) authorEl.textContent = song.authorName;
+                                loadLyricsFor(song.songName, song.authorName, videoId);
+                            }
+                            setTimeout(updateProgressBar, 500);
+                            applyAlbumArtDisplayMode();
+                            if (SB.enabled) SB.start(videoId);
+                        },
+                        onStateChange: handlePlayerStateChange,
+                        onError: handleVideoError
+                    }
+                });
+            } else {
+                if (player.loadVideoById) { player.loadVideoById(videoId);
+                    player.setVolume(currentVolume); }
+                if (SB.enabled) SB.start(videoId);
+            }
+            renderPlaylist(STATE.playlist);
+            document.querySelectorAll('#songList li').forEach(el => {
+                if (el.dataset.video === videoId) el.classList.add('selected');
+            });
+        };
+
+        // ════════════════════════════════════════════════════════════════
         //  OFFLINE MP3 PLAYER – FIXED progress bar and playback
         // ════════════════════════════════════════════════════════════════
 
@@ -5163,7 +5542,6 @@
         offlineAudio.style.display = 'none';
         document.body.appendChild(offlineAudio);
 
-        // ─── Offline Render ───
         function offlineRenderPlaylist() {
             const container = document.getElementById('offlinePlaylistContainer');
             if (STATE.offlinePlaylist.length === 0) {
@@ -5187,7 +5565,6 @@
             container.innerHTML = html;
         }
 
-        // ─── Offline Load Song ───
         function offlineLoadSong(index) {
             if (index < 0 || index >= STATE.offlinePlaylist.length) return;
             STATE.offlineCurrentSongIndex = index;
@@ -5210,7 +5587,6 @@
                     document.getElementById('offlinePlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
                 });
             }
-            // Reset progress
             document.getElementById('offlineProgressFill').style.width = '0%';
             document.getElementById('offlineCurrentTime').textContent = '0:00';
             if (offlineAudio.duration) {
@@ -5227,7 +5603,6 @@
             }
         }
 
-        // ─── Offline Toggle Play ───
         function offlineTogglePlay() {
             if (STATE.offlinePlaylist.length === 0) {
                 showToast('Add some songs first!', 'info');
@@ -5263,7 +5638,6 @@
             offlineUpdateTabTitle();
         }
 
-        // ─── Offline Repeat ───
         function offlineToggleRepeat() {
             STATE.offlineIsRepeating = !STATE.offlineIsRepeating;
             document.getElementById('offlineRepeatBtn').classList.toggle('active', STATE.offlineIsRepeating);
@@ -5271,7 +5645,6 @@
             offlineUpdateSongInfo();
         }
 
-        // ─── Offline Shuffle ───
         function offlineToggleShuffle() {
             STATE.offlineIsShuffling = !STATE.offlineIsShuffling;
             document.getElementById('offlineShuffleBtn').classList.toggle('active', STATE.offlineIsShuffling);
@@ -5321,7 +5694,6 @@
             offlineNextSong();
         }
 
-        // ─── Offline Prev ───
         function offlinePrevSong() {
             if (STATE.offlinePlaylist.length === 0) return;
             if (STATE.offlineIsShuffling && STATE.offlinePlayHistory.length > 1) {
@@ -5350,7 +5722,6 @@
             }
         }
 
-        // ─── Offline Next ───
         function offlineNextSong() {
             if (STATE.offlinePlaylist.length === 0) return;
             let ni;
@@ -5372,7 +5743,6 @@
             }
         }
 
-        // ─── Offline Rewind / Forward ───
         function offlineRewind15() {
             offlineAudio.currentTime = Math.max(0, offlineAudio.currentTime - 15);
         }
@@ -5381,7 +5751,6 @@
             offlineAudio.currentTime = Math.min(offlineAudio.duration || 0, offlineAudio.currentTime + 15);
         }
 
-        // ─── Offline Seek (FIXED: works with click and drag) ───
         let offlineIsDragging = false;
 
         function offlineSeekTo(e) {
@@ -5395,7 +5764,6 @@
             }
         }
 
-        // Add drag support for offline progress bar
         document.addEventListener('DOMContentLoaded', function() {
             const bar = document.getElementById('offlineProgressBar');
             if (!bar) return;
@@ -5433,7 +5801,6 @@
             });
         });
 
-        // ─── Offline Update Progress ───
         function offlineUpdateProgress() {
             if (offlineAudio.duration) {
                 const pct = (offlineAudio.currentTime / offlineAudio.duration) * 100;
@@ -5443,7 +5810,6 @@
             }
         }
 
-        // ─── Offline Update Song Info ───
         function offlineUpdateSongInfo() {
             if (STATE.offlineCurrentSongIndex !== -1) {
                 const modes = [];
@@ -5458,7 +5824,6 @@
             }
         }
 
-        // ─── Offline Format Time ───
         function offlineFormatTime(seconds) {
             if (!seconds || isNaN(seconds) || seconds < 0) return '0:00';
             const m = Math.floor(seconds / 60);
@@ -5466,7 +5831,6 @@
             return `${m}:${s.toString().padStart(2, '0')}`;
         }
 
-        // ─── Offline Remove Song ───
         function offlineRemoveSong(event, index) {
             event.stopPropagation();
             URL.revokeObjectURL(STATE.offlinePlaylist[index].url);
@@ -5494,7 +5858,6 @@
             offlineRenderPlaylist();
         }
 
-        // ─── Offline Add Files ───
         function offlineAddFilesToPlaylist(files) {
             const audioFiles = files.filter(file =>
                 (file.type.startsWith('audio/') ||
@@ -5540,7 +5903,6 @@
             showToast(`Added ${added} song(s)!`, 'success');
         }
 
-        // ─── Offline Clear ───
         function openOfflineClearConfirm() {
             if (STATE.offlinePlaylist.length === 0) return;
             if (confirm('Clear all offline songs? This cannot be undone.')) {
@@ -5563,7 +5925,6 @@
             }
         }
 
-        // ─── Offline Event Listeners ───
         offlineAudio.addEventListener('loadedmetadata', () => {
             offlineUpdateSongInfo();
             offlineUpdateProgress();
@@ -5596,7 +5957,6 @@
             offlineAddFilesToPlaylist(files);
         });
 
-        // ─── Offline Init ───
         function offlineInit() {
             offlineRenderPlaylist();
             if (STATE.offlineCurrentSongIndex !== -1 && STATE.offlinePlaylist[STATE.offlineCurrentSongIndex]) {
@@ -5874,13 +6234,13 @@
                 if (typeof window.onYouTubeIframeAPIReady === 'function') window.onYouTubeIframeAPIReady();
             }
 
+            autoImportDefaultPlaylist();
+
             initImageGenerator();
             initVideoGenerator();
 
-            // Offline init
             offlineInit();
 
-            // Ensure Music tab default: YouTube active
             switchMusicTab('yt');
 
             console.log('⬡ HEX AI — Material 3 Edition with Enhanced Offline MP3 Player ⬡');
@@ -5897,7 +6257,7 @@
             if (offlineAudio) offlineAudio.pause();
         });
 
-        // Expose offline functions globally
+        // Expose functions globally
         window.offlineTogglePlay = offlineTogglePlay;
         window.offlinePrevSong = offlinePrevSong;
         window.offlineNextSong = offlineNextSong;
@@ -5910,6 +6270,7 @@
         window.offlineSeekTo = offlineSeekTo;
         window.openOfflineClearConfirm = openOfflineClearConfirm;
         window.applyTheme = applyTheme;
+        window.setView = setView;
         window.switchMusicTab = switchMusicTab;
         window.switchPanel = switchPanel;
         window.toggleSettings = toggleSettings;
@@ -5923,6 +6284,7 @@
         window.sendMessage = sendMessage;
         window.renderFilePreview = renderFilePreview;
         window.offlineAddFilesToPlaylist = offlineAddFilesToPlaylist;
+        window.searchYouTube = searchYouTube;
     </script>
 
 </body>
