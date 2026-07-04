@@ -3118,13 +3118,6 @@
                                             <button class="btn btn-outline-primary" data-mode="video">Video</button>
                                         </div>
                                     </div>
-                                    <div class="theme-toggle" style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--md-on-surface-variant);">
-                                        <span>Dynamic Theme</span>
-                                        <label class="switch">
-                                            <input type="checkbox" id="dynamicThemeToggle" checked />
-                                            <span class="slider"></span>
-                                        </label>
-                                    </div>
                                 </div>
                                 <div id="errorMessage" style="display:none;"></div>
                                 <div id="playerContainer" style="display:none;">
@@ -3349,12 +3342,20 @@
             <div class="settings-section" id="geminiKeySection" style="display:none;">
                 <div class="section-title"><i class="fas fa-key"></i> Google Gemini API Key</div>
                 <input type="password" id="geminiKeyInput" placeholder="Enter Gemini API key..." />
-                <div class="section-title" style="margin-top:8px;"><i class="fas fa-cubes"></i> Model</div>
+                <div class="section-title" style="margin-top:8px;"><i class="fas fa-cubes"></i> Model (free models)</div>
                 <select id="geminiModelSelect">
                     <option value="gemini-3.1-flash-lite">gemini-3.1-flash-lite</option>
-                    <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
-                    <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+                    <option value="gemini-3-flash-preview">gemini-3-flash-preview</option>
+                    <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview</option>
+                    <option value="gemini-2.5-flash-image">gemini-2.5-flash-image</option>
+                    <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+                    <option value="gemini-flash-latest">gemini-flash-latest</option>
+                    <option value="gemini-flash-lite-latest">gemini-flash-lite-latest</option>
+                    <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</option>
+                    <option value="gemini-2.0-flash-lite">gemini-2.0-flash-lite</option>
+                    <option value="gemini-robotics-er-1.6-preview">gemini-robotics-er-1.6-preview</option>
                 </select>
+                <div class="settings-note">Select a Gemini model. Make sure your API key has access to the chosen model.</div>
             </div>
 
             <div class="settings-section">
@@ -3577,7 +3578,7 @@
 
     <script>
         // =============================================================
-        //  THEME ENGINE – Complete with presets
+        //  THEME ENGINE – Complete with presets (no toggle in YT section)
         // =============================================================
 
         (() => {
@@ -3585,27 +3586,12 @@
             const TRANSITION_MS = 320;
 
             let albumArtEl = null;
-            let dynamicEnabled = true;
+            let dynamicEnabled = true; // always on (no toggle)
 
             const ThemeEngine = {
                 init(options = {}) {
                     albumArtEl = options.albumArtEl || document.getElementById('albumArt');
-                    const toggle = document.getElementById('dynamicThemeToggle');
-                    if (toggle) {
-                        dynamicEnabled = toggle.checked;
-                        toggle.addEventListener('change', () => {
-                            dynamicEnabled = toggle.checked;
-                            if (!dynamicEnabled) {
-                                this.clearDynamicPalette();
-                                document.body.classList.remove('dynamic-theme-active');
-                            } else {
-                                const img = albumArtEl ? albumArtEl.src : null;
-                                if (img && img !== 'https://via.placeholder.com/300') {
-                                    this.applyVibrantFromUrl(img);
-                                }
-                            }
-                        });
-                    }
+                    // dynamicEnabled stays true – no toggle to read
                     // Load saved theme appearance
                     const savedTheme = localStorage.getItem('hexai_theme_appearance') || 'default';
                     const sel = document.getElementById('themeAppearanceSelect');
@@ -3620,13 +3606,12 @@
                     if (theme === 'default') {
                         root.removeAttribute('data-theme');
                         document.body.classList.remove('dynamic-theme-active');
-                        // Re-apply dynamic if enabled
+                        // Re-apply dynamic if enabled (always on)
                         if (dynamicEnabled && albumArtEl && albumArtEl.src && albumArtEl.src !== 'https://via.placeholder.com/300') {
                             this.applyVibrantFromUrl(albumArtEl.src);
                         }
                     } else {
                         root.setAttribute('data-theme', theme);
-                        // Sync data-mode with dark/light
                         const isDark = document.body.classList.contains('dark');
                         root.setAttribute('data-mode', isDark ? 'dark' : 'light');
                         document.body.classList.add('dynamic-theme-active');
@@ -3645,8 +3630,6 @@
 
                 setDynamicEnabled(enabled) {
                     dynamicEnabled = Boolean(enabled);
-                    const toggle = document.getElementById('dynamicThemeToggle');
-                    if (toggle) toggle.checked = dynamicEnabled;
                 },
 
                 async applyVibrantFromImage(img) {
@@ -4014,6 +3997,50 @@
         }
 
         // =============================================================
+        //  OFFLINE PLAYLIST PERSISTENCE (unlimited songs)
+        // =============================================================
+
+        function saveOfflinePlaylist() {
+            try {
+                localStorage.setItem('hexai_offline_playlist', JSON.stringify(STATE.offlinePlaylist));
+                localStorage.setItem('hexai_offline_current_index', String(STATE.offlineCurrentSongIndex));
+                localStorage.setItem('hexai_offline_is_playing', String(STATE.offlineIsPlaying));
+                localStorage.setItem('hexai_offline_is_repeating', String(STATE.offlineIsRepeating));
+                localStorage.setItem('hexai_offline_is_shuffling', String(STATE.offlineIsShuffling));
+                localStorage.setItem('hexai_offline_play_history', JSON.stringify(STATE.offlinePlayHistory));
+            } catch (e) {
+                console.warn('saveOfflinePlaylist error:', e);
+            }
+        }
+
+        function loadOfflinePlaylist() {
+            try {
+                const stored = localStorage.getItem('hexai_offline_playlist');
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed)) {
+                        STATE.offlinePlaylist = parsed;
+                    }
+                }
+                const index = localStorage.getItem('hexai_offline_current_index');
+                if (index !== null) STATE.offlineCurrentSongIndex = parseInt(index, 10);
+                const playing = localStorage.getItem('hexai_offline_is_playing');
+                if (playing !== null) STATE.offlineIsPlaying = playing === 'true';
+                const repeating = localStorage.getItem('hexai_offline_is_repeating');
+                if (repeating !== null) STATE.offlineIsRepeating = repeating === 'true';
+                const shuffling = localStorage.getItem('hexai_offline_is_shuffling');
+                if (shuffling !== null) STATE.offlineIsShuffling = shuffling === 'true';
+                const history = localStorage.getItem('hexai_offline_play_history');
+                if (history) {
+                    const parsed = JSON.parse(history);
+                    if (Array.isArray(parsed)) STATE.offlinePlayHistory = parsed;
+                }
+            } catch (e) {
+                console.warn('loadOfflinePlaylist error:', e);
+            }
+        }
+
+        // =============================================================
         //  THEME & SETTINGS
         // =============================================================
 
@@ -4025,7 +4052,6 @@
             const sel = document.getElementById('themeSelect');
             if (sel) sel.value = theme;
             localStorage.setItem('hexai_theme_pref', theme);
-            // Sync data-mode with theme appearance
             const root = document.documentElement;
             const appearance = root.getAttribute('data-theme');
             if (appearance) {
@@ -4145,7 +4171,6 @@
                 STATE.settings.geminiModel = sel.value;
             }
             applyTheme(STATE.settings.theme);
-            // Apply theme appearance
             if (window.ThemeEngine) {
                 window.ThemeEngine.applyThemeAppearance(STATE.settings.themeAppearance || 'default');
             }
@@ -4491,7 +4516,7 @@
             if (!apiKey || apiKey.length < 8) throw new Error('Gemini API key not configured.');
             const model = STATE.settings.geminiModel || 'gemini-3.1-flash-lite';
             const url =
-                `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
+                `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
             const body = { contents: [{ parts: [{ text: promptText }] }] };
             const resp = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON
                     .stringify(body) });
@@ -4505,7 +4530,7 @@
             if (!apiKey || apiKey.length < 8) throw new Error('Gemini API key not configured.');
             const model = STATE.settings.geminiModel || 'gemini-3.1-flash-lite';
             const url =
-                `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
+                `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
             const parts = [{ text: promptText || 'Describe this image in detail.' }];
             if (imageBase64Data) {
                 parts.push({
@@ -6034,7 +6059,7 @@
         };
 
         // =============================================================
-        //  OFFLINE MP3 PLAYER
+        //  OFFLINE MP3 PLAYER (with localStorage persistence)
         // =============================================================
 
         const offlineAudio = document.createElement('audio');
@@ -6057,6 +6082,10 @@
         const offlineFileInput = document.getElementById('offlineFileInput');
         const offlineAlbumArt = document.getElementById('offlineAlbumArt');
 
+        // Load offline playlist from localStorage
+        loadOfflinePlaylist();
+
+        // Sync STATE.offlinePlaylist with the loaded data
         let offlinePlaylist = STATE.offlinePlaylist;
         let offlineCurrentSongIndex = STATE.offlineCurrentSongIndex;
         let offlineIsPlaying = STATE.offlineIsPlaying;
@@ -6111,9 +6140,11 @@
                 tempAudio.addEventListener('loadedmetadata', () => {
                     song.duration = offlineFormatTime(tempAudio.duration);
                     offlineRenderPlaylist();
+                    saveOfflinePlaylist();
                 });
             });
             offlineRenderPlaylist();
+            saveOfflinePlaylist();
             if (offlineCurrentSongIndex === -1 && offlinePlaylist.length > 0) {
                 offlineLoadSong(0);
             }
@@ -6147,6 +6178,7 @@
             offlineUpdateSongInfo();
             offlineUpdateTabTitle();
             offlineRenderPlaylist();
+            saveOfflinePlaylist();
             if (offlineIsPlaying) {
                 offlineAudio.play();
             }
@@ -6155,7 +6187,7 @@
         function offlineUpdateTabTitle() {
             if (offlineCurrentSongIndex !== -1 && offlinePlaylist[offlineCurrentSongIndex]) {
                 const song = offlinePlaylist[offlineCurrentSongIndex];
-                const playingStatus = offlineIsPlaying ? '▶️' : '⏸️';
+                const playingStatus = offlineIsPlaying ? '▶️' : '◼';
                 document.title = `${playingStatus} ${song.name} - Music Player`;
             } else {
                 document.title = '🎵 Music Player';
@@ -6176,6 +6208,7 @@
                 offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
                 offlineIsPlaying = true;
             }
+            saveOfflinePlaylist();
             offlineUpdateTabTitle();
         }
 
@@ -6185,6 +6218,7 @@
             if (offlineAudio) {
                 offlineAudio.loop = offlineIsRepeating;
             }
+            saveOfflinePlaylist();
             offlineUpdateSongInfo();
         }
 
@@ -6204,6 +6238,7 @@
             } else {
                 offlinePlayHistory = [];
             }
+            saveOfflinePlaylist();
             offlineUpdateSongInfo();
         }
 
@@ -6317,6 +6352,7 @@
                 offlineCurrentSongIndex--;
             }
             offlineRenderPlaylist();
+            saveOfflinePlaylist();
         }
 
         function offlineFormatTime(seconds) {
@@ -6405,6 +6441,7 @@
             offlineCurrentTime.textContent = '0:00';
             offlineTotalTime.textContent = '0:00';
             offlineRenderPlaylist();
+            saveOfflinePlaylist();
             offlineUpdateTabTitle();
         }
 
@@ -6660,53 +6697,50 @@
             initImageGenerator();
             initVideoGenerator();
 
+            // Render offline playlist from loaded state
             offlineRenderPlaylist();
+            if (offlineCurrentSongIndex !== -1 && offlinePlaylist.length > 0) {
+                const song = offlinePlaylist[offlineCurrentSongIndex];
+                if (song) {
+                    offlineAudio.src = song.url;
+                    offlineSongTitle.textContent = song.name;
+                    offlineUpdateSongInfo();
+                    if (offlineIsPlaying) {
+                        offlineAudio.play();
+                        offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                    }
+                }
+            }
             switchMusicTab('yt');
 
-            // INIT THEME ENGINE
+            // INIT THEME ENGINE (no toggle)
             if (window.ThemeEngine) {
                 const savedAppearance = STATE.settings.themeAppearance || localStorage.getItem('hexai_theme_appearance') ||
                     'default';
                 ThemeEngine.init({
                     albumArtEl: document.getElementById('albumArt')
                 });
-                // Apply saved appearance
                 const appSel = document.getElementById('themeAppearanceSelect');
                 if (appSel) {
                     appSel.value = savedAppearance;
                     ThemeEngine.applyThemeAppearance(savedAppearance);
                 }
-                // Sync data-mode
                 ThemeEngine.syncMode();
 
                 const currentArt = document.getElementById('albumArt');
                 if (currentArt && currentArt.src && currentArt.src !== 'https://via.placeholder.com/300') {
                     ThemeEngine.applyVibrantFromUrl(currentArt.src);
                 }
-
-                const dynamicToggle = document.getElementById('dynamicThemeToggle');
-                if (dynamicToggle) {
-                    dynamicToggle.addEventListener('change', function() {
-                        ThemeEngine.setDynamicEnabled(this.checked);
-                        if (!this.checked) {
-                            ThemeEngine.clearDynamicPalette();
-                        } else {
-                            const art = document.getElementById('albumArt');
-                            if (art && art.src && art.src !== 'https://via.placeholder.com/300') {
-                                ThemeEngine.applyVibrantFromUrl(art.src);
-                            }
-                        }
-                    });
-                }
             }
 
-            console.log('⬡ HEX AI — Material 3 Edition with Theme Appearance System ⬡');
+            console.log('⬡ HEX AI — Dynamic theme toggle removed from YouTube Music section ⬡');
         }
 
         document.addEventListener('DOMContentLoaded', init);
 
         window.addEventListener('beforeunload', function() {
             saveState();
+            saveOfflinePlaylist();
             if (STATE.progressInterval) clearInterval(STATE.progressInterval);
             if (progressInterval) clearInterval(progressInterval);
             if (syncInterval) clearInterval(syncInterval);
