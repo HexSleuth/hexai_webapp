@@ -5,8 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>⬡ HEX AI – Music Player</title>
-    
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8">
+    </script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -17,9 +18,9 @@
 
     <script>
         (function() {
-            const stored = localStorage.getItem('dark');
+            const stored = localStorage.getItem('hexai_theme_pref');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const isDark = stored === null ? prefersDark : stored !== 'false';
+            const isDark = stored === null ? prefersDark : stored === 'dark';
             document.body.classList.toggle('dark', isDark);
         })();
     </script>
@@ -28,6 +29,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
     </script>
     <script src="https://www.youtube.com/iframe_api">
+    </script>
+
+    <!-- Color extraction libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vibrant.js/1.0.0/Vibrant.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js">
     </script>
 
     <style>
@@ -73,6 +80,26 @@
             --md-font: 'Segoe UI', system-ui, -apple-system, sans-serif;
             --md-transition: 0.2s cubic-bezier(0.2, 0, 0, 1);
             --md-nav-height: 72px;
+
+            /* Dynamic theme variables (fallback to Material) */
+            --ui-accent: var(--md-primary);
+            --ui-accent-2: var(--md-secondary);
+            --ui-progress-fill: var(--md-primary);
+            --ui-glow: rgba(103, 80, 164, 0.35);
+            --ui-bg: var(--md-background);
+            --ui-surface: var(--md-surface);
+            --ui-surface-2: var(--md-surface-variant);
+            --ui-text: var(--md-on-background);
+            --ui-text-muted: var(--md-on-surface-variant);
+            --ui-border: var(--md-outline-variant);
+            --ui-shadow: var(--md-shadow);
+            --ui-progress-bg: var(--md-outline-variant);
+            --ui-button-bg: var(--md-surface-variant);
+            --ui-button-text: var(--md-on-surface-variant);
+            --ui-button-border: var(--md-outline);
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
         }
 
         body.dark {
@@ -107,6 +134,273 @@
             --md-elevation3: 0 4px 8px 3px #0000004d, 0 1px 3px 0 #00000066;
             --md-elevation4: 0 6px 10px 4px #0000004d, 0 2px 3px 0 #00000066;
             --md-elevation5: 0 8px 12px 6px #0000004d, 0 2px 4px 0 #00000066;
+        }
+
+        /* ===== THEME PRESETS ===== */
+        [data-theme="glass"] {
+            --ui-bg: #11131a;
+            --ui-surface: rgba(24, 28, 36, 0.72);
+            --ui-surface-2: rgba(36, 42, 52, 0.7);
+            --ui-border: rgba(255, 255, 255, 0.12);
+            --ui-shadow: rgba(0, 0, 0, 0.55);
+            --ui-glow: rgba(120, 204, 255, 0.35);
+            --ui-mesh-1: rgba(88, 160, 255, 0.25);
+            --ui-mesh-2: rgba(255, 94, 125, 0.22);
+            --ui-mesh-3: rgba(108, 255, 209, 0.2);
+            --ui-control-radius: 20px;
+            --ui-play-radius: 16px;
+        }
+        [data-theme="glass"][data-mode="light"] {
+            --ui-bg: #eef3ff;
+            --ui-surface: rgba(255, 255, 255, 0.74);
+            --ui-surface-2: rgba(255, 255, 255, 0.6);
+            --ui-text: #1a2433;
+            --ui-text-muted: #5a6b82;
+            --ui-accent: #4aa3ff;
+            --ui-accent-2: #7bdcff;
+            --ui-accent-hover: #2c7ee6;
+            --ui-border: rgba(120, 160, 255, 0.35);
+            --ui-shadow: rgba(30, 60, 120, 0.12);
+            --ui-glow: rgba(90, 160, 255, 0.4);
+            --ui-button-bg: rgba(255, 255, 255, 0.9);
+            --ui-button-text: #1a2433;
+            --ui-button-border: rgba(120, 160, 255, 0.25);
+            --ui-progress-bg: rgba(120, 160, 255, 0.2);
+        }
+        [data-theme="glass"][data-mode="dark"] {
+            --ui-bg: #0f1524;
+            --ui-surface: rgba(20, 32, 52, 0.72);
+            --ui-surface-2: rgba(30, 46, 72, 0.6);
+            --ui-text: #e9f0ff;
+            --ui-text-muted: #a6b7d6;
+            --ui-accent: #6bb7ff;
+            --ui-accent-2: #9ad9ff;
+            --ui-accent-hover: #4a98e8;
+            --ui-border: rgba(120, 160, 255, 0.22);
+            --ui-shadow: rgba(0, 0, 0, 0.5);
+            --ui-glow: rgba(107, 183, 255, 0.35);
+            --ui-button-bg: rgba(255, 255, 255, 0.16);
+            --ui-button-text: #eef4ff;
+            --ui-button-border: rgba(120, 160, 255, 0.2);
+            --ui-progress-bg: rgba(120, 160, 255, 0.15);
+        }
+        [data-theme="glass"] body {
+            background: linear-gradient(135deg, #d8e7ff 0%, #c7f1ff 50%, #f0f6ff 100%);
+        }
+        [data-theme="glass"][data-mode="dark"] body {
+            background: linear-gradient(135deg, #141b2e 0%, #1d2a3f 50%, #1a2436 100%);
+        }
+
+        [data-theme="oled"] {
+            --ui-bg: #000000;
+            --ui-surface: #050505;
+            --ui-surface-2: #090909;
+            --ui-text: #f5f5f5;
+            --ui-text-muted: #8f8f8f;
+            --ui-accent: #00f5ff;
+            --ui-accent-2: #4dff9b;
+            --ui-accent-hover: #00c7cf;
+            --ui-border: #101010;
+            --ui-shadow: rgba(0, 0, 0, 0);
+            --ui-glow: rgba(0, 245, 255, 0.25);
+            --ui-progress-bg: #101010;
+            --ui-control-radius: 4px;
+            --ui-play-radius: 6px;
+        }
+        [data-theme="oled"][data-mode="light"] {
+            --ui-bg: #f0f0f0;
+            --ui-surface: #ffffff;
+            --ui-surface-2: #f5f5f5;
+            --ui-text: #111111;
+            --ui-text-muted: #666666;
+            --ui-accent: #00c7cf;
+            --ui-accent-2: #3de889;
+            --ui-accent-hover: #00aab2;
+            --ui-border: #dddddd;
+            --ui-shadow: rgba(0, 0, 0, 0.08);
+            --ui-glow: rgba(0, 199, 207, 0.2);
+            --ui-progress-bg: #e0e0e0;
+        }
+        [data-theme="oled"][data-mode="dark"] {
+            --ui-bg: #000000;
+            --ui-surface: #050505;
+            --ui-surface-2: #0a0a0a;
+            --ui-text: #f0f0f0;
+            --ui-text-muted: #888888;
+            --ui-accent: #00f5ff;
+            --ui-accent-2: #4dff9b;
+            --ui-accent-hover: #00c7cf;
+            --ui-border: #151515;
+            --ui-shadow: rgba(0, 0, 0, 0);
+            --ui-glow: rgba(0, 245, 255, 0.3);
+            --ui-progress-bg: #151515;
+        }
+
+        [data-theme="synthwave"],
+        [data-theme="synth"] {
+            --ui-accent: #2dfcff;
+            --ui-accent-2: #a7ff2f;
+            --ui-accent-hover: #14dbe0;
+            --ui-glow: rgba(45, 252, 255, 0.45);
+            --ui-timer-font: "Courier New", "Lucida Console", monospace;
+            --ui-control-radius: 8px;
+            --ui-play-radius: 10px;
+            --ui-scanline: rgba(255, 255, 255, 0.08);
+        }
+        [data-theme="synthwave"][data-mode="dark"],
+        [data-theme="synth"][data-mode="dark"] {
+            --ui-bg: #140b2d;
+            --ui-surface: #1b0f3d;
+            --ui-surface-2: #23114a;
+            --ui-text: #f9e6ff;
+            --ui-text-muted: #c7a6ff;
+            --ui-border: rgba(255, 79, 216, 0.28);
+            --ui-shadow: rgba(255, 79, 216, 0.24);
+            --ui-progress-bg: rgba(93, 255, 253, 0.2);
+            --ui-accent: #ff4fd8;
+            --ui-accent-2: #5dfffd;
+            --ui-accent-hover: #ff2bc1;
+        }
+        [data-theme="synthwave"][data-mode="light"],
+        [data-theme="synth"][data-mode="light"] {
+            --ui-bg: #f5edff;
+            --ui-surface: #ffffff;
+            --ui-surface-2: #f0e8ff;
+            --ui-text: #2b1240;
+            --ui-text-muted: #6b4b9b;
+            --ui-border: rgba(45, 252, 255, 0.35);
+            --ui-shadow: rgba(45, 252, 255, 0.22);
+            --ui-progress-bg: rgba(45, 252, 255, 0.2);
+            --ui-accent: #7b3fa0;
+            --ui-accent-2: #2dfcff;
+            --ui-accent-hover: #5d2d7a;
+        }
+
+        [data-theme="forest"] {
+            --ui-control-radius: 18px;
+            --ui-play-radius: 14px;
+        }
+        [data-theme="forest"][data-mode="light"] {
+            --ui-bg: #e8f2e2;
+            --ui-surface: #f5faf0;
+            --ui-surface-2: #edf5e6;
+            --ui-text: #1f2b22;
+            --ui-text-muted: #4f6556;
+            --ui-accent: #2f7d4a;
+            --ui-accent-2: #7fcf8a;
+            --ui-accent-hover: #256b3f;
+            --ui-border: #cfe0c8;
+            --ui-shadow: rgba(35, 70, 50, 0.18);
+            --ui-glow: rgba(90, 190, 120, 0.3);
+            --ui-progress-bg: #cfe0c8;
+            --ui-button-bg: #eaf5e6;
+            --ui-button-text: #1f2b22;
+            --ui-button-border: #b8d0b0;
+        }
+        [data-theme="forest"][data-mode="dark"] {
+            --ui-bg: #16231b;
+            --ui-surface: #1f3226;
+            --ui-surface-2: #273a2c;
+            --ui-text: #e6f3ea;
+            --ui-text-muted: #a6b8ad;
+            --ui-accent: #5ac07a;
+            --ui-accent-2: #9ee6b5;
+            --ui-accent-hover: #43a967;
+            --ui-border: #2a3f31;
+            --ui-shadow: rgba(0, 0, 0, 0.5);
+            --ui-glow: rgba(90, 190, 120, 0.35);
+            --ui-progress-bg: #2a3f31;
+            --ui-button-bg: #2d4535;
+            --ui-button-text: #e6f3ea;
+            --ui-button-border: #3a5a44;
+        }
+
+        [data-theme="cyberpunk"] {
+            --ui-control-radius: 6px;
+            --ui-play-radius: 8px;
+        }
+        [data-theme="cyberpunk"][data-mode="dark"] {
+            --ui-bg: #050806;
+            --ui-surface: #0b120f;
+            --ui-surface-2: #121c16;
+            --ui-text: #d7ffe9;
+            --ui-text-muted: #86bfa1;
+            --ui-accent: #00ff7b;
+            --ui-accent-2: #6bffb0;
+            --ui-accent-hover: #00d96a;
+            --ui-border: #0f1f17;
+            --ui-shadow: rgba(0, 0, 0, 0.7);
+            --ui-glow: rgba(0, 255, 123, 0.5);
+            --ui-progress-bg: #0f1f17;
+            --ui-button-bg: #00ff7b;
+            --ui-button-text: #04120a;
+            --ui-button-border: #00c95f;
+        }
+        [data-theme="cyberpunk"][data-mode="light"] {
+            --ui-bg: #e4fff1;
+            --ui-surface: #f1fff8;
+            --ui-surface-2: #e8fff2;
+            --ui-text: #0b1a12;
+            --ui-text-muted: #3f6b55;
+            --ui-accent: #00cc63;
+            --ui-accent-2: #63ffb0;
+            --ui-accent-hover: #00a954;
+            --ui-border: #bfe8d1;
+            --ui-shadow: rgba(10, 70, 45, 0.14);
+            --ui-glow: rgba(0, 204, 99, 0.35);
+            --ui-progress-bg: #bfe8d1;
+            --ui-button-bg: #00cc63;
+            --ui-button-text: #071510;
+            --ui-button-border: #00a954;
+        }
+
+        /* ===== THEME TRANSITION ===== */
+        .theme-transition,
+        .theme-transition * {
+            transition: background-color var(--md-transition, 0.32s),
+                color var(--md-transition, 0.32s),
+                border-color var(--md-transition, 0.32s),
+                box-shadow var(--md-transition, 0.32s),
+                fill var(--md-transition, 0.32s),
+                stroke var(--md-transition, 0.32s),
+                background var(--md-transition, 0.32s) !important;
+        }
+
+        /* ===== DYNAMIC THEME OVERRIDES ===== */
+        .dynamic-theme-active {
+            --md-primary: var(--ui-accent, var(--md-primary));
+            --md-on-primary: #ffffff;
+            --md-primary-container: var(--ui-surface-2, var(--md-primary-container));
+            --md-on-primary-container: var(--ui-accent-2, var(--md-on-primary-container));
+            --md-secondary: var(--ui-accent-2, var(--md-secondary));
+            --md-secondary-container: var(--ui-surface-2, var(--md-secondary-container));
+            --md-surface: var(--ui-surface, var(--md-surface));
+            --md-on-surface: var(--ui-text, var(--md-on-surface));
+            --md-background: var(--ui-bg, var(--md-background));
+            --md-on-background: var(--ui-text, var(--md-on-background));
+            --md-surface-variant: var(--ui-surface-2, var(--md-surface-variant));
+            --md-surface-tint: var(--ui-accent, var(--md-surface-tint));
+            --md-elevation1: 0 1px 3px 1px var(--ui-glow, #0000001f), 0 1px 2px 0 #0000003d;
+            --md-elevation2: 0 2px 6px 2px var(--ui-glow, #0000001f), 0 1px 2px 0 #0000003d;
+            --md-elevation3: 0 4px 8px 3px var(--ui-glow, #0000001f), 0 1px 3px 0 #0000003d;
+            --md-elevation4: 0 6px 10px 4px var(--ui-glow, #0000001f), 0 2px 3px 0 #0000003d;
+            --md-elevation5: 0 8px 12px 6px var(--ui-glow, #0000001f), 0 2px 4px 0 #0000003d;
+            --md-progress-fill: var(--ui-progress-fill, var(--md-primary));
+            --md-outline: var(--ui-border, var(--md-outline));
+            --md-outline-variant: var(--ui-border, var(--md-outline-variant));
+            --md-shadow: var(--ui-shadow, var(--md-shadow));
+            --md-shape-md: var(--ui-control-radius, var(--md-shape-md));
+            --md-shape-full: var(--ui-play-radius, var(--md-shape-full));
+            --md-button-bg: var(--ui-button-bg, var(--md-surface-variant));
+            --md-button-text: var(--ui-button-text, var(--md-on-surface-variant));
+            --md-button-border: var(--ui-button-border, var(--md-outline));
+        }
+        .dynamic-theme-active.dark {
+            --md-on-primary: #ffffff;
+            --md-on-primary-container: #ffffff;
+            --md-on-secondary: #ffffff;
+            --md-on-surface: var(--ui-text, #e6e0e9);
+            --md-on-background: var(--ui-text, #e6e0e9);
         }
 
         /* ===== RESET & BASE ===== */
@@ -1311,7 +1605,7 @@
             display: flex;
         }
 
-        /* ----- YOUTUBE SECTION (kept intact) ----- */
+        /* ----- YOUTUBE SECTION ----- */
         #yt-section .yt-music-container {
             width: 100%;
             max-width: 1000px;
@@ -2755,7 +3049,7 @@
             </div>
         </div>
 
-        <!-- MUSIC PANEL (NEW TABS: YOUTUBE & OFFLINE) -->
+        <!-- MUSIC PANEL -->
         <div class="panel" id="panel-music">
             <div id="musicPanel">
                 <div class="music-tabs">
@@ -2823,6 +3117,13 @@
                                             <button class="btn btn-outline-primary" data-mode="none">None</button>
                                             <button class="btn btn-outline-primary" data-mode="video">Video</button>
                                         </div>
+                                    </div>
+                                    <div class="theme-toggle" style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--md-on-surface-variant);">
+                                        <span>Dynamic Theme</span>
+                                        <label class="switch">
+                                            <input type="checkbox" id="dynamicThemeToggle" checked />
+                                            <span class="slider"></span>
+                                        </label>
                                     </div>
                                 </div>
                                 <div id="errorMessage" style="display:none;"></div>
@@ -2997,18 +3298,34 @@
     <div class="modal-overlay hidden" id="settingsOverlay">
         <div class="modal">
             <h2><i class="fas fa-cog"></i> Settings</h2>
+
             <div class="settings-section">
-                <div class="section-title"><i class="fas fa-adjust"></i> Theme</div>
+                <div class="section-title"><i class="fas fa-palette"></i> Theme Appearance</div>
+                <select id="themeAppearanceSelect">
+                    <option value="default">Default (Material 3)</option>
+                    <option value="glass">Glass</option>
+                    <option value="oled">OLED</option>
+                    <option value="synthwave">Synthwave</option>
+                    <option value="forest">Forest</option>
+                    <option value="cyberpunk">Cyberpunk</option>
+                </select>
+                <div class="settings-note">Choose a visual theme. Dark/light mode is controlled separately below.</div>
+            </div>
+
+            <div class="settings-section">
+                <div class="section-title"><i class="fas fa-adjust"></i> Dark / Light Mode</div>
                 <select id="themeSelect">
                     <option value="system">System (follow device)</option>
                     <option value="dark">Dark</option>
                     <option value="light">Light</option>
                 </select>
             </div>
+
             <div class="settings-section">
                 <div class="section-title"><i class="fas fa-globe"></i> Language</div>
                 <div class="gtranslate_wrapper"></div>
             </div>
+
             <div class="settings-section">
                 <div class="section-title"><i class="fas fa-robot"></i> AI Provider</div>
                 <select id="providerSelect" onchange="onProviderChange()">
@@ -3016,6 +3333,7 @@
                     <option value="gemini">Google Gemini</option>
                 </select>
             </div>
+
             <div class="settings-section" id="openRouterKeySection">
                 <div class="section-title"><i class="fas fa-key"></i> OpenRouter API Key</div>
                 <input type="password" id="openRouterKeyInput" placeholder="Enter OpenRouter API key..." />
@@ -3027,6 +3345,7 @@
                     </button>
                 </div>
             </div>
+
             <div class="settings-section" id="geminiKeySection" style="display:none;">
                 <div class="section-title"><i class="fas fa-key"></i> Google Gemini API Key</div>
                 <input type="password" id="geminiKeyInput" placeholder="Enter Gemini API key..." />
@@ -3037,16 +3356,19 @@
                     <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
                 </select>
             </div>
+
             <div class="settings-section">
                 <div class="section-title"><i class="fas fa-file-alt"></i> Transcript API Key</div>
                 <input type="password" id="transcriptApiKeyInput" placeholder="Enter transcriptapi.com key..." />
                 <div class="settings-note">Get a key at <a href="https://transcriptapi.com" target="_blank">transcriptapi.com</a></div>
             </div>
+
             <div class="settings-section">
                 <div class="section-title"><i class="fab fa-youtube"></i> YouTube Data API v3 Key</div>
                 <input type="password" id="ytApiKeyInput" placeholder="Enter YouTube Data API v3 key..." />
                 <div class="settings-note">Required for YouTube Music search &amp; playlist import.</div>
             </div>
+
             <div class="settings-section">
                 <div class="section-title"><i class="fas fa-language"></i> Translation Settings</div>
                 <div style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -3254,12 +3576,224 @@
     </script>
 
     <script>
-        // ════════════════════════════════════════════════════════════════
-        //  GLOBAL STATE (merged: HEX AI + Offline MP3)
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
+        //  THEME ENGINE – Complete with presets
+        // =============================================================
+
+        (() => {
+            const THEME_CLASS = 'theme-transition';
+            const TRANSITION_MS = 320;
+
+            let albumArtEl = null;
+            let dynamicEnabled = true;
+
+            const ThemeEngine = {
+                init(options = {}) {
+                    albumArtEl = options.albumArtEl || document.getElementById('albumArt');
+                    const toggle = document.getElementById('dynamicThemeToggle');
+                    if (toggle) {
+                        dynamicEnabled = toggle.checked;
+                        toggle.addEventListener('change', () => {
+                            dynamicEnabled = toggle.checked;
+                            if (!dynamicEnabled) {
+                                this.clearDynamicPalette();
+                                document.body.classList.remove('dynamic-theme-active');
+                            } else {
+                                const img = albumArtEl ? albumArtEl.src : null;
+                                if (img && img !== 'https://via.placeholder.com/300') {
+                                    this.applyVibrantFromUrl(img);
+                                }
+                            }
+                        });
+                    }
+                    // Load saved theme appearance
+                    const savedTheme = localStorage.getItem('hexai_theme_appearance') || 'default';
+                    const sel = document.getElementById('themeAppearanceSelect');
+                    if (sel) {
+                        sel.value = savedTheme;
+                        this.applyThemeAppearance(savedTheme);
+                    }
+                },
+
+                applyThemeAppearance(theme) {
+                    const root = document.documentElement;
+                    if (theme === 'default') {
+                        root.removeAttribute('data-theme');
+                        document.body.classList.remove('dynamic-theme-active');
+                        // Re-apply dynamic if enabled
+                        if (dynamicEnabled && albumArtEl && albumArtEl.src && albumArtEl.src !== 'https://via.placeholder.com/300') {
+                            this.applyVibrantFromUrl(albumArtEl.src);
+                        }
+                    } else {
+                        root.setAttribute('data-theme', theme);
+                        // Sync data-mode with dark/light
+                        const isDark = document.body.classList.contains('dark');
+                        root.setAttribute('data-mode', isDark ? 'dark' : 'light');
+                        document.body.classList.add('dynamic-theme-active');
+                    }
+                    localStorage.setItem('hexai_theme_appearance', theme);
+                },
+
+                syncMode() {
+                    const root = document.documentElement;
+                    const theme = root.getAttribute('data-theme');
+                    if (theme) {
+                        const isDark = document.body.classList.contains('dark');
+                        root.setAttribute('data-mode', isDark ? 'dark' : 'light');
+                    }
+                },
+
+                setDynamicEnabled(enabled) {
+                    dynamicEnabled = Boolean(enabled);
+                    const toggle = document.getElementById('dynamicThemeToggle');
+                    if (toggle) toggle.checked = dynamicEnabled;
+                },
+
+                async applyVibrantFromImage(img) {
+                    if (!dynamicEnabled || !img) return;
+                    const palette = await getPalette(img);
+                    if (!palette) return;
+                    applyPalette(palette);
+                    document.body.classList.add('dynamic-theme-active');
+                },
+
+                async applyVibrantFromUrl(url) {
+                    if (!dynamicEnabled || !url || url === 'https://via.placeholder.com/300') {
+                        this.clearDynamicPalette();
+                        document.body.classList.remove('dynamic-theme-active');
+                        return;
+                    }
+                    const img = await loadImage(url);
+                    if (!img) return;
+                    return this.applyVibrantFromImage(img);
+                },
+
+                clearDynamicPalette() {
+                    const root = document.documentElement.style;
+                    root.removeProperty('--ui-accent');
+                    root.removeProperty('--ui-accent-2');
+                    root.removeProperty('--ui-progress-fill');
+                    root.removeProperty('--ui-glow');
+                    root.removeProperty('--ui-bg');
+                    root.removeProperty('--ui-surface');
+                    root.removeProperty('--ui-surface-2');
+                    root.removeProperty('--ui-text');
+                    root.removeProperty('--ui-text-muted');
+                    root.removeProperty('--ui-border');
+                    root.removeProperty('--ui-shadow');
+                    root.removeProperty('--ui-progress-bg');
+                    root.removeProperty('--ui-button-bg');
+                    root.removeProperty('--ui-button-text');
+                    root.removeProperty('--ui-button-border');
+                    root.removeProperty('--ui-control-radius');
+                    root.removeProperty('--ui-play-radius');
+                    root.removeProperty('--ui-scanline');
+                    document.body.classList.remove('dynamic-theme-active');
+                }
+            };
+
+            function withTransition(fn) {
+                const root = document.documentElement;
+                root.classList.add(THEME_CLASS);
+                fn();
+                window.setTimeout(() => root.classList.remove(THEME_CLASS), TRANSITION_MS);
+            }
+
+            async function getPalette(img) {
+                if (window.Vibrant) {
+                    try {
+                        const palette = await new Vibrant(img).getPalette();
+                        return {
+                            accent: swatchToRgb(palette.Vibrant || palette.Muted),
+                            accent2: swatchToRgb(palette.LightVibrant || palette.LightMuted),
+                            bg: swatchToRgb(palette.DarkMuted || palette.DarkVibrant),
+                            surface: swatchToRgb(palette.Muted || palette.DarkMuted)
+                        };
+                    } catch (err) {
+                        return null;
+                    }
+                }
+                if (window.ColorThief) {
+                    try {
+                        const colorThief = new ColorThief();
+                        const [primary, secondary] = colorThief.getPalette(img, 2);
+                        return {
+                            accent: rgbArrayToCss(primary),
+                            accent2: rgbArrayToCss(secondary || primary),
+                            bg: rgbArrayToCss(darken(primary, 0.7)),
+                            surface: rgbArrayToCss(darken(primary, 0.85))
+                        };
+                    } catch (err) {
+                        return null;
+                    }
+                }
+                return null;
+            }
+
+            function applyPalette(palette) {
+                withTransition(() => {
+                    const root = document.documentElement.style;
+                    if (palette.accent) root.setProperty('--ui-accent', palette.accent);
+                    if (palette.accent2) root.setProperty('--ui-accent-2', palette.accent2);
+                    if (palette.bg) root.setProperty('--ui-bg', palette.bg);
+                    if (palette.surface) {
+                        root.setProperty('--ui-surface', palette.surface);
+                        root.setProperty('--ui-surface-2', lightenCss(palette.surface, 0.08));
+                    }
+                    root.setProperty('--ui-progress-fill', palette.accent || 'var(--ui-accent)');
+                    root.setProperty('--ui-glow', glowFrom(palette.accent || '#00b3ff'));
+                });
+            }
+
+            function swatchToRgb(swatch) {
+                if (!swatch) return null;
+                const rgb = swatch.getRgb();
+                return rgbArrayToCss(rgb);
+            }
+
+            function rgbArrayToCss(rgb) {
+                if (!rgb) return null;
+                const [r, g, b] = rgb.map(v => Math.round(v));
+                return `rgb(${r} ${g} ${b})`;
+            }
+
+            function darken(rgb, amount) {
+                return rgb.map(v => Math.max(0, v * amount));
+            }
+
+            function lightenCss(css, amount) {
+                const match = css.match(/(\d+)\s+(\d+)\s+(\d+)/);
+                if (!match) return css;
+                const [r, g, b] = match.slice(1).map(Number);
+                const nr = Math.min(255, Math.round(r + (255 - r) * amount));
+                const ng = Math.min(255, Math.round(g + (255 - g) * amount));
+                const nb = Math.min(255, Math.round(b + (255 - b) * amount));
+                return `rgb(${nr} ${ng} ${nb})`;
+            }
+
+            function glowFrom(css) {
+                return css.replace('rgb(', 'rgba(').replace(')', ', 0.35)');
+            }
+
+            function loadImage(url) {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.crossOrigin = 'anonymous';
+                    img.onload = () => resolve(img);
+                    img.onerror = () => resolve(null);
+                    img.src = url;
+                });
+            }
+
+            window.ThemeEngine = ThemeEngine;
+        })();
+
+
+        // =============================================================
+        //  GLOBAL STATE
+        // =============================================================
 
         const STATE = {
-            // --- HEX AI ---
             activePanel: 'chat',
             settings: {
                 provider: 'openrouter',
@@ -3270,6 +3804,7 @@
                 transcriptApiKey: '',
                 ytApiKey: '',
                 theme: 'system',
+                themeAppearance: 'default',
                 openRouterModels: [],
                 geminiModels: [],
                 translationService: 'auto',
@@ -3293,7 +3828,6 @@
             playerReady: false,
             messageIdCounter: 1,
             isProcessing: false,
-            // --- Offline MP3 ---
             offlinePlaylist: [],
             offlineCurrentSongIndex: -1,
             offlineIsPlaying: false,
@@ -3307,8 +3841,7 @@
             offlineVisualizerActive: false,
         };
 
-        let domRefs = {};
-        let player = null; // YouTube player
+        let player = null;
         let playing = false;
         let songUnavailable = false;
         let progressInterval = null;
@@ -3336,9 +3869,9 @@
         let sponsorCheckInterval = null;
         let selectedVideoId = null;
 
-        // ════════════════════════════════════════════════════════════════
-        //  HEX AI – HELPER FUNCTIONS
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
+        //  HELPER FUNCTIONS
+        // =============================================================
 
         function emojiToCodepointPath(emoji) {
             return [...emoji].map(c => c.codePointAt(0).toString(16)).join('-');
@@ -3432,9 +3965,9 @@
             return `${h12}:${m.toString().padStart(2,'0')} ${ampm}`;
         }
 
-        // ════════════════════════════════════════════════════════════════
-        //  STATE PERSISTENCE (shared)
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
+        //  STATE PERSISTENCE
+        // =============================================================
 
         function loadState() {
             try {
@@ -3449,7 +3982,6 @@
                     STATE.lyricsEnabled = parsed.lyricsEnabled ?? false;
                     STATE.albumSpinEnabled = parsed.albumSpinEnabled ?? true;
                     STATE.messageIdCounter = parsed.messageIdCounter || 1;
-                    // offline state
                     STATE.offlinePlaylist = parsed.offlinePlaylist || [];
                     STATE.offlineCurrentSongIndex = parsed.offlineCurrentSongIndex ?? -1;
                     STATE.offlineIsPlaying = parsed.offlineIsPlaying || false;
@@ -3481,9 +4013,9 @@
             } catch (e) { console.warn('saveState:', e); }
         }
 
-        // ════════════════════════════════════════════════════════════════
-        //  THEME, SETTINGS, PANEL SWITCHING (HEX AI)
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
+        //  THEME & SETTINGS
+        // =============================================================
 
         function applyTheme(theme) {
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -3492,11 +4024,17 @@
             document.body.classList.toggle('dark', effective === 'dark');
             const sel = document.getElementById('themeSelect');
             if (sel) sel.value = theme;
-            localStorage.setItem('hexai_theme', theme);
+            localStorage.setItem('hexai_theme_pref', theme);
+            // Sync data-mode with theme appearance
+            const root = document.documentElement;
+            const appearance = root.getAttribute('data-theme');
+            if (appearance) {
+                root.setAttribute('data-mode', effective === 'dark' ? 'dark' : 'light');
+            }
         }
 
         function getThemePreference() {
-            return localStorage.getItem('hexai_theme') || 'system';
+            return localStorage.getItem('hexai_theme_pref') || 'system';
         }
 
         function toggleSettings() {
@@ -3509,6 +4047,8 @@
                 document.getElementById('ytApiKeyInput').value = STATE.settings.ytApiKey || '';
                 document.getElementById('providerSelect').value = STATE.settings.provider || 'openrouter';
                 document.getElementById('themeSelect').value = STATE.settings.theme || 'system';
+                const appearance = document.getElementById('themeAppearanceSelect');
+                if (appearance) appearance.value = STATE.settings.themeAppearance || 'default';
                 const transService = document.getElementById('translationServiceSelect');
                 if (transService) transService.value = STATE.settings.translationService || 'auto';
                 const transLang = document.getElementById('translationTargetLang');
@@ -3591,6 +4131,8 @@
             STATE.settings.transcriptApiKey = document.getElementById('transcriptApiKeyInput').value.trim();
             STATE.settings.ytApiKey = document.getElementById('ytApiKeyInput').value.trim();
             STATE.settings.theme = document.getElementById('themeSelect').value;
+            const appearance = document.getElementById('themeAppearanceSelect');
+            if (appearance) STATE.settings.themeAppearance = appearance.value;
             const transService = document.getElementById('translationServiceSelect');
             if (transService) STATE.settings.translationService = transService.value;
             const transLang = document.getElementById('translationTargetLang');
@@ -3603,6 +4145,10 @@
                 STATE.settings.geminiModel = sel.value;
             }
             applyTheme(STATE.settings.theme);
+            // Apply theme appearance
+            if (window.ThemeEngine) {
+                window.ThemeEngine.applyThemeAppearance(STATE.settings.themeAppearance || 'default');
+            }
             saveState();
             updateModelBadge();
             toggleSettings();
@@ -3653,12 +4199,10 @@
             const offlineSection = document.getElementById('offline-section');
             const ytTab = document.getElementById('ytTab');
             const offlineTab = document.getElementById('offlineTab');
-
             ytSection.classList.toggle('active', tab === 'yt');
             offlineSection.classList.toggle('active', tab === 'offline');
             ytTab.classList.toggle('filled', tab === 'yt');
             offlineTab.classList.toggle('filled', tab === 'offline');
-
             if (tab === 'yt') {
                 if (typeof renderPlaylist === 'function') renderPlaylist(STATE.playlist);
             } else {
@@ -3666,9 +4210,9 @@
             }
         }
 
-        // ════════════════════════════════════════════════════════════════
-        //  CHAT (core)
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
+        //  CHAT
+        // =============================================================
 
         function handleChatKey(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
@@ -3714,14 +4258,11 @@
             div.className = `msg ${role}`;
             if (!id) id = 'msg-' + (STATE.messageIdCounter++);
             div.dataset.msgid = id;
-
             const isUser = role === 'user';
             const avatarIcon = isUser ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
             const timeDisplay = timestamp || getTimestamp();
-
             let processed = content || '';
             processed = processMessageText(processed);
-
             let imageHtml = '';
             if (images && images.length) {
                 if (images.length === 1) {
@@ -3736,7 +4277,6 @@
                     imageHtml += `</div>`;
                 }
             }
-
             div.innerHTML = `
                 <div class="msg-header">
                     <span class="msg-avatar">${avatarIcon}</span>
@@ -3845,16 +4385,13 @@
             const text = input.value.trim();
             const hasFiles = STATE.attachedFiles.length > 0;
             if (!text && !hasFiles) return;
-
             STATE.isProcessing = true;
             const timestamp = getTimestamp();
             const msgId = 'msg-' + (STATE.messageIdCounter++);
-
             const imageUrls = [];
             const imageDataList = [];
             let pdfTextContent = '';
             let mimeType = 'image/jpeg';
-
             for (const file of STATE.attachedFiles) {
                 if (file.type.startsWith('image/')) {
                     const b64 = await fileToBase64(file);
@@ -3866,12 +4403,10 @@
                     pdfTextContent += '📄 ' + file.name + '\n' + text + '\n\n';
                 }
             }
-
             let userContent = text;
             if (pdfTextContent) {
                 userContent = (text ? text + '\n\n' : '') + 'PDF content:\n' + pdfTextContent;
             }
-
             STATE.chatHistory.push({ id: msgId, role: 'user', content: userContent, timestamp: timestamp, images: imageUrls
                     .filter(Boolean) });
             STATE.attachedFiles = [];
@@ -3881,7 +4416,6 @@
             renderChatMessages();
             const container = document.getElementById('chatMessages');
             container.scrollTop = container.scrollHeight;
-
             const typingDiv = document.createElement('div');
             typingDiv.className = 'msg assistant';
             typingDiv.id = 'typingIndicator';
@@ -3896,14 +4430,12 @@
             `;
             container.appendChild(typingDiv);
             container.scrollTop = container.scrollHeight;
-
             try {
                 let aiResponse = '';
                 const hasGeminiKey = STATE.settings.geminiKey && STATE.settings.geminiKey.length > 8;
                 const hasImages = imageDataList.filter(Boolean).length > 0;
                 const combinedPrompt = (text ? text : '') + (pdfTextContent ? '\n\n--- PDF Content ---\n' + pdfTextContent :
                     '');
-
                 if (hasImages && hasGeminiKey) {
                     aiResponse = await callGeminiVision(combinedPrompt || 'Describe this image.', imageDataList.find(
                     Boolean), mimeType);
@@ -3918,16 +4450,13 @@
                     aiResponse =
                         'HEX AI is ready. Configure **Gemini** or **OpenRouter** API keys in Settings (⚙️) to get real AI responses.';
                 }
-
                 const typingEl = document.getElementById('typingIndicator');
                 if (typingEl) typingEl.remove();
-
                 const aiTimestamp = getTimestamp();
                 const aiId = 'msg-' + (STATE.messageIdCounter++);
                 STATE.chatHistory.push({ id: aiId, role: 'assistant', content: aiResponse, timestamp: aiTimestamp });
                 renderChatMessages();
                 container.scrollTop = container.scrollHeight;
-
             } catch (err) {
                 const typingEl = document.getElementById('typingIndicator');
                 if (typingEl) typingEl.remove();
@@ -3991,9 +4520,9 @@
             return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || 'No response from Gemini.';
         }
 
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
         //  EMOJI PICKER
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
 
         function toggleEmojiPicker() {
             const picker = document.getElementById('emojiPicker3D');
@@ -4091,9 +4620,9 @@
             });
         }
 
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
         //  VOICE INPUT
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
 
         function setupVoiceRecognition() {
             const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -4139,9 +4668,9 @@
             }
         }
 
-        // ════════════════════════════════════════════════════════════════
-        //  YOUTUBE MUSIC (kept intact from provided code)
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
+        //  YOUTUBE MUSIC
+        // =============================================================
 
         const API_BASE = 'https://lyrics.paxsenix.org';
         const CORS_PROXY_URL = 'https://api.codetabs.com/v1/proxy?quest=';
@@ -4190,7 +4719,6 @@
         const importPlaylistBtn = document.getElementById('importPlaylistBtn');
         const sponsorToggle = document.getElementById('sponsorBlockToggle');
 
-        // YT load & render
         function loadPlaylist() {
             const stored = localStorage.getItem('youtubeMusicPlaylist');
             if (stored) {
@@ -4285,11 +4813,9 @@
                 li.draggable = true;
                 li.dataset.index = idx;
                 if (song.videoId === currentlySelected) li.classList.add('selected');
-
                 const num = document.createElement('span');
                 num.className = 'song-number';
                 num.textContent = `${idx + 1}.`;
-
                 const name = document.createElement('span');
                 name.className = 'song-name';
                 let clean = song.songName;
@@ -4297,15 +4823,12 @@
                 clean = clean.replace(new RegExp(`\\s*-\\s*${song.authorName}$`), '');
                 clean = clean.replace(new RegExp(`\\s*by\\s*${song.authorName}$`, 'i'), '');
                 name.textContent = clean;
-
                 const author = document.createElement('span');
                 author.className = 'author-column';
                 author.textContent = song.authorName;
-
                 const dragHandle = document.createElement('span');
                 dragHandle.className = 'drag-handle';
                 dragHandle.innerHTML = '<i class="fas fa-grip-vertical"></i>';
-
                 const action = document.createElement('div');
                 action.className = 'song-action';
                 const rm = document.createElement('button');
@@ -4317,13 +4840,11 @@
                     removeSong(song.videoId);
                 });
                 action.appendChild(rm);
-
                 li.appendChild(num);
                 li.appendChild(name);
                 li.appendChild(author);
                 li.appendChild(dragHandle);
                 li.appendChild(action);
-
                 li.addEventListener('click', (e) => {
                     if (e.target.closest('.drag-handle') || e.target.closest('.remove-song-btn')) return;
                     document.querySelectorAll('#songList li').forEach(el => el.classList.remove('selected'));
@@ -4331,7 +4852,6 @@
                     actualSelectedVideoId = song.videoId;
                     loadNewVideo(song.videoId, song.albumArt, song);
                 });
-
                 songList.appendChild(li);
             });
         }
@@ -4363,17 +4883,16 @@
                     totalTimeEl.textContent = '0:00';
                     if (progressInterval) clearInterval(progressInterval);
                     actualSelectedVideoId = null;
+                    ThemeEngine.clearDynamicPalette();
                 }
             }
         }
 
         function loadNewVideo(videoId, albumArtUrl, songObject = null) {
             if (player) player.setVolume(currentVolume);
-
             const art = document.getElementById('albumArt');
             art.style.transition = 'opacity 0.5s';
             art.style.opacity = '0';
-
             if (albumArtDisplayMode !== 'video') {
                 setTimeout(() => {
                     art.classList.remove('rotate');
@@ -4392,17 +4911,29 @@
                             } else {
                                 art.classList.remove('rotate', 'rotate-paused');
                             }
+                            if (albumArtUrl && albumArtUrl !== 'https://via.placeholder.com/300') {
+                                ThemeEngine.applyVibrantFromUrl(albumArtUrl);
+                            } else {
+                                ThemeEngine.clearDynamicPalette();
+                            }
                         }, 500);
+                    };
+                    art.onerror = () => {
+                        art.src = 'https://via.placeholder.com/300';
+                        ThemeEngine.clearDynamicPalette();
                     };
                 }, 500);
             } else {
                 setTimeout(() => { initializeVideoPlayerInAlbumArt(videoId); }, 100);
                 art.style.opacity = '1';
+                if (albumArtUrl && albumArtUrl !== 'https://via.placeholder.com/300') {
+                    ThemeEngine.applyVibrantFromUrl(albumArtUrl);
+                } else {
+                    ThemeEngine.clearDynamicPalette();
+                }
             }
-
             const titleEl = document.querySelector("#nowPlaying .song-title");
             const authorEl = document.querySelector("#nowPlaying .author-name");
-
             if (songObject) {
                 const sName = songObject.songName;
                 const aName = songObject.authorName;
@@ -4426,12 +4957,10 @@
                 }
                 loadLyricsFor(sName, aName, videoId);
             }
-
             if (errorTimeout) clearTimeout(errorTimeout);
             errorMessage.style.display = 'none';
             songUnavailable = false;
             if (countdownInterval) clearInterval(countdownInterval);
-
             if (player && typeof player.loadVideoById === 'function') {
                 player.loadVideoById(videoId);
                 player.setVolume(currentVolume);
@@ -4459,14 +4988,12 @@
                     selectedVideoId = videoId;
                 }
             }
-
             selectedVideoId = videoId;
             progressFill.style.width = '0%';
             currentTimeEl.textContent = '0:00';
             totalTimeEl.textContent = '0:00';
             playing = true;
             playPauseBtn.innerHTML = ICON_PAUSE;
-
             updateProgressBar();
             if (SB.enabled) SB.start(videoId);
         }
@@ -4474,7 +5001,6 @@
         function handlePlayerStateChange(event) {
             const art = document.getElementById('albumArt');
             const autoPlay = autoPlayToggle && autoPlayToggle.checked;
-
             if (albumArtDisplayMode === 'spin') {
                 if (event.data === 1) {
                     if (albumArtSpinEnabled) { art.classList.remove('rotate-paused');
@@ -4483,9 +5009,7 @@
                     if (albumArtSpinEnabled) art.classList.add('rotate-paused');
                 }
             }
-
             if (event.data === 1 || event.data === 3) updateProgressBar();
-
             if (event.data === 0) {
                 playing = false;
                 if (albumArtSpinEnabled) art.classList.add('rotate-paused');
@@ -4720,7 +5244,6 @@
             const curId = player ? player.getVideoData?.()?.video_id : selectedVideoId;
             const curSong = STATE.playlist.find(s => s.videoId === curId);
             const curUrl = curSong ? curSong.albumArt : art.src;
-
             switch (albumArtDisplayMode) {
                 case 'spin':
                     document.body.classList.add('album-art-spin-mode');
@@ -4749,6 +5272,17 @@
                     break;
             }
             localStorage.setItem('albumArtDisplayMode', albumArtDisplayMode);
+            if (albumArtDisplayMode !== 'video' && curUrl && curUrl !== 'https://via.placeholder.com/300') {
+                ThemeEngine.applyVibrantFromUrl(curUrl);
+            } else if (albumArtDisplayMode === 'video') {
+                if (curUrl && curUrl !== 'https://via.placeholder.com/300') {
+                    ThemeEngine.applyVibrantFromUrl(curUrl);
+                } else {
+                    ThemeEngine.clearDynamicPalette();
+                }
+            } else {
+                ThemeEngine.clearDynamicPalette();
+            }
         }
 
         function initializeVideoPlayerInAlbumArt(videoId) {
@@ -4786,6 +5320,7 @@
         }
 
         // ─── LYRICS ───
+
         function parseLrc(text) {
             const lines = [];
             const regex = /\[(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?\](.*)/;
@@ -5039,7 +5574,8 @@
             window.open(URL.createObjectURL(blob), '_blank');
         });
 
-        // ─── SponsorBlock (SB) ───
+        // ─── SponsorBlock ───
+
         const SB = {
             categories: ["sponsor", "selfpromo", "interaction", "intro", "outro", "preview", "music_offtopic",
                 "exclusive_access", "poi_highlight"
@@ -5252,10 +5788,8 @@
             searchResultsList.innerHTML = '';
             searchError.classList.add('d-none');
             searchResults.classList.add('d-none');
-
             const cached = getCachedResults(term);
             if (cached) { displaySearchResults(cached); return; }
-
             searchLoading.classList.remove('d-none');
             try {
                 const data = await searchYouTubeViaPaxsenix(term);
@@ -5267,7 +5801,6 @@
                     return;
                 }
             } catch (e) { console.warn('Paxsenix search failed, falling back to YouTube API:', e); }
-
             const YT_KEY = STATE.settings.ytApiKey || '';
             if (!YT_KEY || YT_KEY.length < 10) {
                 searchError.innerHTML =
@@ -5477,6 +6010,9 @@
                                     .authorName);
                                 if (authorEl) authorEl.textContent = song.authorName;
                                 loadLyricsFor(song.songName, song.authorName, videoId);
+                                if (song.albumArt && song.albumArt !== 'https://via.placeholder.com/300') {
+                                    ThemeEngine.applyVibrantFromUrl(song.albumArt);
+                                }
                             }
                             setTimeout(updateProgressBar, 500);
                             applyAlbumArtDisplayMode();
@@ -5497,16 +6033,15 @@
             });
         };
 
-        // ════════════════════════════════════════════════════════════════
-        //  OFFLINE MP3 PLAYER (full implementation)
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
+        //  OFFLINE MP3 PLAYER
+        // =============================================================
 
         const offlineAudio = document.createElement('audio');
         offlineAudio.id = 'offlineAudio';
         offlineAudio.style.display = 'none';
         document.body.appendChild(offlineAudio);
 
-        // DOM elements for offline player
         const offlinePlayPauseBtn = document.getElementById('offlinePlayPauseBtn');
         const offlineRepeatBtn = document.getElementById('offlineRepeatBtn');
         const offlineShuffleBtn = document.getElementById('offlineShuffleBtn');
@@ -5528,35 +6063,23 @@
         let offlineIsRepeating = STATE.offlineIsRepeating;
         let offlineIsShuffling = STATE.offlineIsShuffling;
         let offlinePlayHistory = STATE.offlinePlayHistory;
-        let offlineAudioContext = null;
-        let offlineAnalyser = null;
-        let offlineAnalyserData = null;
-        let offlineVisualizerRaf = null;
-        let offlineVisualizerActive = false;
 
-        // Initialize offline audio
         if (offlineAudio) {
             offlineAudio.volume = 0.5;
-
             offlineAudio.addEventListener('loadedmetadata', offlineUpdateSongInfo);
             offlineAudio.addEventListener('timeupdate', offlineUpdateProgress);
             offlineAudio.addEventListener('ended', offlineHandleSongEnd);
-
             offlineVolumeSlider.addEventListener('input', (e) => {
                 offlineAudio.volume = e.target.value / 100;
             });
-
             offlineFileInput.addEventListener('change', offlineHandleFileSelect);
-
             offlineUploadArea.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 offlineUploadArea.classList.add('dragover');
             });
-
             offlineUploadArea.addEventListener('dragleave', () => {
                 offlineUploadArea.classList.remove('dragover');
             });
-
             offlineUploadArea.addEventListener('drop', (e) => {
                 e.preventDefault();
                 offlineUploadArea.classList.remove('dragover');
@@ -5575,7 +6098,6 @@
                 file.type.startsWith('audio/') ||
                 file.name.match(/\.(mp3|wav|ogg|m4a|flac)$/i)
             );
-
             audioFiles.forEach(file => {
                 const url = URL.createObjectURL(file);
                 const song = {
@@ -5584,18 +6106,14 @@
                     file: file,
                     duration: '0:00'
                 };
-
                 offlinePlaylist.push(song);
-
                 const tempAudio = new Audio(url);
                 tempAudio.addEventListener('loadedmetadata', () => {
                     song.duration = offlineFormatTime(tempAudio.duration);
                     offlineRenderPlaylist();
                 });
             });
-
             offlineRenderPlaylist();
-
             if (offlineCurrentSongIndex === -1 && offlinePlaylist.length > 0) {
                 offlineLoadSong(0);
             }
@@ -5607,7 +6125,6 @@
                     '<div class="offline-empty-playlist">Your playlist is empty. Add some music to get started!</div>';
                 return;
             }
-
             const playlistHTML = offlinePlaylist.map((song, index) => `
                 <div class="offline-playlist-item ${index === offlineCurrentSongIndex ? 'active' : ''}" data-index="${index}" onclick="offlineLoadSong(${index})">
                     <div class="offline-song-number">${index + 1}</div>
@@ -5618,22 +6135,18 @@
                     <button class="offline-remove-btn" data-index="${index}" onclick="offlineRemoveSong(event, ${index})">×</button>
                 </div>
             `).join('');
-
             offlinePlaylistContainer.innerHTML = playlistHTML;
         }
 
         function offlineLoadSong(index) {
             if (index < 0 || index >= offlinePlaylist.length) return;
-
             offlineCurrentSongIndex = index;
             const song = offlinePlaylist[index];
-
             offlineAudio.src = song.url;
             offlineSongTitle.textContent = song.name;
             offlineUpdateSongInfo();
             offlineUpdateTabTitle();
             offlineRenderPlaylist();
-
             if (offlineIsPlaying) {
                 offlineAudio.play();
             }
@@ -5651,11 +6164,9 @@
 
         function offlineTogglePlay() {
             if (offlinePlaylist.length === 0) return;
-
             if (offlineCurrentSongIndex === -1) {
                 offlineLoadSong(0);
             }
-
             if (offlineIsPlaying) {
                 offlineAudio.pause();
                 offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
@@ -5665,7 +6176,6 @@
                 offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
                 offlineIsPlaying = true;
             }
-
             offlineUpdateTabTitle();
         }
 
@@ -5681,15 +6191,12 @@
         function offlineToggleShuffle() {
             offlineIsShuffling = !offlineIsShuffling;
             offlineShuffleBtn.classList.toggle('active', offlineIsShuffling);
-
             if (offlineIsShuffling) {
                 offlinePlayHistory = [];
-
                 if (offlinePlaylist.length > 0) {
                     const randomIndex = Math.floor(Math.random() * offlinePlaylist.length);
                     offlinePlayHistory.push(randomIndex);
                     offlineLoadSong(randomIndex);
-
                     offlineAudio.play();
                     offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
                     offlineIsPlaying = true;
@@ -5697,20 +6204,17 @@
             } else {
                 offlinePlayHistory = [];
             }
-
             offlineUpdateSongInfo();
         }
 
         function offlineGetNextShuffleIndex() {
             if (offlinePlaylist.length <= 1) return 0;
-
             const unplayedIndices = [];
             for (let i = 0; i < offlinePlaylist.length; i++) {
                 if (!offlinePlayHistory.includes(i)) {
                     unplayedIndices.push(i);
                 }
             }
-
             if (unplayedIndices.length === 0) {
                 offlinePlayHistory = [offlineCurrentSongIndex];
                 for (let i = 0; i < offlinePlaylist.length; i++) {
@@ -5719,10 +6223,8 @@
                     }
                 }
             }
-
             const randomIndex = Math.floor(Math.random() * unplayedIndices.length);
             const nextIndex = unplayedIndices[randomIndex];
-
             offlinePlayHistory.push(nextIndex);
             return nextIndex;
         }
@@ -5734,7 +6236,6 @@
 
         function offlinePrevSong() {
             if (offlinePlaylist.length === 0) return;
-
             if (offlineIsShuffling && offlinePlayHistory.length > 1) {
                 offlinePlayHistory.pop();
                 const prevIndex = offlinePlayHistory[offlinePlayHistory.length - 1];
@@ -5747,14 +6248,12 @@
 
         function offlineNextSong() {
             if (offlinePlaylist.length === 0) return;
-
             let newIndex;
             if (offlineIsShuffling) {
                 newIndex = offlineGetNextShuffleIndex();
             } else {
                 newIndex = offlineCurrentSongIndex < offlinePlaylist.length - 1 ? offlineCurrentSongIndex + 1 : 0;
             }
-
             offlineLoadSong(newIndex);
         }
 
@@ -5789,7 +6288,6 @@
                 const modeText = modes.length > 0 ? ' • ' + modes.join(' • ') : '';
                 offlineSongInfo.textContent = `Track ${offlineCurrentSongIndex + 1} of ${offlinePlaylist.length}${modeText}`;
             }
-
             if (offlineAudio.duration) {
                 offlineTotalTime.textContent = offlineFormatTime(offlineAudio.duration);
             }
@@ -5797,13 +6295,9 @@
 
         function offlineRemoveSong(event, index) {
             event.stopPropagation();
-
             URL.revokeObjectURL(offlinePlaylist[index].url);
-
             offlinePlaylist.splice(index, 1);
-
             offlinePlayHistory = offlinePlayHistory.filter(i => i !== index).map(i => i > index ? i - 1 : i);
-
             if (index === offlineCurrentSongIndex) {
                 if (offlinePlaylist.length === 0) {
                     offlineCurrentSongIndex = -1;
@@ -5822,27 +6316,21 @@
             } else if (index < offlineCurrentSongIndex) {
                 offlineCurrentSongIndex--;
             }
-
             offlineRenderPlaylist();
         }
 
         function offlineFormatTime(seconds) {
             if (isNaN(seconds)) return '0:00';
-
             const mins = Math.floor(seconds / 60);
             const secs = Math.floor(seconds % 60);
             return `${mins}:${secs.toString().padStart(2, '0')}`;
         }
 
-        // Keyboard shortcuts for offline player
         document.addEventListener('keydown', (e) => {
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.contentEditable === 'true')
                 return;
-
-            // Only respond if offline section is active
             const offlineSection = document.getElementById('offline-section');
             if (!offlineSection || !offlineSection.classList.contains('active')) return;
-
             switch (e.code) {
                 case 'Space':
                     e.preventDefault();
@@ -5879,17 +6367,14 @@
         document.addEventListener('keyup', (e) => {
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.contentEditable === 'true')
                 return;
-
             const offlineSection = document.getElementById('offline-section');
             if (!offlineSection || !offlineSection.classList.contains('active')) return;
-
             if (e.code === 'Space') {
                 e.preventDefault();
                 e.stopPropagation();
             }
         });
 
-        // Offline clear confirm (simplified)
         function openOfflineClearConfirm() {
             if (offlinePlaylist.length === 0) return;
             if (confirm('Clear all offline songs? This cannot be undone.')) {
@@ -5902,18 +6387,15 @@
                 offlineRenderPlaylist();
                 return;
             }
-
             offlinePlaylist.forEach(song => {
                 if (song.url) {
                     URL.revokeObjectURL(song.url);
                 }
             });
-
             offlinePlaylist = [];
             offlineCurrentSongIndex = -1;
             offlineIsPlaying = false;
             offlinePlayHistory = [];
-
             offlineAudio.pause();
             offlineAudio.src = '';
             offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
@@ -5922,14 +6404,13 @@
             offlineProgressFill.style.width = '0%';
             offlineCurrentTime.textContent = '0:00';
             offlineTotalTime.textContent = '0:00';
-
             offlineRenderPlaylist();
             offlineUpdateTabTitle();
         }
 
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
         //  IMAGE & VIDEO GENERATORS
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
 
         function initImageGenerator() {
             const generateBtn = document.getElementById('generateImageBtn');
@@ -5940,7 +6421,6 @@
             const addToChatBtn = document.getElementById('addToChatBtn');
             const downloadBtn = document.getElementById('downloadGenImageBtn');
             let currentImageUrl = null;
-
             const showPreview = (url) => {
                 if (previewContainer) previewContainer.innerHTML =
                     `<img src="${url}" class="gen-preview-img" alt="AI Generated">`;
@@ -6013,7 +6493,6 @@
             let animationId = null;
             let mediaRecorder = null;
             let recordedChunks = [];
-
             const clearVideoPreview = () => {
                 if (animationId) cancelAnimationFrame(animationId);
                 if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
@@ -6027,7 +6506,6 @@
                 currentVideoUrl = null;
                 recordedChunks = [];
             };
-
             const showVideoPreview = (url) => {
                 if (videoPreview) { videoPreview.src = url;
                     videoPreview.style.display = 'block'; }
@@ -6036,7 +6514,6 @@
                 if (videoActions) videoActions.style.display = 'flex';
                 currentVideoUrl = url;
             };
-
             const animateImage = (img, durationMs, fps, canvasEl, callback) => {
                 const ctx = canvasEl.getContext('2d');
                 const w = canvasEl.width = 512;
@@ -6076,7 +6553,6 @@
                 mediaRecorder.start();
                 drawFrame();
             };
-
             if (generateBtn) {
                 generateBtn.addEventListener('click', async () => {
                     const prompt = promptInput?.value?.trim() || 'neon city at night, cyberpunk, cinematic';
@@ -6119,9 +6595,9 @@
             }
         }
 
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
         //  BOOT
-        // ════════════════════════════════════════════════════════════════
+        // =============================================================
 
         function init() {
             loadState();
@@ -6184,13 +6660,47 @@
             initImageGenerator();
             initVideoGenerator();
 
-            // Offline initial render
             offlineRenderPlaylist();
-
-            // Ensure Music tab default: YouTube active
             switchMusicTab('yt');
 
-            console.log('⬡ HEX AI — Material 3 Edition with Offline MP3 Player ⬡');
+            // INIT THEME ENGINE
+            if (window.ThemeEngine) {
+                const savedAppearance = STATE.settings.themeAppearance || localStorage.getItem('hexai_theme_appearance') ||
+                    'default';
+                ThemeEngine.init({
+                    albumArtEl: document.getElementById('albumArt')
+                });
+                // Apply saved appearance
+                const appSel = document.getElementById('themeAppearanceSelect');
+                if (appSel) {
+                    appSel.value = savedAppearance;
+                    ThemeEngine.applyThemeAppearance(savedAppearance);
+                }
+                // Sync data-mode
+                ThemeEngine.syncMode();
+
+                const currentArt = document.getElementById('albumArt');
+                if (currentArt && currentArt.src && currentArt.src !== 'https://via.placeholder.com/300') {
+                    ThemeEngine.applyVibrantFromUrl(currentArt.src);
+                }
+
+                const dynamicToggle = document.getElementById('dynamicThemeToggle');
+                if (dynamicToggle) {
+                    dynamicToggle.addEventListener('change', function() {
+                        ThemeEngine.setDynamicEnabled(this.checked);
+                        if (!this.checked) {
+                            ThemeEngine.clearDynamicPalette();
+                        } else {
+                            const art = document.getElementById('albumArt');
+                            if (art && art.src && art.src !== 'https://via.placeholder.com/300') {
+                                ThemeEngine.applyVibrantFromUrl(art.src);
+                            }
+                        }
+                    });
+                }
+            }
+
+            console.log('⬡ HEX AI — Material 3 Edition with Theme Appearance System ⬡');
         }
 
         document.addEventListener('DOMContentLoaded', init);
@@ -6203,7 +6713,7 @@
             if (SB.checkInterval) clearInterval(SB.checkInterval);
         });
 
-        // Expose offline functions globally for onclick
+        // Expose functions globally
         window.offlineTogglePlay = offlineTogglePlay;
         window.offlinePrevSong = offlinePrevSong;
         window.offlineNextSong = offlineNextSong;
