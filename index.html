@@ -135,106 +135,164 @@
             --md-elevation5: 0 8px 12px 6px #0000004d, 0 2px 4px 0 #00000066;
         }
 
-        /* ===== THEME PRESETS ===== */
-        [data-theme="glass"] {
-            --ui-bg: #11131a;
-            --ui-surface: rgba(24, 28, 36, 0.72);
-            --ui-surface-2: rgba(36, 42, 52, 0.7);
-            --ui-border: rgba(255, 255, 255, 0.12);
-            --ui-shadow: rgba(0, 0, 0, 0.55);
-            --ui-glow: rgba(120, 204, 255, 0.35);
-            --ui-mesh-1: rgba(88, 160, 255, 0.25);
-            --ui-mesh-2: rgba(255, 94, 125, 0.22);
-            --ui-mesh-3: rgba(108, 255, 209, 0.2);
-            --ui-control-radius: 20px;
-            --ui-play-radius: 16px;
+        /* ===== THEME PRESETS — FULL COLLECTION ===== */
+        /* ----- Cupcake ----- */
+        [data-theme="cupcake"] {
+            --ui-bg: #faf7f5;
+            --ui-text: #291334;
+            --ui-accent: #65c3c8;
+            --ui-accent-2: #ef9fbc;
+            --ui-accent-hover: #eeaf3a;
+            --ui-surface: #fffbf9;
+            --ui-surface-2: #f5eeea;
+            --ui-text-muted: #7a5b6c;
+            --ui-border: #e5d8d2;
+            --ui-shadow: rgba(41, 19, 52, 0.12);
+            --ui-progress-bg: #e5d8d2;
+            --ui-button-bg: #fffbf9;
+            --ui-button-text: #291334;
+            --ui-button-border: #65c3c8;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(101, 195, 200, 0.30);
         }
-        [data-theme="glass"][data-mode="light"] {
-            --ui-bg: #eef3ff;
-            --ui-surface: rgba(255, 255, 255, 0.74);
-            --ui-surface-2: rgba(255, 255, 255, 0.6);
-            --ui-text: #1a2433;
-            --ui-text-muted: #5a6b82;
-            --ui-accent: #4aa3ff;
-            --ui-accent-2: #7bdcff;
-            --ui-accent-hover: #2c7ee6;
-            --ui-border: rgba(120, 160, 255, 0.35);
-            --ui-shadow: rgba(30, 60, 120, 0.12);
-            --ui-glow: rgba(90, 160, 255, 0.4);
-            --ui-button-bg: rgba(255, 255, 255, 0.9);
-            --ui-button-text: #1a2433;
-            --ui-button-border: rgba(120, 160, 255, 0.25);
-            --ui-progress-bg: rgba(120, 160, 255, 0.2);
-        }
-        [data-theme="glass"][data-mode="dark"] {
-            --ui-bg: #0f1524;
-            --ui-surface: rgba(20, 32, 52, 0.72);
-            --ui-surface-2: rgba(30, 46, 72, 0.6);
-            --ui-text: #e9f0ff;
-            --ui-text-muted: #a6b7d6;
-            --ui-accent: #6bb7ff;
-            --ui-accent-2: #9ad9ff;
-            --ui-accent-hover: #4a98e8;
-            --ui-border: rgba(120, 160, 255, 0.22);
-            --ui-shadow: rgba(0, 0, 0, 0.5);
-            --ui-glow: rgba(107, 183, 255, 0.35);
-            --ui-button-bg: rgba(255, 255, 255, 0.16);
-            --ui-button-text: #eef4ff;
-            --ui-button-border: rgba(120, 160, 255, 0.2);
-            --ui-progress-bg: rgba(120, 160, 255, 0.15);
-        }
-        [data-theme="glass"] body {
-            background: linear-gradient(135deg, #d8e7ff 0%, #c7f1ff 50%, #f0f6ff 100%);
-        }
-        [data-theme="glass"][data-mode="dark"] body {
-            background: linear-gradient(135deg, #141b2e 0%, #1d2a3f 50%, #1a2436 100%);
+        [data-theme="cupcake"][data-mode="dark"] {
+            --ui-bg: #1a0e1f;
+            --ui-text: #f0e6f0;
+            --ui-accent: #65c3c8;
+            --ui-accent-2: #ef9fbc;
+            --ui-accent-hover: #eeaf3a;
+            --ui-surface: #2a1a30;
+            --ui-surface-2: #3a2642;
+            --ui-text-muted: #b89cae;
+            --ui-border: #3a2642;
+            --ui-shadow: rgba(0, 0, 0, 0.45);
+            --ui-progress-bg: #3a2642;
+            --ui-button-bg: #2a1a30;
+            --ui-button-text: #f0e6f0;
+            --ui-button-border: #65c3c8;
+            --ui-glow: rgba(101, 195, 200, 0.25);
         }
 
-        [data-theme="oled"] {
-            --ui-bg: #000000;
-            --ui-surface: #050505;
-            --ui-surface-2: #090909;
-            --ui-text: #f5f5f5;
-            --ui-text-muted: #8f8f8f;
-            --ui-accent: #00f5ff;
-            --ui-accent-2: #4dff9b;
-            --ui-accent-hover: #00c7cf;
-            --ui-border: #101010;
-            --ui-shadow: rgba(0, 0, 0, 0);
-            --ui-glow: rgba(0, 245, 255, 0.25);
-            --ui-progress-bg: #101010;
-            --ui-control-radius: 4px;
-            --ui-play-radius: 6px;
+        /* ----- Bumblebee ----- */
+        [data-theme="bumblebee"] {
+            --ui-bg: #ffffff;
+            --ui-text: #181830;
+            --ui-accent: #e0a82e;
+            --ui-accent-2: #f9d72f;
+            --ui-accent-hover: #c48e1e;
+            --ui-surface: #f2f2f2;
+            --ui-surface-2: #e8e8e8;
+            --ui-text-muted: #6a6a82;
+            --ui-border: #d4d4d4;
+            --ui-shadow: rgba(24, 24, 48, 0.10);
+            --ui-progress-bg: #d4d4d4;
+            --ui-button-bg: #f2f2f2;
+            --ui-button-text: #181830;
+            --ui-button-border: #e0a82e;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(224, 168, 46, 0.30);
         }
-        [data-theme="oled"][data-mode="light"] {
-            --ui-bg: #f0f0f0;
-            --ui-surface: #ffffff;
-            --ui-surface-2: #f5f5f5;
-            --ui-text: #111111;
-            --ui-text-muted: #666666;
-            --ui-accent: #00c7cf;
-            --ui-accent-2: #3de889;
-            --ui-accent-hover: #00aab2;
-            --ui-border: #dddddd;
-            --ui-shadow: rgba(0, 0, 0, 0.08);
-            --ui-glow: rgba(0, 199, 207, 0.2);
-            --ui-progress-bg: #e0e0e0;
-        }
-        [data-theme="oled"][data-mode="dark"] {
-            --ui-bg: #000000;
-            --ui-surface: #050505;
-            --ui-surface-2: #0a0a0a;
-            --ui-text: #f0f0f0;
-            --ui-text-muted: #888888;
-            --ui-accent: #00f5ff;
-            --ui-accent-2: #4dff9b;
-            --ui-accent-hover: #00c7cf;
-            --ui-border: #151515;
-            --ui-shadow: rgba(0, 0, 0, 0);
-            --ui-glow: rgba(0, 245, 255, 0.3);
-            --ui-progress-bg: #151515;
+        [data-theme="bumblebee"][data-mode="dark"] {
+            --ui-bg: #181830;
+            --ui-text: #f0ecdc;
+            --ui-accent: #e0a82e;
+            --ui-accent-2: #f9d72f;
+            --ui-accent-hover: #c48e1e;
+            --ui-surface: #222242;
+            --ui-surface-2: #2e2e52;
+            --ui-text-muted: #a8a4b4;
+            --ui-border: #2e2e52;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #2e2e52;
+            --ui-button-bg: #222242;
+            --ui-button-text: #f0ecdc;
+            --ui-button-border: #e0a82e;
+            --ui-glow: rgba(224, 168, 46, 0.25);
         }
 
+        /* ----- Emerald ----- */
+        [data-theme="emerald"] {
+            --ui-bg: #ffffff;
+            --ui-text: #333c4d;
+            --ui-accent: #66cc8a;
+            --ui-accent-2: #377cfb;
+            --ui-accent-hover: #4aad6e;
+            --ui-surface: #f9fafb;
+            --ui-surface-2: #edf0f2;
+            --ui-text-muted: #6c7a8e;
+            --ui-border: #dce0e4;
+            --ui-shadow: rgba(51, 60, 77, 0.10);
+            --ui-progress-bg: #dce0e4;
+            --ui-button-bg: #f9fafb;
+            --ui-button-text: #333c4d;
+            --ui-button-border: #66cc8a;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(102, 204, 138, 0.30);
+        }
+        [data-theme="emerald"][data-mode="dark"] {
+            --ui-bg: #1a222a;
+            --ui-text: #e8edf2;
+            --ui-accent: #66cc8a;
+            --ui-accent-2: #377cfb;
+            --ui-accent-hover: #4aad6e;
+            --ui-surface: #2a3440;
+            --ui-surface-2: #3a4654;
+            --ui-text-muted: #a0b0c0;
+            --ui-border: #3a4654;
+            --ui-shadow: rgba(0, 0, 0, 0.45);
+            --ui-progress-bg: #3a4654;
+            --ui-button-bg: #2a3440;
+            --ui-button-text: #e8edf2;
+            --ui-button-border: #66cc8a;
+            --ui-glow: rgba(102, 204, 138, 0.25);
+        }
+
+        /* ----- Corporate ----- */
+        [data-theme="corporate"] {
+            --ui-bg: #ffffff;
+            --ui-text: #1f2937;
+            --ui-accent: #4b6bfb;
+            --ui-accent-2: #7b92b2;
+            --ui-accent-hover: #3855d4;
+            --ui-surface: #f3f4f6;
+            --ui-surface-2: #e8eaed;
+            --ui-text-muted: #6b7a8a;
+            --ui-border: #d4d8de;
+            --ui-shadow: rgba(31, 41, 55, 0.10);
+            --ui-progress-bg: #d4d8de;
+            --ui-button-bg: #f3f4f6;
+            --ui-button-text: #1f2937;
+            --ui-button-border: #4b6bfb;
+            --ui-control-radius: var(--md-shape-sm);
+            --ui-play-radius: var(--md-shape-md);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(75, 107, 251, 0.30);
+        }
+        [data-theme="corporate"][data-mode="dark"] {
+            --ui-bg: #111827;
+            --ui-text: #e6edf5;
+            --ui-accent: #4b6bfb;
+            --ui-accent-2: #7b92b2;
+            --ui-accent-hover: #3855d4;
+            --ui-surface: #1f2937;
+            --ui-surface-2: #2d3748;
+            --ui-text-muted: #9aabbe;
+            --ui-border: #2d3748;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #2d3748;
+            --ui-button-bg: #1f2937;
+            --ui-button-text: #e6edf5;
+            --ui-button-border: #4b6bfb;
+            --ui-glow: rgba(75, 107, 251, 0.25);
+        }
+
+        /* ----- Synthwave (already defined) ----- */
         [data-theme="synthwave"],
         [data-theme="synth"] {
             --ui-accent: #2dfcff;
@@ -275,6 +333,202 @@
             --ui-accent-hover: #5d2d7a;
         }
 
+        /* ----- Retro ----- */
+        [data-theme="retro"] {
+            --ui-bg: #e4d8b4;
+            --ui-text: #282425;
+            --ui-accent: #ef9995;
+            --ui-accent-2: #a4cbb4;
+            --ui-accent-hover: #d48682;
+            --ui-surface: #dbcca4;
+            --ui-surface-2: #d0c198;
+            --ui-text-muted: #6a5c50;
+            --ui-border: #c8b890;
+            --ui-shadow: rgba(40, 36, 37, 0.14);
+            --ui-progress-bg: #c8b890;
+            --ui-button-bg: #dbcca4;
+            --ui-button-text: #282425;
+            --ui-button-border: #ef9995;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(239, 153, 149, 0.30);
+        }
+        [data-theme="retro"][data-mode="dark"] {
+            --ui-bg: #1e1a18;
+            --ui-text: #f0e8d8;
+            --ui-accent: #ef9995;
+            --ui-accent-2: #a4cbb4;
+            --ui-accent-hover: #d48682;
+            --ui-surface: #2e2824;
+            --ui-surface-2: #3e3632;
+            --ui-text-muted: #b0a498;
+            --ui-border: #3e3632;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #3e3632;
+            --ui-button-bg: #2e2824;
+            --ui-button-text: #f0e8d8;
+            --ui-button-border: #ef9995;
+            --ui-glow: rgba(239, 153, 149, 0.25);
+        }
+
+        /* ----- Cyberpunk (already defined) ----- */
+        [data-theme="cyberpunk"] {
+            --ui-control-radius: 6px;
+            --ui-play-radius: 8px;
+        }
+        [data-theme="cyberpunk"][data-mode="dark"] {
+            --ui-bg: #050806;
+            --ui-surface: #0b120f;
+            --ui-surface-2: #121c16;
+            --ui-text: #d7ffe9;
+            --ui-text-muted: #86bfa1;
+            --ui-accent: #00ff7b;
+            --ui-accent-2: #6bffb0;
+            --ui-accent-hover: #00d96a;
+            --ui-border: #0f1f17;
+            --ui-shadow: rgba(0, 0, 0, 0.7);
+            --ui-progress-bg: #0f1f17;
+            --ui-button-bg: #00ff7b;
+            --ui-button-text: #04120a;
+            --ui-button-border: #00c95f;
+        }
+        [data-theme="cyberpunk"][data-mode="light"] {
+            --ui-bg: #e4fff1;
+            --ui-surface: #f1fff8;
+            --ui-surface-2: #e8fff2;
+            --ui-text: #0b1a12;
+            --ui-text-muted: #3f6b55;
+            --ui-accent: #00cc63;
+            --ui-accent-2: #63ffb0;
+            --ui-accent-hover: #00a954;
+            --ui-border: #bfe8d1;
+            --ui-shadow: rgba(10, 70, 45, 0.14);
+            --ui-glow: rgba(0, 204, 99, 0.35);
+            --ui-progress-bg: #bfe8d1;
+            --ui-button-bg: #00cc63;
+            --ui-button-text: #071510;
+            --ui-button-border: #00a954;
+        }
+
+        /* ----- Valentine ----- */
+        [data-theme="valentine"] {
+            --ui-bg: #f0d6eb;
+            --ui-text: #632c3b;
+            --ui-accent: #e96d7b;
+            --ui-accent-2: #af4670;
+            --ui-accent-hover: #d45a68;
+            --ui-surface: #e4c4df;
+            --ui-surface-2: #d8b8d2;
+            --ui-text-muted: #8a5a6e;
+            --ui-border: #d4b0cc;
+            --ui-shadow: rgba(99, 44, 59, 0.14);
+            --ui-progress-bg: #d4b0cc;
+            --ui-button-bg: #e4c4df;
+            --ui-button-text: #632c3b;
+            --ui-button-border: #e96d7b;
+            --ui-control-radius: var(--md-shape-full);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(233, 109, 123, 0.30);
+        }
+        [data-theme="valentine"][data-mode="dark"] {
+            --ui-bg: #2a1620;
+            --ui-text: #f0dce8;
+            --ui-accent: #e96d7b;
+            --ui-accent-2: #af4670;
+            --ui-accent-hover: #d45a68;
+            --ui-surface: #3e2230;
+            --ui-surface-2: #523040;
+            --ui-text-muted: #c8a0b8;
+            --ui-border: #523040;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #523040;
+            --ui-button-bg: #3e2230;
+            --ui-button-text: #f0dce8;
+            --ui-button-border: #e96d7b;
+            --ui-glow: rgba(233, 109, 123, 0.25);
+        }
+
+        /* ----- Halloween ----- */
+        [data-theme="halloween"] {
+            --ui-bg: #212121;
+            --ui-text: #ededed;
+            --ui-accent: #f28c18;
+            --ui-accent-2: #6d3a9c;
+            --ui-accent-hover: #d4760a;
+            --ui-surface: #2a2a2a;
+            --ui-surface-2: #383838;
+            --ui-text-muted: #a0a0a0;
+            --ui-border: #383838;
+            --ui-shadow: rgba(0, 0, 0, 0.60);
+            --ui-progress-bg: #383838;
+            --ui-button-bg: #2a2a2a;
+            --ui-button-text: #ededed;
+            --ui-button-border: #f28c18;
+            --ui-control-radius: var(--md-shape-sm);
+            --ui-play-radius: var(--md-shape-md);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(242, 140, 24, 0.35);
+        }
+        [data-theme="halloween"][data-mode="light"] {
+            --ui-bg: #f5efe8;
+            --ui-text: #1a1a1a;
+            --ui-accent: #f28c18;
+            --ui-accent-2: #6d3a9c;
+            --ui-accent-hover: #d4760a;
+            --ui-surface: #e8e0d8;
+            --ui-surface-2: #ddd4cc;
+            --ui-text-muted: #6a6058;
+            --ui-border: #d0c8c0;
+            --ui-shadow: rgba(0, 0, 0, 0.10);
+            --ui-progress-bg: #d0c8c0;
+            --ui-button-bg: #e8e0d8;
+            --ui-button-text: #1a1a1a;
+            --ui-button-border: #f28c18;
+            --ui-glow: rgba(242, 140, 24, 0.25);
+        }
+
+        /* ----- Garden ----- */
+        [data-theme="garden"] {
+            --ui-bg: #e9e7e7;
+            --ui-text: #100f0f;
+            --ui-accent: #5c7f67;
+            --ui-accent-2: #ecf4e7;
+            --ui-accent-hover: #4a6a54;
+            --ui-surface: #d8d8d8;
+            --ui-surface-2: #cccccc;
+            --ui-text-muted: #5a5a5a;
+            --ui-border: #c0c0c0;
+            --ui-shadow: rgba(16, 15, 15, 0.10);
+            --ui-progress-bg: #c0c0c0;
+            --ui-button-bg: #d8d8d8;
+            --ui-button-text: #100f0f;
+            --ui-button-border: #5c7f67;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(92, 127, 103, 0.30);
+        }
+        [data-theme="garden"][data-mode="dark"] {
+            --ui-bg: #1a1a1a;
+            --ui-text: #e8e8e8;
+            --ui-accent: #5c7f67;
+            --ui-accent-2: #ecf4e7;
+            --ui-accent-hover: #4a6a54;
+            --ui-surface: #2a2a2a;
+            --ui-surface-2: #3a3a3a;
+            --ui-text-muted: #9a9a9a;
+            --ui-border: #3a3a3a;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #3a3a3a;
+            --ui-button-bg: #2a2a2a;
+            --ui-button-text: #e8e8e8;
+            --ui-button-border: #5c7f67;
+            --ui-glow: rgba(92, 127, 103, 0.25);
+        }
+
+        /* ----- Forest (already defined) ----- */
         [data-theme="forest"] {
             --ui-control-radius: 18px;
             --ui-play-radius: 14px;
@@ -314,43 +568,862 @@
             --ui-button-border: #3a5a44;
         }
 
-        [data-theme="cyberpunk"] {
-            --ui-control-radius: 6px;
-            --ui-play-radius: 8px;
+        /* ----- Aqua ----- */
+        [data-theme="aqua"] {
+            --ui-bg: #345da7;
+            --ui-text: #bcebfa;
+            --ui-accent: #09ecf3;
+            --ui-accent-2: #966fb3;
+            --ui-accent-hover: #06d0d8;
+            --ui-surface: #2b4c8a;
+            --ui-surface-2: #22407a;
+            --ui-text-muted: #8ab4cc;
+            --ui-border: #1e3a6a;
+            --ui-shadow: rgba(0, 0, 0, 0.35);
+            --ui-progress-bg: #1e3a6a;
+            --ui-button-bg: #2b4c8a;
+            --ui-button-text: #bcebfa;
+            --ui-button-border: #09ecf3;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(9, 236, 243, 0.35);
         }
-        [data-theme="cyberpunk"][data-mode="dark"] {
-            --ui-bg: #050806;
-            --ui-surface: #0b120f;
-            --ui-surface-2: #121c16;
-            --ui-text: #d7ffe9;
-            --ui-text-muted: #86bfa1;
-            --ui-accent: #00ff7b;
-            --ui-accent-2: #6bffb0;
-            --ui-accent-hover: #00d96a;
-            --ui-border: #0f1f17;
-            --ui-shadow: rgba(0, 0, 0, 0.7);
-            --ui-glow: rgba(0, 255, 123, 0.5);
-            --ui-progress-bg: #0f1f17;
-            --ui-button-bg: #00ff7b;
-            --ui-button-text: #04120a;
-            --ui-button-border: #00c95f;
+        [data-theme="aqua"][data-mode="light"] {
+            --ui-bg: #dcecf5;
+            --ui-text: #1a3a5a;
+            --ui-accent: #09ecf3;
+            --ui-accent-2: #966fb3;
+            --ui-accent-hover: #06d0d8;
+            --ui-surface: #c8dce8;
+            --ui-surface-2: #b8d0de;
+            --ui-text-muted: #5a7a8a;
+            --ui-border: #a8c0ce;
+            --ui-shadow: rgba(26, 58, 90, 0.12);
+            --ui-progress-bg: #a8c0ce;
+            --ui-button-bg: #c8dce8;
+            --ui-button-text: #1a3a5a;
+            --ui-button-border: #09ecf3;
+            --ui-glow: rgba(9, 236, 243, 0.25);
         }
-        [data-theme="cyberpunk"][data-mode="light"] {
-            --ui-bg: #e4fff1;
-            --ui-surface: #f1fff8;
-            --ui-surface-2: #e8fff2;
-            --ui-text: #0b1a12;
-            --ui-text-muted: #3f6b55;
-            --ui-accent: #00cc63;
-            --ui-accent-2: #63ffb0;
-            --ui-accent-hover: #00a954;
-            --ui-border: #bfe8d1;
-            --ui-shadow: rgba(10, 70, 45, 0.14);
-            --ui-glow: rgba(0, 204, 99, 0.35);
-            --ui-progress-bg: #bfe8d1;
-            --ui-button-bg: #00cc63;
-            --ui-button-text: #071510;
-            --ui-button-border: #00a954;
+
+        /* ----- Lo-Fi ----- */
+        [data-theme="lofi"] {
+            --ui-bg: #ffffff;
+            --ui-text: #0d0d0d;
+            --ui-accent: #0d0d0d;
+            --ui-accent-2: #1a1a1a;
+            --ui-accent-hover: #333333;
+            --ui-surface: #f2f2f2;
+            --ui-surface-2: #e6e6e6;
+            --ui-text-muted: #666666;
+            --ui-border: #d4d4d4;
+            --ui-shadow: rgba(13, 13, 13, 0.08);
+            --ui-progress-bg: #d4d4d4;
+            --ui-button-bg: #f2f2f2;
+            --ui-button-text: #0d0d0d;
+            --ui-button-border: #0d0d0d;
+            --ui-control-radius: var(--md-shape-sm);
+            --ui-play-radius: var(--md-shape-md);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(13, 13, 13, 0.15);
+        }
+        [data-theme="lofi"][data-mode="dark"] {
+            --ui-bg: #0d0d0d;
+            --ui-text: #f2f2f2;
+            --ui-accent: #f2f2f2;
+            --ui-accent-2: #cccccc;
+            --ui-accent-hover: #e6e6e6;
+            --ui-surface: #1a1a1a;
+            --ui-surface-2: #2a2a2a;
+            --ui-text-muted: #888888;
+            --ui-border: #2a2a2a;
+            --ui-shadow: rgba(0, 0, 0, 0.60);
+            --ui-progress-bg: #2a2a2a;
+            --ui-button-bg: #1a1a1a;
+            --ui-button-text: #f2f2f2;
+            --ui-button-border: #f2f2f2;
+            --ui-glow: rgba(242, 242, 242, 0.15);
+        }
+
+        /* ----- Pastel ----- */
+        [data-theme="pastel"] {
+            --ui-bg: #ffffff;
+            --ui-text: #2b2b2b;
+            --ui-accent: #d1c1d7;
+            --ui-accent-2: #f6cbd1;
+            --ui-accent-hover: #bca6c4;
+            --ui-surface: #f6f6f6;
+            --ui-surface-2: #ececec;
+            --ui-text-muted: #7a7a7a;
+            --ui-border: #dcdcdc;
+            --ui-shadow: rgba(43, 43, 43, 0.08);
+            --ui-progress-bg: #dcdcdc;
+            --ui-button-bg: #f6f6f6;
+            --ui-button-text: #2b2b2b;
+            --ui-button-border: #d1c1d7;
+            --ui-control-radius: var(--md-shape-full);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(209, 193, 215, 0.30);
+        }
+        [data-theme="pastel"][data-mode="dark"] {
+            --ui-bg: #1e1e2a;
+            --ui-text: #e8e0ec;
+            --ui-accent: #d1c1d7;
+            --ui-accent-2: #f6cbd1;
+            --ui-accent-hover: #bca6c4;
+            --ui-surface: #2e2e3e;
+            --ui-surface-2: #3e3e52;
+            --ui-text-muted: #a0a0b0;
+            --ui-border: #3e3e52;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #3e3e52;
+            --ui-button-bg: #2e2e3e;
+            --ui-button-text: #e8e0ec;
+            --ui-button-border: #d1c1d7;
+            --ui-glow: rgba(209, 193, 215, 0.25);
+        }
+
+        /* ----- Fantasy ----- */
+        [data-theme="fantasy"] {
+            --ui-bg: #ffffff;
+            --ui-text: #1f2937;
+            --ui-accent: #6e0b75;
+            --ui-accent-2: #007ebd;
+            --ui-accent-hover: #54085a;
+            --ui-surface: #f3f4f6;
+            --ui-surface-2: #e8eaed;
+            --ui-text-muted: #6b7a8a;
+            --ui-border: #d4d8de;
+            --ui-shadow: rgba(31, 41, 55, 0.10);
+            --ui-progress-bg: #d4d8de;
+            --ui-button-bg: #f3f4f6;
+            --ui-button-text: #1f2937;
+            --ui-button-border: #6e0b75;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(110, 11, 117, 0.30);
+        }
+        [data-theme="fantasy"][data-mode="dark"] {
+            --ui-bg: #121824;
+            --ui-text: #e6eaf0;
+            --ui-accent: #6e0b75;
+            --ui-accent-2: #007ebd;
+            --ui-accent-hover: #54085a;
+            --ui-surface: #1f2937;
+            --ui-surface-2: #2d3748;
+            --ui-text-muted: #9aabbe;
+            --ui-border: #2d3748;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #2d3748;
+            --ui-button-bg: #1f2937;
+            --ui-button-text: #e6eaf0;
+            --ui-button-border: #6e0b75;
+            --ui-glow: rgba(110, 11, 117, 0.25);
+        }
+
+        /* ----- Wireframe ----- */
+        [data-theme="wireframe"] {
+            --ui-bg: #ffffff;
+            --ui-text: #000000;
+            --ui-accent: #b8b8b8;
+            --ui-accent-2: #b8b8b8;
+            --ui-accent-hover: #999999;
+            --ui-surface: #eeeeee;
+            --ui-surface-2: #e2e2e2;
+            --ui-text-muted: #666666;
+            --ui-border: #cccccc;
+            --ui-shadow: rgba(0, 0, 0, 0.06);
+            --ui-progress-bg: #cccccc;
+            --ui-button-bg: #eeeeee;
+            --ui-button-text: #000000;
+            --ui-button-border: #b8b8b8;
+            --ui-control-radius: var(--md-shape-xs);
+            --ui-play-radius: var(--md-shape-sm);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(184, 184, 184, 0.20);
+        }
+        [data-theme="wireframe"][data-mode="dark"] {
+            --ui-bg: #000000;
+            --ui-text: #ffffff;
+            --ui-accent: #b8b8b8;
+            --ui-accent-2: #b8b8b8;
+            --ui-accent-hover: #999999;
+            --ui-surface: #141414;
+            --ui-surface-2: #242424;
+            --ui-text-muted: #888888;
+            --ui-border: #2a2a2a;
+            --ui-shadow: rgba(0, 0, 0, 0.60);
+            --ui-progress-bg: #2a2a2a;
+            --ui-button-bg: #141414;
+            --ui-button-text: #ffffff;
+            --ui-button-border: #b8b8b8;
+            --ui-glow: rgba(184, 184, 184, 0.15);
+        }
+
+        /* ----- Black ----- */
+        [data-theme="black"] {
+            --ui-bg: #000000;
+            --ui-text: #ffffff;
+            --ui-accent: #333333;
+            --ui-accent-2: #333333;
+            --ui-accent-hover: #555555;
+            --ui-surface: #141414;
+            --ui-surface-2: #242424;
+            --ui-text-muted: #888888;
+            --ui-border: #2a2a2a;
+            --ui-shadow: rgba(0, 0, 0, 0.60);
+            --ui-progress-bg: #2a2a2a;
+            --ui-button-bg: #141414;
+            --ui-button-text: #ffffff;
+            --ui-button-border: #333333;
+            --ui-control-radius: var(--md-shape-xs);
+            --ui-play-radius: var(--md-shape-sm);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(51, 51, 51, 0.25);
+        }
+        [data-theme="black"][data-mode="light"] {
+            --ui-bg: #ffffff;
+            --ui-text: #000000;
+            --ui-accent: #333333;
+            --ui-accent-2: #333333;
+            --ui-accent-hover: #555555;
+            --ui-surface: #f0f0f0;
+            --ui-surface-2: #e4e4e4;
+            --ui-text-muted: #666666;
+            --ui-border: #cccccc;
+            --ui-shadow: rgba(0, 0, 0, 0.06);
+            --ui-progress-bg: #cccccc;
+            --ui-button-bg: #f0f0f0;
+            --ui-button-text: #000000;
+            --ui-button-border: #333333;
+            --ui-glow: rgba(51, 51, 51, 0.20);
+        }
+
+        /* ----- Luxury ----- */
+        [data-theme="luxury"] {
+            --ui-bg: #09090b;
+            --ui-text: #dca54c;
+            --ui-accent: #ffffff;
+            --ui-accent-2: #152747;
+            --ui-accent-hover: #e6e6e6;
+            --ui-surface: #171618;
+            --ui-surface-2: #222226;
+            --ui-text-muted: #8a7a5a;
+            --ui-border: #2a282c;
+            --ui-shadow: rgba(0, 0, 0, 0.60);
+            --ui-progress-bg: #2a282c;
+            --ui-button-bg: #171618;
+            --ui-button-text: #dca54c;
+            --ui-button-border: #ffffff;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(220, 165, 76, 0.35);
+        }
+        [data-theme="luxury"][data-mode="light"] {
+            --ui-bg: #faf8f5;
+            --ui-text: #2a1a0a;
+            --ui-accent: #c4933a;
+            --ui-accent-2: #1a2a3a;
+            --ui-accent-hover: #a87a2e;
+            --ui-surface: #ede8e0;
+            --ui-surface-2: #e2dcd4;
+            --ui-text-muted: #6a5a4a;
+            --ui-border: #d4ccc4;
+            --ui-shadow: rgba(42, 26, 10, 0.10);
+            --ui-progress-bg: #d4ccc4;
+            --ui-button-bg: #ede8e0;
+            --ui-button-text: #2a1a0a;
+            --ui-button-border: #c4933a;
+            --ui-glow: rgba(196, 147, 58, 0.25);
+        }
+
+        /* ----- Dracula ----- */
+        [data-theme="dracula"] {
+            --ui-bg: #282a36;
+            --ui-text: #f8f8f2;
+            --ui-accent: #ff79c6;
+            --ui-accent-2: #bd93f9;
+            --ui-accent-hover: #e85ab2;
+            --ui-surface: #44475a;
+            --ui-surface-2: #565a6e;
+            --ui-text-muted: #b8b8d0;
+            --ui-border: #565a6e;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #565a6e;
+            --ui-button-bg: #44475a;
+            --ui-button-text: #f8f8f2;
+            --ui-button-border: #ff79c6;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(255, 121, 198, 0.35);
+        }
+        [data-theme="dracula"][data-mode="light"] {
+            --ui-bg: #f0eeec;
+            --ui-text: #1a1a2a;
+            --ui-accent: #d05a9a;
+            --ui-accent-2: #9a7ad0;
+            --ui-accent-hover: #b84a86;
+            --ui-surface: #e4e0dc;
+            --ui-surface-2: #d8d4d0;
+            --ui-text-muted: #5a5a6a;
+            --ui-border: #c8c4c0;
+            --ui-shadow: rgba(26, 26, 42, 0.10);
+            --ui-progress-bg: #c8c4c0;
+            --ui-button-bg: #e4e0dc;
+            --ui-button-text: #1a1a2a;
+            --ui-button-border: #d05a9a;
+            --ui-glow: rgba(208, 90, 154, 0.25);
+        }
+
+        /* ----- CMYK ----- */
+        [data-theme="cmyk"] {
+            --ui-bg: #ffffff;
+            --ui-text: #1a1a1a;
+            --ui-accent: #45aeee;
+            --ui-accent-2: #e8488a;
+            --ui-accent-hover: #2a92d4;
+            --ui-surface: #f4f4f4;
+            --ui-surface-2: #e8e8e8;
+            --ui-text-muted: #6a6a6a;
+            --ui-border: #d4d4d4;
+            --ui-shadow: rgba(26, 26, 26, 0.08);
+            --ui-progress-bg: #d4d4d4;
+            --ui-button-bg: #f4f4f4;
+            --ui-button-text: #1a1a1a;
+            --ui-button-border: #45aeee;
+            --ui-control-radius: var(--md-shape-sm);
+            --ui-play-radius: var(--md-shape-md);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(69, 174, 238, 0.30);
+        }
+        [data-theme="cmyk"][data-mode="dark"] {
+            --ui-bg: #0a0a1a;
+            --ui-text: #e8eaf0;
+            --ui-accent: #45aeee;
+            --ui-accent-2: #e8488a;
+            --ui-accent-hover: #2a92d4;
+            --ui-surface: #1a1a2e;
+            --ui-surface-2: #2a2a42;
+            --ui-text-muted: #8a8a9a;
+            --ui-border: #2a2a42;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #2a2a42;
+            --ui-button-bg: #1a1a2e;
+            --ui-button-text: #e8eaf0;
+            --ui-button-border: #45aeee;
+            --ui-glow: rgba(69, 174, 238, 0.25);
+        }
+
+        /* ----- Autumn ----- */
+        [data-theme="autumn"] {
+            --ui-bg: #f1f1f1;
+            --ui-text: #2d1810;
+            --ui-accent: #8c0327;
+            --ui-accent-2: #d85251;
+            --ui-accent-hover: #6e021e;
+            --ui-surface: #e3e3e3;
+            --ui-surface-2: #d8d8d8;
+            --ui-text-muted: #6a5248;
+            --ui-border: #c8c8c8;
+            --ui-shadow: rgba(45, 24, 16, 0.10);
+            --ui-progress-bg: #c8c8c8;
+            --ui-button-bg: #e3e3e3;
+            --ui-button-text: #2d1810;
+            --ui-button-border: #8c0327;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(140, 3, 39, 0.30);
+        }
+        [data-theme="autumn"][data-mode="dark"] {
+            --ui-bg: #1a0e08;
+            --ui-text: #f0e4d8;
+            --ui-accent: #8c0327;
+            --ui-accent-2: #d85251;
+            --ui-accent-hover: #6e021e;
+            --ui-surface: #2a1a14;
+            --ui-surface-2: #3a2822;
+            --ui-text-muted: #b0a098;
+            --ui-border: #3a2822;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #3a2822;
+            --ui-button-bg: #2a1a14;
+            --ui-button-text: #f0e4d8;
+            --ui-button-border: #8c0327;
+            --ui-glow: rgba(140, 3, 39, 0.25);
+        }
+
+        /* ----- Business ----- */
+        [data-theme="business"] {
+            --ui-bg: #202020;
+            --ui-text: #c1c1c1;
+            --ui-accent: #1c4e80;
+            --ui-accent-2: #7ea6e0;
+            --ui-accent-hover: #133a5e;
+            --ui-surface: #2b2b2b;
+            --ui-surface-2: #3a3a3a;
+            --ui-text-muted: #8a8a8a;
+            --ui-border: #3a3a3a;
+            --ui-shadow: rgba(0, 0, 0, 0.60);
+            --ui-progress-bg: #3a3a3a;
+            --ui-button-bg: #2b2b2b;
+            --ui-button-text: #c1c1c1;
+            --ui-button-border: #1c4e80;
+            --ui-control-radius: var(--md-shape-sm);
+            --ui-play-radius: var(--md-shape-md);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(28, 78, 128, 0.35);
+        }
+        [data-theme="business"][data-mode="light"] {
+            --ui-bg: #f0f0f0;
+            --ui-text: #1a1a1a;
+            --ui-accent: #1c4e80;
+            --ui-accent-2: #7ea6e0;
+            --ui-accent-hover: #133a5e;
+            --ui-surface: #e4e4e4;
+            --ui-surface-2: #d8d8d8;
+            --ui-text-muted: #5a5a5a;
+            --ui-border: #c8c8c8;
+            --ui-shadow: rgba(26, 26, 26, 0.08);
+            --ui-progress-bg: #c8c8c8;
+            --ui-button-bg: #e4e4e4;
+            --ui-button-text: #1a1a1a;
+            --ui-button-border: #1c4e80;
+            --ui-glow: rgba(28, 78, 128, 0.25);
+        }
+
+        /* ----- Acid ----- */
+        [data-theme="acid"] {
+            --ui-bg: #fafafa;
+            --ui-text: #141414;
+            --ui-accent: #ff00ff;
+            --ui-accent-2: #ff9900;
+            --ui-accent-hover: #d400d4;
+            --ui-surface: #ebebeb;
+            --ui-surface-2: #e0e0e0;
+            --ui-text-muted: #6a6a6a;
+            --ui-border: #cccccc;
+            --ui-shadow: rgba(20, 20, 20, 0.10);
+            --ui-progress-bg: #cccccc;
+            --ui-button-bg: #ebebeb;
+            --ui-button-text: #141414;
+            --ui-button-border: #ff00ff;
+            --ui-control-radius: var(--md-shape-xs);
+            --ui-play-radius: var(--md-shape-sm);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(255, 0, 255, 0.35);
+        }
+        [data-theme="acid"][data-mode="dark"] {
+            --ui-bg: #0a0a0a;
+            --ui-text: #f0f0f0;
+            --ui-accent: #ff00ff;
+            --ui-accent-2: #ff9900;
+            --ui-accent-hover: #d400d4;
+            --ui-surface: #1a1a1a;
+            --ui-surface-2: #2a2a2a;
+            --ui-text-muted: #8a8a8a;
+            --ui-border: #2a2a2a;
+            --ui-shadow: rgba(0, 0, 0, 0.60);
+            --ui-progress-bg: #2a2a2a;
+            --ui-button-bg: #1a1a1a;
+            --ui-button-text: #f0f0f0;
+            --ui-button-border: #ff00ff;
+            --ui-glow: rgba(255, 0, 255, 0.30);
+        }
+
+        /* ----- Lemonade ----- */
+        [data-theme="lemonade"] {
+            --ui-bg: #f3f4f6;
+            --ui-text: #374151;
+            --ui-accent: #519903;
+            --ui-accent-2: #e9e92f;
+            --ui-accent-hover: #3f7a02;
+            --ui-surface: #e5e7eb;
+            --ui-surface-2: #d8dbe0;
+            --ui-text-muted: #6b7a8a;
+            --ui-border: #c8ccd4;
+            --ui-shadow: rgba(55, 65, 81, 0.10);
+            --ui-progress-bg: #c8ccd4;
+            --ui-button-bg: #e5e7eb;
+            --ui-button-text: #374151;
+            --ui-button-border: #519903;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(81, 153, 3, 0.30);
+        }
+        [data-theme="lemonade"][data-mode="dark"] {
+            --ui-bg: #1a1a24;
+            --ui-text: #e0e4ec;
+            --ui-accent: #519903;
+            --ui-accent-2: #e9e92f;
+            --ui-accent-hover: #3f7a02;
+            --ui-surface: #2a2a38;
+            --ui-surface-2: #3a3a4a;
+            --ui-text-muted: #9a9aaa;
+            --ui-border: #3a3a4a;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #3a3a4a;
+            --ui-button-bg: #2a2a38;
+            --ui-button-text: #e0e4ec;
+            --ui-button-border: #519903;
+            --ui-glow: rgba(81, 153, 3, 0.25);
+        }
+
+        /* ----- Night ----- */
+        [data-theme="night"] {
+            --ui-bg: #0f172a;
+            --ui-text: #cbd5e1;
+            --ui-accent: #38bdf8;
+            --ui-accent-2: #818cf8;
+            --ui-accent-hover: #0ea5e9;
+            --ui-surface: #1e293b;
+            --ui-surface-2: #2d3a52;
+            --ui-text-muted: #8a9ab0;
+            --ui-border: #2d3a52;
+            --ui-shadow: rgba(0, 0, 0, 0.60);
+            --ui-progress-bg: #2d3a52;
+            --ui-button-bg: #1e293b;
+            --ui-button-text: #cbd5e1;
+            --ui-button-border: #38bdf8;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(56, 189, 248, 0.35);
+        }
+        [data-theme="night"][data-mode="light"] {
+            --ui-bg: #e8ecf4;
+            --ui-text: #1a2a3a;
+            --ui-accent: #38bdf8;
+            --ui-accent-2: #818cf8;
+            --ui-accent-hover: #0ea5e9;
+            --ui-surface: #d4dce8;
+            --ui-surface-2: #c8d0de;
+            --ui-text-muted: #5a6a7a;
+            --ui-border: #b8c0ce;
+            --ui-shadow: rgba(26, 42, 58, 0.10);
+            --ui-progress-bg: #b8c0ce;
+            --ui-button-bg: #d4dce8;
+            --ui-button-text: #1a2a3a;
+            --ui-button-border: #38bdf8;
+            --ui-glow: rgba(56, 189, 248, 0.25);
+        }
+
+        /* ----- Coffee ----- */
+        [data-theme="coffee"] {
+            --ui-bg: #20161f;
+            --ui-text: #d2a478;
+            --ui-accent: #db924b;
+            --ui-accent-2: #263e3f;
+            --ui-accent-hover: #c47e38;
+            --ui-surface: #2c1e2b;
+            --ui-surface-2: #3a2a38;
+            --ui-text-muted: #a08070;
+            --ui-border: #3a2a38;
+            --ui-shadow: rgba(0, 0, 0, 0.60);
+            --ui-progress-bg: #3a2a38;
+            --ui-button-bg: #2c1e2b;
+            --ui-button-text: #d2a478;
+            --ui-button-border: #db924b;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(219, 146, 75, 0.35);
+        }
+        [data-theme="coffee"][data-mode="light"] {
+            --ui-bg: #f0e8dc;
+            --ui-text: #2a1a12;
+            --ui-accent: #db924b;
+            --ui-accent-2: #263e3f;
+            --ui-accent-hover: #c47e38;
+            --ui-surface: #e4d8cc;
+            --ui-surface-2: #d8ccc0;
+            --ui-text-muted: #6a5a4a;
+            --ui-border: #c8bcb0;
+            --ui-shadow: rgba(42, 26, 18, 0.10);
+            --ui-progress-bg: #c8bcb0;
+            --ui-button-bg: #e4d8cc;
+            --ui-button-text: #2a1a12;
+            --ui-button-border: #db924b;
+            --ui-glow: rgba(219, 146, 75, 0.25);
+        }
+
+        /* ----- Winter ----- */
+        [data-theme="winter"] {
+            --ui-bg: #ffffff;
+            --ui-text: #394e6a;
+            --ui-accent: #047aff;
+            --ui-accent-2: #463aa1;
+            --ui-accent-hover: #0362cc;
+            --ui-surface: #f2f7ff;
+            --ui-surface-2: #e6eef8;
+            --ui-text-muted: #6a7a8e;
+            --ui-border: #d4dce8;
+            --ui-shadow: rgba(57, 78, 106, 0.10);
+            --ui-progress-bg: #d4dce8;
+            --ui-button-bg: #f2f7ff;
+            --ui-button-text: #394e6a;
+            --ui-button-border: #047aff;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(4, 122, 255, 0.30);
+        }
+        [data-theme="winter"][data-mode="dark"] {
+            --ui-bg: #0e182a;
+            --ui-text: #d0d8e8;
+            --ui-accent: #047aff;
+            --ui-accent-2: #463aa1;
+            --ui-accent-hover: #0362cc;
+            --ui-surface: #1a2640;
+            --ui-surface-2: #2a3652;
+            --ui-text-muted: #8a9ab0;
+            --ui-border: #2a3652;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #2a3652;
+            --ui-button-bg: #1a2640;
+            --ui-button-text: #d0d8e8;
+            --ui-button-border: #047aff;
+            --ui-glow: rgba(4, 122, 255, 0.25);
+        }
+
+        /* ----- Dim ----- */
+        [data-theme="dim"] {
+            --ui-bg: #2a303c;
+            --ui-text: #a6adbb;
+            --ui-accent: #9cdbff;
+            --ui-accent-2: #5e81ac;
+            --ui-accent-hover: #7ac8f0;
+            --ui-surface: #242933;
+            --ui-surface-2: #323a46;
+            --ui-text-muted: #7a8290;
+            --ui-border: #323a46;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #323a46;
+            --ui-button-bg: #242933;
+            --ui-button-text: #a6adbb;
+            --ui-button-border: #9cdbff;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(156, 219, 255, 0.35);
+        }
+        [data-theme="dim"][data-mode="light"] {
+            --ui-bg: #e8ecf0;
+            --ui-text: #2a303c;
+            --ui-accent: #5e81ac;
+            --ui-accent-2: #9cdbff;
+            --ui-accent-hover: #4a6e94;
+            --ui-surface: #dce0e6;
+            --ui-surface-2: #d0d4dc;
+            --ui-text-muted: #5a6a7a;
+            --ui-border: #c0c4cc;
+            --ui-shadow: rgba(42, 48, 60, 0.10);
+            --ui-progress-bg: #c0c4cc;
+            --ui-button-bg: #dce0e6;
+            --ui-button-text: #2a303c;
+            --ui-button-border: #5e81ac;
+            --ui-glow: rgba(94, 129, 172, 0.25);
+        }
+
+        /* ----- Nord ----- */
+        [data-theme="nord"] {
+            --ui-bg: #eceff4;
+            --ui-text: #2e3440;
+            --ui-accent: #5e81ac;
+            --ui-accent-2: #81a1c1;
+            --ui-accent-hover: #4a6e94;
+            --ui-surface: #e5e9f0;
+            --ui-surface-2: #d8dce6;
+            --ui-text-muted: #6a7a8a;
+            --ui-border: #c8ccd8;
+            --ui-shadow: rgba(46, 52, 64, 0.10);
+            --ui-progress-bg: #c8ccd8;
+            --ui-button-bg: #e5e9f0;
+            --ui-button-text: #2e3440;
+            --ui-button-border: #5e81ac;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(94, 129, 172, 0.30);
+        }
+        [data-theme="nord"][data-mode="dark"] {
+            --ui-bg: #1e2430;
+            --ui-text: #d8dee8;
+            --ui-accent: #5e81ac;
+            --ui-accent-2: #81a1c1;
+            --ui-accent-hover: #4a6e94;
+            --ui-surface: #2e3440;
+            --ui-surface-2: #3e4654;
+            --ui-text-muted: #8a9aaa;
+            --ui-border: #3e4654;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #3e4654;
+            --ui-button-bg: #2e3440;
+            --ui-button-text: #d8dee8;
+            --ui-button-border: #5e81ac;
+            --ui-glow: rgba(94, 129, 172, 0.25);
+        }
+
+        /* ----- Sunset ----- */
+        [data-theme="sunset"] {
+            --ui-bg: #121c22;
+            --ui-text: #9cb4bd;
+            --ui-accent: #ff865b;
+            --ui-accent-2: #fd6f9c;
+            --ui-accent-hover: #e06e48;
+            --ui-surface: #1a2730;
+            --ui-surface-2: #263642;
+            --ui-text-muted: #7a8e9a;
+            --ui-border: #263642;
+            --ui-shadow: rgba(0, 0, 0, 0.60);
+            --ui-progress-bg: #263642;
+            --ui-button-bg: #1a2730;
+            --ui-button-text: #9cb4bd;
+            --ui-button-border: #ff865b;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(255, 134, 91, 0.35);
+        }
+        [data-theme="sunset"][data-mode="light"] {
+            --ui-bg: #f0e4dc;
+            --ui-text: #1a1a1a;
+            --ui-accent: #ff865b;
+            --ui-accent-2: #fd6f9c;
+            --ui-accent-hover: #e06e48;
+            --ui-surface: #e4d8d0;
+            --ui-surface-2: #d8ccc4;
+            --ui-text-muted: #6a5a52;
+            --ui-border: #c8bcb4;
+            --ui-shadow: rgba(26, 26, 26, 0.10);
+            --ui-progress-bg: #c8bcb4;
+            --ui-button-bg: #e4d8d0;
+            --ui-button-text: #1a1a1a;
+            --ui-button-border: #ff865b;
+            --ui-glow: rgba(255, 134, 91, 0.25);
+        }
+
+        /* ----- Caramel Latte (Custom) ----- */
+        [data-theme="caramellatte"] {
+            --ui-bg: #fdf6e3;
+            --ui-text: #5c4333;
+            --ui-accent: #c27a3e;
+            --ui-accent-2: #e6b981;
+            --ui-accent-hover: #a8662e;
+            --ui-surface: #f5eedc;
+            --ui-surface-2: #ece4d0;
+            --ui-text-muted: #8a705a;
+            --ui-border: #e0d4c0;
+            --ui-shadow: rgba(92, 67, 51, 0.12);
+            --ui-progress-bg: #e0d4c0;
+            --ui-button-bg: #f5eedc;
+            --ui-button-text: #5c4333;
+            --ui-button-border: #c27a3e;
+            --ui-control-radius: var(--md-shape-md);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(194, 122, 62, 0.30);
+        }
+        [data-theme="caramellatte"][data-mode="dark"] {
+            --ui-bg: #1a1410;
+            --ui-text: #dcc4ac;
+            --ui-accent: #c27a3e;
+            --ui-accent-2: #e6b981;
+            --ui-accent-hover: #a8662e;
+            --ui-surface: #2a221c;
+            --ui-surface-2: #3a322a;
+            --ui-text-muted: #a09080;
+            --ui-border: #3a322a;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #3a322a;
+            --ui-button-bg: #2a221c;
+            --ui-button-text: #dcc4ac;
+            --ui-button-border: #c27a3e;
+            --ui-glow: rgba(194, 122, 62, 0.25);
+        }
+
+        /* ----- Abyss (Custom) ----- */
+        [data-theme="abyss"] {
+            --ui-bg: #000b18;
+            --ui-text: #86acc9;
+            --ui-accent: #004a8f;
+            --ui-accent-2: #002244;
+            --ui-accent-hover: #0068b8;
+            --ui-surface: #001229;
+            --ui-surface-2: #001e3a;
+            --ui-text-muted: #5a7a9a;
+            --ui-border: #001e3a;
+            --ui-shadow: rgba(0, 0, 0, 0.70);
+            --ui-progress-bg: #001e3a;
+            --ui-button-bg: #001229;
+            --ui-button-text: #86acc9;
+            --ui-button-border: #004a8f;
+            --ui-control-radius: var(--md-shape-sm);
+            --ui-play-radius: var(--md-shape-md);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(0, 74, 143, 0.35);
+        }
+        [data-theme="abyss"][data-mode="light"] {
+            --ui-bg: #d8e4f0;
+            --ui-text: #0a2a4a;
+            --ui-accent: #004a8f;
+            --ui-accent-2: #002244;
+            --ui-accent-hover: #0068b8;
+            --ui-surface: #c8d4e4;
+            --ui-surface-2: #b8c8d8;
+            --ui-text-muted: #4a6a82;
+            --ui-border: #a8b8c8;
+            --ui-shadow: rgba(10, 42, 74, 0.10);
+            --ui-progress-bg: #a8b8c8;
+            --ui-button-bg: #c8d4e4;
+            --ui-button-text: #0a2a4a;
+            --ui-button-border: #004a8f;
+            --ui-glow: rgba(0, 74, 143, 0.25);
+        }
+
+        /* ----- Silk (Custom) ----- */
+        [data-theme="silk"] {
+            --ui-bg: #f8f6f8;
+            --ui-text: #4a454d;
+            --ui-accent: #d6b8c9;
+            --ui-accent-2: #f0e6eb;
+            --ui-accent-hover: #c4a2b8;
+            --ui-surface: #fdfbfe;
+            --ui-surface-2: #f0ecf0;
+            --ui-text-muted: #8a7a82;
+            --ui-border: #e4dce4;
+            --ui-shadow: rgba(74, 69, 77, 0.08);
+            --ui-progress-bg: #e4dce4;
+            --ui-button-bg: #fdfbfe;
+            --ui-button-text: #4a454d;
+            --ui-button-border: #d6b8c9;
+            --ui-control-radius: var(--md-shape-full);
+            --ui-play-radius: var(--md-shape-full);
+            --ui-scanline: transparent;
+            --ui-glow: rgba(214, 184, 201, 0.30);
+        }
+        [data-theme="silk"][data-mode="dark"] {
+            --ui-bg: #1a1820;
+            --ui-text: #e0d8e4;
+            --ui-accent: #d6b8c9;
+            --ui-accent-2: #f0e6eb;
+            --ui-accent-hover: #c4a2b8;
+            --ui-surface: #2a2832;
+            --ui-surface-2: #3a3844;
+            --ui-text-muted: #a098a8;
+            --ui-border: #3a3844;
+            --ui-shadow: rgba(0, 0, 0, 0.50);
+            --ui-progress-bg: #3a3844;
+            --ui-button-bg: #2a2832;
+            --ui-button-text: #e0d8e4;
+            --ui-button-border: #d6b8c9;
+            --ui-glow: rgba(214, 184, 201, 0.25);
         }
 
         /* ===== THEME TRANSITION ===== */
@@ -3300,6 +4373,36 @@
                     <option value="synthwave">Synthwave</option>
                     <option value="forest">Forest</option>
                     <option value="cyberpunk">Cyberpunk</option>
+                    <option value="cupcake">Cupcake</option>
+                    <option value="bumblebee">Bumblebee</option>
+                    <option value="emerald">Emerald</option>
+                    <option value="corporate">Corporate</option>
+                    <option value="retro">Retro</option>
+                    <option value="valentine">Valentine</option>
+                    <option value="halloween">Halloween</option>
+                    <option value="garden">Garden</option>
+                    <option value="aqua">Aqua</option>
+                    <option value="lofi">Lo-Fi</option>
+                    <option value="pastel">Pastel</option>
+                    <option value="fantasy">Fantasy</option>
+                    <option value="wireframe">Wireframe</option>
+                    <option value="black">Black</option>
+                    <option value="luxury">Luxury</option>
+                    <option value="dracula">Dracula</option>
+                    <option value="cmyk">CMYK</option>
+                    <option value="autumn">Autumn</option>
+                    <option value="business">Business</option>
+                    <option value="acid">Acid</option>
+                    <option value="lemonade">Lemonade</option>
+                    <option value="night">Night</option>
+                    <option value="coffee">Coffee</option>
+                    <option value="winter">Winter</option>
+                    <option value="dim">Dim</option>
+                    <option value="nord">Nord</option>
+                    <option value="sunset">Sunset</option>
+                    <option value="caramellatte">Caramel Latte</option>
+                    <option value="abyss">Abyss</option>
+                    <option value="silk">Silk</option>
                 </select>
                 <div class="settings-note">Choose a visual theme. Dark/light mode is controlled separately below.</div>
             </div>
@@ -6773,5 +7876,4 @@
     </script>
 
 </body>
-
 </html>
