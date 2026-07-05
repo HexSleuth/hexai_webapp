@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>⬡ HEX AI – Music Player</title>
+    <title>⬣ HEX AI – Music Player</title>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8">
     </script>
@@ -30,7 +30,6 @@
     <script src="https://www.youtube.com/iframe_api">
     </script>
 
-    <!-- Color extraction libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vibrant.js/1.0.0/Vibrant.min.js">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js">
@@ -80,7 +79,6 @@
             --md-transition: 0.2s cubic-bezier(0.2, 0, 0, 1);
             --md-nav-height: 72px;
 
-            /* Dynamic theme variables (fallback to Material) */
             --ui-accent: var(--md-primary);
             --ui-accent-2: var(--md-secondary);
             --ui-progress-fill: var(--md-primary);
@@ -136,6 +134,197 @@
         }
 
         /* ===== THEME PRESETS — FULL COLLECTION ===== */
+        [data-theme="glass"] {
+            --ui-bg: #11131a;
+            --ui-surface: rgba(24, 28, 36, 0.72);
+            --ui-surface-2: rgba(36, 42, 52, 0.7);
+            --ui-border: rgba(255, 255, 255, 0.12);
+            --ui-shadow: rgba(0, 0, 0, 0.55);
+            --ui-glow: rgba(120, 204, 255, 0.35);
+            --ui-mesh-1: rgba(88, 160, 255, 0.25);
+            --ui-mesh-2: rgba(255, 94, 125, 0.22);
+            --ui-mesh-3: rgba(108, 255, 209, 0.2);
+        }
+
+        [data-theme="oled"] {
+            --ui-bg: #000000;
+            --ui-surface: #050505;
+            --ui-surface-2: #090909;
+            --ui-text: #f5f5f5;
+            --ui-text-muted: #8f8f8f;
+            --ui-accent: #00f5ff;
+            --ui-accent-2: #4dff9b;
+            --ui-accent-hover: #00c7cf;
+            --ui-border: #101010;
+            --ui-shadow: rgba(0, 0, 0, 0);
+            --ui-glow: rgba(0, 245, 255, 0.25);
+            --ui-progress-bg: #101010;
+        }
+
+        [data-theme="synth"],
+        [data-theme="synthwave"] {
+            --ui-accent: #2dfcff;
+            --ui-accent-2: #a7ff2f;
+            --ui-accent-hover: #14dbe0;
+            --ui-glow: rgba(45, 252, 255, 0.45);
+            --ui-timer-font: "Courier New", "Lucida Console", monospace;
+        }
+
+        [data-theme="synthwave"][data-mode="dark"],
+        [data-theme="synth"][data-mode="dark"] {
+            --ui-bg: #140b2d;
+            --ui-surface: #1b0f3d;
+            --ui-surface-2: #23114a;
+            --ui-text: #f9e6ff;
+            --ui-text-muted: #c7a6ff;
+            --ui-border: rgba(255, 79, 216, 0.28);
+            --ui-shadow: rgba(255, 79, 216, 0.24);
+            --ui-progress-bg: rgba(93, 255, 253, 0.2);
+        }
+
+        [data-theme="synthwave"][data-mode="light"],
+        [data-theme="synth"][data-mode="light"] {
+            --ui-bg: #f5edff;
+            --ui-surface: #ffffff;
+            --ui-surface-2: #f0e8ff;
+            --ui-text: #2b1240;
+            --ui-text-muted: #6b4b9b;
+            --ui-border: rgba(45, 252, 255, 0.35);
+            --ui-shadow: rgba(45, 252, 255, 0.22);
+        }
+
+        [data-theme="glass"][data-mode="light"] {
+            --ui-bg: #eef3ff;
+            --ui-surface: rgba(255, 255, 255, 0.74);
+            --ui-surface-2: rgba(255, 255, 255, 0.6);
+            --ui-text: #1a2433;
+            --ui-text-muted: #5a6b82;
+            --ui-accent: #4aa3ff;
+            --ui-accent-2: #7bdcff;
+            --ui-accent-hover: #2c7ee6;
+            --ui-border: rgba(120, 160, 255, 0.35);
+            --ui-shadow: rgba(30, 60, 120, 0.12);
+            --ui-glow: rgba(90, 160, 255, 0.4);
+            --ui-button-bg: rgba(255, 255, 255, 0.9);
+            --ui-button-text: #1a2433;
+            --ui-button-border: rgba(120, 160, 255, 0.25);
+        }
+
+        [data-theme="glass"][data-mode="dark"] {
+            --ui-bg: #0f1524;
+            --ui-surface: rgba(20, 32, 52, 0.72);
+            --ui-surface-2: rgba(30, 46, 72, 0.6);
+            --ui-text: #e9f0ff;
+            --ui-text-muted: #a6b7d6;
+            --ui-accent: #6bb7ff;
+            --ui-accent-2: #9ad9ff;
+            --ui-accent-hover: #4a98e8;
+            --ui-border: rgba(120, 160, 255, 0.22);
+            --ui-shadow: rgba(0, 0, 0, 0.5);
+            --ui-glow: rgba(107, 183, 255, 0.35);
+            --ui-button-bg: rgba(255, 255, 255, 0.16);
+            --ui-button-text: #eef4ff;
+            --ui-button-border: rgba(120, 160, 255, 0.2);
+        }
+
+        [data-theme="glass"] body {
+            background: linear-gradient(135deg, #d8e7ff 0%, #c7f1ff 50%, #f0f6ff 100%);
+        }
+
+        [data-theme="glass"][data-mode="dark"] body {
+            background: linear-gradient(135deg, #141b2e 0%, #1d2a3f 50%, #1a2436 100%);
+        }
+
+        [data-theme="forest"][data-mode="light"] {
+            --ui-bg: #e8f2e2;
+            --ui-surface: #f5faf0;
+            --ui-surface-2: #edf5e6;
+            --ui-text: #1f2b22;
+            --ui-text-muted: #4f6556;
+            --ui-accent: #2f7d4a;
+            --ui-accent-2: #7fcf8a;
+            --ui-accent-hover: #256b3f;
+            --ui-border: #cfe0c8;
+            --ui-shadow: rgba(35, 70, 50, 0.18);
+            --ui-glow: rgba(90, 190, 120, 0.3);
+            --ui-control-radius: 18px;
+            --ui-play-radius: 14px;
+        }
+
+        [data-theme="forest"][data-mode="dark"] {
+            --ui-bg: #16231b;
+            --ui-surface: #1f3226;
+            --ui-surface-2: #273a2c;
+            --ui-text: #e6f3ea;
+            --ui-text-muted: #a6b8ad;
+            --ui-accent: #5ac07a;
+            --ui-accent-2: #9ee6b5;
+            --ui-accent-hover: #43a967;
+            --ui-border: #2a3f31;
+            --ui-shadow: rgba(0, 0, 0, 0.5);
+            --ui-glow: rgba(90, 190, 120, 0.35);
+            --ui-control-radius: 18px;
+            --ui-play-radius: 14px;
+        }
+
+        [data-theme="cyberpunk"][data-mode="dark"] {
+            --ui-bg: #050806;
+            --ui-surface: #0b120f;
+            --ui-surface-2: #121c16;
+            --ui-text: #d7ffe9;
+            --ui-text-muted: #86bfa1;
+            --ui-accent: #00ff7b;
+            --ui-accent-2: #6bffb0;
+            --ui-accent-hover: #00d96a;
+            --ui-border: #0f1f17;
+            --ui-shadow: rgba(0, 0, 0, 0.7);
+            --ui-glow: rgba(0, 255, 123, 0.5);
+            --ui-control-radius: 6px;
+            --ui-play-radius: 8px;
+            --ui-button-bg: #00ff7b;
+            --ui-button-text: #04120a;
+            --ui-button-border: #00c95f;
+        }
+
+        [data-theme="cyberpunk"][data-mode="light"] {
+            --ui-bg: #e4fff1;
+            --ui-surface: #f1fff8;
+            --ui-surface-2: #e8fff2;
+            --ui-text: #0b1a12;
+            --ui-text-muted: #3f6b55;
+            --ui-accent: #00cc63;
+            --ui-accent-2: #63ffb0;
+            --ui-accent-hover: #00a954;
+            --ui-border: #bfe8d1;
+            --ui-shadow: rgba(10, 70, 45, 0.14);
+            --ui-glow: rgba(0, 204, 99, 0.35);
+            --ui-control-radius: 6px;
+            --ui-play-radius: 8px;
+            --ui-button-bg: #00cc63;
+            --ui-button-text: #071510;
+            --ui-button-border: #00a954;
+        }
+
+        [data-theme="cyberpunk"] .clear-btn {
+            background: var(--ui-button-bg);
+        }
+
+        [data-theme="synth"] {
+            --ui-bg: #12081c;
+            --ui-surface: rgba(26, 10, 38, 0.9);
+            --ui-surface-2: rgba(34, 14, 50, 0.85);
+            --ui-text: #f9e6ff;
+            --ui-text-muted: #c7a6ff;
+            --ui-accent: #ff4fd8;
+            --ui-accent-2: #5dfffd;
+            --ui-accent-hover: #ff2bc1;
+            --ui-border: rgba(255, 79, 216, 0.25);
+            --ui-shadow: rgba(255, 79, 216, 0.22);
+            --ui-glow: rgba(93, 255, 253, 0.35);
+            --ui-progress-bg: rgba(93, 255, 253, 0.2);
+            --ui-scanline: rgba(255, 255, 255, 0.08);
+        }
+
         /* ----- Cupcake ----- */
         [data-theme="cupcake"] {
             --ui-bg: #faf7f5;
@@ -292,47 +481,6 @@
             --ui-glow: rgba(75, 107, 251, 0.25);
         }
 
-        /* ----- Synthwave (already defined) ----- */
-        [data-theme="synthwave"],
-        [data-theme="synth"] {
-            --ui-accent: #2dfcff;
-            --ui-accent-2: #a7ff2f;
-            --ui-accent-hover: #14dbe0;
-            --ui-glow: rgba(45, 252, 255, 0.45);
-            --ui-timer-font: "Courier New", "Lucida Console", monospace;
-            --ui-control-radius: 8px;
-            --ui-play-radius: 10px;
-            --ui-scanline: rgba(255, 255, 255, 0.08);
-        }
-        [data-theme="synthwave"][data-mode="dark"],
-        [data-theme="synth"][data-mode="dark"] {
-            --ui-bg: #140b2d;
-            --ui-surface: #1b0f3d;
-            --ui-surface-2: #23114a;
-            --ui-text: #f9e6ff;
-            --ui-text-muted: #c7a6ff;
-            --ui-border: rgba(255, 79, 216, 0.28);
-            --ui-shadow: rgba(255, 79, 216, 0.24);
-            --ui-progress-bg: rgba(93, 255, 253, 0.2);
-            --ui-accent: #ff4fd8;
-            --ui-accent-2: #5dfffd;
-            --ui-accent-hover: #ff2bc1;
-        }
-        [data-theme="synthwave"][data-mode="light"],
-        [data-theme="synth"][data-mode="light"] {
-            --ui-bg: #f5edff;
-            --ui-surface: #ffffff;
-            --ui-surface-2: #f0e8ff;
-            --ui-text: #2b1240;
-            --ui-text-muted: #6b4b9b;
-            --ui-border: rgba(45, 252, 255, 0.35);
-            --ui-shadow: rgba(45, 252, 255, 0.22);
-            --ui-progress-bg: rgba(45, 252, 255, 0.2);
-            --ui-accent: #7b3fa0;
-            --ui-accent-2: #2dfcff;
-            --ui-accent-hover: #5d2d7a;
-        }
-
         /* ----- Retro ----- */
         [data-theme="retro"] {
             --ui-bg: #e4d8b4;
@@ -370,45 +518,6 @@
             --ui-button-text: #f0e8d8;
             --ui-button-border: #ef9995;
             --ui-glow: rgba(239, 153, 149, 0.25);
-        }
-
-        /* ----- Cyberpunk (already defined) ----- */
-        [data-theme="cyberpunk"] {
-            --ui-control-radius: 6px;
-            --ui-play-radius: 8px;
-        }
-        [data-theme="cyberpunk"][data-mode="dark"] {
-            --ui-bg: #050806;
-            --ui-surface: #0b120f;
-            --ui-surface-2: #121c16;
-            --ui-text: #d7ffe9;
-            --ui-text-muted: #86bfa1;
-            --ui-accent: #00ff7b;
-            --ui-accent-2: #6bffb0;
-            --ui-accent-hover: #00d96a;
-            --ui-border: #0f1f17;
-            --ui-shadow: rgba(0, 0, 0, 0.7);
-            --ui-progress-bg: #0f1f17;
-            --ui-button-bg: #00ff7b;
-            --ui-button-text: #04120a;
-            --ui-button-border: #00c95f;
-        }
-        [data-theme="cyberpunk"][data-mode="light"] {
-            --ui-bg: #e4fff1;
-            --ui-surface: #f1fff8;
-            --ui-surface-2: #e8fff2;
-            --ui-text: #0b1a12;
-            --ui-text-muted: #3f6b55;
-            --ui-accent: #00cc63;
-            --ui-accent-2: #63ffb0;
-            --ui-accent-hover: #00a954;
-            --ui-border: #bfe8d1;
-            --ui-shadow: rgba(10, 70, 45, 0.14);
-            --ui-glow: rgba(0, 204, 99, 0.35);
-            --ui-progress-bg: #bfe8d1;
-            --ui-button-bg: #00cc63;
-            --ui-button-text: #071510;
-            --ui-button-border: #00a954;
         }
 
         /* ----- Valentine ----- */
@@ -526,46 +635,6 @@
             --ui-button-text: #e8e8e8;
             --ui-button-border: #5c7f67;
             --ui-glow: rgba(92, 127, 103, 0.25);
-        }
-
-        /* ----- Forest (already defined) ----- */
-        [data-theme="forest"] {
-            --ui-control-radius: 18px;
-            --ui-play-radius: 14px;
-        }
-        [data-theme="forest"][data-mode="light"] {
-            --ui-bg: #e8f2e2;
-            --ui-surface: #f5faf0;
-            --ui-surface-2: #edf5e6;
-            --ui-text: #1f2b22;
-            --ui-text-muted: #4f6556;
-            --ui-accent: #2f7d4a;
-            --ui-accent-2: #7fcf8a;
-            --ui-accent-hover: #256b3f;
-            --ui-border: #cfe0c8;
-            --ui-shadow: rgba(35, 70, 50, 0.18);
-            --ui-glow: rgba(90, 190, 120, 0.3);
-            --ui-progress-bg: #cfe0c8;
-            --ui-button-bg: #eaf5e6;
-            --ui-button-text: #1f2b22;
-            --ui-button-border: #b8d0b0;
-        }
-        [data-theme="forest"][data-mode="dark"] {
-            --ui-bg: #16231b;
-            --ui-surface: #1f3226;
-            --ui-surface-2: #273a2c;
-            --ui-text: #e6f3ea;
-            --ui-text-muted: #a6b8ad;
-            --ui-accent: #5ac07a;
-            --ui-accent-2: #9ee6b5;
-            --ui-accent-hover: #43a967;
-            --ui-border: #2a3f31;
-            --ui-shadow: rgba(0, 0, 0, 0.5);
-            --ui-glow: rgba(90, 190, 120, 0.35);
-            --ui-progress-bg: #2a3f31;
-            --ui-button-bg: #2d4535;
-            --ui-button-text: #e6f3ea;
-            --ui-button-border: #3a5a44;
         }
 
         /* ----- Aqua ----- */
@@ -1309,7 +1378,7 @@
             --ui-glow: rgba(255, 134, 91, 0.25);
         }
 
-        /* ----- Caramel Latte (Custom) ----- */
+        /* ----- Caramel Latte ----- */
         [data-theme="caramellatte"] {
             --ui-bg: #fdf6e3;
             --ui-text: #5c4333;
@@ -1348,7 +1417,7 @@
             --ui-glow: rgba(194, 122, 62, 0.25);
         }
 
-        /* ----- Abyss (Custom) ----- */
+        /* ----- Abyss ----- */
         [data-theme="abyss"] {
             --ui-bg: #000b18;
             --ui-text: #86acc9;
@@ -1387,7 +1456,7 @@
             --ui-glow: rgba(0, 74, 143, 0.25);
         }
 
-        /* ----- Silk (Custom) ----- */
+        /* ----- Silk ----- */
         [data-theme="silk"] {
             --ui-bg: #f8f6f8;
             --ui-text: #4a454d;
@@ -3038,6 +3107,68 @@
             color: var(--md-on-primary);
             transform: scale(1.05);
         }
+
+        /* ----- Background Playback toggle ----- */
+        #yt-section .yt-player-card .extra-controls .bg-playback-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--md-on-surface-variant);
+        }
+        body.dark #yt-section .yt-player-card .extra-controls .bg-playback-toggle {
+            color: #cac4d0;
+        }
+        #yt-section .yt-player-card .extra-controls .bg-playback-toggle .switch {
+            position: relative;
+            display: inline-block;
+            width: 38px;
+            height: 20px;
+        }
+        #yt-section .yt-player-card .extra-controls .bg-playback-toggle .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        #yt-section .yt-player-card .extra-controls .bg-playback-toggle .switch .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--md-outline-variant);
+            transition: 0.3s;
+            border-radius: var(--md-shape-full);
+        }
+        body.dark #yt-section .yt-player-card .extra-controls .bg-playback-toggle .switch .slider {
+            background: #444;
+        }
+        #yt-section .yt-player-card .extra-controls .bg-playback-toggle .switch .slider::before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background: var(--md-surface);
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        #yt-section .yt-player-card .extra-controls .bg-playback-toggle .switch input:checked+.slider {
+            background: var(--md-primary);
+        }
+        #yt-section .yt-player-card .extra-controls .bg-playback-toggle .switch input:checked+.slider::before {
+            transform: translateX(18px);
+        }
+        #yt-section .yt-player-card .extra-controls .bg-playback-toggle .help-note {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-left: 4px;
+        }
+        /* ---------------------------------------------------------- */
+
         #yt-section .yt-music-row .playlist-col {
             flex: 1.6;
             min-width: 300px;
@@ -4190,6 +4321,15 @@
                                             <button class="btn btn-outline-primary" data-mode="video">Video</button>
                                         </div>
                                     </div>
+                                    <!-- Background Playback toggle -->
+                                    <div class="bg-playback-toggle">
+                                        <span>Background Playback</span>
+                                        <label class="switch">
+                                            <input type="checkbox" id="bgPlaybackToggle" />
+                                            <span class="slider"></span>
+                                        </label>
+                                        <span class="help-note">(keeps audio alive)</span>
+                                    </div>
                                 </div>
                                 <div id="errorMessage" style="display:none;"></div>
                                 <div id="playerContainer" style="display:none;">
@@ -4680,7 +4820,7 @@
 
     <script>
         // =============================================================
-        //  THEME ENGINE – Complete with presets (no toggle in YT section)
+        //  THEME ENGINE – Complete with all presets
         // =============================================================
 
         (() => {
@@ -4688,13 +4828,11 @@
             const TRANSITION_MS = 320;
 
             let albumArtEl = null;
-            let dynamicEnabled = true; // always on (no toggle)
+            let dynamicEnabled = true;
 
             const ThemeEngine = {
                 init(options = {}) {
                     albumArtEl = options.albumArtEl || document.getElementById('albumArt');
-                    // dynamicEnabled stays true – no toggle to read
-                    // Load saved theme appearance
                     const savedTheme = localStorage.getItem('hexai_theme_appearance') || 'default';
                     const sel = document.getElementById('themeAppearanceSelect');
                     if (sel) {
@@ -4708,7 +4846,6 @@
                     if (theme === 'default') {
                         root.removeAttribute('data-theme');
                         document.body.classList.remove('dynamic-theme-active');
-                        // Re-apply dynamic if enabled (always on)
                         if (dynamicEnabled && albumArtEl && albumArtEl.src && albumArtEl.src !== 'https://via.placeholder.com/300') {
                             this.applyVibrantFromUrl(albumArtEl.src);
                         }
@@ -4924,6 +5061,10 @@
             offlineAnalyserData: null,
             offlineVisualizerRaf: null,
             offlineVisualizerActive: false,
+            bgPlaybackEnabled: false,
+            bgAudioContext: null,
+            bgSilentBuffer: null,
+            bgSilentSource: null,
         };
 
         let player = null;
@@ -5073,6 +5214,7 @@
                     STATE.offlineIsRepeating = parsed.offlineIsRepeating || false;
                     STATE.offlineIsShuffling = parsed.offlineIsShuffling || false;
                     STATE.offlinePlayHistory = parsed.offlinePlayHistory || [];
+                    STATE.bgPlaybackEnabled = parsed.bgPlaybackEnabled || false;
                 }
             } catch (e) { console.warn('loadState:', e); }
         }
@@ -5094,6 +5236,7 @@
                     offlineIsRepeating: STATE.offlineIsRepeating,
                     offlineIsShuffling: STATE.offlineIsShuffling,
                     offlinePlayHistory: STATE.offlinePlayHistory,
+                    bgPlaybackEnabled: STATE.bgPlaybackEnabled,
                 }));
             } catch (e) { console.warn('saveState:', e); }
         }
@@ -5845,6 +5988,7 @@
         const playlistImportInput = document.getElementById('playlistImportInput');
         const importPlaylistBtn = document.getElementById('importPlaylistBtn');
         const sponsorToggle = document.getElementById('sponsorBlockToggle');
+        const bgPlaybackToggle = document.getElementById('bgPlaybackToggle');
 
         function loadPlaylist() {
             const stored = localStorage.getItem('youtubeMusicPlaylist');
@@ -6123,6 +6267,7 @@
             playPauseBtn.innerHTML = ICON_PAUSE;
             updateProgressBar();
             if (SB.enabled) SB.start(videoId);
+            if (STATE.bgPlaybackEnabled) ensureBgAudioContext();
         }
 
         function handlePlayerStateChange(event) {
@@ -7144,6 +7289,7 @@
                             setTimeout(updateProgressBar, 500);
                             applyAlbumArtDisplayMode();
                             if (SB.enabled) SB.start(videoId);
+                            if (STATE.bgPlaybackEnabled) ensureBgAudioContext();
                         },
                         onStateChange: handlePlayerStateChange,
                         onError: handleVideoError
@@ -7153,12 +7299,131 @@
                 if (player.loadVideoById) { player.loadVideoById(videoId);
                     player.setVolume(currentVolume); }
                 if (SB.enabled) SB.start(videoId);
+                if (STATE.bgPlaybackEnabled) ensureBgAudioContext();
             }
             renderPlaylist(STATE.playlist);
             document.querySelectorAll('#songList li').forEach(el => {
                 if (el.dataset.video === videoId) el.classList.add('selected');
             });
         };
+
+        // =============================================================
+        //  BACKGROUND PLAYBACK – Silent Audio Context + MediaSession
+        // =============================================================
+
+        function initBackgroundPlayback() {
+            const saved = localStorage.getItem('bgPlaybackEnabled');
+            if (saved !== null) {
+                STATE.bgPlaybackEnabled = saved === 'true';
+                if (bgPlaybackToggle) bgPlaybackToggle.checked = STATE.bgPlaybackEnabled;
+            }
+            if (bgPlaybackToggle) {
+                bgPlaybackToggle.addEventListener('change', function() {
+                    STATE.bgPlaybackEnabled = this.checked;
+                    localStorage.setItem('bgPlaybackEnabled', String(STATE.bgPlaybackEnabled));
+                    if (STATE.bgPlaybackEnabled) {
+                        ensureBgAudioContext();
+                        showToast('Background playback enabled – audio will keep playing when tab is hidden.', 'info');
+                    } else {
+                        stopBgAudioContext();
+                        showToast('Background playback disabled.', 'info');
+                    }
+                });
+            }
+            if (STATE.bgPlaybackEnabled) {
+                ensureBgAudioContext();
+            }
+            if (navigator.mediaSession) {
+                navigator.mediaSession.setActionHandler('play', () => {
+                    if (player && typeof player.playVideo === 'function') player.playVideo();
+                });
+                navigator.mediaSession.setActionHandler('pause', () => {
+                    if (player && typeof player.pauseVideo === 'function') player.pauseVideo();
+                });
+                navigator.mediaSession.setActionHandler('previoustrack', () => {
+                    playPreviousSong();
+                });
+                navigator.mediaSession.setActionHandler('nexttrack', () => {
+                    playNextSong();
+                });
+                const updateMetadata = () => {
+                    if (navigator.mediaSession) {
+                        const title = document.querySelector("#nowPlaying .song-title")?.textContent || 'Unknown';
+                        const artist = document.querySelector("#nowPlaying .author-name")?.textContent || '';
+                        const art = document.getElementById('albumArt').src;
+                        navigator.mediaSession.metadata = new MediaMetadata({
+                            title: title,
+                            artist: artist,
+                            album: 'HEX AI Music',
+                            artwork: [{ src: art, sizes: '512x512', type: 'image/jpeg' }]
+                        });
+                    }
+                };
+                const titleEl = document.querySelector("#nowPlaying .song-title");
+                const observer = new MutationObserver(updateMetadata);
+                if (titleEl) observer.observe(titleEl, { childList: true, characterData: true, subtree: true });
+                const artEl = document.getElementById('albumArt');
+                if (artEl) observer.observe(artEl, { attributes: true, attributeFilter: ['src'] });
+            }
+        }
+
+        let bgAudioCtx = null;
+        let bgSilentBuffer = null;
+        let bgSilentSource = null;
+        let bgResumeInterval = null;
+
+        function ensureBgAudioContext() {
+            if (!STATE.bgPlaybackEnabled) return;
+            try {
+                if (!bgAudioCtx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    bgAudioCtx = new AudioContext();
+                }
+                if (bgAudioCtx.state === 'suspended') {
+                    bgAudioCtx.resume();
+                }
+                if (bgAudioCtx.state === 'running') {
+                    if (!bgSilentBuffer) {
+                        const sampleRate = bgAudioCtx.sampleRate;
+                        const bufferSize = Math.floor(sampleRate * 0.5);
+                        bgSilentBuffer = bgAudioCtx.createBuffer(1, bufferSize, sampleRate);
+                        const data = bgSilentBuffer.getChannelData(0);
+                        for (let i = 0; i < bufferSize; i++) data[i] = 0;
+                    }
+                    if (bgSilentSource) {
+                        try { bgSilentSource.stop(); } catch {}
+                        bgSilentSource = null;
+                    }
+                    bgSilentSource = bgAudioCtx.createBufferSource();
+                    bgSilentSource.buffer = bgSilentBuffer;
+                    bgSilentSource.loop = true;
+                    bgSilentSource.connect(bgAudioCtx.destination);
+                    bgSilentSource.start();
+                    if (bgResumeInterval) clearInterval(bgResumeInterval);
+                    bgResumeInterval = setInterval(() => {
+                        if (bgAudioCtx && bgAudioCtx.state === 'suspended') {
+                            bgAudioCtx.resume();
+                        }
+                    }, 1000);
+                }
+            } catch (e) {
+                console.warn('Background audio context error:', e);
+            }
+        }
+
+        function stopBgAudioContext() {
+            if (bgResumeInterval) { clearInterval(bgResumeInterval);
+                bgResumeInterval = null; }
+            if (bgSilentSource) {
+                try { bgSilentSource.stop(); } catch {}
+                bgSilentSource = null;
+            }
+            if (bgAudioCtx) {
+                try { bgAudioCtx.close(); } catch {}
+                bgAudioCtx = null;
+                bgSilentBuffer = null;
+            }
+        }
 
         // =============================================================
         //  OFFLINE MP3 PLAYER (with localStorage persistence)
@@ -7184,10 +7449,8 @@
         const offlineFileInput = document.getElementById('offlineFileInput');
         const offlineAlbumArt = document.getElementById('offlineAlbumArt');
 
-        // Load offline playlist from localStorage
         loadOfflinePlaylist();
 
-        // Sync STATE.offlinePlaylist with the loaded data
         let offlinePlaylist = STATE.offlinePlaylist;
         let offlineCurrentSongIndex = STATE.offlineCurrentSongIndex;
         let offlineIsPlaying = STATE.offlineIsPlaying;
@@ -7289,10 +7552,10 @@
         function offlineUpdateTabTitle() {
             if (offlineCurrentSongIndex !== -1 && offlinePlaylist[offlineCurrentSongIndex]) {
                 const song = offlinePlaylist[offlineCurrentSongIndex];
-                const playingStatus = offlineIsPlaying ? '▶️' : '◼';
+                const playingStatus = offlineIsPlaying ? '▷' : '𓊕';
                 document.title = `${playingStatus} ${song.name} - Music Player`;
             } else {
-                document.title = '🎵 Music Player';
+                document.title = '⬣ Music Player';
             }
         }
 
@@ -7799,7 +8062,6 @@
             initImageGenerator();
             initVideoGenerator();
 
-            // Render offline playlist from loaded state
             offlineRenderPlaylist();
             if (offlineCurrentSongIndex !== -1 && offlinePlaylist.length > 0) {
                 const song = offlinePlaylist[offlineCurrentSongIndex];
@@ -7815,7 +8077,6 @@
             }
             switchMusicTab('yt');
 
-            // INIT THEME ENGINE (no toggle)
             if (window.ThemeEngine) {
                 const savedAppearance = STATE.settings.themeAppearance || localStorage.getItem('hexai_theme_appearance') ||
                     'default';
@@ -7835,7 +8096,9 @@
                 }
             }
 
-            console.log('⬡ HEX AI — Dynamic theme toggle removed from YouTube Music section ⬡');
+            initBackgroundPlayback();
+
+            console.log('⬡ HEX AI — Theme Appearance ready with all 40+ presets ⬡');
         }
 
         document.addEventListener('DOMContentLoaded', init);
@@ -7847,9 +8110,9 @@
             if (progressInterval) clearInterval(progressInterval);
             if (syncInterval) clearInterval(syncInterval);
             if (SB.checkInterval) clearInterval(SB.checkInterval);
+            stopBgAudioContext();
         });
 
-        // Expose functions globally
         window.offlineTogglePlay = offlineTogglePlay;
         window.offlinePrevSong = offlinePrevSong;
         window.offlineNextSong = offlineNextSong;
