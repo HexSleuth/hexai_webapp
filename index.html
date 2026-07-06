@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>⬡ HEX AI – Music Player + Summarizer</title>
+    <title> ⬣ HEX AI – Music Player + Summarizer</title>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8">
     </script>
@@ -35,6 +35,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js">
+    </script>
+    <!-- Added for ID3 tag reading -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.7/jsmediatags.min.js">
     </script>
 
     <style>
@@ -4302,6 +4305,21 @@
             font: var(--md-body-medium);
         }
 
+        /* ===== VISUALIZER CONTAINER ===== */
+        .offline-visualizer-container {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .offline-visualizer-container canvas {
+            display: none;
+            width: 100%;
+            max-width: 512px;
+            height: 100px;
+            border-radius: var(--md-shape-md);
+            background: #1a1a1a;
+            margin: 0 auto;
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 640px) {
             .header {
@@ -4755,6 +4773,14 @@
                             </button>
                         </div>
 
+                        <!-- VISUALIZER & VOLUME -->
+                        <div class="offline-visualizer-container">
+                            <button class="md-icon-button" id="offlineVisualizerBtn" onclick="toggleOfflineVisualizer()" title="Toggle Visualizer">
+                                <i class="fa-solid fa-chart-simple"></i>
+                            </button>
+                            <canvas id="offlineVisualizer" width="512" height="100"></canvas>
+                        </div>
+
                         <div class="offline-progress-container">
                             <div class="offline-progress-bar" id="offlineProgressBar" onclick="offlineSeekTo(event)">
                                 <div class="offline-progress-fill" id="offlineProgressFill"></div>
@@ -4766,18 +4792,18 @@
                         </div>
 
                         <div class="offline-volume-container">
-                            <i class="fa-solid fa-volume-low"></i>
+                            <i class="fa-solid fa-volume-low" id="offlineVolumeIcon"></i>
                             <input type="range" class="offline-volume-slider" id="offlineVolumeSlider" min="0" max="100" value="50">
                             <i class="fa-solid fa-volume-high"></i>
                         </div>
 
                         <div class="offline-playlist">
                             <div class="offline-playlist-title">
-                                <i class="fa-regular fa-list"></i>Offline Playlist
+                                <i class="fa-regular fa-list"></i> Offline Playlist
                             </div>
                             <div id="offlinePlaylistContainer">
                                 <div class="offline-empty-playlist">
-                                    <i class="fa-regular fa-circle-plus"></i>Your playlist is empty. Add some music!
+                                    <i class="fa-regular fa-circle-plus"></i> Your playlist is empty. Add some music!
                                 </div>
                             </div>
                         </div>
@@ -5733,7 +5759,7 @@
             saveState();
             updateModelBadge();
             toggleSettings();
-            showToast('✅ Settings saved!');
+            showToast('Settings saved!');
         }
 
         function updateModelBadge() {
@@ -7805,9 +7831,14 @@
         const offlineUploadArea = document.getElementById('offlineUploadArea');
         const offlineFileInput = document.getElementById('offlineFileInput');
         const offlineAlbumArt = document.getElementById('offlineAlbumArt');
+        const offlineVisualizerBtn = document.getElementById('offlineVisualizerBtn');
+        const offlineVisualizerCanvas = document.getElementById('offlineVisualizer');
+        const offlineVolumeIcon = document.getElementById('offlineVolumeIcon');
 
+        // Load offline playlist from localStorage
         loadOfflinePlaylist();
 
+        // Sync STATE.offlinePlaylist with the loaded data
         let offlinePlaylist = STATE.offlinePlaylist;
         let offlineCurrentSongIndex = STATE.offlineCurrentSongIndex;
         let offlineIsPlaying = STATE.offlineIsPlaying;
@@ -7815,6 +7846,145 @@
         let offlineIsShuffling = STATE.offlineIsShuffling;
         let offlinePlayHistory = STATE.offlinePlayHistory;
 
+        // ---- Visualizer variables ----
+        let offlineVisualizerActive = false;
+        let offlineAnalyser = null;
+        let offlineVisualizerRaf = null;
+        let offlineAudioContext = null;
+
+        // ---- Volume icon updater ----
+        function updateOfflineVolumeIcon() {
+            if (!offlineVolumeIcon) return;
+            const val = offlineAudio.volume;
+            if (val === 0) {
+                offlineVolumeIcon.className = 'fa-solid fa-volume-xmark';
+            } else if (val < 0.5) {
+                offlineVolumeIcon.className = 'fa-solid fa-volume-low';
+            } else {
+                offlineVolumeIcon.className = 'fa-solid fa-volume-high';
+            }
+        }
+
+        // ---- ID3 tag reader ----
+        function readID3Tags(file, callback) {
+            if (typeof jsmediatags === 'undefined') {
+                callback(null);
+                return;
+            }
+            jsmediatags.read(file, {
+                onSuccess: function(tag) {
+                    const tags = tag.tags;
+                    let albumArt = null;
+                    if (tags.picture) {
+                        const pic = tags.picture;
+                        try {
+                            const base64 = btoa(String.fromCharCode(...new Uint8Array(pic.data)));
+                            albumArt = `data:${pic.format};base64,${base64}`;
+                        } catch (e) {
+                            console.warn('Album art conversion failed', e);
+                        }
+                    }
+                    callback({
+                        title: tags.title || null,
+                        artist: tags.artist || null,
+                        album: tags.album || null,
+                        albumArt: albumArt
+                    });
+                },
+                onError: function(error) {
+                    console.warn('ID3 tag error:', error);
+                    callback(null);
+                }
+            });
+        }
+
+        // ---- Visualizer functions ----
+        function initOfflineVisualizer() {
+            if (!offlineAudioContext) {
+                try {
+                    offlineAudioContext = new(window.AudioContext || window.webkitAudioContext)();
+                    offlineAnalyser = offlineAudioContext.createAnalyser();
+                    offlineAnalyser.fftSize = 256;
+                    const source = offlineAudioContext.createMediaElementSource(offlineAudio);
+                    source.connect(offlineAnalyser);
+                    offlineAnalyser.connect(offlineAudioContext.destination);
+                } catch (e) {
+                    console.warn('Visualizer init error:', e);
+                    return false;
+                }
+            }
+            if (offlineAudioContext.state === 'suspended') {
+                offlineAudioContext.resume();
+            }
+            return true;
+        }
+
+        function startOfflineVisualizer() {
+            const canvas = offlineVisualizerCanvas;
+            if (!canvas) return;
+            if (!offlineAudioContext && !initOfflineVisualizer()) {
+                showToast('Visualizer not available', 'error');
+                return;
+            }
+            const ctx = canvas.getContext('2d');
+            const bufferLength = offlineAnalyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            function draw() {
+                offlineVisualizerRaf = requestAnimationFrame(draw);
+                offlineAnalyser.getByteFrequencyData(dataArray);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const barWidth = (canvas.width / bufferLength) * 2.5;
+                let barHeight;
+                let x = 0;
+                for (let i = 0; i < bufferLength; i++) {
+                    barHeight = dataArray[i] / 2;
+                    ctx.fillStyle = `hsl(${(i / bufferLength) * 360}, 100%, 50%)`;
+                    ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                    x += barWidth + 1;
+                }
+            }
+            draw();
+            offlineVisualizerActive = true;
+        }
+
+        function stopOfflineVisualizer() {
+            if (offlineVisualizerRaf) cancelAnimationFrame(offlineVisualizerRaf);
+            offlineVisualizerRaf = null;
+            offlineVisualizerActive = false;
+            const canvas = offlineVisualizerCanvas;
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        function toggleOfflineVisualizer() {
+            const canvas = offlineVisualizerCanvas;
+            if (!canvas) return;
+            if (canvas.style.display === 'none') {
+                canvas.style.display = 'block';
+                if (!offlineAudioContext && !initOfflineVisualizer()) {
+                    canvas.style.display = 'none';
+                    showToast('Visualizer not available', 'error');
+                    return;
+                }
+                // Ensure analyser is connected even if audio was paused
+                if (offlineAnalyser) {
+                    startOfflineVisualizer();
+                } else {
+                    initOfflineVisualizer();
+                    startOfflineVisualizer();
+                }
+                showToast('Visualizer ON', 'info');
+            } else {
+                canvas.style.display = 'none';
+                stopOfflineVisualizer();
+                showToast('Visualizer OFF', 'info');
+            }
+        }
+
+        // ---- Base offline player ----
         if (offlineAudio) {
             offlineAudio.volume = 0.5;
             offlineAudio.addEventListener('loadedmetadata', offlineUpdateSongInfo);
@@ -7822,6 +7992,7 @@
             offlineAudio.addEventListener('ended', offlineHandleSongEnd);
             offlineVolumeSlider.addEventListener('input', (e) => {
                 offlineAudio.volume = e.target.value / 100;
+                updateOfflineVolumeIcon();
             });
             offlineFileInput.addEventListener('change', offlineHandleFileSelect);
             offlineUploadArea.addEventListener('dragover', (e) => {
@@ -7855,14 +8026,23 @@
                     name: file.name.replace(/\.(mp3|wav|ogg|m4a|flac)$/i, ''),
                     url: url,
                     file: file,
-                    duration: '0:00'
+                    duration: '0:00',
+                    id3: null
                 };
                 offlinePlaylist.push(song);
                 const tempAudio = new Audio(url);
                 tempAudio.addEventListener('loadedmetadata', () => {
                     song.duration = offlineFormatTime(tempAudio.duration);
-                    offlineRenderPlaylist();
-                    saveOfflinePlaylist();
+                    // Try to read ID3 tags
+                    readID3Tags(file, (data) => {
+                        if (data) {
+                            song.id3 = data;
+                            if (data.title) song.name = data.title;
+                            if (data.artist) song.artist = data.artist;
+                        }
+                        offlineRenderPlaylist();
+                        saveOfflinePlaylist();
+                    });
                 });
             });
             offlineRenderPlaylist();
@@ -7897,12 +8077,25 @@
             const song = offlinePlaylist[index];
             offlineAudio.src = song.url;
             offlineSongTitle.textContent = song.name;
+            // Update album art
+            if (song.id3 && song.id3.albumArt) {
+                offlineAlbumArt.src = song.id3.albumArt;
+                offlineAlbumArt.hidden = false;
+            } else {
+                offlineAlbumArt.hidden = true;
+            }
             offlineUpdateSongInfo();
             offlineUpdateTabTitle();
             offlineRenderPlaylist();
             saveOfflinePlaylist();
+            updateOfflineVolumeIcon();
             if (offlineIsPlaying) {
                 offlineAudio.play();
+            }
+            // If visualizer is active, ensure it restarts
+            if (offlineVisualizerActive && offlineVisualizerCanvas.style.display !== 'none') {
+                stopOfflineVisualizer();
+                startOfflineVisualizer();
             }
         }
 
@@ -7912,7 +8105,7 @@
                 const playingStatus = offlineIsPlaying ? '▷' : '𓊕';
                 document.title = `${playingStatus} ${song.name} - Music Player`;
             } else {
-                document.title = '⬣ Music Player';
+                document.title = '🎵 Music Player';
             }
         }
 
@@ -7925,10 +8118,16 @@
                 offlineAudio.pause();
                 offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
                 offlineIsPlaying = false;
+                if (offlineVisualizerActive) {
+                    stopOfflineVisualizer();
+                }
             } else {
                 offlineAudio.play();
                 offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
                 offlineIsPlaying = true;
+                if (offlineVisualizerActive && offlineVisualizerCanvas.style.display !== 'none') {
+                    startOfflineVisualizer();
+                }
             }
             saveOfflinePlaylist();
             offlineUpdateTabTitle();
@@ -8064,6 +8263,7 @@
                     offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
                     offlineIsPlaying = false;
                     offlinePlayHistory = [];
+                    offlineAlbumArt.hidden = true;
                     offlineUpdateTabTitle();
                 } else {
                     const newIndex = index >= offlinePlaylist.length ? 0 : index;
@@ -8119,6 +8319,10 @@
                     e.preventDefault();
                     offlineToggleShuffle();
                     break;
+                case 'KeyV':
+                    e.preventDefault();
+                    toggleOfflineVisualizer();
+                    break;
             }
         });
 
@@ -8162,6 +8366,9 @@
             offlineProgressFill.style.width = '0%';
             offlineCurrentTime.textContent = '0:00';
             offlineTotalTime.textContent = '0:00';
+            offlineAlbumArt.hidden = true;
+            if (offlineVisualizerActive) stopOfflineVisualizer();
+            offlineVisualizerCanvas.style.display = 'none';
             offlineRenderPlaylist();
             saveOfflinePlaylist();
             offlineUpdateTabTitle();
@@ -8374,12 +8581,12 @@
                 showToast('Invalid YouTube URL.', 'error');
                 return false;
             }
-            summarizerStatus.textContent = '🔍 Fetching video data from YouTube API...';
+            summarizerStatus.textContent = 'Fetching video data from YouTube API...';
             summarizerResult.innerHTML =
                 '<div class="text-center text-muted" style="padding:20px 0;"><i class="fas fa-spinner fa-pulse"></i> Loading...</div>';
             try {
                 const videoData = await fetchYouTubeVideoData(videoId, ytKey);
-                summarizerStatus.textContent = '🤖 Generating summary with Gemini AI...';
+                summarizerStatus.textContent = 'Generating summary with Gemini AI...';
                 const model = STATE.settings.geminiModel || 'gemini-3.1-flash-lite';
                 const systemInstruction =
                     `You are an expert YouTube video content summarizer. Analyze the provided video metadata (title, description, channel, publish date, duration) and create a detailed, insightful, and well-structured summary. Use clear markdown formatting with headings (##), bullet points, and sections. Structure your response to include: ## Overview (a concise paragraph summarizing the video's content and purpose), ## Key Topics Covered (bullet points of the main subjects discussed), ## Main Takeaways (actionable insights or conclusions), and optionally ## Additional Context if relevant. Be comprehensive but clear. Match the language of the summary to the video's content language, unless the user requests otherwise.`;
@@ -8392,12 +8599,12 @@
                 userPrompt +=
                     `---\nPlease provide a comprehensive summary of this YouTube video based on the information above.`;
                 const summary = await callGeminiWithSystem(model, geminiKey, systemInstruction, userPrompt);
-                summarizerStatus.textContent = '✅ Summary ready!';
+                summarizerStatus.textContent = ' Summary ready!';
                 renderSummarizerResult(videoData, summary);
-                showToast('✅ Summary generated!', 'success');
+                showToast('Summary generated!', 'success');
                 return true;
             } catch (err) {
-                summarizerStatus.textContent = '❌ Error: ' + err.message;
+                summarizerStatus.textContent = 'Error: ' + err.message;
                 summarizerResult.innerHTML =
                     `<div class="error-text" style="padding:16px 20px;border-radius:8px;color:var(--md-error);">⚠️ <strong>Error:</strong> ${escapeHTML(err.message)}</div>`;
                 showToast(err.message, 'error');
@@ -8527,9 +8734,9 @@
             html += `<div class="summ-info">`;
             html +=
                 `<h4><a href="${escapeHTML(videoData.url)}" target="_blank" rel="noopener">${escapeHTML(videoData.title)}</a></h4>`;
-            html += `<p>📺 ${escapeHTML(videoData.channelTitle)}</p>`;
+            html += `<p> ${escapeHTML(videoData.channelTitle)}</p>`;
             html += `<div class="summ-meta">`;
-            html += `<span>📅 ${escapeHTML(formatDate(videoData.publishedAt))}</span>`;
+            html += `<span> ${escapeHTML(formatDate(videoData.publishedAt))}</span>`;
             html += `<span>⏱ ${escapeHTML(videoData.duration)}</span>`;
             html += `</div>`;
             html += `</div>`;
@@ -8698,7 +8905,14 @@
                 if (song) {
                     offlineAudio.src = song.url;
                     offlineSongTitle.textContent = song.name;
+                    if (song.id3 && song.id3.albumArt) {
+                        offlineAlbumArt.src = song.id3.albumArt;
+                        offlineAlbumArt.hidden = false;
+                    } else {
+                        offlineAlbumArt.hidden = true;
+                    }
                     offlineUpdateSongInfo();
+                    updateOfflineVolumeIcon();
                     if (offlineIsPlaying) {
                         offlineAudio.play();
                         offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
@@ -8728,7 +8942,7 @@
 
             initBackgroundPlayback();
 
-            console.log('⬡ HEX AI — Music Player + Summarizer ready ⬡');
+            console.log('⬡ HEX AI — Music Player + Summarizer + Offline MP3 with ID3 & Visualizer ready ⬡');
         }
 
         document.addEventListener('DOMContentLoaded', init);
@@ -8753,6 +8967,7 @@
         window.offlineToggleRepeat = offlineToggleRepeat;
         window.offlineToggleShuffle = offlineToggleShuffle;
         window.offlineSeekTo = offlineSeekTo;
+        window.toggleOfflineVisualizer = toggleOfflineVisualizer;
         window.openOfflineClearConfirm = openOfflineClearConfirm;
         window.switchMusicTab = switchMusicTab;
         window.switchPanel = switchPanel;
