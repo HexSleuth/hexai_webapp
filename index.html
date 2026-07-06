@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>⬡ HEX AI – Music Player</title>
+    <title>⬡ HEX AI – Music Player + Summarizer</title>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8">
     </script>
@@ -33,6 +33,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vibrant.js/1.0.0/Vibrant.min.js">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js">
     </script>
 
     <style>
@@ -3168,7 +3170,7 @@
             margin-left: 4px;
         }
 
-        /* ----- Analyze Video button ----- */
+        /* ----- Analyze / Summarize button ----- */
         #yt-section .yt-player-card .extra-controls .analyze-btn-wrapper {
             display: flex;
             align-items: center;
@@ -3547,6 +3549,259 @@
         body.dark #yt-section #lyricsContainer .lrc-line .lyrics-pair .translated-lyric {
             color: #cac4d0;
         }
+
+        /* ===== SUMMARIZER TAB ===== */
+        #yt-section #summarizerContainer {
+            background: var(--md-surface);
+            border-radius: var(--md-shape-lg);
+            border: 1px solid var(--md-outline-variant);
+            padding: 16px 18px;
+            box-shadow: var(--md-elevation1);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+        }
+        body.dark #yt-section #summarizerContainer {
+            background: #242424;
+            border-color: #3a3a3a;
+        }
+        #yt-section #summarizerContainer #summarizerHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        #yt-section #summarizerContainer #summarizerTitle {
+            font-weight: 600;
+            font-size: 16px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #yt-section #summarizerContainer .summarizer-controls {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        #yt-section #summarizerContainer .summarizer-controls button {
+            padding: 4px 12px;
+            border-radius: var(--md-shape-full);
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid var(--md-outline-variant);
+            background: transparent;
+            color: var(--md-on-surface);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        body.dark #yt-section #summarizerContainer .summarizer-controls button {
+            color: #e6e0e9;
+            border-color: #3a3a3a;
+        }
+        #yt-section #summarizerContainer .summarizer-controls button:hover {
+            background: var(--md-surface-variant);
+        }
+        #yt-section #summarizerContainer #summarizerUrlInput {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--md-outline-variant);
+            border-radius: var(--md-shape-full);
+            font-size: 14px;
+            background: var(--md-surface-variant);
+            color: var(--md-on-surface);
+            outline: none;
+            transition: border-color 0.3s;
+            margin-bottom: 8px;
+        }
+        body.dark #yt-section #summarizerContainer #summarizerUrlInput {
+            background: #2a2a2a;
+            border-color: #3a3a3a;
+            color: #e6e0e9;
+        }
+        #yt-section #summarizerContainer #summarizerUrlInput:focus {
+            border-color: var(--md-primary);
+        }
+        #yt-section #summarizerContainer .summarizer-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        #yt-section #summarizerContainer .summarizer-actions button {
+            padding: 6px 16px;
+            border-radius: var(--md-shape-full);
+            font-size: 13px;
+            font-weight: 500;
+            border: none;
+            background: var(--md-primary);
+            color: var(--md-on-primary);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #yt-section #summarizerContainer .summarizer-actions button:hover {
+            filter: brightness(1.05);
+            box-shadow: var(--md-elevation2);
+        }
+        #yt-section #summarizerContainer .summarizer-actions button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        #yt-section #summarizerContainer .summarizer-actions button.tonal {
+            background: var(--md-surface-variant);
+            color: var(--md-on-surface-variant);
+        }
+        #yt-section #summarizerContainer .summarizer-actions button.tonal:hover {
+            background: var(--md-secondary-container);
+            color: var(--md-on-secondary-container);
+        }
+        #yt-section #summarizerContainer #summarizerStatus {
+            font-size: 13px;
+            color: var(--md-on-surface-variant);
+            margin-bottom: 8px;
+            min-height: 20px;
+        }
+        body.dark #yt-section #summarizerContainer #summarizerStatus {
+            color: #cac4d0;
+        }
+        #yt-section #summarizerContainer #summarizerResult {
+            flex: 1;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.7;
+            padding: 8px 4px;
+            min-height: 120px;
+            background: var(--md-surface-variant);
+            border-radius: var(--md-shape-sm);
+            border: 1px solid var(--md-outline-variant);
+            color: var(--md-on-surface);
+        }
+        body.dark #yt-section #summarizerContainer #summarizerResult {
+            background: #1a1a1a;
+            border-color: #3a3a3a;
+            color: #e6e0e9;
+        }
+        #yt-section #summarizerContainer #summarizerResult::-webkit-scrollbar {
+            width: 4px;
+        }
+        #yt-section #summarizerContainer #summarizerResult::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #yt-section #summarizerContainer #summarizerResult::-webkit-scrollbar-thumb {
+            background: rgba(186, 195, 255, 0.2);
+            border-radius: 4px;
+        }
+        #yt-section #summarizerContainer #summarizerResult .summary-markdown h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0.6em 0 0.3em;
+            border-bottom: 2px solid var(--md-outline-variant);
+            padding-bottom: 4px;
+        }
+        #yt-section #summarizerContainer #summarizerResult .summary-markdown h3 {
+            font-size: 1.05rem;
+            font-weight: 500;
+            margin: 0.5em 0 0.25em;
+        }
+        #yt-section #summarizerContainer #summarizerResult .summary-markdown ul,
+        #yt-section #summarizerContainer #summarizerResult .summary-markdown ol {
+            margin-left: 20px;
+            margin-bottom: 0.6em;
+        }
+        #yt-section #summarizerContainer #summarizerResult .summary-markdown li {
+            margin-bottom: 0.3em;
+        }
+        #yt-section #summarizerContainer #summarizerResult .summary-markdown p {
+            margin-bottom: 0.6em;
+        }
+        #yt-section #summarizerContainer #summarizerResult .summary-markdown code {
+            background: var(--md-surface);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        body.dark #yt-section #summarizerContainer #summarizerResult .summary-markdown code {
+            background: #2a2a2a;
+        }
+        #yt-section #summarizerContainer .summarizer-video-card {
+            display: flex;
+            gap: 12px;
+            background: var(--md-surface-variant);
+            border-radius: var(--md-shape-sm);
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        body.dark #yt-section #summarizerContainer .summarizer-video-card {
+            background: #1a1a1a;
+        }
+        #yt-section #summarizerContainer .summarizer-video-card img {
+            width: 120px;
+            height: 68px;
+            object-fit: cover;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+        #yt-section #summarizerContainer .summarizer-video-card .summ-info {
+            flex: 1;
+            min-width: 160px;
+        }
+        #yt-section #summarizerContainer .summarizer-video-card .summ-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 2px;
+        }
+        #yt-section #summarizerContainer .summarizer-video-card .summ-info p {
+            font-size: 12px;
+            color: var(--md-on-surface-variant);
+            margin: 0;
+        }
+        body.dark #yt-section #summarizerContainer .summarizer-video-card .summ-info p {
+            color: #cac4d0;
+        }
+        #yt-section #summarizerContainer .summarizer-video-card .summ-info .summ-meta {
+            display: flex;
+            gap: 10px;
+            font-size: 11px;
+            color: var(--md-on-surface-variant);
+            margin-top: 2px;
+        }
+        body.dark #yt-section #summarizerContainer .summarizer-video-card .summ-info .summ-meta {
+            color: #cac4d0;
+        }
+        #yt-section #summarizerContainer #summarizerCopyBtn {
+            margin-top: 6px;
+            padding: 4px 14px;
+            border-radius: var(--md-shape-full);
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid var(--md-outline-variant);
+            background: transparent;
+            color: var(--md-on-surface);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        body.dark #yt-section #summarizerContainer #summarizerCopyBtn {
+            color: #e6e0e9;
+            border-color: #3a3a3a;
+        }
+        #yt-section #summarizerContainer #summarizerCopyBtn:hover {
+            background: var(--md-surface-variant);
+        }
+
         #yt-section #youtubeSearchSection {
             margin-top: 8px;
         }
@@ -4204,7 +4459,7 @@
                                 💡 Attach images and Gemini will analyze them! <br>
                                 Each message now has <strong>Copy</strong>, <strong>Share</strong>, and
                                 <strong>Delete</strong> buttons.<br>
-                                🎥 In the Music player, click <strong>Analyze Video</strong> to get a summary, takeaways, and tools mentioned (uses Gemini).
+                                🎥 In the Music player, click <strong>Analyze</strong> to get a summary, or use the <strong>Summarizer</strong> tab for any video.
                             </span>
                         </div>
                         <div class="msg-actions">
@@ -4351,7 +4606,6 @@
                                             <button class="btn btn-outline-primary" data-mode="video">Video</button>
                                         </div>
                                     </div>
-                                    <!-- Background Playback toggle -->
                                     <div class="bg-playback-toggle">
                                         <span>Background Playback</span>
                                         <label class="switch">
@@ -4360,7 +4614,6 @@
                                         </label>
                                         <span class="help-note">(keeps audio alive)</span>
                                     </div>
-                                    <!-- Analyze Video button -->
                                     <div class="analyze-btn-wrapper">
                                         <button id="analyzeBtn" onclick="analyzeYouTubeVideo()"><i class="fas fa-microchip"></i> Analyze</button>
                                     </div>
@@ -4379,6 +4632,9 @@
                                         </button>
                                         <button class="btn btn-outline-primary" id="showLyricsBtn">
                                             <i class="fas fa-music"></i> <span class="btn-text">Lyrics</span>
+                                        </button>
+                                        <button class="btn btn-outline-primary" id="showSummarizerBtn">
+                                            <i class="fas fa-file-alt"></i> <span class="btn-text">Summarizer</span>
                                         </button>
                                     </div>
                                     <div id="playlistSearchContainer">
@@ -4408,6 +4664,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- LYRICS CONTAINER -->
                         <div id="lyricsContainer">
                             <div id="lyricsHeader">
                                 <h6 id="lyricsTitle"><i class="fas fa-file-alt"></i> Lyrics</h6>
@@ -4421,6 +4679,25 @@
                             <div id="lyricsMeta">No lyrics loaded</div>
                             <div id="lyricsText">No lyrics loaded</div>
                         </div>
+
+                        <!-- SUMMARIZER CONTAINER -->
+                        <div id="summarizerContainer">
+                            <div id="summarizerHeader">
+                                <h6 id="summarizerTitle"><i class="fas fa-file-alt"></i>YouTube Summarizer</h6>
+                                <div class="summarizer-controls">
+                                    <button id="clearSummarizerBtn"><i class="fas fa-undo"></i> Clear</button>
+                                </div>
+                            </div>
+                            <input type="text" id="summarizerUrlInput" placeholder="Paste a YouTube URL here..." />
+                            <div class="summarizer-actions">
+                                <button id="summarizeBtn"><i class="fas fa-magic"></i> Summarize</button>
+                                <button class="tonal" id="summarizeCurrentBtn"><i class="fas fa-play-circle"></i> Current Video</button>
+                            </div>
+                            <div id="summarizerStatus">Ready. Paste a URL or click "Current Video".</div>
+                            <div id="summarizerResult"><div class="text-muted text-center" style="padding:30px 0;">Summary will appear here</div></div>
+                            <button id="summarizerCopyBtn" style="margin-top:6px;display:none;"><i class="fas fa-copy"></i> Copy Summary</button>
+                        </div>
+
                     </div>
                 </div>
 
@@ -4496,11 +4773,11 @@
 
                         <div class="offline-playlist">
                             <div class="offline-playlist-title">
-                                <i class="fa-regular fa-list"></i> Offline Playlist
+                                <i class="fa-regular fa-list"></i>Offline Playlist
                             </div>
                             <div id="offlinePlaylistContainer">
                                 <div class="offline-empty-playlist">
-                                    <i class="fa-regular fa-circle-plus"></i> Your playlist is empty. Add some music!
+                                    <i class="fa-regular fa-circle-plus"></i>Your playlist is empty. Add some music!
                                 </div>
                             </div>
                         </div>
@@ -4643,7 +4920,7 @@
             <div class="settings-section">
                 <div class="section-title"><i class="fab fa-youtube"></i> YouTube Data API v3 Key</div>
                 <input type="password" id="ytApiKeyInput" placeholder="Enter YouTube Data API v3 key..." />
-                <div class="settings-note">Required for YouTube Music search &amp; playlist import.</div>
+                <div class="settings-note">Required for YouTube Music search, playlist import, and summarizer metadata.</div>
             </div>
 
             <div class="settings-section">
@@ -5509,6 +5786,17 @@
             offlineTab.classList.toggle('filled', tab === 'offline');
             if (tab === 'yt') {
                 if (typeof renderPlaylist === 'function') renderPlaylist(STATE.playlist);
+                // Show playlist by default, hide lyrics and summarizer
+                document.getElementById('songListContainer').classList.remove('d-none');
+                document.getElementById('playlistSearchContainer').classList.remove('d-none');
+                document.getElementById('lyricsContainer').classList.add('d-none');
+                document.getElementById('summarizerContainer').classList.add('d-none');
+                document.getElementById('showSongListBtn').classList.add('active');
+                document.getElementById('showSongListBtn').classList.remove('btn-outline-primary');
+                document.getElementById('showLyricsBtn').classList.remove('active');
+                document.getElementById('showLyricsBtn').classList.add('btn-outline-primary');
+                document.getElementById('showSummarizerBtn').classList.remove('active');
+                document.getElementById('showSummarizerBtn').classList.add('btn-outline-primary');
             } else {
                 offlineRenderPlaylist();
             }
@@ -6023,6 +6311,62 @@
         const importPlaylistBtn = document.getElementById('importPlaylistBtn');
         const sponsorToggle = document.getElementById('sponsorBlockToggle');
         const bgPlaybackToggle = document.getElementById('bgPlaybackToggle');
+
+        // ===== SUMMARIZER ELEMENTS =====
+        const summarizerContainer = document.getElementById('summarizerContainer');
+        const showSummarizerBtn = document.getElementById('showSummarizerBtn');
+        const summarizeBtn = document.getElementById('summarizeBtn');
+        const summarizeCurrentBtn = document.getElementById('summarizeCurrentBtn');
+        const summarizerUrlInput = document.getElementById('summarizerUrlInput');
+        const summarizerStatus = document.getElementById('summarizerStatus');
+        const summarizerResult = document.getElementById('summarizerResult');
+        const summarizerCopyBtn = document.getElementById('summarizerCopyBtn');
+        const clearSummarizerBtn = document.getElementById('clearSummarizerBtn');
+
+        // ===== TAB SWITCHING =====
+        showSongListBtn?.addEventListener('click', function() {
+            if (!songListContainer.classList.contains('d-none')) return;
+            songListContainer.classList.remove('d-none');
+            playlistSearchContainer.classList.remove('d-none');
+            lyricsContainer.classList.add('d-none');
+            summarizerContainer.classList.add('d-none');
+            this.classList.add('active');
+            this.classList.remove('btn-outline-primary');
+            showLyricsBtn.classList.remove('active');
+            showLyricsBtn.classList.add('btn-outline-primary');
+            showSummarizerBtn.classList.remove('active');
+            showSummarizerBtn.classList.add('btn-outline-primary');
+        });
+
+        showLyricsBtn?.addEventListener('click', function() {
+            if (!lyricsContainer.classList.contains('d-none')) return;
+            lyricsContainer.classList.remove('d-none');
+            songListContainer.classList.add('d-none');
+            playlistSearchContainer.classList.add('d-none');
+            summarizerContainer.classList.add('d-none');
+            this.classList.add('active');
+            this.classList.remove('btn-outline-primary');
+            showSongListBtn.classList.remove('active');
+            showSongListBtn.classList.add('btn-outline-primary');
+            showSummarizerBtn.classList.remove('active');
+            showSummarizerBtn.classList.add('btn-outline-primary');
+        });
+
+        showSummarizerBtn?.addEventListener('click', function() {
+            if (!summarizerContainer.classList.contains('d-none')) return;
+            summarizerContainer.classList.remove('d-none');
+            songListContainer.classList.add('d-none');
+            playlistSearchContainer.classList.add('d-none');
+            lyricsContainer.classList.add('d-none');
+            this.classList.add('active');
+            this.classList.remove('btn-outline-primary');
+            showSongListBtn.classList.remove('active');
+            showSongListBtn.classList.add('btn-outline-primary');
+            showLyricsBtn.classList.remove('active');
+            showLyricsBtn.classList.add('btn-outline-primary');
+        });
+
+        // ===== SUMMARIZER LOGIC =====
 
         function loadPlaylist() {
             const stored = localStorage.getItem('youtubeMusicPlaylist');
@@ -7267,27 +7611,6 @@
             searchPlaylistInput.focus();
         });
 
-        showSongListBtn?.addEventListener('click', function() {
-            if (!songListContainer.classList.contains('d-none')) return;
-            songListContainer.classList.remove('d-none');
-            playlistSearchContainer.classList.remove('d-none');
-            lyricsContainer.classList.add('d-none');
-            this.classList.add('active');
-            this.classList.remove('btn-outline-primary');
-            showLyricsBtn.classList.remove('active');
-            showLyricsBtn.classList.add('btn-outline-primary');
-        });
-        showLyricsBtn?.addEventListener('click', function() {
-            if (!lyricsContainer.classList.contains('d-none')) return;
-            lyricsContainer.classList.remove('d-none');
-            songListContainer.classList.add('d-none');
-            playlistSearchContainer.classList.add('d-none');
-            this.classList.add('active');
-            this.classList.remove('btn-outline-primary');
-            showSongListBtn.classList.remove('active');
-            showSongListBtn.classList.add('btn-outline-primary');
-        });
-
         window.onYouTubeIframeAPIReady = function() {
             console.log('⬡ YouTube IFrame API ready');
             if (STATE.playlist.length === 0) return;
@@ -8032,79 +8355,276 @@
         }
 
         // =============================================================
-        //  ANALYZE YOUTUBE VIDEO (NEW FEATURE)
+        //  SUMMARIZER – CORE LOGIC
         // =============================================================
 
-        async function analyzeYouTubeVideo() {
-            // Get current video ID
-            const videoId = player ? player.getVideoData?.()?.video_id : selectedVideoId;
+        async function summarizeYouTubeVideo(url) {
+            const geminiKey = STATE.settings.geminiKey;
+            if (!geminiKey || geminiKey.length < 8) {
+                showToast('Gemini API key required. Set it in Settings.', 'error');
+                return false;
+            }
+            const ytKey = STATE.settings.ytApiKey;
+            if (!ytKey || ytKey.length < 10) {
+                showToast('YouTube API key required. Set it in Settings.', 'error');
+                return false;
+            }
+            const videoId = extractYouTubeID(url);
             if (!videoId) {
+                showToast('Invalid YouTube URL.', 'error');
+                return false;
+            }
+            summarizerStatus.textContent = '🔍 Fetching video data from YouTube API...';
+            summarizerResult.innerHTML =
+                '<div class="text-center text-muted" style="padding:20px 0;"><i class="fas fa-spinner fa-pulse"></i> Loading...</div>';
+            try {
+                const videoData = await fetchYouTubeVideoData(videoId, ytKey);
+                summarizerStatus.textContent = '🤖 Generating summary with Gemini AI...';
+                const model = STATE.settings.geminiModel || 'gemini-3.1-flash-lite';
+                const systemInstruction =
+                    `You are an expert YouTube video content summarizer. Analyze the provided video metadata (title, description, channel, publish date, duration) and create a detailed, insightful, and well-structured summary. Use clear markdown formatting with headings (##), bullet points, and sections. Structure your response to include: ## Overview (a concise paragraph summarizing the video's content and purpose), ## Key Topics Covered (bullet points of the main subjects discussed), ## Main Takeaways (actionable insights or conclusions), and optionally ## Additional Context if relevant. Be comprehensive but clear. Match the language of the summary to the video's content language, unless the user requests otherwise.`;
+                let userPrompt = `**Video Title:** ${videoData.title}\n`;
+                userPrompt += `**Channel:** ${videoData.channelTitle}\n`;
+                userPrompt += `**Published:** ${formatDate(videoData.publishedAt)}\n`;
+                userPrompt += `**Duration:** ${videoData.duration}\n`;
+                userPrompt += `**YouTube URL:** ${videoData.url}\n\n`;
+                userPrompt += `**Video Description:**\n${videoData.description || '(No description available)'}\n\n`;
+                userPrompt +=
+                    `---\nPlease provide a comprehensive summary of this YouTube video based on the information above.`;
+                const summary = await callGeminiWithSystem(model, geminiKey, systemInstruction, userPrompt);
+                summarizerStatus.textContent = '✅ Summary ready!';
+                renderSummarizerResult(videoData, summary);
+                showToast('✅ Summary generated!', 'success');
+                return true;
+            } catch (err) {
+                summarizerStatus.textContent = '❌ Error: ' + err.message;
+                summarizerResult.innerHTML =
+                    `<div class="error-text" style="padding:16px 20px;border-radius:8px;color:var(--md-error);">⚠️ <strong>Error:</strong> ${escapeHTML(err.message)}</div>`;
+                showToast(err.message, 'error');
+                return false;
+            }
+        }
+
+        async function callGeminiWithSystem(model, apiKey, systemInstruction, userPrompt) {
+            const url =
+                `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
+            const body = {
+                system_instruction: {
+                    parts: [{ text: systemInstruction }]
+                },
+                contents: [{
+                    parts: [{ text: userPrompt }]
+                }],
+                generationConfig: {
+                    temperature: 0.4,
+                    topP: 0.9,
+                    maxOutputTokens: 4096,
+                },
+            };
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
+            });
+            if (!response.ok) {
+                const errorBody = await response.text();
+                let errorMsg = `Gemini API error (${response.status})`;
+                try {
+                    const errJson = JSON.parse(errorBody);
+                    if (errJson.error && errJson.error.message) {
+                        errorMsg = errJson.error.message;
+                    }
+                } catch {}
+                throw new Error(errorMsg);
+            }
+            const data = await response.json();
+            if (data.promptFeedback && data.promptFeedback.blockReason) {
+                throw new Error(`Content blocked by safety filter: ${data.promptFeedback.blockReason}`);
+            }
+            if (!data.candidates || data.candidates.length === 0) {
+                throw new Error('Gemini returned no candidates. The response may have been blocked.');
+            }
+            const candidate = data.candidates[0];
+            if (candidate.finishReason && candidate.finishReason !== 'STOP') {
+                throw new Error(`Gemini response finished unexpectedly: ${candidate.finishReason}`);
+            }
+            const parts = candidate.content && candidate.content.parts;
+            if (!parts || parts.length === 0) {
+                throw new Error('Gemini returned an empty response.');
+            }
+            return parts.map(p => p.text || '').join('\n');
+        }
+
+        async function fetchYouTubeVideoData(videoId, apiKey) {
+            const url =
+                `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${encodeURIComponent(videoId)}&key=${encodeURIComponent(apiKey)}`;
+            const response = await fetch(url);
+            if (!response.ok) {
+                const errorBody = await response.text();
+                let errorMsg = `YouTube API error (${response.status})`;
+                try {
+                    const errJson = JSON.parse(errorBody);
+                    if (errJson.error && errJson.error.message) {
+                        errorMsg = errJson.error.message;
+                    }
+                } catch {}
+                throw new Error(errorMsg);
+            }
+            const data = await response.json();
+            if (!data.items || data.items.length === 0) {
+                throw new Error('Video not found. It may be private, deleted, or the ID is invalid.');
+            }
+            const item = data.items[0];
+            const snippet = item.snippet || {};
+            const contentDetails = item.contentDetails || {};
+            return {
+                videoId: item.id,
+                title: snippet.title || 'Untitled',
+                description: snippet.description || '',
+                channelTitle: snippet.channelTitle || 'Unknown channel',
+                publishedAt: snippet.publishedAt || '',
+                thumbnailUrl: (snippet.thumbnails && snippet.thumbnails.medium && snippet.thumbnails.medium.url) ||
+                    (snippet.thumbnails && snippet.thumbnails.default && snippet.thumbnails.default.url) || '',
+                duration: parseDuration(contentDetails.duration),
+                url: `https://www.youtube.com/watch?v=${item.id}`,
+            };
+        }
+
+        function parseDuration(isoDuration) {
+            if (!isoDuration) return 'N/A';
+            const match = isoDuration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+            if (!match) return isoDuration;
+            const hours = parseInt(match[1] || '0');
+            const minutes = parseInt(match[2] || '0');
+            const seconds = parseInt(match[3] || '0');
+            if (hours > 0) {
+                return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+            return `${minutes}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function formatDate(isoDate) {
+            if (!isoDate) return 'Unknown date';
+            try {
+                const date = new Date(isoDate);
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            } catch {
+                return isoDate;
+            }
+        }
+
+        function renderSummarizerResult(videoData, summary) {
+            let html = '';
+            html += `<div class="summarizer-video-card">`;
+            if (videoData.thumbnailUrl) {
+                html +=
+                    `<a href="${escapeHTML(videoData.url)}" target="_blank" rel="noopener"><img src="${escapeHTML(videoData.thumbnailUrl)}" alt="Video thumbnail" loading="lazy"></a>`;
+            }
+            html += `<div class="summ-info">`;
+            html +=
+                `<h4><a href="${escapeHTML(videoData.url)}" target="_blank" rel="noopener">${escapeHTML(videoData.title)}</a></h4>`;
+            html += `<p>📺 ${escapeHTML(videoData.channelTitle)}</p>`;
+            html += `<div class="summ-meta">`;
+            html += `<span>📅 ${escapeHTML(formatDate(videoData.publishedAt))}</span>`;
+            html += `<span>⏱ ${escapeHTML(videoData.duration)}</span>`;
+            html += `</div>`;
+            html += `</div>`;
+            html += `</div>`;
+            html += `<div class="summary-markdown">`;
+            if (typeof marked !== 'undefined' && marked.parse) {
+                try {
+                    html += marked.parse(summary);
+                } catch {
+                    html += `<pre>${escapeHTML(summary)}</pre>`;
+                }
+            } else {
+                html += `<pre>${escapeHTML(summary)}</pre>`;
+            }
+            html += `</div>`;
+            summarizerResult.innerHTML = html;
+            summarizerCopyBtn.style.display = 'inline-flex';
+            summarizerCopyBtn.dataset.summary = summary;
+        }
+
+        // ===== SUMMARIZER EVENT HANDLERS =====
+
+        summarizeBtn?.addEventListener('click', async function() {
+            const url = summarizerUrlInput.value.trim();
+            if (!url) {
+                showToast('Please enter a YouTube URL.', 'error');
+                return;
+            }
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Working...';
+            await summarizeYouTubeVideo(url);
+            this.disabled = false;
+            this.innerHTML = '<i class="fas fa-magic"></i> Summarize';
+        });
+
+        summarizeCurrentBtn?.addEventListener('click', async function() {
+            let currentUrl = null;
+            const vid = player ? player.getVideoData?.()?.video_id : selectedVideoId;
+            if (vid) currentUrl = `https://www.youtube.com/watch?v=${vid}`;
+            if (!currentUrl) {
                 showToast('No video is currently playing.', 'error');
                 return;
             }
+            summarizerUrlInput.value = currentUrl;
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Working...';
+            await summarizeYouTubeVideo(currentUrl);
+            this.disabled = false;
+            this.innerHTML = '<i class="fas fa-play-circle"></i> Current Video';
+        });
 
-            // Check for Gemini API key
-            const apiKey = STATE.settings.geminiKey;
-            if (!apiKey || apiKey.length < 8) {
-                showToast('Gemini API key required. Set it in Settings.', 'error');
+        clearSummarizerBtn?.addEventListener('click', function() {
+            summarizerUrlInput.value = '';
+            summarizerStatus.textContent = 'Ready. Paste a URL or click "Current Video".';
+            summarizerResult.innerHTML =
+                '<div class="text-muted text-center" style="padding:30px 0;">Summary will appear here</div>';
+            summarizerCopyBtn.style.display = 'none';
+        });
+
+        summarizerCopyBtn?.addEventListener('click', function() {
+            const summary = this.dataset.summary || summarizerResult.innerText;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(summary).then(() => {
+                    showToast('Summary copied!', 'success');
+                }).catch(() => {
+                    fallbackCopy(summary);
+                });
+            } else {
+                fallbackCopy(summary);
+            }
+        });
+
+        summarizerUrlInput?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') summarizeBtn.click();
+        });
+
+        // ===== ENHANCED ANALYZE BUTTON (uses summarizer) =====
+
+        async function analyzeYouTubeVideo() {
+            const vid = player ? player.getVideoData?.()?.video_id : selectedVideoId;
+            if (!vid) {
+                showToast('No video is currently playing.', 'error');
                 return;
             }
-
-            const model = STATE.settings.geminiModel || 'gemini-3.1-flash-lite';
-            const prompt = `https://www.youtube.com/watch?v=${videoId}\n\nProvide a detailed summary of this video, extract the key takeaways, and list any specific tools or software mentioned with timestamps.`;
-
-            showToast('Analyzing video... (this may take a moment)', 'info');
-
-            // Add user message to chat
-            const userMsg = `Analyze video: https://www.youtube.com/watch?v=${videoId}`;
-            const timestamp = getTimestamp();
-            const msgId = 'msg-' + (STATE.messageIdCounter++);
-            STATE.chatHistory.push({ id: msgId, role: 'user', content: userMsg, timestamp: timestamp });
-            renderChatMessages();
-
-            const container = document.getElementById('chatMessages');
-            // Add typing indicator
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'msg assistant';
-            typingDiv.id = 'typingIndicator';
-            typingDiv.innerHTML = `
-                <div class="msg-header">
-                    <span class="msg-avatar"><i class="fas fa-robot"></i></span>
-                    <span class="msg-timestamp">analyzing...</span>
-                </div>
-                <div class="msg-bubble">
-                    <div class="typing-indicator"><span></span><span></span><span></span></div>
-                </div>
-            `;
-            container.appendChild(typingDiv);
-            container.scrollTop = container.scrollHeight;
-
-            try {
-                // Call Gemini (reuse callGeminiText)
-                const response = await callGeminiText(prompt);
-
-                // Remove typing indicator
-                const typingEl = document.getElementById('typingIndicator');
-                if (typingEl) typingEl.remove();
-
-                // Add assistant response
-                const aiTimestamp = getTimestamp();
-                const aiId = 'msg-' + (STATE.messageIdCounter++);
-                STATE.chatHistory.push({ id: aiId, role: 'assistant', content: response, timestamp: aiTimestamp });
-                renderChatMessages();
-                container.scrollTop = container.scrollHeight;
-                showToast('Analysis complete!', 'success');
-            } catch (err) {
-                const typingEl = document.getElementById('typingIndicator');
-                if (typingEl) typingEl.remove();
-                const errMsg = '⚠️ Error analyzing video: ' + err.message;
-                const aiTimestamp = getTimestamp();
-                const aiId = 'msg-' + (STATE.messageIdCounter++);
-                STATE.chatHistory.push({ id: aiId, role: 'assistant', content: errMsg, timestamp: aiTimestamp });
-                renderChatMessages();
-                container.scrollTop = container.scrollHeight;
-                showToast(err.message, 'error');
-            }
+            const url = `https://www.youtube.com/watch?v=${vid}`;
+            summarizerUrlInput.value = url;
+            // Switch to summarizer tab
+            document.getElementById('showSummarizerBtn').click();
+            // Run summarization
+            const btn = summarizeBtn;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Working...';
+            await summarizeYouTubeVideo(url);
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-magic"></i> Summarize';
         }
 
         // =============================================================
@@ -8208,7 +8728,7 @@
 
             initBackgroundPlayback();
 
-            console.log('⬡ HEX AI — Theme Appearance ready with all 40+ presets ⬡');
+            console.log('⬡ HEX AI — Music Player + Summarizer ready ⬡');
         }
 
         document.addEventListener('DOMContentLoaded', init);
@@ -8246,7 +8766,7 @@
         window.handleChatKey = handleChatKey;
         window.sendMessage = sendMessage;
         window.renderFilePreview = renderFilePreview;
-        window.analyzeYouTubeVideo = analyzeYouTubeVideo; // expose function
+        window.analyzeYouTubeVideo = analyzeYouTubeVideo;
     </script>
 
 </body>
