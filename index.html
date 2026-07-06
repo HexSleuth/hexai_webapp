@@ -3167,6 +3167,35 @@
             opacity: 0.6;
             margin-left: 4px;
         }
+
+        /* ----- Analyze Video button ----- */
+        #yt-section .yt-player-card .extra-controls .analyze-btn-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        #yt-section .yt-player-card .extra-controls #analyzeBtn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--md-on-surface-variant);
+            background: var(--md-surface-variant);
+            padding: 4px 12px;
+            border-radius: var(--md-shape-full);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        body.dark #yt-section .yt-player-card .extra-controls #analyzeBtn {
+            color: #cac4d0;
+            background: #2a2a2a;
+        }
+        #yt-section .yt-player-card .extra-controls #analyzeBtn:hover {
+            background: var(--md-primary);
+            color: var(--md-on-primary);
+            box-shadow: var(--md-elevation2);
+        }
         /* ---------------------------------------------------------- */
 
         #yt-section .yt-music-row .playlist-col {
@@ -4174,7 +4203,8 @@
                             <span style="font-size:0.8rem;color:var(--md-on-surface-variant);">
                                 💡 Attach images and Gemini will analyze them! <br>
                                 Each message now has <strong>Copy</strong>, <strong>Share</strong>, and
-                                <strong>Delete</strong> buttons.
+                                <strong>Delete</strong> buttons.<br>
+                                🎥 In the Music player, click <strong>Analyze Video</strong> to get a summary, takeaways, and tools mentioned (uses Gemini).
                             </span>
                         </div>
                         <div class="msg-actions">
@@ -4329,6 +4359,10 @@
                                             <span class="slider"></span>
                                         </label>
                                         <span class="help-note">(keeps audio alive)</span>
+                                    </div>
+                                    <!-- Analyze Video button -->
+                                    <div class="analyze-btn-wrapper">
+                                        <button id="analyzeBtn" onclick="analyzeYouTubeVideo()"><i class="fas fa-microchip"></i> Analyze</button>
                                     </div>
                                 </div>
                                 <div id="errorMessage" style="display:none;"></div>
@@ -7998,6 +8032,82 @@
         }
 
         // =============================================================
+        //  ANALYZE YOUTUBE VIDEO (NEW FEATURE)
+        // =============================================================
+
+        async function analyzeYouTubeVideo() {
+            // Get current video ID
+            const videoId = player ? player.getVideoData?.()?.video_id : selectedVideoId;
+            if (!videoId) {
+                showToast('No video is currently playing.', 'error');
+                return;
+            }
+
+            // Check for Gemini API key
+            const apiKey = STATE.settings.geminiKey;
+            if (!apiKey || apiKey.length < 8) {
+                showToast('Gemini API key required. Set it in Settings.', 'error');
+                return;
+            }
+
+            const model = STATE.settings.geminiModel || 'gemini-3.1-flash-lite';
+            const prompt = `https://www.youtube.com/watch?v=${videoId}\n\nProvide a detailed summary of this video, extract the key takeaways, and list any specific tools or software mentioned with timestamps.`;
+
+            showToast('Analyzing video... (this may take a moment)', 'info');
+
+            // Add user message to chat
+            const userMsg = `Analyze video: https://www.youtube.com/watch?v=${videoId}`;
+            const timestamp = getTimestamp();
+            const msgId = 'msg-' + (STATE.messageIdCounter++);
+            STATE.chatHistory.push({ id: msgId, role: 'user', content: userMsg, timestamp: timestamp });
+            renderChatMessages();
+
+            const container = document.getElementById('chatMessages');
+            // Add typing indicator
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'msg assistant';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="msg-header">
+                    <span class="msg-avatar"><i class="fas fa-robot"></i></span>
+                    <span class="msg-timestamp">analyzing...</span>
+                </div>
+                <div class="msg-bubble">
+                    <div class="typing-indicator"><span></span><span></span><span></span></div>
+                </div>
+            `;
+            container.appendChild(typingDiv);
+            container.scrollTop = container.scrollHeight;
+
+            try {
+                // Call Gemini (reuse callGeminiText)
+                const response = await callGeminiText(prompt);
+
+                // Remove typing indicator
+                const typingEl = document.getElementById('typingIndicator');
+                if (typingEl) typingEl.remove();
+
+                // Add assistant response
+                const aiTimestamp = getTimestamp();
+                const aiId = 'msg-' + (STATE.messageIdCounter++);
+                STATE.chatHistory.push({ id: aiId, role: 'assistant', content: response, timestamp: aiTimestamp });
+                renderChatMessages();
+                container.scrollTop = container.scrollHeight;
+                showToast('Analysis complete!', 'success');
+            } catch (err) {
+                const typingEl = document.getElementById('typingIndicator');
+                if (typingEl) typingEl.remove();
+                const errMsg = '⚠️ Error analyzing video: ' + err.message;
+                const aiTimestamp = getTimestamp();
+                const aiId = 'msg-' + (STATE.messageIdCounter++);
+                STATE.chatHistory.push({ id: aiId, role: 'assistant', content: errMsg, timestamp: aiTimestamp });
+                renderChatMessages();
+                container.scrollTop = container.scrollHeight;
+                showToast(err.message, 'error');
+            }
+        }
+
+        // =============================================================
         //  BOOT
         // =============================================================
 
@@ -8136,6 +8246,7 @@
         window.handleChatKey = handleChatKey;
         window.sendMessage = sendMessage;
         window.renderFilePreview = renderFilePreview;
+        window.analyzeYouTubeVideo = analyzeYouTubeVideo; // expose function
     </script>
 
 </body>
