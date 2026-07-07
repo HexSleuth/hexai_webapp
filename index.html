@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>⬡ HEX AI – Music Player + Summarizer</title>
+    <title>⬡ HEX AI – Music Player + Karaoke + Summarizer</title>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8">
     </script>
@@ -3208,7 +3208,6 @@
             color: var(--md-on-primary);
             box-shadow: var(--md-elevation2);
         }
-        /* ---------------------------------------------------------- */
 
         #yt-section .yt-music-row .playlist-col {
             flex: 1.6;
@@ -3431,6 +3430,8 @@
         #yt-section #songList .drag-handle:active {
             cursor: grabbing;
         }
+
+        /* ===== LYRICS CONTAINER (Enhanced for Karaoke) ===== */
         #yt-section #lyricsContainer {
             background: var(--md-surface);
             border-radius: var(--md-shape-lg);
@@ -3441,6 +3442,7 @@
             display: flex;
             flex-direction: column;
             min-height: 200px;
+            transition: background 0.3s, border-color 0.3s;
         }
         body.dark #yt-section #lyricsContainer {
             background: #242424;
@@ -3493,6 +3495,72 @@
         body.dark #yt-section #lyricsContainer #lyricsMeta {
             color: #cac4d0;
         }
+
+        /* ----- Karaoke Mode Styles ----- */
+        #yt-section #lyricsContainer.karaoke-active #lyricsText {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+        }
+        #yt-section #lyricsContainer.karaoke-active .lrc-line {
+            margin: 12px 0;
+            padding: 8px 12px;
+            opacity: 0.2;
+            filter: blur(1px);
+            transition: opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease, color 0.4s ease, text-shadow 0.4s ease;
+            transform: scale(0.95);
+            border-left: none !important;
+            background: transparent !important;
+            font-weight: normal;
+            cursor: default;
+        }
+        #yt-section #lyricsContainer.karaoke-active .lrc-line .lrc-time {
+            display: none;
+        }
+        #yt-section #lyricsContainer.karaoke-active .lrc-line .lyrics-pair .translated-lyric {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            border-left-color: var(--md-primary);
+        }
+        #yt-section #lyricsContainer.karaoke-active .lrc-line.past {
+            opacity: 0.4;
+            filter: blur(0px);
+            transform: scale(0.96);
+        }
+        #yt-section #lyricsContainer.karaoke-active .lrc-line.highlight {
+            opacity: 1 !important;
+            filter: blur(0px) !important;
+            transform: scale(1.12) !important;
+            color: var(--md-primary) !important;
+            text-shadow: 0 0 20px var(--ui-glow, rgba(103, 80, 164, 0.45));
+            background: transparent !important;
+            border-left: none !important;
+            font-weight: bold;
+        }
+        #yt-section #lyricsContainer.karaoke-active .lrc-line.highlight .lyrics-pair .original-lyric {
+            color: var(--md-primary) !important;
+        }
+        #yt-section #lyricsContainer.karaoke-active .lrc-line.highlight .lyrics-pair .translated-lyric {
+            color: var(--md-secondary) !important;
+            opacity: 0.9;
+        }
+        /* Restore scrollbar in karaoke mode */
+        #yt-section #lyricsContainer.karaoke-active #lyricsText::-webkit-scrollbar {
+            width: 4px;
+        }
+        #yt-section #lyricsContainer.karaoke-active #lyricsText::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #yt-section #lyricsContainer.karaoke-active #lyricsText::-webkit-scrollbar-thumb {
+            background: rgba(186, 195, 255, 0.2);
+            border-radius: 4px;
+        }
+
         #yt-section #lyricsContainer #lyricsText {
             flex: 1;
             overflow-y: auto;
@@ -3501,6 +3569,7 @@
             padding: 4px 2px;
             scroll-behavior: smooth;
             min-height: 120px;
+            transition: font-size 0.4s ease, text-align 0.4s ease;
         }
         #yt-section #lyricsContainer #lyricsText::-webkit-scrollbar {
             width: 4px;
@@ -3515,11 +3584,11 @@
         #yt-section #lyricsContainer .lrc-line {
             padding: 4px 6px;
             border-radius: var(--md-shape-sm);
-            transition: background 0.3s, color 0.3s;
+            transition: background 0.3s, color 0.3s, opacity 0.4s, transform 0.4s, filter 0.4s;
             display: flex;
             align-items: flex-start;
             gap: 8px;
-            cursor: pointer;
+            cursor: default;
         }
         #yt-section #lyricsContainer .lrc-line:hover {
             background: var(--md-surface-variant);
@@ -4697,15 +4766,18 @@
                             </div>
                         </div>
 
-                        <!-- LYRICS CONTAINER -->
+                        <!-- ===== LYRICS CONTAINER (Enhanced with Karaoke) ===== -->
                         <div id="lyricsContainer">
                             <div id="lyricsHeader">
                                 <h6 id="lyricsTitle"><i class="fas fa-file-alt"></i> Lyrics</h6>
                                 <div class="lyrics-controls">
-                                    <button id="toggleSyncBtn">Auto-Sync: ON</button>
-                                    <button id="toggleTranslationBtn" title="Translation"><i class="fas fa-language"></i></button>
-                                    <button id="refreshLyricsBtn"><i class="fas fa-sync"></i> Refresh</button>
-                                    <button id="openRawBtn"><i class="fas fa-code"></i> Raw</button>
+                                    <button id="toggleKaraokeBtn" class="btn-outline-primary" title="Karaoke Mode"><i class="fas fa-microphone-alt"></i> Karaoke</button>
+                                    <button id="searchLrcLibBtn" class="btn-outline-primary" title="Search LRCLib"><i class="fas fa-search"></i> LRCLib</button>
+                                    <button id="generateAILyricsBtn" class="btn-outline-primary" title="AI Lyrics"><i class="fas fa-robot"></i> AI Lyrics</button>
+                                    <button id="toggleSyncBtn" class="btn-outline-primary">Auto-Sync: ON</button>
+                                    <button id="toggleTranslationBtn" class="btn-outline-primary" title="Translation"><i class="fas fa-language"></i></button>
+                                    <button id="refreshLyricsBtn" class="btn-outline-primary"><i class="fas fa-sync"></i> Refresh</button>
+                                    <button id="openRawBtn" class="btn-outline-primary"><i class="fas fa-code"></i> Raw</button>
                                 </div>
                             </div>
                             <div id="lyricsMeta">No lyrics loaded</div>
@@ -5416,6 +5488,7 @@
             bgAudioContext: null,
             bgSilentBuffer: null,
             bgSilentSource: null,
+            karaokeActive: false,
         };
 
         let player = null;
@@ -5455,7 +5528,7 @@
         }
 
         function escapeHTML(s) {
-            return s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+            return s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '"': '&quot;' })[c]);
         }
 
         function formatTime(sec) {
@@ -5566,6 +5639,7 @@
                     STATE.offlineIsShuffling = parsed.offlineIsShuffling || false;
                     STATE.offlinePlayHistory = parsed.offlinePlayHistory || [];
                     STATE.bgPlaybackEnabled = parsed.bgPlaybackEnabled || false;
+                    STATE.karaokeActive = parsed.karaokeActive || false;
                 }
             } catch (e) { console.warn('loadState:', e); }
         }
@@ -5588,6 +5662,7 @@
                     offlineIsShuffling: STATE.offlineIsShuffling,
                     offlinePlayHistory: STATE.offlinePlayHistory,
                     bgPlaybackEnabled: STATE.bgPlaybackEnabled,
+                    karaokeActive: STATE.karaokeActive,
                 }));
             } catch (e) { console.warn('saveState:', e); }
         }
@@ -5826,7 +5901,6 @@
             offlineTab.classList.toggle('filled', tab === 'offline');
             if (tab === 'yt') {
                 if (typeof renderPlaylist === 'function') renderPlaylist(STATE.playlist);
-                // Show playlist by default, hide lyrics and summarizer
                 document.getElementById('songListContainer').classList.remove('d-none');
                 document.getElementById('playlistSearchContainer').classList.remove('d-none');
                 document.getElementById('lyricsContainer').classList.add('d-none');
@@ -6352,6 +6426,11 @@
         const sponsorToggle = document.getElementById('sponsorBlockToggle');
         const bgPlaybackToggle = document.getElementById('bgPlaybackToggle');
 
+        // ===== NEW KARAOKE / LRCLIB / AI BUTTONS =====
+        const toggleKaraokeBtn = document.getElementById('toggleKaraokeBtn');
+        const searchLrcLibBtn = document.getElementById('searchLrcLibBtn');
+        const generateAILyricsBtn = document.getElementById('generateAILyricsBtn');
+
         // ===== SUMMARIZER ELEMENTS =====
         const summarizerContainer = document.getElementById('summarizerContainer');
         const showSummarizerBtn = document.getElementById('showSummarizerBtn');
@@ -6406,7 +6485,771 @@
             showLyricsBtn.classList.add('btn-outline-primary');
         });
 
-        // ===== SUMMARIZER LOGIC =====
+        // =============================================================
+        //  KARAOKE MODE
+        // =============================================================
+
+        let karaokeActive = STATE.karaokeActive || false;
+
+        toggleKaraokeBtn?.addEventListener('click', function() {
+            karaokeActive = !karaokeActive;
+            STATE.karaokeActive = karaokeActive;
+            if (karaokeActive) {
+                lyricsContainer.classList.add('karaoke-active');
+                this.classList.add('active');
+                this.style.background = 'var(--md-primary)';
+                this.style.color = 'var(--md-on-primary)';
+                this.style.borderColor = 'var(--md-primary)';
+                showToast('🎤 Karaoke mode ON', 'success');
+                // Force re-sync with larger text
+                if (autoSyncEnabled) startLyricsSync();
+            } else {
+                lyricsContainer.classList.remove('karaoke-active');
+                this.classList.remove('active');
+                this.style.background = 'transparent';
+                this.style.color = 'var(--md-on-surface)';
+                this.style.borderColor = 'var(--md-outline-variant)';
+                showToast('🎤 Karaoke mode OFF', 'info');
+            }
+            saveState();
+        });
+
+        // ---- Enhanced lyrics sync for karaoke ----
+        function startLyricsSync() {
+            if (syncInterval) clearInterval(syncInterval);
+            syncInterval = setInterval(() => {
+                if (autoSyncEnabled && player && typeof player.getCurrentTime === 'function') {
+                    const cur = player.getCurrentTime();
+                    if (lyricsData && lyricsData.isLrc && lyricsData.lrcLines) {
+                        const lines = lyricsData.lrcLines;
+                        let low = 0,
+                            high = lines.length - 1,
+                            found = 0;
+                        while (low <= high) {
+                            const mid = Math.floor((low + high) / 2);
+                            if (lines[mid].time <= cur) { found = mid;
+                                low = mid + 1; } else high = mid - 1;
+                        }
+                        const el = lyricsText;
+                        const children = el.children;
+                        // Remove highlight from all
+                        for (let i = 0; i < children.length; i++) {
+                            children[i].classList.remove('highlight');
+                            children[i].classList.remove('past');
+                        }
+                        // Mark past lines
+                        for (let i = 0; i < found; i++) {
+                            if (children[i]) children[i].classList.add('past');
+                        }
+                        const toHighlight = el.querySelector(`.lrc-line[data-index="${found}"]`);
+                        if (toHighlight) {
+                            toHighlight.classList.add('highlight');
+                            if (lyricsAutoScroll) {
+                                const parent = el;
+                                const pRect = parent.getBoundingClientRect();
+                                const cRect = toHighlight.getBoundingClientRect();
+                                const offset = cRect.top - pRect.top - parent.clientHeight / 2 + cRect.height / 2;
+                                parent.scrollBy({ top: offset, behavior: 'smooth' });
+                            }
+                        }
+                    }
+                }
+            }, 300);
+        }
+
+        // =============================================================
+        //  LRCLib Search
+        // =============================================================
+
+        searchLrcLibBtn?.addEventListener('click', async function() {
+            const title = document.querySelector("#nowPlaying .song-title")?.textContent || '';
+            const artist = document.querySelector("#nowPlaying .author-name")?.textContent || '';
+            if (!title || !artist) {
+                showToast('No song currently playing.', 'error');
+                return;
+            }
+            const { artist: cleanArtist, track: cleanTrack } = cleanTitleAndArtist(title, artist);
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            try {
+                const resp = await fetch(
+                    `https://lrclib.net/api/search?q=${encodeURIComponent(cleanTrack + ' ' + cleanArtist)}`);
+                if (!resp.ok) throw new Error('LRCLib error');
+                const results = await resp.json();
+                if (results && results.length > 0) {
+                    const best = results[0];
+                    if (best.syncedLyrics) {
+                        renderLyricsFromLRC(best.syncedLyrics);
+                        showToast('✅ Synced lyrics found via LRCLib!', 'success');
+                    } else if (best.plainLyrics) {
+                        showToast('ℹ️ Plain lyrics only (no timestamps). Try AI generation.', 'info');
+                        lyricsText.innerHTML = best.plainLyrics.split('\n').filter(l => l.trim()).map(l =>
+                            `<div class="plain-line">${l}</div>`).join('');
+                        lyricsData = { isLrc: false, plain: best.plainLyrics };
+                        lyricsMeta.textContent = `Plain lyrics from LRCLib – ${cleanArtist} – ${cleanTrack}`;
+                    } else {
+                        showToast('No lyrics found on LRCLib.', 'error');
+                    }
+                } else {
+                    showToast('No lyrics found on LRCLib.', 'error');
+                }
+            } catch (err) {
+                showToast('LRCLib search failed: ' + err.message, 'error');
+            } finally {
+                this.disabled = false;
+                this.innerHTML = '<i class="fas fa-search"></i> LRCLib';
+            }
+        });
+
+        // =============================================================
+        //  AI Lyrics Generation (Gemini)
+        // =============================================================
+
+        generateAILyricsBtn?.addEventListener('click', async function() {
+            const title = document.querySelector("#nowPlaying .song-title")?.textContent || '';
+            const artist = document.querySelector("#nowPlaying .author-name")?.textContent || '';
+            const dur = player?.getDuration?.() || 0;
+            if (!title || !artist) {
+                showToast('No song currently playing.', 'error');
+                return;
+            }
+            const gmKey = STATE.settings.geminiKey;
+            if (!gmKey || gmKey.length < 8) {
+                showToast('Gemini API key required. Set it in Settings.', 'error');
+                return;
+            }
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+            const model = STATE.settings.geminiModel || 'gemini-3.1-flash-lite';
+            const systemInstruction =
+                `You are a creative songwriter and expert at formatting timed lyrics. Given a song's title, artist, and total duration (in seconds), create a full, realistic set of lyrics with timestamps. Use the LRC format: [mm:ss.xx]lyric line. Timestamps should be evenly spaced and match a typical song structure (intro, verse, chorus, etc). The total length of all lines must stay within the video duration. Output ONLY the LRC text, no explanation. Make the lyrics authentic and fitting for the song's title and artist.`;
+            const userPrompt =
+                `Song title: "${title}"\nArtist: "${artist}"\nVideo duration: ${Math.floor(dur)} seconds (${formatTime(dur)})\nGenerate full synced lyrics in LRC format.`;
+
+            try {
+                const resp = await fetch(
+                    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${gmKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            system_instruction: { parts: [{ text: systemInstruction }] },
+                            contents: [{ parts: [{ text: userPrompt }] }],
+                            generationConfig: { temperature: 0.8, topP: 0.9, maxOutputTokens: 4096 }
+                        })
+                    });
+                if (!resp.ok) {
+                    const err = await resp.json();
+                    throw new Error(err.error?.message || 'Gemini API error');
+                }
+                const data = await resp.json();
+                const generatedText = data.candidates?.[0]?.content?.parts?.map(p => p.text).join('') || '';
+                if (!generatedText) throw new Error('Empty response from Gemini.');
+                renderLyricsFromLRC(generatedText);
+                showToast('✅ AI lyrics generated!', 'success');
+            } catch (err) {
+                showToast('AI Generation failed: ' + err.message, 'error');
+            } finally {
+                this.disabled = false;
+                this.innerHTML = '<i class="fas fa-robot"></i> AI Lyrics';
+            }
+        });
+
+        // =============================================================
+        //  LRC Rendering (unified)
+        // =============================================================
+
+        function parseLrc(text) {
+            const lines = [];
+            const regex = /\[(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?\](.*)/;
+            text.split(/\r?\n/).forEach(line => {
+                const match = line.match(regex);
+                if (match) {
+                    const time = parseInt(match[1]) * 60 + parseInt(match[2]) + ((parseInt(match[3]) || 0) / 100);
+                    const textContent = match[4].trim();
+                    if (textContent) lines.push({ time, text: textContent });
+                }
+            });
+            return lines;
+        }
+
+        function renderLyricsFromLRC(lrcString) {
+            const lines = parseLrc(lrcString);
+            if (lines.length === 0) {
+                showToast('No valid LRC lines found.', 'error');
+                return;
+            }
+            lyricsData = { isLrc: true, lrcLines: lines };
+            renderLrcLines(lines);
+            const title = document.querySelector("#nowPlaying .song-title")?.textContent || 'Unknown';
+            const artist = document.querySelector("#nowPlaying .author-name")?.textContent || 'Unknown';
+            lyricsMeta.textContent = `Synced lyrics (${lines.length} lines) – ${artist} – ${title}`;
+            lyricsState.status = 'synced';
+            startLyricsSync();
+            if (translationEnabled) applyTranslation();
+        }
+
+        function renderLrcLines(lines) {
+            if (!lyricsText) return;
+            lyricsText.innerHTML = lines.map((l, i) => {
+                const m = Math.floor(l.time / 60);
+                const s = Math.floor(l.time % 60);
+                const fmt = `${m}:${s < 10 ? '0' + s : s}`;
+                return `<div class="lrc-line" data-index="${i}" data-time="${l.time}" data-formatted-time="${fmt}">
+                <span class="lrc-time">[${fmt}]</span>
+                <span class="lrc-text">${l.text}</span>
+              </div>`;
+            }).join('');
+        }
+
+        function renderLrcLinesWithTranslation(lines, translationsArr) {
+            if (!lyricsText) return;
+            lyricsText.innerHTML = lines.map((l, i) => {
+                const m = Math.floor(l.time / 60);
+                const s = Math.floor(l.time % 60);
+                const fmt = `${m}:${s < 10 ? '0' + s : s}`;
+                const hasTrans = translationsArr && translationsArr[i] && translationsArr[i] !== l.text;
+                const transText = hasTrans ? translationsArr[i] : '';
+                return `<div class="lrc-line" data-index="${i}" data-time="${l.time}" data-formatted-time="${fmt}">
+                <span class="lrc-time">[${fmt}]</span>
+                <div class="lyrics-pair">
+                  <div class="original-lyric" data-label="Original">${l.text}</div>
+                  ${hasTrans ? `<div class="translated-lyric" data-label="Translation">${transText}</div>` : ''}
+                </div>
+              </div>`;
+            }).join('');
+        }
+
+        function cleanTitleAndArtist(rawTitle, rawArtist) {
+            let title = rawTitle || '';
+            let artist = rawArtist || '';
+            title = title.replace(/\[[^\]]*\]|\([^)]*\)|［[^］]*］|【[^】]*】|「[^」]*」|『[^』]*』/g, '');
+            title = title.replace(/official\s*(music\s*)?video|music\s*video|mv|lyrics?|lyric\s*video|ver\.?|HD|4K|provided\s*to\s*youtube\s*by|auto[-\s]*generated\s*by\s*youtube|topic/gi, '');
+            title = title.replace(/\s+[fF](?:ea)?t\.?\s+[^-–—]*/g, '');
+            title = title.replace(/\s+[fF]eaturing\s+[^-–—]*/g, '');
+            title = title.replace(/\s+[fF](?:ea)?t\.?\s*[-–—]/g, '');
+            title = title.replace(/\s+[fF]eaturing\s*[-–—]/g, '');
+            title = title.replace(/\(\s*\)/g, '');
+            title = title.replace(/\[\s*\]/g, '');
+            title = title.replace(/\（\s*\）/g, '');
+            title = title.replace(/\［\s*\］/g, '');
+            title = title.replace(/[\uFF5E\u2013\u2014\-–—]+/g, '-');
+            title = title.replace(/\s{2,}/g, ' ').trim();
+            let extractedArtist = artist.trim();
+            let extractedTrack = title.trim();
+            const jpMatch = rawTitle.match(/^(.+?)「(.+?)」/);
+            if (jpMatch) { extractedArtist = jpMatch[1].trim();
+                extractedTrack = jpMatch[2].trim(); } else {
+                const dashMatch = extractedTrack.match(/^(.+?)\s*-\s*(.+)$/);
+                if (dashMatch) { extractedArtist = dashMatch[1].trim();
+                    extractedTrack = dashMatch[2].trim(); }
+            }
+            extractedArtist = extractedArtist.replace(/[【】\[\]()「」『』]/g, '').replace(/\s*-\s*topic$/i, '').replace(
+                /^[-–—]+|[-–—]+$/g, '').trim();
+            extractedTrack = extractedTrack.replace(/[【】\[\]()「」『』]/g, '').replace(/\s+[fF](?:ea)?t\.?\s+[^-–—]*/g,
+                '').replace(/\s+[fF]eaturing\s+[^-–—]*/g, '').replace(/\(\s*\)/g, '').replace(/\[\s*\]/g, '').trim();
+            if (extractedTrack.toLowerCase().startsWith(extractedArtist.toLowerCase())) {
+                extractedTrack = extractedTrack.slice(extractedArtist.length).trim();
+            }
+            if (!extractedTrack || extractedTrack.toLowerCase() === extractedArtist.toLowerCase()) {
+                const fb = rawTitle.match(/「(.+?)」/);
+                if (fb) extractedTrack = fb[1].trim();
+            }
+            return { artist: extractedArtist, track: extractedTrack };
+        }
+
+        async function fetchLyricsMultiSource(artist, title, videoId) {
+            const cacheKey = `lyrics_${encodeURIComponent(artist)}_${encodeURIComponent(title)}`;
+            const cached = localStorage.getItem(cacheKey);
+            if (cached) {
+                try { const json = JSON.parse(cached); if (json.syncedLyrics || json.plainLyrics) return json; } catch {}
+            }
+            if (videoId) {
+                try {
+                    const data = await fetchLyricsFromPaxsenix(videoId);
+                    if (data && (data.syncedLyrics || data.plainLyrics || data.lyrics || data.text)) {
+                        const result = { syncedLyrics: data.syncedLyrics || data.lyrics || data.text || null,
+                            plainLyrics: data.plainLyrics || data.lyrics || data.text || null, timestamp: Date
+                                .now(), source: 'paxsenix' };
+                        localStorage.setItem(cacheKey, JSON.stringify(result));
+                        return result;
+                    }
+                } catch (e) { console.warn('Paxsenix API failed:', e); }
+            }
+            const sources = [{ name: 'LRCLIB', url: `https://lrclib.net/api/get?artist_name=${encodeURIComponent(artist)}&track_name=${encodeURIComponent(title)}` },
+                { name: 'Lyrics.ovh', url: `https://api.lyrics.ovh/v1/${encodeURIComponent(artist)}/${encodeURIComponent(title)}` }
+            ];
+            for (const src of sources) {
+                try {
+                    const proxied = `${CORS_PROXY_URL}${encodeURIComponent(src.url)}`;
+                    const res = await fetch(proxied);
+                    if (!res.ok) continue;
+                    const data = await res.json();
+                    if (src.name === 'LRCLIB') {
+                        if (data.syncedLyrics || data.plainLyrics) { data.timestamp = Date.now();
+                            data.source = src.name;
+                            localStorage.setItem(cacheKey, JSON.stringify(data)); return data; }
+                    } else if (src.name === 'Lyrics.ovh') {
+                        if (data.lyrics) {
+                            const result = { plainLyrics: data.lyrics, timestamp: Date.now(), source: src.name };
+                            localStorage.setItem(cacheKey, JSON.stringify(result));
+                            return result;
+                        }
+                    }
+                } catch (e) { console.warn(`${src.name} failed:`, e); }
+            }
+            return null;
+        }
+
+        async function fetchLyricsFromPaxsenix(videoId) {
+            const url = `${API_BASE}/api/lyrics?v=${encodeURIComponent(videoId)}`;
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`Lyrics HTTP ${res.status}`);
+                const data = await res.json();
+                return data;
+            } catch (err) { console.error('Paxsenix lyrics error:', err); throw err; }
+        }
+
+        async function fetchLyrics(title, artist, videoId) {
+            const { artist: cleanArtist, track: cleanTrack } = cleanTitleAndArtist(title, artist);
+            lyricsState = { status: 'loading', artist: cleanArtist, title: cleanTrack };
+            lyricsMeta.textContent = 'Searching...';
+            lyricsText.textContent = 'Searching...';
+            try {
+                const data = await fetchLyricsMultiSource(cleanArtist, cleanTrack, videoId);
+                if (!data) throw new Error('No lyrics found from any source');
+                const lyrics = data.syncedLyrics || data.plainLyrics;
+                if (!lyrics) throw new Error('No lyrics');
+                const isLrc = /^\s*\[\d{1,2}:\d{2}/m.test(lyrics);
+                if (isLrc) {
+                    const parsed = parseLrc(lyrics);
+                    lyricsData = { isLrc: true, lrcLines: parsed };
+                    renderLrcLines(parsed);
+                    const source = data.source || 'LRCLIB';
+                    lyricsMeta.textContent = `Synced lyrics found for ${cleanArtist} – ${cleanTrack} (${source})`;
+                    lyricsState.status = 'synced';
+                } else {
+                    lyricsData = { isLrc: false, plain: lyrics };
+                    const lines = lyrics.split(/\r?\n/).filter(l => l.trim().length > 0);
+                    lyricsText.innerHTML = lines.map(line => `<div class="plain-line">${line}</div>`).join('');
+                    const source = data.source || 'Lyrics.ovh/Genius';
+                    lyricsMeta.textContent = `Plain lyrics found for ${cleanArtist} – ${cleanTrack} (${source})`;
+                    lyricsState.status = 'plain';
+                }
+                window.currentSongArtist = cleanArtist;
+                window.currentSongTitle = cleanTrack;
+                startLyricsSync();
+                if (translationEnabled) await applyTranslation();
+            } catch (e) {
+                lyricsData = null;
+                lyricsText.textContent = 'Lyrics not found.';
+                lyricsMeta.textContent = 'Lyrics not found.';
+                lyricsState.status = 'error';
+                console.warn('Lyrics fetch error:', e);
+            }
+        }
+
+        function loadLyricsFor(title, artist, videoId) {
+            const { artist: cleanArtist, track: cleanTrack } = cleanTitleAndArtist(title, artist);
+            fetchLyrics(cleanTrack, cleanArtist, videoId);
+        }
+
+        // ---- Translation ----
+        toggleTranslationBtn?.addEventListener('click', () => {
+            translationEnabled = !translationEnabled;
+            if (translationEnabled) {
+                toggleTranslationBtn.innerHTML = '<i class="fas fa-check"></i> ON';
+                toggleTranslationBtn.style.background = 'var(--md-primary)';
+                toggleTranslationBtn.style.color = 'var(--md-on-primary)';
+                if (lyricsData) applyTranslation();
+            } else {
+                toggleTranslationBtn.innerHTML = '<i class="fas fa-language"></i>';
+                toggleTranslationBtn.style.background = 'transparent';
+                toggleTranslationBtn.style.color = 'var(--md-on-surface-variant)';
+                if (lyricsData) {
+                    if (lyricsData.isLrc) renderLrcLines(lyricsData.lrcLines);
+                    else {
+                        const lines = lyricsData.plain.split(/\r?\n/).filter(l => l.trim().length > 0);
+                        lyricsText.innerHTML = lines.map(line => `<div class="plain-line">${line}</div>`).join('');
+                    }
+                    lyricsMeta.textContent = lyricsMeta.textContent.replace(/ \(Translated.*\)/, '');
+                }
+            }
+        });
+
+        async function applyTranslation() {
+            if (!lyricsData || !lyricsData.isLrc || !lyricsData.lrcLines) return;
+            const lines = lyricsData.lrcLines;
+            const texts = lines.map(l => l.text);
+            const targetLang = STATE.settings.translationTargetLang || 'en';
+            const service = STATE.settings.translationService || 'auto';
+            let translations = [];
+            try {
+                if (service === 'gemini' || service === 'auto') {
+                    translations = await translateWithGemini(texts, targetLang);
+                }
+                if ((!translations || translations.length === 0) && (service === 'openrouter' || service === 'auto')) {
+                    translations = await translateWithOpenRouter(texts, targetLang);
+                }
+                if (translations && translations.length > 0) {
+                    renderLrcLinesWithTranslation(lines, translations);
+                    lyricsMeta.textContent += ` (Translated to ${targetLang})`;
+                }
+            } catch (e) {
+                console.warn('Translation failed:', e);
+                showToast('Translation failed: ' + e.message, 'error');
+            }
+        }
+
+        async function translateWithGemini(texts, targetLang) {
+            const apiKey = STATE.settings.geminiKey;
+            if (!apiKey || apiKey.length < 8) return [];
+            const model = STATE.settings.geminiModel || 'gemini-3.1-flash-lite';
+            const prompt =
+                `Translate the following song lyrics to ${targetLang}. Return ONLY a JSON array of translated strings, one per line. Do not add any other text.\n\nLyrics:\n${texts.join('\n')}`;
+            try {
+                const resp = await fetch(
+                    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }],
+                            generationConfig: { temperature: 0.3, maxOutputTokens: 4096 }
+                        })
+                    });
+                if (!resp.ok) throw new Error('Gemini translation error');
+                const data = await resp.json();
+                const result = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '[]';
+                const parsed = JSON.parse(result);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (e) {
+                console.warn('Gemini translation error:', e);
+                return [];
+            }
+        }
+
+        async function translateWithOpenRouter(texts, targetLang) {
+            const apiKey = STATE.settings.openRouterKey;
+            if (!apiKey || apiKey.length < 8) return [];
+            const model = STATE.settings.chatModel || 'google/gemini-3.1-flash-lite';
+            const prompt =
+                `Translate the following song lyrics to ${targetLang}. Return ONLY a JSON array of translated strings, one per line. Do not add any other text.\n\nLyrics:\n${texts.join('\n')}`;
+            try {
+                const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ model: model, messages: [{ role: 'user', content: prompt }] })
+                });
+                if (!resp.ok) throw new Error('OpenRouter translation error');
+                const data = await resp.json();
+                const result = data.choices?.[0]?.message?.content?.trim() || '[]';
+                const parsed = JSON.parse(result);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (e) {
+                console.warn('OpenRouter translation error:', e);
+                return [];
+            }
+        }
+
+        toggleSyncBtn?.addEventListener('click', () => {
+            autoSyncEnabled = !autoSyncEnabled;
+            toggleSyncBtn.textContent = autoSyncEnabled ? 'Auto-Sync: ON' : 'Auto-Sync: OFF';
+            if (!autoSyncEnabled && syncInterval) {
+                clearInterval(syncInterval);
+                syncInterval = null;
+            } else if (autoSyncEnabled && lyricsData && lyricsData.isLrc) {
+                startLyricsSync();
+            }
+        });
+
+        refreshLyricsBtn?.addEventListener('click', async () => {
+            const title = document.querySelector("#nowPlaying .song-title")?.textContent || '';
+            const artist = document.querySelector("#nowPlaying .author-name")?.textContent || '';
+            const vid = player ? player.getVideoData?.()?.video_id : selectedVideoId;
+            if (title && artist && vid) await loadLyricsFor(title, artist, vid);
+        });
+
+        openRawBtn?.addEventListener('click', () => {
+            if (!lyricsData) return alert('No lyrics loaded.');
+            const blob = new Blob([JSON.stringify(lyricsData, null, 2)], { type: 'application/json' });
+            window.open(URL.createObjectURL(blob), '_blank');
+        });
+
+        // =============================================================
+        //  SUMMARIZER – CORE LOGIC
+        // =============================================================
+
+        async function summarizeYouTubeVideo(url) {
+            const geminiKey = STATE.settings.geminiKey;
+            if (!geminiKey || geminiKey.length < 8) {
+                showToast('Gemini API key required. Set it in Settings.', 'error');
+                return false;
+            }
+            const ytKey = STATE.settings.ytApiKey;
+            if (!ytKey || ytKey.length < 10) {
+                showToast('YouTube API key required. Set it in Settings.', 'error');
+                return false;
+            }
+            const videoId = extractYouTubeID(url);
+            if (!videoId) {
+                showToast('Invalid YouTube URL.', 'error');
+                return false;
+            }
+            summarizerStatus.textContent = 'Fetching video data from YouTube API...';
+            summarizerResult.innerHTML =
+                '<div class="text-center text-muted" style="padding:20px 0;"><i class="fas fa-spinner fa-pulse"></i> Loading...</div>';
+            try {
+                const videoData = await fetchYouTubeVideoData(videoId, ytKey);
+                summarizerStatus.textContent = 'Generating summary with Gemini AI...';
+                const model = STATE.settings.geminiModel || 'gemini-3.1-flash-lite';
+                const systemInstruction =
+                    `You are an expert YouTube video content summarizer. Analyze the provided video metadata (title, description, channel, publish date, duration) and create a detailed, insightful, and well-structured summary. Use clear markdown formatting with headings (##), bullet points, and sections. Structure your response to include: ## Overview (a concise paragraph summarizing the video's content and purpose), ## Key Topics Covered (bullet points of the main subjects discussed), ## Main Takeaways (actionable insights or conclusions), and optionally ## Additional Context if relevant. Be comprehensive but clear. Match the language of the summary to the video's content language, unless the user requests otherwise.`;
+                let userPrompt = `**Video Title:** ${videoData.title}\n`;
+                userPrompt += `**Channel:** ${videoData.channelTitle}\n`;
+                userPrompt += `**Published:** ${formatDate(videoData.publishedAt)}\n`;
+                userPrompt += `**Duration:** ${videoData.duration}\n`;
+                userPrompt += `**YouTube URL:** ${videoData.url}\n\n`;
+                userPrompt += `**Video Description:**\n${videoData.description || '(No description available)'}\n\n`;
+                userPrompt +=
+                    `---\nPlease provide a comprehensive summary of this YouTube video based on the information above.`;
+                const summary = await callGeminiWithSystem(model, geminiKey, systemInstruction, userPrompt);
+                summarizerStatus.textContent = 'Summary ready!';
+                renderSummarizerResult(videoData, summary);
+                showToast('Summary generated!', 'success');
+                return true;
+            } catch (err) {
+                summarizerStatus.textContent = '✘ Error: ' + err.message;
+                summarizerResult.innerHTML =
+                    `<div class="error-text" style="padding:16px 20px;border-radius:8px;color:var(--md-error);">⚠️ <strong>Error:</strong> ${escapeHTML(err.message)}</div>`;
+                showToast(err.message, 'error');
+                return false;
+            }
+        }
+
+        async function callGeminiWithSystem(model, apiKey, systemInstruction, userPrompt) {
+            const url =
+                `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
+            const body = {
+                system_instruction: {
+                    parts: [{ text: systemInstruction }]
+                },
+                contents: [{
+                    parts: [{ text: userPrompt }]
+                }],
+                generationConfig: {
+                    temperature: 0.4,
+                    topP: 0.9,
+                    maxOutputTokens: 4096,
+                },
+            };
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
+            });
+            if (!response.ok) {
+                const errorBody = await response.text();
+                let errorMsg = `Gemini API error (${response.status})`;
+                try {
+                    const errJson = JSON.parse(errorBody);
+                    if (errJson.error && errJson.error.message) {
+                        errorMsg = errJson.error.message;
+                    }
+                } catch {}
+                throw new Error(errorMsg);
+            }
+            const data = await response.json();
+            if (data.promptFeedback && data.promptFeedback.blockReason) {
+                throw new Error(`Content blocked by safety filter: ${data.promptFeedback.blockReason}`);
+            }
+            if (!data.candidates || data.candidates.length === 0) {
+                throw new Error('Gemini returned no candidates. The response may have been blocked.');
+            }
+            const candidate = data.candidates[0];
+            if (candidate.finishReason && candidate.finishReason !== 'STOP') {
+                throw new Error(`Gemini response finished unexpectedly: ${candidate.finishReason}`);
+            }
+            const parts = candidate.content && candidate.content.parts;
+            if (!parts || parts.length === 0) {
+                throw new Error('Gemini returned an empty response.');
+            }
+            return parts.map(p => p.text || '').join('\n');
+        }
+
+        async function fetchYouTubeVideoData(videoId, apiKey) {
+            const url =
+                `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${encodeURIComponent(videoId)}&key=${encodeURIComponent(apiKey)}`;
+            const response = await fetch(url);
+            if (!response.ok) {
+                const errorBody = await response.text();
+                let errorMsg = `YouTube API error (${response.status})`;
+                try {
+                    const errJson = JSON.parse(errorBody);
+                    if (errJson.error && errJson.error.message) {
+                        errorMsg = errJson.error.message;
+                    }
+                } catch {}
+                throw new Error(errorMsg);
+            }
+            const data = await response.json();
+            if (!data.items || data.items.length === 0) {
+                throw new Error('Video not found. It may be private, deleted, or the ID is invalid.');
+            }
+            const item = data.items[0];
+            const snippet = item.snippet || {};
+            const contentDetails = item.contentDetails || {};
+            return {
+                videoId: item.id,
+                title: snippet.title || 'Untitled',
+                description: snippet.description || '',
+                channelTitle: snippet.channelTitle || 'Unknown channel',
+                publishedAt: snippet.publishedAt || '',
+                thumbnailUrl: (snippet.thumbnails && snippet.thumbnails.medium && snippet.thumbnails.medium.url) ||
+                    (snippet.thumbnails && snippet.thumbnails.default && snippet.thumbnails.default.url) || '',
+                duration: parseDuration(contentDetails.duration),
+                url: `https://www.youtube.com/watch?v=${item.id}`,
+            };
+        }
+
+        function parseDuration(isoDuration) {
+            if (!isoDuration) return 'N/A';
+            const match = isoDuration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+            if (!match) return isoDuration;
+            const hours = parseInt(match[1] || '0');
+            const minutes = parseInt(match[2] || '0');
+            const seconds = parseInt(match[3] || '0');
+            if (hours > 0) {
+                return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+            return `${minutes}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function formatDate(isoDate) {
+            if (!isoDate) return 'Unknown date';
+            try {
+                const date = new Date(isoDate);
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            } catch {
+                return isoDate;
+            }
+        }
+
+        function renderSummarizerResult(videoData, summary) {
+            let html = '';
+            html += `<div class="summarizer-video-card">`;
+            if (videoData.thumbnailUrl) {
+                html +=
+                    `<a href="${escapeHTML(videoData.url)}" target="_blank" rel="noopener"><img src="${escapeHTML(videoData.thumbnailUrl)}" alt="Video thumbnail" loading="lazy"></a>`;
+            }
+            html += `<div class="summ-info">`;
+            html +=
+                `<h4><a href="${escapeHTML(videoData.url)}" target="_blank" rel="noopener">${escapeHTML(videoData.title)}</a></h4>`;
+            html += `<p>📺 ${escapeHTML(videoData.channelTitle)}</p>`;
+            html += `<div class="summ-meta">`;
+            html += `<span>📅 ${escapeHTML(formatDate(videoData.publishedAt))}</span>`;
+            html += `<span>⏱ ${escapeHTML(videoData.duration)}</span>`;
+            html += `</div>`;
+            html += `</div>`;
+            html += `</div>`;
+            html += `<div class="summary-markdown">`;
+            if (typeof marked !== 'undefined' && marked.parse) {
+                try {
+                    html += marked.parse(summary);
+                } catch {
+                    html += `<pre>${escapeHTML(summary)}</pre>`;
+                }
+            } else {
+                html += `<pre>${escapeHTML(summary)}</pre>`;
+            }
+            html += `</div>`;
+            summarizerResult.innerHTML = html;
+            summarizerCopyBtn.style.display = 'inline-flex';
+            summarizerCopyBtn.dataset.summary = summary;
+        }
+
+        // ===== SUMMARIZER EVENT HANDLERS =====
+
+        summarizeBtn?.addEventListener('click', async function() {
+            const url = summarizerUrlInput.value.trim();
+            if (!url) {
+                showToast('Please enter a YouTube URL.', 'error');
+                return;
+            }
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Working...';
+            await summarizeYouTubeVideo(url);
+            this.disabled = false;
+            this.innerHTML = '<i class="fas fa-magic"></i> Summarize';
+        });
+
+        summarizeCurrentBtn?.addEventListener('click', async function() {
+            let currentUrl = null;
+            const vid = player ? player.getVideoData?.()?.video_id : selectedVideoId;
+            if (vid) currentUrl = `https://www.youtube.com/watch?v=${vid}`;
+            if (!currentUrl) {
+                showToast('No video is currently playing.', 'error');
+                return;
+            }
+            summarizerUrlInput.value = currentUrl;
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Working...';
+            await summarizeYouTubeVideo(currentUrl);
+            this.disabled = false;
+            this.innerHTML = '<i class="fas fa-play-circle"></i> Current Video';
+        });
+
+        clearSummarizerBtn?.addEventListener('click', function() {
+            summarizerUrlInput.value = '';
+            summarizerStatus.textContent = 'Ready. Paste a URL or click "Current Video".';
+            summarizerResult.innerHTML =
+                '<div class="text-muted text-center" style="padding:30px 0;">Summary will appear here</div>';
+            summarizerCopyBtn.style.display = 'none';
+        });
+
+        summarizerCopyBtn?.addEventListener('click', function() {
+            const summary = this.dataset.summary || summarizerResult.innerText;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(summary).then(() => {
+                    showToast('Summary copied!', 'success');
+                }).catch(() => {
+                    fallbackCopy(summary);
+                });
+            } else {
+                fallbackCopy(summary);
+            }
+        });
+
+        summarizerUrlInput?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') summarizeBtn.click();
+        });
+
+        // ===== ENHANCED ANALYZE BUTTON (uses summarizer) =====
+
+        async function analyzeYouTubeVideo() {
+            const vid = player ? player.getVideoData?.()?.video_id : selectedVideoId;
+            if (!vid) {
+                showToast('No video is currently playing.', 'error');
+                return;
+            }
+            const url = `https://www.youtube.com/watch?v=${vid}`;
+            summarizerUrlInput.value = url;
+            document.getElementById('showSummarizerBtn').click();
+            const btn = summarizeBtn;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Working...';
+            await summarizeYouTubeVideo(url);
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-magic"></i> Summarize';
+        }
+
+
+        // =============================================================
+        //  PLAYLIST & YT PLAYER (existing)
+        // =============================================================
 
         function loadPlaylist() {
             const stored = localStorage.getItem('youtubeMusicPlaylist');
@@ -7009,261 +7852,6 @@
             }
         }
 
-        // ─── LYRICS ───
-
-        function parseLrc(text) {
-            const lines = [];
-            const regex = /\[(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?\](.*)/;
-            text.split(/\r?\n/).forEach(line => {
-                const match = line.match(regex);
-                if (match) {
-                    const time = parseInt(match[1]) * 60 + parseInt(match[2]) + ((parseInt(match[3]) || 0) / 100);
-                    lines.push({ time, text: match[4].trim() });
-                }
-            });
-            return lines;
-        }
-
-        function renderLrcLines(lines) {
-            if (!lyricsText) return;
-            lyricsText.innerHTML = lines.map((l, i) => {
-                const m = Math.floor(l.time / 60);
-                const s = Math.floor(l.time % 60);
-                const fmt = `${m}:${s < 10 ? '0' + s : s}`;
-                return `<div class="lrc-line" data-index="${i}" data-time="${l.time}" data-formatted-time="${fmt}">
-                <span class="lrc-time">[${fmt}]</span>
-                <span class="lrc-text">${l.text}</span>
-              </div>`;
-            }).join('');
-        }
-
-        function renderLrcLinesWithTranslation(lines, translationsArr) {
-            if (!lyricsText) return;
-            lyricsText.innerHTML = lines.map((l, i) => {
-                const m = Math.floor(l.time / 60);
-                const s = Math.floor(l.time % 60);
-                const fmt = `${m}:${s < 10 ? '0' + s : s}`;
-                const hasTrans = translationsArr && translationsArr[i] && translationsArr[i] !== l.text;
-                const transText = hasTrans ? translationsArr[i] : '';
-                return `<div class="lrc-line" data-index="${i}" data-time="${l.time}" data-formatted-time="${fmt}">
-                <span class="lrc-time">[${fmt}]</span>
-                <div class="lyrics-pair">
-                  <div class="original-lyric" data-label="Original">${l.text}</div>
-                  ${hasTrans ? `<div class="translated-lyric" data-label="Translation">${transText}</div>` : ''}
-                </div>
-              </div>`;
-            }).join('');
-        }
-
-        function cleanTitleAndArtist(rawTitle, rawArtist) {
-            let title = rawTitle || '';
-            let artist = rawArtist || '';
-            title = title.replace(/\[[^\]]*\]|\([^)]*\)|［[^］]*］|【[^】]*】|「[^」]*」|『[^』]*』/g, '');
-            title = title.replace(/official\s*(music\s*)?video|music\s*video|mv|lyrics?|lyric\s*video|ver\.?|HD|4K|provided\s*to\s*youtube\s*by|auto[-\s]*generated\s*by\s*youtube|topic/gi, '');
-            title = title.replace(/\s+[fF](?:ea)?t\.?\s+[^-–—]*/g, '');
-            title = title.replace(/\s+[fF]eaturing\s+[^-–—]*/g, '');
-            title = title.replace(/\s+[fF](?:ea)?t\.?\s*[-–—]/g, '');
-            title = title.replace(/\s+[fF]eaturing\s*[-–—]/g, '');
-            title = title.replace(/\(\s*\)/g, '');
-            title = title.replace(/\[\s*\]/g, '');
-            title = title.replace(/\（\s*\）/g, '');
-            title = title.replace(/\［\s*\］/g, '');
-            title = title.replace(/[\uFF5E\u2013\u2014\-–—]+/g, '-');
-            title = title.replace(/\s{2,}/g, ' ').trim();
-            let extractedArtist = artist.trim();
-            let extractedTrack = title.trim();
-            const jpMatch = rawTitle.match(/^(.+?)「(.+?)」/);
-            if (jpMatch) { extractedArtist = jpMatch[1].trim();
-                extractedTrack = jpMatch[2].trim(); } else {
-                const dashMatch = extractedTrack.match(/^(.+?)\s*-\s*(.+)$/);
-                if (dashMatch) { extractedArtist = dashMatch[1].trim();
-                    extractedTrack = dashMatch[2].trim(); }
-            }
-            extractedArtist = extractedArtist.replace(/[【】\[\]()「」『』]/g, '').replace(/\s*-\s*topic$/i, '').replace(
-                /^[-–—]+|[-–—]+$/g, '').trim();
-            extractedTrack = extractedTrack.replace(/[【】\[\]()「」『』]/g, '').replace(/\s+[fF](?:ea)?t\.?\s+[^-–—]*/g,
-                '').replace(/\s+[fF]eaturing\s+[^-–—]*/g, '').replace(/\(\s*\)/g, '').replace(/\[\s*\]/g, '').trim();
-            if (extractedTrack.toLowerCase().startsWith(extractedArtist.toLowerCase())) {
-                extractedTrack = extractedTrack.slice(extractedArtist.length).trim();
-            }
-            if (!extractedTrack || extractedTrack.toLowerCase() === extractedArtist.toLowerCase()) {
-                const fb = rawTitle.match(/「(.+?)」/);
-                if (fb) extractedTrack = fb[1].trim();
-            }
-            return { artist: extractedArtist, track: extractedTrack };
-        }
-
-        async function fetchLyricsMultiSource(artist, title, videoId) {
-            const cacheKey = `lyrics_${encodeURIComponent(artist)}_${encodeURIComponent(title)}`;
-            const cached = localStorage.getItem(cacheKey);
-            if (cached) {
-                try { const json = JSON.parse(cached); if (json.syncedLyrics || json.plainLyrics) return json; } catch {}
-            }
-            if (videoId) {
-                try {
-                    const data = await fetchLyricsFromPaxsenix(videoId);
-                    if (data && (data.syncedLyrics || data.plainLyrics || data.lyrics || data.text)) {
-                        const result = { syncedLyrics: data.syncedLyrics || data.lyrics || data.text || null,
-                            plainLyrics: data.plainLyrics || data.lyrics || data.text || null, timestamp: Date
-                                .now(), source: 'paxsenix' };
-                        localStorage.setItem(cacheKey, JSON.stringify(result));
-                        return result;
-                    }
-                } catch (e) { console.warn('Paxsenix API failed:', e); }
-            }
-            const sources = [{ name: 'LRCLIB', url: `https://lrclib.net/api/get?artist_name=${encodeURIComponent(artist)}&track_name=${encodeURIComponent(title)}` },
-                { name: 'Lyrics.ovh', url: `https://api.lyrics.ovh/v1/${encodeURIComponent(artist)}/${encodeURIComponent(title)}` }
-            ];
-            for (const src of sources) {
-                try {
-                    const proxied = `${CORS_PROXY_URL}${encodeURIComponent(src.url)}`;
-                    const res = await fetch(proxied);
-                    if (!res.ok) continue;
-                    const data = await res.json();
-                    if (src.name === 'LRCLIB') {
-                        if (data.syncedLyrics || data.plainLyrics) { data.timestamp = Date.now();
-                            data.source = src.name;
-                            localStorage.setItem(cacheKey, JSON.stringify(data)); return data; }
-                    } else if (src.name === 'Lyrics.ovh') {
-                        if (data.lyrics) {
-                            const result = { plainLyrics: data.lyrics, timestamp: Date.now(), source: src.name };
-                            localStorage.setItem(cacheKey, JSON.stringify(result));
-                            return result;
-                        }
-                    }
-                } catch (e) { console.warn(`${src.name} failed:`, e); }
-            }
-            return null;
-        }
-
-        async function fetchLyricsFromPaxsenix(videoId) {
-            const url = `${API_BASE}/api/lyrics?v=${encodeURIComponent(videoId)}`;
-            try {
-                const res = await fetch(url);
-                if (!res.ok) throw new Error(`Lyrics HTTP ${res.status}`);
-                const data = await res.json();
-                return data;
-            } catch (err) { console.error('Paxsenix lyrics error:', err); throw err; }
-        }
-
-        async function fetchLyrics(title, artist, videoId) {
-            const { artist: cleanArtist, track: cleanTrack } = cleanTitleAndArtist(title, artist);
-            lyricsState = { status: 'loading', artist: cleanArtist, title: cleanTrack };
-            lyricsMeta.textContent = 'Searching...';
-            lyricsText.textContent = 'Searching...';
-            try {
-                const data = await fetchLyricsMultiSource(cleanArtist, cleanTrack, videoId);
-                if (!data) throw new Error('No lyrics found from any source');
-                const lyrics = data.syncedLyrics || data.plainLyrics;
-                if (!lyrics) throw new Error('No lyrics');
-                const isLrc = /^\s*\[\d{1,2}:\d{2}/m.test(lyrics);
-                if (isLrc) {
-                    const parsed = parseLrc(lyrics);
-                    lyricsData = { isLrc: true, lrcLines: parsed };
-                    renderLrcLines(parsed);
-                    const source = data.source || 'LRCLIB';
-                    lyricsMeta.textContent = `Synced lyrics found for ${cleanArtist} – ${cleanTrack} (${source})`;
-                    lyricsState.status = 'synced';
-                } else {
-                    lyricsData = { isLrc: false, plain: lyrics };
-                    const lines = lyrics.split(/\r?\n/).filter(l => l.trim().length > 0);
-                    lyricsText.innerHTML = lines.map(line => `<div class="plain-line">${line}</div>`).join('');
-                    const source = data.source || 'Lyrics.ovh/Genius';
-                    lyricsMeta.textContent = `Plain lyrics found for ${cleanArtist} – ${cleanTrack} (${source})`;
-                    lyricsState.status = 'plain';
-                }
-                window.currentSongArtist = cleanArtist;
-                window.currentSongTitle = cleanTrack;
-                if (translationEnabled) await applyTranslation();
-            } catch (e) {
-                lyricsData = null;
-                lyricsText.textContent = 'Lyrics not found.';
-                lyricsMeta.textContent = 'Lyrics not found.';
-                lyricsState.status = 'error';
-                console.warn('Lyrics fetch error:', e);
-            }
-        }
-
-        function startLyricsSync() {
-            if (syncInterval) clearInterval(syncInterval);
-            syncInterval = setInterval(() => {
-                if (autoSyncEnabled && player && typeof player.getCurrentTime === 'function') {
-                    const cur = player.getCurrentTime();
-                    if (lyricsData && lyricsData.isLrc && lyricsData.lrcLines) {
-                        const lines = lyricsData.lrcLines;
-                        let low = 0,
-                            high = lines.length - 1,
-                            found = 0;
-                        while (low <= high) {
-                            const mid = Math.floor((low + high) / 2);
-                            if (lines[mid].time <= cur) { found = mid;
-                                low = mid + 1; } else high = mid - 1;
-                        }
-                        const el = lyricsText;
-                        const children = el.children;
-                        for (let i = 0; i < children.length; i++) children[i].classList.remove('highlight');
-                        const toHighlight = el.querySelector(`.lrc-line[data-index="${found}"]`);
-                        if (toHighlight) {
-                            toHighlight.classList.add('highlight');
-                            if (lyricsAutoScroll) {
-                                const parent = el;
-                                const pRect = parent.getBoundingClientRect();
-                                const cRect = toHighlight.getBoundingClientRect();
-                                const offset = cRect.top - pRect.top - parent.clientHeight / 2 + cRect.height / 2;
-                                parent.scrollBy({ top: offset, behavior: 'smooth' });
-                            }
-                        }
-                    }
-                }
-            }, 500);
-        }
-
-        function loadLyricsFor(title, artist, videoId) {
-            const { artist: cleanArtist, track: cleanTrack } = cleanTitleAndArtist(title, artist);
-            fetchLyrics(cleanTrack, cleanArtist, videoId);
-            startLyricsSync();
-        }
-
-        toggleTranslationBtn?.addEventListener('click', () => {
-            translationEnabled = !translationEnabled;
-            if (translationEnabled) {
-                toggleTranslationBtn.innerHTML = '<i class="fas fa-check"></i> ON';
-                toggleTranslationBtn.style.background = 'var(--md-primary)';
-                toggleTranslationBtn.style.color = 'var(--md-on-primary)';
-                if (lyricsData) applyTranslation();
-            } else {
-                toggleTranslationBtn.innerHTML = '<i class="fas fa-language"></i>';
-                toggleTranslationBtn.style.background = 'transparent';
-                toggleTranslationBtn.style.color = 'var(--md-on-surface-variant)';
-                if (lyricsData) {
-                    if (lyricsData.isLrc) renderLrcLines(lyricsData.lrcLines);
-                    else {
-                        const lines = lyricsData.plain.split(/\r?\n/).filter(l => l.trim().length > 0);
-                        lyricsText.innerHTML = lines.map(line => `<div class="plain-line">${line}</div>`).join('');
-                    }
-                    lyricsMeta.textContent = lyricsMeta.textContent.replace(/ \(Translated.*\)/, '');
-                }
-            }
-        });
-
-        toggleSyncBtn?.addEventListener('click', () => {
-            autoSyncEnabled = !autoSyncEnabled;
-            toggleSyncBtn.textContent = autoSyncEnabled ? 'Auto-Sync: ON' : 'Auto-Sync: OFF';
-        });
-
-        refreshLyricsBtn?.addEventListener('click', async () => {
-            const title = document.querySelector("#nowPlaying .song-title")?.textContent || '';
-            const artist = document.querySelector("#nowPlaying .author-name")?.textContent || '';
-            const vid = player ? player.getVideoData?.()?.video_id : selectedVideoId;
-            if (title && artist && vid) await loadLyricsFor(title, artist, vid);
-        });
-
-        openRawBtn?.addEventListener('click', () => {
-            if (!lyricsData) return alert('No lyrics loaded.');
-            const blob = new Blob([JSON.stringify(lyricsData, null, 2)], { type: 'application/json' });
-            window.open(URL.createObjectURL(blob), '_blank');
-        });
-
         // ─── SponsorBlock ───
 
         const SB = {
@@ -7715,14 +8303,14 @@
                 if (bgPlaybackToggle) bgPlaybackToggle.checked = STATE.bgPlaybackEnabled;
             }
 
-            // The actual enhancement is applied when toggle changes
             if (bgPlaybackToggle) {
                 bgPlaybackToggle.addEventListener('change', function() {
                     STATE.bgPlaybackEnabled = this.checked;
                     localStorage.setItem('bgPlaybackEnabled', String(STATE.bgPlaybackEnabled));
                     if (STATE.bgPlaybackEnabled) {
                         enableBackgroundPlaybackEnhancement();
-                        showToast('Background playback enhanced – audio will keep playing when tab is hidden.', 'info');
+                        showToast('Background playback enhanced – audio will keep playing when tab is hidden.',
+                            'info');
                     } else {
                         disableBackgroundPlaybackEnhancement();
                         showToast('Background playback disabled.', 'info');
@@ -7730,13 +8318,11 @@
                 });
             }
 
-            // If already enabled at startup, apply enhancement
             if (STATE.bgPlaybackEnabled) {
                 enableBackgroundPlaybackEnhancement();
             }
         }
 
-        // ---- Enhancement state ----
         let bgEnhancementActive = false;
         let bgEnhancementInterval = null;
         let origDocumentHidden = null;
@@ -7746,8 +8332,6 @@
         function enableBackgroundPlaybackEnhancement() {
             if (bgEnhancementActive) return;
             bgEnhancementActive = true;
-
-            // 1. Override document.hidden and visibilityState
             origDocumentHidden = Object.getOwnPropertyDescriptor(Document.prototype, 'hidden');
             origVisibilityState = Object.getOwnPropertyDescriptor(Document.prototype, 'visibilityState');
             try {
@@ -7759,17 +8343,13 @@
                     get: () => 'visible',
                     configurable: true
                 });
-                // Also override document.hasFocus
                 document.hasFocus = () => true;
             } catch (e) {
                 console.warn('Could not override visibility properties', e);
             }
-
-            // 2. Intercept visibilitychange event to prevent propagation
             origAddEventListener = document.addEventListener;
             document.addEventListener = function(type, listener, options) {
                 if (type === 'visibilitychange') {
-                    // Replace with a no-op or stop propagation
                     const wrapped = function(e) {
                         e.stopImmediatePropagation();
                         e.preventDefault();
@@ -7778,34 +8358,23 @@
                 }
                 return origAddEventListener.call(this, type, listener, options);
             }.bind(document);
-
-            // 3. Set up a periodic check to resume playback if paused
             if (bgEnhancementInterval) clearInterval(bgEnhancementInterval);
             bgEnhancementInterval = setInterval(() => {
                 if (!player || typeof player.getPlayerState !== 'function') return;
                 const state = player.getPlayerState();
-                // If paused (state 2) and we want to keep playing, resume
                 if (state === 2) {
-                    // Check if it's an intentional pause? We'll just resume if background playback is on.
-                    // But avoid resuming if user explicitly paused (we can't know). 
-                    // We'll only resume if the video is not ended and not at the beginning.
                     if (player.getDuration() > 0 && player.getCurrentTime() < player.getDuration() - 1) {
                         console.log('[BG Playback] Resuming video due to background enhancement');
                         player.playVideo();
                     }
                 }
             }, 3000);
-
-            // Ensure silent audio context is also active
             ensureBgAudioContext();
-
             console.log('[BG Playback] Enhancement enabled');
         }
 
         function disableBackgroundPlaybackEnhancement() {
             if (!bgEnhancementActive) return;
-
-            // Restore original properties
             try {
                 if (origDocumentHidden) {
                     Object.defineProperty(document, 'hidden', origDocumentHidden);
@@ -7813,24 +8382,21 @@
                 if (origVisibilityState) {
                     Object.defineProperty(document, 'visibilityState', origVisibilityState);
                 }
-                document.hasFocus = () => true; // we can't easily restore original, but that's fine
+                document.hasFocus = () => true;
                 if (origAddEventListener) {
                     document.addEventListener = origAddEventListener;
                 }
             } catch (e) {
                 console.warn('Could not restore visibility properties', e);
             }
-
             if (bgEnhancementInterval) {
                 clearInterval(bgEnhancementInterval);
                 bgEnhancementInterval = null;
             }
-
             bgEnhancementActive = false;
             console.log('[BG Playback] Enhancement disabled');
         }
 
-        // ---- Silent audio context (existing) ----
         let bgAudioCtx = null;
         let bgSilentBuffer = null;
         let bgSilentSource = null;
@@ -7916,10 +8482,8 @@
         const offlineVisualizerCanvas = document.getElementById('offlineVisualizer');
         const offlineVolumeIcon = document.getElementById('offlineVolumeIcon');
 
-        // Load offline playlist from localStorage
         loadOfflinePlaylist();
 
-        // Sync STATE.offlinePlaylist with the loaded data
         let offlinePlaylist = STATE.offlinePlaylist;
         let offlineCurrentSongIndex = STATE.offlineCurrentSongIndex;
         let offlineIsPlaying = STATE.offlineIsPlaying;
@@ -7927,13 +8491,11 @@
         let offlineIsShuffling = STATE.offlineIsShuffling;
         let offlinePlayHistory = STATE.offlinePlayHistory;
 
-        // ---- Visualizer variables ----
         let offlineVisualizerActive = false;
         let offlineAnalyser = null;
         let offlineVisualizerRaf = null;
         let offlineAudioContext = null;
 
-        // ---- Volume icon updater ----
         function updateOfflineVolumeIcon() {
             if (!offlineVolumeIcon) return;
             const val = offlineAudio.volume;
@@ -7946,7 +8508,6 @@
             }
         }
 
-        // ---- ID3 tag reader ----
         function readID3Tags(file, callback) {
             if (typeof jsmediatags === 'undefined') {
                 callback(null);
@@ -7979,10 +8540,6 @@
             });
         }
 
-        // =============================================================
-        //  THEME-AWARE VISUALIZER (Transparent background + theme colors)
-        // =============================================================
-
         function initOfflineVisualizer() {
             if (!offlineAudioContext) {
                 try {
@@ -8006,7 +8563,6 @@
         function getThemeColors() {
             const root = document.documentElement;
             const style = getComputedStyle(root);
-            // Get theme colors from CSS variables
             const accent = style.getPropertyValue('--ui-accent').trim() || style.getPropertyValue('--md-primary').trim() ||
                 '#6750a4';
             const accent2 = style.getPropertyValue('--ui-accent-2').trim() || style.getPropertyValue('--md-secondary')
@@ -8031,18 +8587,13 @@
             function draw() {
                 animationId = requestAnimationFrame(draw);
                 offlineAnalyser.getByteFrequencyData(dataArray);
-                // Clear with transparent background
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-
                 const theme = getThemeColors();
                 const barCount = Math.min(bufferLength, 64);
                 const barWidth = (canvas.width / barCount) * 0.7;
                 const gap = (canvas.width / barCount) * 0.3;
                 let x = 0;
-
-                // Draw subtle glow under bars
                 const gradient = ctx.createLinearGradient(0, canvas.height, 0, 0);
-                // Parse the accent color to RGB for gradient
                 const accentRgb = parseCssColor(theme.accent);
                 if (accentRgb) {
                     gradient.addColorStop(0, `rgba(${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}, 0.05)`);
@@ -8053,13 +8604,10 @@
                     gradient.addColorStop(0.5, 'rgba(103, 80, 164, 0.15)');
                     gradient.addColorStop(1, 'rgba(103, 80, 164, 0.3)');
                 }
-
                 for (let i = 0; i < barCount; i++) {
                     const idx = Math.floor((i / barCount) * bufferLength);
                     const value = dataArray[idx] || 0;
                     const barHeight = (value / 255) * canvas.height * 0.85;
-
-                    // Use theme accent color with varying opacity based on height
                     const opacity = 0.3 + (value / 255) * 0.7;
                     const accentColor = parseCssColor(theme.accent);
                     if (accentColor) {
@@ -8067,8 +8615,6 @@
                     } else {
                         ctx.fillStyle = `rgba(103, 80, 164, ${opacity})`;
                     }
-
-                    // Rounded bars with slight shadow
                     ctx.shadowColor = theme.glow;
                     ctx.shadowBlur = 8;
                     ctx.beginPath();
@@ -8087,8 +8633,6 @@
                     ctx.closePath();
                     ctx.fill();
                     ctx.shadowBlur = 0;
-
-                    // Add a subtle highlight on top of taller bars
                     if (value > 128) {
                         const highlightOpacity = (value - 128) / 127 * 0.3;
                         if (accentColor) {
@@ -8098,11 +8642,8 @@
                         }
                         ctx.fillRect(xPos, yPos, w, 2);
                     }
-
                     x += barWidth + gap;
                 }
-
-                // Draw a subtle baseline
                 const baseColor = parseCssColor(theme.accent2);
                 if (baseColor) {
                     ctx.fillStyle = `rgba(${baseColor.r}, ${baseColor.g}, ${baseColor.b}, 0.15)`;
@@ -8111,7 +8652,6 @@
                 }
                 ctx.fillRect(0, canvas.height - 1, canvas.width, 1);
             }
-
             draw();
             offlineVisualizerRaf = animationId;
             offlineVisualizerActive = true;
@@ -8154,20 +8694,16 @@
             }
         }
 
-        // ---- Helper to parse CSS color strings ----
         function parseCssColor(colorStr) {
             if (!colorStr) return null;
-            // Try rgb(r g b) or rgb(r,g,b) format
             let match = colorStr.match(/rgb\s*\(\s*(\d+)\s*[,\s]\s*(\d+)\s*[,\s]\s*(\d+)\s*\)/);
             if (match) return { r: parseInt(match[1]), g: parseInt(match[2]), b: parseInt(match[3]) };
-            // Try hex format
             match = colorStr.match(/^#([a-fA-F0-9]{6})$/);
             if (match) {
                 const hex = match[1];
                 return { r: parseInt(hex.slice(0, 2), 16), g: parseInt(hex.slice(2, 4), 16), b: parseInt(hex.slice(4, 6),
                         16) };
             }
-            // Try hex shorthand
             match = colorStr.match(/^#([a-fA-F0-9]{3})$/);
             if (match) {
                 const hex = match[1];
@@ -8177,22 +8713,14 @@
             return null;
         }
 
-        // ---- Listen for theme changes ----
         const themeObserver = new MutationObserver(() => {
-            // If visualizer is active, redraw with new colors
             if (offlineVisualizerActive && offlineVisualizerCanvas.classList.contains('active')) {
-                // Restart visualizer to apply new colors
                 stopOfflineVisualizer();
                 startOfflineVisualizer();
             }
         });
         themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-        // Also observe the root for data-theme changes
         themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-mode'] });
-
-        // =============================================================
-        //  BASE OFFLINE PLAYER
-        // =============================================================
 
         if (offlineAudio) {
             offlineAudio.volume = 0.5;
@@ -8242,7 +8770,6 @@
                 const tempAudio = new Audio(url);
                 tempAudio.addEventListener('loadedmetadata', () => {
                     song.duration = offlineFormatTime(tempAudio.duration);
-                    // Try to read ID3 tags
                     readID3Tags(file, (data) => {
                         if (data) {
                             song.id3 = data;
@@ -8286,7 +8813,6 @@
             const song = offlinePlaylist[index];
             offlineAudio.src = song.url;
             offlineSongTitle.textContent = song.name;
-            // Update album art
             if (song.id3 && song.id3.albumArt) {
                 offlineAlbumArt.src = song.id3.albumArt;
                 offlineAlbumArt.hidden = false;
@@ -8301,7 +8827,6 @@
             if (offlineIsPlaying) {
                 offlineAudio.play();
             }
-            // If visualizer is active, ensure it restarts
             if (offlineVisualizerActive && offlineVisualizerCanvas.classList.contains('active')) {
                 stopOfflineVisualizer();
                 startOfflineVisualizer();
@@ -8772,279 +9297,6 @@
         }
 
         // =============================================================
-        //  SUMMARIZER – CORE LOGIC
-        // =============================================================
-
-        async function summarizeYouTubeVideo(url) {
-            const geminiKey = STATE.settings.geminiKey;
-            if (!geminiKey || geminiKey.length < 8) {
-                showToast('Gemini API key required. Set it in Settings.', 'error');
-                return false;
-            }
-            const ytKey = STATE.settings.ytApiKey;
-            if (!ytKey || ytKey.length < 10) {
-                showToast('YouTube API key required. Set it in Settings.', 'error');
-                return false;
-            }
-            const videoId = extractYouTubeID(url);
-            if (!videoId) {
-                showToast('Invalid YouTube URL.', 'error');
-                return false;
-            }
-            summarizerStatus.textContent = 'Fetching video data from YouTube API...';
-            summarizerResult.innerHTML =
-                '<div class="text-center text-muted" style="padding:20px 0;"><i class="fas fa-spinner fa-pulse"></i> Loading...</div>';
-            try {
-                const videoData = await fetchYouTubeVideoData(videoId, ytKey);
-                summarizerStatus.textContent = 'Generating summary with Gemini AI...';
-                const model = STATE.settings.geminiModel || 'gemini-3.1-flash-lite';
-                const systemInstruction =
-                    `You are an expert YouTube video content summarizer. Analyze the provided video metadata (title, description, channel, publish date, duration) and create a detailed, insightful, and well-structured summary. Use clear markdown formatting with headings (##), bullet points, and sections. Structure your response to include: ## Overview (a concise paragraph summarizing the video's content and purpose), ## Key Topics Covered (bullet points of the main subjects discussed), ## Main Takeaways (actionable insights or conclusions), and optionally ## Additional Context if relevant. Be comprehensive but clear. Match the language of the summary to the video's content language, unless the user requests otherwise.`;
-                let userPrompt = `**Video Title:** ${videoData.title}\n`;
-                userPrompt += `**Channel:** ${videoData.channelTitle}\n`;
-                userPrompt += `**Published:** ${formatDate(videoData.publishedAt)}\n`;
-                userPrompt += `**Duration:** ${videoData.duration}\n`;
-                userPrompt += `**YouTube URL:** ${videoData.url}\n\n`;
-                userPrompt += `**Video Description:**\n${videoData.description || '(No description available)'}\n\n`;
-                userPrompt +=
-                    `---\nPlease provide a comprehensive summary of this YouTube video based on the information above.`;
-                const summary = await callGeminiWithSystem(model, geminiKey, systemInstruction, userPrompt);
-                summarizerStatus.textContent = 'Summary ready!';
-                renderSummarizerResult(videoData, summary);
-                showToast('Summary generated!', 'success');
-                return true;
-            } catch (err) {
-                summarizerStatus.textContent = '✘ Error: ' + err.message;
-                summarizerResult.innerHTML =
-                    `<div class="error-text" style="padding:16px 20px;border-radius:8px;color:var(--md-error);">⚠️ <strong>Error:</strong> ${escapeHTML(err.message)}</div>`;
-                showToast(err.message, 'error');
-                return false;
-            }
-        }
-
-        async function callGeminiWithSystem(model, apiKey, systemInstruction, userPrompt) {
-            const url =
-                `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
-            const body = {
-                system_instruction: {
-                    parts: [{ text: systemInstruction }]
-                },
-                contents: [{
-                    parts: [{ text: userPrompt }]
-                }],
-                generationConfig: {
-                    temperature: 0.4,
-                    topP: 0.9,
-                    maxOutputTokens: 4096,
-                },
-            };
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body),
-            });
-            if (!response.ok) {
-                const errorBody = await response.text();
-                let errorMsg = `Gemini API error (${response.status})`;
-                try {
-                    const errJson = JSON.parse(errorBody);
-                    if (errJson.error && errJson.error.message) {
-                        errorMsg = errJson.error.message;
-                    }
-                } catch {}
-                throw new Error(errorMsg);
-            }
-            const data = await response.json();
-            if (data.promptFeedback && data.promptFeedback.blockReason) {
-                throw new Error(`Content blocked by safety filter: ${data.promptFeedback.blockReason}`);
-            }
-            if (!data.candidates || data.candidates.length === 0) {
-                throw new Error('Gemini returned no candidates. The response may have been blocked.');
-            }
-            const candidate = data.candidates[0];
-            if (candidate.finishReason && candidate.finishReason !== 'STOP') {
-                throw new Error(`Gemini response finished unexpectedly: ${candidate.finishReason}`);
-            }
-            const parts = candidate.content && candidate.content.parts;
-            if (!parts || parts.length === 0) {
-                throw new Error('Gemini returned an empty response.');
-            }
-            return parts.map(p => p.text || '').join('\n');
-        }
-
-        async function fetchYouTubeVideoData(videoId, apiKey) {
-            const url =
-                `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${encodeURIComponent(videoId)}&key=${encodeURIComponent(apiKey)}`;
-            const response = await fetch(url);
-            if (!response.ok) {
-                const errorBody = await response.text();
-                let errorMsg = `YouTube API error (${response.status})`;
-                try {
-                    const errJson = JSON.parse(errorBody);
-                    if (errJson.error && errJson.error.message) {
-                        errorMsg = errJson.error.message;
-                    }
-                } catch {}
-                throw new Error(errorMsg);
-            }
-            const data = await response.json();
-            if (!data.items || data.items.length === 0) {
-                throw new Error('Video not found. It may be private, deleted, or the ID is invalid.');
-            }
-            const item = data.items[0];
-            const snippet = item.snippet || {};
-            const contentDetails = item.contentDetails || {};
-            return {
-                videoId: item.id,
-                title: snippet.title || 'Untitled',
-                description: snippet.description || '',
-                channelTitle: snippet.channelTitle || 'Unknown channel',
-                publishedAt: snippet.publishedAt || '',
-                thumbnailUrl: (snippet.thumbnails && snippet.thumbnails.medium && snippet.thumbnails.medium.url) ||
-                    (snippet.thumbnails && snippet.thumbnails.default && snippet.thumbnails.default.url) || '',
-                duration: parseDuration(contentDetails.duration),
-                url: `https://www.youtube.com/watch?v=${item.id}`,
-            };
-        }
-
-        function parseDuration(isoDuration) {
-            if (!isoDuration) return 'N/A';
-            const match = isoDuration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
-            if (!match) return isoDuration;
-            const hours = parseInt(match[1] || '0');
-            const minutes = parseInt(match[2] || '0');
-            const seconds = parseInt(match[3] || '0');
-            if (hours > 0) {
-                return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            }
-            return `${minutes}:${String(seconds).padStart(2, '0')}`;
-        }
-
-        function formatDate(isoDate) {
-            if (!isoDate) return 'Unknown date';
-            try {
-                const date = new Date(isoDate);
-                return date.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-            } catch {
-                return isoDate;
-            }
-        }
-
-        function renderSummarizerResult(videoData, summary) {
-            let html = '';
-            html += `<div class="summarizer-video-card">`;
-            if (videoData.thumbnailUrl) {
-                html +=
-                    `<a href="${escapeHTML(videoData.url)}" target="_blank" rel="noopener"><img src="${escapeHTML(videoData.thumbnailUrl)}" alt="Video thumbnail" loading="lazy"></a>`;
-            }
-            html += `<div class="summ-info">`;
-            html +=
-                `<h4><a href="${escapeHTML(videoData.url)}" target="_blank" rel="noopener">${escapeHTML(videoData.title)}</a></h4>`;
-            html += `<p>📺 ${escapeHTML(videoData.channelTitle)}</p>`;
-            html += `<div class="summ-meta">`;
-            html += `<span>📅 ${escapeHTML(formatDate(videoData.publishedAt))}</span>`;
-            html += `<span>⏱ ${escapeHTML(videoData.duration)}</span>`;
-            html += `</div>`;
-            html += `</div>`;
-            html += `</div>`;
-            html += `<div class="summary-markdown">`;
-            if (typeof marked !== 'undefined' && marked.parse) {
-                try {
-                    html += marked.parse(summary);
-                } catch {
-                    html += `<pre>${escapeHTML(summary)}</pre>`;
-                }
-            } else {
-                html += `<pre>${escapeHTML(summary)}</pre>`;
-            }
-            html += `</div>`;
-            summarizerResult.innerHTML = html;
-            summarizerCopyBtn.style.display = 'inline-flex';
-            summarizerCopyBtn.dataset.summary = summary;
-        }
-
-        // ===== SUMMARIZER EVENT HANDLERS =====
-
-        summarizeBtn?.addEventListener('click', async function() {
-            const url = summarizerUrlInput.value.trim();
-            if (!url) {
-                showToast('Please enter a YouTube URL.', 'error');
-                return;
-            }
-            this.disabled = true;
-            this.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Working...';
-            await summarizeYouTubeVideo(url);
-            this.disabled = false;
-            this.innerHTML = '<i class="fas fa-magic"></i> Summarize';
-        });
-
-        summarizeCurrentBtn?.addEventListener('click', async function() {
-            let currentUrl = null;
-            const vid = player ? player.getVideoData?.()?.video_id : selectedVideoId;
-            if (vid) currentUrl = `https://www.youtube.com/watch?v=${vid}`;
-            if (!currentUrl) {
-                showToast('No video is currently playing.', 'error');
-                return;
-            }
-            summarizerUrlInput.value = currentUrl;
-            this.disabled = true;
-            this.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Working...';
-            await summarizeYouTubeVideo(currentUrl);
-            this.disabled = false;
-            this.innerHTML = '<i class="fas fa-play-circle"></i> Current Video';
-        });
-
-        clearSummarizerBtn?.addEventListener('click', function() {
-            summarizerUrlInput.value = '';
-            summarizerStatus.textContent = 'Ready. Paste a URL or click "Current Video".';
-            summarizerResult.innerHTML =
-                '<div class="text-muted text-center" style="padding:30px 0;">Summary will appear here</div>';
-            summarizerCopyBtn.style.display = 'none';
-        });
-
-        summarizerCopyBtn?.addEventListener('click', function() {
-            const summary = this.dataset.summary || summarizerResult.innerText;
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(summary).then(() => {
-                    showToast('Summary copied!', 'success');
-                }).catch(() => {
-                    fallbackCopy(summary);
-                });
-            } else {
-                fallbackCopy(summary);
-            }
-        });
-
-        summarizerUrlInput?.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') summarizeBtn.click();
-        });
-
-        // ===== ENHANCED ANALYZE BUTTON (uses summarizer) =====
-
-        async function analyzeYouTubeVideo() {
-            const vid = player ? player.getVideoData?.()?.video_id : selectedVideoId;
-            if (!vid) {
-                showToast('No video is currently playing.', 'error');
-                return;
-            }
-            const url = `https://www.youtube.com/watch?v=${vid}`;
-            summarizerUrlInput.value = url;
-            // Switch to summarizer tab
-            document.getElementById('showSummarizerBtn').click();
-            // Run summarization
-            const btn = summarizeBtn;
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Working...';
-            await summarizeYouTubeVideo(url);
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-magic"></i> Summarize';
-        }
-
-        // =============================================================
         //  THEME TOGGLE
         // =============================================================
 
@@ -9052,9 +9304,7 @@
             const current = getThemePreference();
             const newTheme = current === 'dark' ? 'light' : 'dark';
             applyTheme(newTheme);
-            // Update the select in settings
             document.getElementById('themeSelect').value = newTheme;
-            // Update the icon
             updateThemeToggleIcon();
             showToast(`Switched to ${newTheme === 'dark' ? 'Dark' : 'Light'} mode`, 'info');
         }
@@ -9177,12 +9427,21 @@
             }
 
             initBackgroundPlayback();
-
-            // Update theme toggle icon after everything is loaded
             updateThemeToggleIcon();
 
-            console.log('⬡ HEX AI — Music Player + Summarizer + Offline MP3 with ID3 & Visualizer ready ♫');
-            console.log('Offline visualizer: transparent background + theme-aware colors');
+            // ---- Restore karaoke state ----
+            if (STATE.karaokeActive && lyricsContainer) {
+                lyricsContainer.classList.add('karaoke-active');
+                if (toggleKaraokeBtn) {
+                    toggleKaraokeBtn.classList.add('active');
+                    toggleKaraokeBtn.style.background = 'var(--md-primary)';
+                    toggleKaraokeBtn.style.color = 'var(--md-on-primary)';
+                    toggleKaraokeBtn.style.borderColor = 'var(--md-primary)';
+                }
+            }
+
+            console.log('⬡ HEX AI — Music Player + Karaoke + Summarizer + Offline MP3 ready ♫');
+            console.log('🎤 Karaoke mode, LRCLib search, and AI lyrics generation integrated.');
         }
 
         document.addEventListener('DOMContentLoaded', init);
