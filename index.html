@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title> ⬣ HEX AI – Music Player + Summarizer</title>
+    <title>⬡ HEX AI – Music Player + Summarizer</title>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8">
     </script>
@@ -38,6 +38,13 @@
     </script>
     <!-- Added for ID3 tag reading -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.7/jsmediatags.min.js">
+    </script>
+
+    <!-- Howler.js for audio visualizer -->
+    <script src="https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js">
+    </script>
+    <!-- Tone.js – Web Audio API framework -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js">
     </script>
 
     <style>
@@ -4309,6 +4316,7 @@
         .offline-visualizer-container {
             text-align: center;
             margin-bottom: 8px;
+            position: relative;
         }
         .offline-visualizer-container canvas {
             display: none;
@@ -4316,8 +4324,14 @@
             max-width: 512px;
             height: 100px;
             border-radius: var(--md-shape-md);
-            background: #1a1a1a;
+            background: transparent !important;
             margin: 0 auto;
+            box-shadow: 0 0 20px var(--ui-glow, rgba(103, 80, 164, 0.15));
+            border: 1px solid var(--ui-border, rgba(202, 196, 208, 0.3));
+            transition: box-shadow var(--md-transition), border-color var(--md-transition);
+        }
+        .offline-visualizer-container canvas.active {
+            display: block;
         }
 
         /* ===== RESPONSIVE ===== */
@@ -4452,8 +4466,8 @@
                 <span class="model-badge-dot offline" id="modelBadgeDot"></span>
                 <span class="model-badge-text" id="modelBadgeText">No API Key</span>
             </div>
-            <button class="md-icon-button" id="settingsBtn" onclick="toggleSettings()" title="Settings (Ctrl+,)">
-                <i class="fas fa-cog"></i>
+            <button class="md-icon-button" id="themeToggleBtn" onclick="toggleThemeMode()" title="Toggle Dark/Light Mode">
+                <i class="fas fa-moon"></i>
             </button>
         </div>
     </header>
@@ -4470,14 +4484,14 @@
                             <span class="msg-timestamp">just now</span>
                         </div>
                         <div class="msg-bubble">
-                            <strong>⬡ HEX AI</strong> — Material 3 Edition 🎶💃<br />
+                            <strong>⬡ HEX AI</strong> — Material 3 Edition ♫ 💃<br />
                             Chat, generate images/videos, play YouTube music.<br />
-                            <strong>Configure API keys</strong> in Settings (⚙️) to unlock all features.<br />
+                            <strong>Configure API keys</strong> in Settings (⚙) to unlock all features.<br />
                             <span style="font-size:0.8rem;color:var(--md-on-surface-variant);">
                                 💡 Attach images and Gemini will analyze them! <br>
                                 Each message now has <strong>Copy</strong>, <strong>Share</strong>, and
                                 <strong>Delete</strong> buttons.<br>
-                                🎥 In the Music player, click <strong>Analyze</strong> to get a summary, or use the <strong>Summarizer</strong> tab for any video.
+                                ♫ In the Music player, click <strong>Analyze</strong> to get a summary, or use the <strong>Summarizer</strong> tab for any video.
                             </span>
                         </div>
                         <div class="msg-actions">
@@ -4560,7 +4574,7 @@
             <div id="musicPanel">
                 <div class="music-tabs">
                     <button class="md-button filled" id="ytTab" onclick="switchMusicTab('yt')">YouTube Music</button>
-                    <button class="md-button" id="offlineTab" onclick="switchMusicTab('offline')">Offline MP3</button>
+                    <button class="md-button" id="offlineTab" onclick="switchMusicTab('offline')">Offline Music</button>
                 </div>
 
                 <!-- YOUTUBE SECTION -->
@@ -4799,7 +4813,7 @@
 
                         <div class="offline-playlist">
                             <div class="offline-playlist-title">
-                                <i class="fa-regular fa-list"></i> Offline Playlist
+                                <i class="fas fa-list"></i> Offline Playlist
                             </div>
                             <div id="offlinePlaylistContainer">
                                 <div class="offline-empty-playlist">
@@ -5698,10 +5712,10 @@
                 const sel = document.getElementById('modelSelect');
                 sel.innerHTML = list.map(id => `<option value="${id}">${id}</option>`).join('');
                 if (list.length) sel.value = list[0];
-                showToast(`✅ ${list.length} models loaded!`);
+                showToast(`✔ ${list.length} models loaded!`);
                 saveState();
             } catch (err) {
-                showToast('❌ ' + err.message, 'error');
+                showToast('✘' + err.message, 'error');
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-sync"></i>';
@@ -5759,7 +5773,7 @@
             saveState();
             updateModelBadge();
             toggleSettings();
-            showToast('Settings saved!');
+            showToast('✔ Settings saved!');
         }
 
         function updateModelBadge() {
@@ -6059,14 +6073,14 @@
                     Boolean), mimeType);
                 } else if (hasImages && !hasGeminiKey) {
                     aiResponse =
-                        '📷 Image received! To analyze images, please configure your **Gemini API Key** in Settings (⚙️).';
+                        'Image received! To analyze images, please configure your **Gemini API Key** in Settings (⚙).';
                 } else if (STATE.settings.openRouterKey && STATE.settings.openRouterKey.length > 8) {
                     aiResponse = await callOpenRouter(combinedPrompt || text);
                 } else if (hasGeminiKey) {
                     aiResponse = await callGeminiText(combinedPrompt || text);
                 } else {
                     aiResponse =
-                        'HEX AI is ready. Configure **Gemini** or **OpenRouter** API keys in Settings (⚙️) to get real AI responses.';
+                        'HEX AI is ready. Configure **Gemini** or **OpenRouter** API keys in Settings (⚙) to get real AI responses.';
                 }
                 const typingEl = document.getElementById('typingIndicator');
                 if (typingEl) typingEl.remove();
@@ -7691,7 +7705,7 @@
         };
 
         // =============================================================
-        //  BACKGROUND PLAYBACK – Silent Audio Context + MediaSession
+        //  BACKGROUND PLAYBACK – Enhanced (Userscript-style)
         // =============================================================
 
         function initBackgroundPlayback() {
@@ -7700,56 +7714,123 @@
                 STATE.bgPlaybackEnabled = saved === 'true';
                 if (bgPlaybackToggle) bgPlaybackToggle.checked = STATE.bgPlaybackEnabled;
             }
+
+            // The actual enhancement is applied when toggle changes
             if (bgPlaybackToggle) {
                 bgPlaybackToggle.addEventListener('change', function() {
                     STATE.bgPlaybackEnabled = this.checked;
                     localStorage.setItem('bgPlaybackEnabled', String(STATE.bgPlaybackEnabled));
                     if (STATE.bgPlaybackEnabled) {
-                        ensureBgAudioContext();
-                        showToast('Background playback enabled – audio will keep playing when tab is hidden.', 'info');
+                        enableBackgroundPlaybackEnhancement();
+                        showToast('Background playback enhanced – audio will keep playing when tab is hidden.', 'info');
                     } else {
-                        stopBgAudioContext();
+                        disableBackgroundPlaybackEnhancement();
                         showToast('Background playback disabled.', 'info');
                     }
                 });
             }
+
+            // If already enabled at startup, apply enhancement
             if (STATE.bgPlaybackEnabled) {
-                ensureBgAudioContext();
-            }
-            if (navigator.mediaSession) {
-                navigator.mediaSession.setActionHandler('play', () => {
-                    if (player && typeof player.playVideo === 'function') player.playVideo();
-                });
-                navigator.mediaSession.setActionHandler('pause', () => {
-                    if (player && typeof player.pauseVideo === 'function') player.pauseVideo();
-                });
-                navigator.mediaSession.setActionHandler('previoustrack', () => {
-                    playPreviousSong();
-                });
-                navigator.mediaSession.setActionHandler('nexttrack', () => {
-                    playNextSong();
-                });
-                const updateMetadata = () => {
-                    if (navigator.mediaSession) {
-                        const title = document.querySelector("#nowPlaying .song-title")?.textContent || 'Unknown';
-                        const artist = document.querySelector("#nowPlaying .author-name")?.textContent || '';
-                        const art = document.getElementById('albumArt').src;
-                        navigator.mediaSession.metadata = new MediaMetadata({
-                            title: title,
-                            artist: artist,
-                            album: 'HEX AI Music',
-                            artwork: [{ src: art, sizes: '512x512', type: 'image/jpeg' }]
-                        });
-                    }
-                };
-                const titleEl = document.querySelector("#nowPlaying .song-title");
-                const observer = new MutationObserver(updateMetadata);
-                if (titleEl) observer.observe(titleEl, { childList: true, characterData: true, subtree: true });
-                const artEl = document.getElementById('albumArt');
-                if (artEl) observer.observe(artEl, { attributes: true, attributeFilter: ['src'] });
+                enableBackgroundPlaybackEnhancement();
             }
         }
 
+        // ---- Enhancement state ----
+        let bgEnhancementActive = false;
+        let bgEnhancementInterval = null;
+        let origDocumentHidden = null;
+        let origVisibilityState = null;
+        let origAddEventListener = null;
+
+        function enableBackgroundPlaybackEnhancement() {
+            if (bgEnhancementActive) return;
+            bgEnhancementActive = true;
+
+            // 1. Override document.hidden and visibilityState
+            origDocumentHidden = Object.getOwnPropertyDescriptor(Document.prototype, 'hidden');
+            origVisibilityState = Object.getOwnPropertyDescriptor(Document.prototype, 'visibilityState');
+            try {
+                Object.defineProperty(document, 'hidden', {
+                    get: () => false,
+                    configurable: true
+                });
+                Object.defineProperty(document, 'visibilityState', {
+                    get: () => 'visible',
+                    configurable: true
+                });
+                // Also override document.hasFocus
+                document.hasFocus = () => true;
+            } catch (e) {
+                console.warn('Could not override visibility properties', e);
+            }
+
+            // 2. Intercept visibilitychange event to prevent propagation
+            origAddEventListener = document.addEventListener;
+            document.addEventListener = function(type, listener, options) {
+                if (type === 'visibilitychange') {
+                    // Replace with a no-op or stop propagation
+                    const wrapped = function(e) {
+                        e.stopImmediatePropagation();
+                        e.preventDefault();
+                    };
+                    return origAddEventListener.call(this, type, wrapped, options);
+                }
+                return origAddEventListener.call(this, type, listener, options);
+            }.bind(document);
+
+            // 3. Set up a periodic check to resume playback if paused
+            if (bgEnhancementInterval) clearInterval(bgEnhancementInterval);
+            bgEnhancementInterval = setInterval(() => {
+                if (!player || typeof player.getPlayerState !== 'function') return;
+                const state = player.getPlayerState();
+                // If paused (state 2) and we want to keep playing, resume
+                if (state === 2) {
+                    // Check if it's an intentional pause? We'll just resume if background playback is on.
+                    // But avoid resuming if user explicitly paused (we can't know). 
+                    // We'll only resume if the video is not ended and not at the beginning.
+                    if (player.getDuration() > 0 && player.getCurrentTime() < player.getDuration() - 1) {
+                        console.log('[BG Playback] Resuming video due to background enhancement');
+                        player.playVideo();
+                    }
+                }
+            }, 3000);
+
+            // Ensure silent audio context is also active
+            ensureBgAudioContext();
+
+            console.log('[BG Playback] Enhancement enabled');
+        }
+
+        function disableBackgroundPlaybackEnhancement() {
+            if (!bgEnhancementActive) return;
+
+            // Restore original properties
+            try {
+                if (origDocumentHidden) {
+                    Object.defineProperty(document, 'hidden', origDocumentHidden);
+                }
+                if (origVisibilityState) {
+                    Object.defineProperty(document, 'visibilityState', origVisibilityState);
+                }
+                document.hasFocus = () => true; // we can't easily restore original, but that's fine
+                if (origAddEventListener) {
+                    document.addEventListener = origAddEventListener;
+                }
+            } catch (e) {
+                console.warn('Could not restore visibility properties', e);
+            }
+
+            if (bgEnhancementInterval) {
+                clearInterval(bgEnhancementInterval);
+                bgEnhancementInterval = null;
+            }
+
+            bgEnhancementActive = false;
+            console.log('[BG Playback] Enhancement disabled');
+        }
+
+        // ---- Silent audio context (existing) ----
         let bgAudioCtx = null;
         let bgSilentBuffer = null;
         let bgSilentSource = null;
@@ -7898,7 +7979,10 @@
             });
         }
 
-        // ---- Visualizer functions ----
+        // =============================================================
+        //  THEME-AWARE VISUALIZER (Transparent background + theme colors)
+        // =============================================================
+
         function initOfflineVisualizer() {
             if (!offlineAudioContext) {
                 try {
@@ -7919,6 +8003,19 @@
             return true;
         }
 
+        function getThemeColors() {
+            const root = document.documentElement;
+            const style = getComputedStyle(root);
+            // Get theme colors from CSS variables
+            const accent = style.getPropertyValue('--ui-accent').trim() || style.getPropertyValue('--md-primary').trim() ||
+                '#6750a4';
+            const accent2 = style.getPropertyValue('--ui-accent-2').trim() || style.getPropertyValue('--md-secondary')
+                .trim() || '#625b71';
+            const glow = style.getPropertyValue('--ui-glow').trim() || 'rgba(103, 80, 164, 0.35)';
+            const isDark = document.body.classList.contains('dark');
+            return { accent, accent2, glow, isDark };
+        }
+
         function startOfflineVisualizer() {
             const canvas = offlineVisualizerCanvas;
             if (!canvas) return;
@@ -7929,23 +8026,97 @@
             const ctx = canvas.getContext('2d');
             const bufferLength = offlineAnalyser.frequencyBinCount;
             const dataArray = new Uint8Array(bufferLength);
+            let animationId = null;
 
             function draw() {
-                offlineVisualizerRaf = requestAnimationFrame(draw);
+                animationId = requestAnimationFrame(draw);
                 offlineAnalyser.getByteFrequencyData(dataArray);
+                // Clear with transparent background
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                const barWidth = (canvas.width / bufferLength) * 2.5;
-                let barHeight;
+
+                const theme = getThemeColors();
+                const barCount = Math.min(bufferLength, 64);
+                const barWidth = (canvas.width / barCount) * 0.7;
+                const gap = (canvas.width / barCount) * 0.3;
                 let x = 0;
-                for (let i = 0; i < bufferLength; i++) {
-                    barHeight = dataArray[i] / 2;
-                    ctx.fillStyle = `hsl(${(i / bufferLength) * 360}, 100%, 50%)`;
-                    ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-                    x += barWidth + 1;
+
+                // Draw subtle glow under bars
+                const gradient = ctx.createLinearGradient(0, canvas.height, 0, 0);
+                // Parse the accent color to RGB for gradient
+                const accentRgb = parseCssColor(theme.accent);
+                if (accentRgb) {
+                    gradient.addColorStop(0, `rgba(${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}, 0.05)`);
+                    gradient.addColorStop(0.5, `rgba(${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}, 0.15)`);
+                    gradient.addColorStop(1, `rgba(${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}, 0.3)`);
+                } else {
+                    gradient.addColorStop(0, 'rgba(103, 80, 164, 0.05)');
+                    gradient.addColorStop(0.5, 'rgba(103, 80, 164, 0.15)');
+                    gradient.addColorStop(1, 'rgba(103, 80, 164, 0.3)');
                 }
+
+                for (let i = 0; i < barCount; i++) {
+                    const idx = Math.floor((i / barCount) * bufferLength);
+                    const value = dataArray[idx] || 0;
+                    const barHeight = (value / 255) * canvas.height * 0.85;
+
+                    // Use theme accent color with varying opacity based on height
+                    const opacity = 0.3 + (value / 255) * 0.7;
+                    const accentColor = parseCssColor(theme.accent);
+                    if (accentColor) {
+                        ctx.fillStyle = `rgba(${accentColor.r}, ${accentColor.g}, ${accentColor.b}, ${opacity})`;
+                    } else {
+                        ctx.fillStyle = `rgba(103, 80, 164, ${opacity})`;
+                    }
+
+                    // Rounded bars with slight shadow
+                    ctx.shadowColor = theme.glow;
+                    ctx.shadowBlur = 8;
+                    ctx.beginPath();
+                    const radius = 3;
+                    const xPos = x + gap / 2;
+                    const yPos = canvas.height - barHeight;
+                    const w = barWidth;
+                    const h = barHeight;
+                    ctx.moveTo(xPos + radius, yPos);
+                    ctx.lineTo(xPos + w - radius, yPos);
+                    ctx.quadraticCurveTo(xPos + w, yPos, xPos + w, yPos + radius);
+                    ctx.lineTo(xPos + w, yPos + h);
+                    ctx.lineTo(xPos, yPos + h);
+                    ctx.lineTo(xPos, yPos + radius);
+                    ctx.quadraticCurveTo(xPos, yPos, xPos + radius, yPos);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+
+                    // Add a subtle highlight on top of taller bars
+                    if (value > 128) {
+                        const highlightOpacity = (value - 128) / 127 * 0.3;
+                        if (accentColor) {
+                            ctx.fillStyle = `rgba(${accentColor.r}, ${accentColor.g}, ${accentColor.b}, ${highlightOpacity})`;
+                        } else {
+                            ctx.fillStyle = `rgba(103, 80, 164, ${highlightOpacity})`;
+                        }
+                        ctx.fillRect(xPos, yPos, w, 2);
+                    }
+
+                    x += barWidth + gap;
+                }
+
+                // Draw a subtle baseline
+                const baseColor = parseCssColor(theme.accent2);
+                if (baseColor) {
+                    ctx.fillStyle = `rgba(${baseColor.r}, ${baseColor.g}, ${baseColor.b}, 0.15)`;
+                } else {
+                    ctx.fillStyle = 'rgba(98, 91, 113, 0.15)';
+                }
+                ctx.fillRect(0, canvas.height - 1, canvas.width, 1);
             }
+
             draw();
+            offlineVisualizerRaf = animationId;
             offlineVisualizerActive = true;
+            canvas.classList.add('active');
+            showToast('Visualizer ON – theme-aware', 'info');
         }
 
         function stopOfflineVisualizer() {
@@ -7956,35 +8127,73 @@
             if (canvas) {
                 const ctx = canvas.getContext('2d');
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvas.classList.remove('active');
             }
+            showToast('Visualizer OFF', 'info');
         }
 
         function toggleOfflineVisualizer() {
             const canvas = offlineVisualizerCanvas;
             if (!canvas) return;
-            if (canvas.style.display === 'none') {
+            if (!canvas.classList.contains('active')) {
                 canvas.style.display = 'block';
                 if (!offlineAudioContext && !initOfflineVisualizer()) {
                     canvas.style.display = 'none';
                     showToast('Visualizer not available', 'error');
                     return;
                 }
-                // Ensure analyser is connected even if audio was paused
                 if (offlineAnalyser) {
                     startOfflineVisualizer();
                 } else {
                     initOfflineVisualizer();
                     startOfflineVisualizer();
                 }
-                showToast('Visualizer ON', 'info');
             } else {
                 canvas.style.display = 'none';
                 stopOfflineVisualizer();
-                showToast('Visualizer OFF', 'info');
             }
         }
 
-        // ---- Base offline player ----
+        // ---- Helper to parse CSS color strings ----
+        function parseCssColor(colorStr) {
+            if (!colorStr) return null;
+            // Try rgb(r g b) or rgb(r,g,b) format
+            let match = colorStr.match(/rgb\s*\(\s*(\d+)\s*[,\s]\s*(\d+)\s*[,\s]\s*(\d+)\s*\)/);
+            if (match) return { r: parseInt(match[1]), g: parseInt(match[2]), b: parseInt(match[3]) };
+            // Try hex format
+            match = colorStr.match(/^#([a-fA-F0-9]{6})$/);
+            if (match) {
+                const hex = match[1];
+                return { r: parseInt(hex.slice(0, 2), 16), g: parseInt(hex.slice(2, 4), 16), b: parseInt(hex.slice(4, 6),
+                        16) };
+            }
+            // Try hex shorthand
+            match = colorStr.match(/^#([a-fA-F0-9]{3})$/);
+            if (match) {
+                const hex = match[1];
+                return { r: parseInt(hex[0] + hex[0], 16), g: parseInt(hex[1] + hex[1], 16), b: parseInt(hex[2] + hex[2],
+                        16) };
+            }
+            return null;
+        }
+
+        // ---- Listen for theme changes ----
+        const themeObserver = new MutationObserver(() => {
+            // If visualizer is active, redraw with new colors
+            if (offlineVisualizerActive && offlineVisualizerCanvas.classList.contains('active')) {
+                // Restart visualizer to apply new colors
+                stopOfflineVisualizer();
+                startOfflineVisualizer();
+            }
+        });
+        themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+        // Also observe the root for data-theme changes
+        themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-mode'] });
+
+        // =============================================================
+        //  BASE OFFLINE PLAYER
+        // =============================================================
+
         if (offlineAudio) {
             offlineAudio.volume = 0.5;
             offlineAudio.addEventListener('loadedmetadata', offlineUpdateSongInfo);
@@ -8093,7 +8302,7 @@
                 offlineAudio.play();
             }
             // If visualizer is active, ensure it restarts
-            if (offlineVisualizerActive && offlineVisualizerCanvas.style.display !== 'none') {
+            if (offlineVisualizerActive && offlineVisualizerCanvas.classList.contains('active')) {
                 stopOfflineVisualizer();
                 startOfflineVisualizer();
             }
@@ -8105,7 +8314,7 @@
                 const playingStatus = offlineIsPlaying ? '▷' : '𓊕';
                 document.title = `${playingStatus} ${song.name} - Music Player`;
             } else {
-                document.title = '🎵 Music Player';
+                document.title = '♫ Music Player';
             }
         }
 
@@ -8125,7 +8334,7 @@
                 offlineAudio.play();
                 offlinePlayPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
                 offlineIsPlaying = true;
-                if (offlineVisualizerActive && offlineVisualizerCanvas.style.display !== 'none') {
+                if (offlineVisualizerActive && offlineVisualizerCanvas.classList.contains('active')) {
                     startOfflineVisualizer();
                 }
             }
@@ -8368,6 +8577,7 @@
             offlineTotalTime.textContent = '0:00';
             offlineAlbumArt.hidden = true;
             if (offlineVisualizerActive) stopOfflineVisualizer();
+            offlineVisualizerCanvas.classList.remove('active');
             offlineVisualizerCanvas.style.display = 'none';
             offlineRenderPlaylist();
             saveOfflinePlaylist();
@@ -8599,12 +8809,12 @@
                 userPrompt +=
                     `---\nPlease provide a comprehensive summary of this YouTube video based on the information above.`;
                 const summary = await callGeminiWithSystem(model, geminiKey, systemInstruction, userPrompt);
-                summarizerStatus.textContent = ' Summary ready!';
+                summarizerStatus.textContent = 'Summary ready!';
                 renderSummarizerResult(videoData, summary);
                 showToast('Summary generated!', 'success');
                 return true;
             } catch (err) {
-                summarizerStatus.textContent = 'Error: ' + err.message;
+                summarizerStatus.textContent = '✘ Error: ' + err.message;
                 summarizerResult.innerHTML =
                     `<div class="error-text" style="padding:16px 20px;border-radius:8px;color:var(--md-error);">⚠️ <strong>Error:</strong> ${escapeHTML(err.message)}</div>`;
                 showToast(err.message, 'error');
@@ -8734,9 +8944,9 @@
             html += `<div class="summ-info">`;
             html +=
                 `<h4><a href="${escapeHTML(videoData.url)}" target="_blank" rel="noopener">${escapeHTML(videoData.title)}</a></h4>`;
-            html += `<p> ${escapeHTML(videoData.channelTitle)}</p>`;
+            html += `<p>📺 ${escapeHTML(videoData.channelTitle)}</p>`;
             html += `<div class="summ-meta">`;
-            html += `<span> ${escapeHTML(formatDate(videoData.publishedAt))}</span>`;
+            html += `<span>📅 ${escapeHTML(formatDate(videoData.publishedAt))}</span>`;
             html += `<span>⏱ ${escapeHTML(videoData.duration)}</span>`;
             html += `</div>`;
             html += `</div>`;
@@ -8832,6 +9042,32 @@
             await summarizeYouTubeVideo(url);
             btn.disabled = false;
             btn.innerHTML = '<i class="fas fa-magic"></i> Summarize';
+        }
+
+        // =============================================================
+        //  THEME TOGGLE
+        // =============================================================
+
+        function toggleThemeMode() {
+            const current = getThemePreference();
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+            // Update the select in settings
+            document.getElementById('themeSelect').value = newTheme;
+            // Update the icon
+            updateThemeToggleIcon();
+            showToast(`Switched to ${newTheme === 'dark' ? 'Dark' : 'Light'} mode`, 'info');
+        }
+
+        function updateThemeToggleIcon() {
+            const btn = document.getElementById('themeToggleBtn');
+            if (!btn) return;
+            const isDark = document.body.classList.contains('dark');
+            const icon = btn.querySelector('i');
+            if (icon) {
+                icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+            }
+            btn.title = isDark ? 'Current: Dark Mode' : 'Current: Light Mode';
         }
 
         // =============================================================
@@ -8942,7 +9178,11 @@
 
             initBackgroundPlayback();
 
-            console.log('⬡ HEX AI — Music Player + Summarizer + Offline MP3 with ID3 & Visualizer ready ⬡');
+            // Update theme toggle icon after everything is loaded
+            updateThemeToggleIcon();
+
+            console.log('⬡ HEX AI — Music Player + Summarizer + Offline MP3 with ID3 & Visualizer ready ♫');
+            console.log('Offline visualizer: transparent background + theme-aware colors');
         }
 
         document.addEventListener('DOMContentLoaded', init);
@@ -8955,6 +9195,7 @@
             if (syncInterval) clearInterval(syncInterval);
             if (SB.checkInterval) clearInterval(SB.checkInterval);
             stopBgAudioContext();
+            disableBackgroundPlaybackEnhancement();
         });
 
         window.offlineTogglePlay = offlineTogglePlay;
@@ -8982,6 +9223,8 @@
         window.sendMessage = sendMessage;
         window.renderFilePreview = renderFilePreview;
         window.analyzeYouTubeVideo = analyzeYouTubeVideo;
+        window.toggleThemeMode = toggleThemeMode;
+        window.updateThemeToggleIcon = updateThemeToggleIcon;
     </script>
 
 </body>
