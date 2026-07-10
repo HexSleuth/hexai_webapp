@@ -4747,7 +4747,10 @@
                                     <div class="playlist-import">
                                         <input type="text" id="playlistImportInput" placeholder="YouTube Music playlist URL or ID..." />
                                         <button id="importPlaylistBtn"><i class="fas fa-import"></i> Import</button>
+                                        <button id="importFileBtn" class="md-button tonal" style="padding:6px 12px; margin-left:4px;"><i class="fas fa-file-upload"></i> Import File</button>
+                                        <button id="exportPlaylistBtn" class="md-button tonal" style="padding:6px 12px; margin-left:4px;"><i class="fas fa-file-download"></i> Export</button>
                                     </div>
+                                    <input type="file" id="importFileInput" accept=".txt,.json" style="display:none;" />
                                     <div id="songListContainer">
                                         <ul id="songList"></ul>
                                     </div>
@@ -6425,6 +6428,9 @@
         const importPlaylistBtn = document.getElementById('importPlaylistBtn');
         const sponsorToggle = document.getElementById('sponsorBlockToggle');
         const bgPlaybackToggle = document.getElementById('bgPlaybackToggle');
+        const importFileBtn = document.getElementById('importFileBtn');
+        const exportPlaylistBtn = document.getElementById('exportPlaylistBtn');
+        const importFileInput = document.getElementById('importFileInput');
 
         // ===== NEW KARAOKE / LRCLIB / AI BUTTONS =====
         const toggleKaraokeBtn = document.getElementById('toggleKaraokeBtn');
@@ -6441,6 +6447,143 @@
         const summarizerResult = document.getElementById('summarizerResult');
         const summarizerCopyBtn = document.getElementById('summarizerCopyBtn');
         const clearSummarizerBtn = document.getElementById('clearSummarizerBtn');
+
+        // =============================================================
+        //  PLAYLIST IMPORT / EXPORT (File-based)
+        // =============================================================
+
+        function exportPlaylist() {
+            try {
+                const exportData = {
+                    playlist: STATE.playlist,
+                    albumArtDisplayMode: albumArtDisplayMode,
+                    darkMode: document.body.classList.contains('dark'),
+                    karaokeActive: STATE.karaokeActive,
+                    translationEnabled: translationEnabled,
+                    autoSyncEnabled: autoSyncEnabled,
+                    exportDate: new Date().toISOString(),
+                };
+                const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `hexai-playlist-${new Date().toISOString().slice(0, 10)}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+                showToast('✅ Playlist exported successfully!', 'success');
+            } catch (error) {
+                console.error('Export error:', error);
+                showToast('❌ Error exporting playlist.', 'error');
+            }
+        }
+
+        function importPlaylist(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    let importedPlaylist = [];
+                    let importDarkMode = false;
+                    let importKaraoke = STATE.karaokeActive;
+                    let importTranslation = translationEnabled;
+                    let importAutoSync = autoSyncEnabled;
+                    let importAlbumArtMode = albumArtDisplayMode;
+
+                    if (Array.isArray(importedData)) {
+                        importedPlaylist = importedData;
+                    } else if (importedData.playlist && Array.isArray(importedData.playlist)) {
+                        importedPlaylist = importedData.playlist;
+                        importDarkMode = importedData.darkMode === true;
+                        importKaraoke = importedData.karaokeActive !== undefined ? importedData.karaokeActive : STATE.karaokeActive;
+                        importTranslation = importedData.translationEnabled !== undefined ? importedData.translationEnabled : translationEnabled;
+                        importAutoSync = importedData.autoSyncEnabled !== undefined ? importedData.autoSyncEnabled : autoSyncEnabled;
+                        importAlbumArtMode = importedData.albumArtDisplayMode || albumArtDisplayMode;
+                    } else {
+                        throw new Error('Invalid playlist format');
+                    }
+
+                    if (!Array.isArray(importedPlaylist) || importedPlaylist.length === 0) {
+                        throw new Error('Playlist is empty or invalid.');
+                    }
+
+                    // Validate structure
+                    for (const item of importedPlaylist) {
+                        if (!item.videoId || !item.songName) {
+                            throw new Error('Invalid song data found.');
+                        }
+                    }
+
+                    if (confirm(`Replace current playlist with ${importedPlaylist.length} songs?`)) {
+                        STATE.playlist = importedPlaylist;
+                        savePlaylist();
+                        renderPlaylist(STATE.playlist);
+
+                        // Apply imported settings
+                        if (importDarkMode !== undefined) {
+                            const theme = importDarkMode ? 'dark' : 'light';
+                            applyTheme(theme);
+                            document.getElementById('themeSelect').value = theme;
+                            updateThemeToggleIcon();
+                        }
+                        if (importAlbumArtMode) {
+                            albumArtDisplayMode = importAlbumArtMode;
+                            localStorage.setItem('albumArtDisplayMode', albumArtDisplayMode);
+                            applyAlbumArtDisplayMode();
+                        }
+
+                        // Restore karaoke / translation / sync state
+                        STATE.karaokeActive = importKaraoke;
+                        translationEnabled = importTranslation;
+                        autoSyncEnabled = importAutoSync;
+
+                        if (toggleKaraokeBtn) {
+                            if (importKaraoke) {
+                                lyricsContainer.classList.add('karaoke-active');
+                                toggleKaraokeBtn.classList.add('active');
+                                toggleKaraokeBtn.style.background = 'var(--md-primary)';
+                                toggleKaraokeBtn.style.color = 'var(--md-on-primary)';
+                                toggleKaraokeBtn.style.borderColor = 'var(--md-primary)';
+                            } else {
+                                lyricsContainer.classList.remove('karaoke-active');
+                                toggleKaraokeBtn.classList.remove('active');
+                                toggleKaraokeBtn.style.background = 'transparent';
+                                toggleKaraokeBtn.style.color = 'var(--md-on-surface)';
+                                toggleKaraokeBtn.style.borderColor = 'var(--md-outline-variant)';
+                            }
+                        }
+                        if (toggleTranslationBtn) {
+                            if (importTranslation) {
+                                toggleTranslationBtn.innerHTML = '<i class="fas fa-check"></i> ON';
+                                toggleTranslationBtn.style.background = 'var(--md-primary)';
+                                toggleTranslationBtn.style.color = 'var(--md-on-primary)';
+                            } else {
+                                toggleTranslationBtn.innerHTML = '<i class="fas fa-language"></i>';
+                                toggleTranslationBtn.style.background = 'transparent';
+                                toggleTranslationBtn.style.color = 'var(--md-on-surface-variant)';
+                            }
+                        }
+                        if (toggleSyncBtn) {
+                            toggleSyncBtn.textContent = importAutoSync ? 'Auto-Sync: ON' : 'Auto-Sync: OFF';
+                        }
+
+                        if (STATE.playlist.length > 0) {
+                            const first = STATE.playlist[0];
+                            loadNewVideo(first.videoId, first.albumArt, first);
+                        }
+
+                        showToast(`✅ Imported ${importedPlaylist.length} songs successfully!`, 'success');
+                    }
+                } catch (error) {
+                    console.error('Import error:', error);
+                    showToast('❌ Import failed: ' + error.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
 
         // ===== TAB SWITCHING =====
         showSongListBtn?.addEventListener('click', function() {
@@ -7323,6 +7466,53 @@
                         authorName: 'BIDIPTA SHARMA',
                         albumArt: 'https://i.ytimg.com/vi/Z_XS05HcQmQ/hqdefault.jpg'
                     },
+
+{
+      "videoId": "fV5Mpc7fzb4",
+      "songName": "Saat Samundar Paar",
+      "authorName": "Sadhana Sargam",
+      "albumArt": "https://i.ytimg.com/vi/Z_XS05HcQmQ/hqdefault.jpg"
+    },
+    {
+      "videoId": "0XTJdt90Yf0",
+      "songName": "Top Hits of Arijit & Shreya",
+      "authorName": "Saregama Music",
+      "albumArt": "https://i.ytimg.com/vi/Z_XS05HcQmQ/hqdefault.jpg"
+    },
+    {
+      "videoId": "hQx8j9jUHa4",
+      "songName": "Kabhi Aar Kabhi Paar (Remix) | Baby Doll Remix | Sona Mohapatra",
+      "authorName": "Saregama Music",
+      "albumArt": "https://i.ytimg.com/vi/Z_XS05HcQmQ/hqdefault.jpg"
+    },
+    {
+      "videoId": "yBahBBAHs04",
+      "songName": "Tu Tu Hai Wahi (Remix) DJ Aqeel, Vaishali Samant | Yeh Wada Raha | Bollywood Remix Song",
+      "authorName": "UMusicIndiaVEVO",
+      "albumArt": "https://i.ytimg.com/vi/Z_XS05HcQmQ/hqdefault.jpg"
+    },
+    {
+      "videoId": "v-0yxbNbVHc",
+      "songName": "Dil Mein Baji Guitar",
+      "authorName": "Top Songs - India",
+      "albumArt": "https://i.ytimg.com/vi/Z_XS05HcQmQ/hqdefault.jpg"
+    },
+    {
+      "videoId": "Gr8G_ldltDE",
+      "songName": "Lapalap Lollypop Lagelu | Superhit Song",
+      "authorName": "Wave Music",
+      "albumArt": "https://i.ytimg.com/vi/Z_XS05HcQmQ/hqdefault.jpg"
+    },
+    {
+      "videoId": "xI7m2wtOLL4",
+      "songName": "Maarela Kachaakach (Bhojpuri Stage dance video) Ka Ho Na Hoi - Bhojpuri Kachvaeen",
+      "authorName": "T-Series Hamaar Bhojpuri",
+      "albumArt": "https://i.ytimg.com/vi/Z_XS05HcQmQ/hqdefault.jpg"
+    },
+
+
+
+
                 ];
             }
             renderPlaylist(STATE.playlist);
@@ -9446,8 +9636,25 @@
                 }
             }
 
+            // ---- Attach Export / Import listeners ----
+            if (exportPlaylistBtn) {
+                exportPlaylistBtn.addEventListener('click', exportPlaylist);
+            }
+            if (importFileBtn) {
+                importFileBtn.addEventListener('click', () => importFileInput.click());
+            }
+            if (importFileInput) {
+                importFileInput.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        importPlaylist(e.target.files[0]);
+                    }
+                    e.target.value = ''; // Reset for re-selection
+                });
+            }
+
             console.log('⬡ HEX AI — Music Player + Karaoke + Summarizer + Offline MP3 ready ♫');
             console.log('🎤 Karaoke mode, LRCLib search, and AI lyrics generation integrated.');
+            console.log('📤 Export / Import Playlist ready.');
         }
 
         document.addEventListener('DOMContentLoaded', init);
@@ -9490,6 +9697,8 @@
         window.analyzeYouTubeVideo = analyzeYouTubeVideo;
         window.toggleThemeMode = toggleThemeMode;
         window.updateThemeToggleIcon = updateThemeToggleIcon;
+        window.exportPlaylist = exportPlaylist;
+        window.importPlaylist = importPlaylist;
     </script>
 <script src="sb.js"></script>
 <script src="keep-awake.js"></script>
