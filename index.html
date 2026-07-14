@@ -10631,564 +10631,468 @@
 
         })();
     </script>
-    <script>
-        (function() {
-            'use strict';
+<!-- Replace the entire script block at the bottom (the one starting with (function(){'use strict';...) with this: -->
+<script>
+(function() {
+    'use strict';
 
-            const DEFAULTS = {
-                categories: ["sponsor", "selfpromo", "interaction", "intro", "outro", "preview",
-                    "music_offtopic", "exclusive_access", "poi_highlight"
-                ],
-                actionTypes: ["skip", "mute", "full", "poi"],
-                skipThreshold: [0.2, 1],
-                serverEndpoint: "https://sponsor.ajay.app",
-                skipTracking: true,
-                highlightKey: "Enter",
-                cacheTTL: 86400000,
-                maxCacheEntries: 500,
-            };
+    // --- CONFIGURABLE SETTINGS (stored in localStorage) ---
+    function getConfig(key, fallback) {
+        try {
+            const val = localStorage.getItem('sb_' + key);
+            return val ? JSON.parse(val) : fallback;
+        } catch { return fallback; }
+    }
+    function setConfig(key, value) {
+        localStorage.setItem('sb_' + key, JSON.stringify(value));
+    }
 
-            const CATEGORY_COLORS = {
-                sponsor: '#00d400',
-                selfpromo: '#ffff00',
-                interaction: '#cc00ff',
-                intro: '#00ffff',
-                outro: '#0202ed',
-                preview: '#008fd6',
-                music_offtopic: '#ff9900',
-                exclusive_access: '#008a5c',
-                poi_highlight: '#ff1684',
-            };
+    const CONFIG = {
+        categories: getConfig('categories', ["sponsor", "selfpromo", "interaction", "intro", "outro", "preview", "music_offtopic", "exclusive_access", "poi_highlight"]),
+        actionTypes: getConfig('actionTypes', ["skip", "mute", "full", "poi"]),
+        skipThreshold: getConfig('skipThreshold', [0.2, 1]),
+        serverEndpoint: getConfig('serverEndpoint', "https://sponsor.ajay.app"),
+        skipTracking: getConfig('skipTracking', true),
+        highlightKey: getConfig('highlightKey', "Enter"),
+    };
 
-            const Storage = {
-                _prefix: 'sb_',
-                get(key) {
-                    try {
-                        const raw = localStorage.getItem(this._prefix + key);
-                        return raw ? JSON.parse(raw) : null;
-                    } catch (
-                        e) {
-                        return null;
-                    }
-                },
-                set(key, value) {
-                    try {
-                        localStorage.setItem(this._prefix + key, JSON.stringify(value));
-                        return true;
-                    } catch (e) {
-                        this.pruneCache();
-                        try {
-                            localStorage.setItem(this._prefix + key, JSON.stringify(value));
-                            return true;
-                        } catch (
-                            e2) {
-                            return false;
-                        }
-                    }
-                },
-                remove(key) {
-                    try {
-                        localStorage.removeItem(this._prefix + key);
-                    } catch (e) {}
-                },
-                getSegments(videoID) {
-                    const entry = this.get('cache_' + videoID);
-                    if (!entry) return null;
-                    if (Date.now() - entry.timestamp > DEFAULTS.cacheTTL) {
-                        this.remove('cache_' + videoID);
-                        return null;
-                    }
-                    return entry.segments;
-                },
-                setSegments(videoID, segments) {
-                    this.set('cache_' + videoID, {
-                        segments: segments,
-                        timestamp: Date.now()
-                    });
-                    this._trackEntry(videoID);
-                },
-                _trackEntry(videoID) {
-                    let index = this.get('cache_index') || [];
-                    index = index.filter(id => id !== videoID);
-                    index.push(videoID);
-                    if (index.length > DEFAULTS.maxCacheEntries) {
-                        const removed = index.splice(0, index.length - DEFAULTS.maxCacheEntries);
-                        removed.forEach(id => this.remove('cache_' + id));
-                    }
-                    this.set('cache_index', index);
-                },
-                pruneCache() {
-                    const index = this.get('cache_index') || [];
-                    const toRemove = index.slice(0, Math.floor(index.length / 2));
-                    toRemove.forEach(id => this.remove('cache_' + id));
-                    this.set('cache_index', index.slice(Math.floor(index.length / 2)));
-                },
-                clearAll() {
-                    const index = this.get('cache_index') || [];
-                    index.forEach(id => this.remove('cache_' + id));
-                    this.remove('cache_index');
-                },
-            };
+    const CATEGORY_COLORS = {
+        sponsor: '#00d400',
+        selfpromo: '#ffff00',
+        interaction: '#cc00ff',
+        intro: '#00ffff',
+        outro: '#0202ed',
+        preview: '#008fd6',
+        music_offtopic: '#ff9900',
+        exclusive_access: '#008a5c',
+        poi_highlight: '#ff1684',
+    };
 
-            const API = {
-                fetchSegments(videoID, callback) {
-                    const endpoint = DEFAULTS.serverEndpoint;
-                    const categories = JSON.stringify(DEFAULTS.categories);
-                    const actionTypes = JSON.stringify(DEFAULTS.actionTypes);
-                    const url =
-                        `${endpoint}/api/skipSegments?videoID=${encodeURIComponent(videoID)}&categories=${encodeURIComponent(categories)}&actionTypes=${encodeURIComponent(actionTypes)}`;
-                    const xhr = new XMLHttpRequest();
-                    xhr.open('GET', url, true);
-                    xhr.timeout = 10000;
-                    xhr.onload = function() {
-                        if (xhr.status === 200) {
-                            try {
-                                callback(null, JSON.parse(xhr.responseText));
-                            } catch (e) {
-                                callback(
-                                    'Parse error', null);
-                            }
-                        } else if (xhr.status === 404) {
-                            callback(null, []);
-                        } else {
-                            callback(
-                                'HTTP ' + xhr.status, null);
-                        }
-                    };
-                    xhr.onerror = function() {
-                        callback('Network error', null);
-                    };
-                    xhr.ontimeout = function() {
-                        callback('Timeout', null);
-                    };
-                    xhr.send();
-                },
-                trackSkip(uuid) {
-                    if (!DEFAULTS.skipTracking || !uuid) return;
-                    const xhr = new XMLHttpRequest();
-                    xhr.open('POST', `${DEFAULTS.serverEndpoint}/api/viewedVideoSponsorTime?UUID=${encodeURIComponent(uuid)}`,
-                        true);
-                    xhr.timeout = 5000;
-                    xhr.send();
-                },
-            };
-
-            const SegmentManager = {
-                skipSegments: new Map(),
-                muteSegments: new Map(),
-                fullVideoLabels: [],
-                poiLabels: [],
-                currentVideoID: null,
-                reset() {
-                    this.skipSegments.clear();
-                    this.muteSegments.clear();
-                    this.fullVideoLabels = [];
-                    this.poiLabels = [];
-                    this.currentVideoID = null;
-                },
-                loadSegments(videoID, segments) {
-                    this.reset();
-                    this.currentVideoID = videoID;
-                    if (!segments || !segments.length) return;
-                    segments.forEach(seg => {
-                        const s = seg.segment;
-                        const start = s[0],
-                            end = s[1],
-                            uuid = seg.UUID;
-                        const actionType = seg.actionType || seg.category;
-                        if (actionType === 'mute') {
-                            this.muteSegments.set(start, {
-                                end,
-                                uuid,
-                                category: seg.category
-                            });
-                        } else if (actionType === 'full') {
-                            this.fullVideoLabels.push({
-                                category: seg.category,
-                                uuid
-                            });
-                        } else if (actionType === 'poi' || actionType === 'poi_highlight') {
-                            this.poiLabels.push({
-                                time: start,
-                                uuid,
-                                category: seg.category
-                            });
-                        } else {
-                            this.skipSegments.set(start, {
-                                end,
-                                uuid,
-                                category: seg.category
-                            });
-                        }
-                    });
-                },
-                getSkipEnd(currentTime) {
-                    const [thresholdStart, thresholdEnd] = DEFAULTS.skipThreshold;
-                    for (const [startTime, data] of this.skipSegments) {
-                        if (currentTime + thresholdStart >= startTime && currentTime - startTime <= thresholdEnd) {
-                            let endTime = data.end;
-                            const uuid = data.uuid;
-                            this.skipSegments.delete(startTime);
-                            for (const [overlapStart, overlapData] of this.skipSegments) {
-                                if (endTime >= overlapStart && overlapStart >= currentTime) {
-                                    endTime = overlapData.end;
-                                    if (
-                                        overlapData.uuid) API.trackSkip(overlapData.uuid);
-                                    this.skipSegments.delete(
-                                        overlapStart);
-                                }
-                            }
-                            if (uuid) API.trackSkip(uuid);
-                            return endTime;
-                        }
-                    }
-                    return null;
-                },
-                getMuteEnd(currentTime) {
-                    const [thresholdStart, thresholdEnd] = DEFAULTS.skipThreshold;
-                    for (const [startTime, data] of this.muteSegments) {
-                        if (currentTime + thresholdStart >= startTime && currentTime - startTime <= thresholdEnd) {
-                            const endTime = data.end;
-                            const uuid = data.uuid;
-                            this.muteSegments.delete(startTime);
-                            if (uuid) API.trackSkip(uuid);
-                            return endTime;
-                        }
-                    }
-                    return null;
-                },
-                getAllSegmentsForUI() {
-                    const all = [];
-                    this.skipSegments.forEach((data, start) => {
-                        all.push({
-                            start,
-                            end: data.end,
-                            category: data
-                                .category
-                        });
-                    });
-                    this.muteSegments.forEach((data, start) => {
-                        all.push({
-                            start,
-                            end: data.end,
-                            category: data
-                                .category,
-                            isMute: true
-                        });
-                    });
-                    return all;
-                },
-            };
-
-            function getVideoID() {
-                const url = new URL(window.location.href);
-                if (url.pathname === '/watch' || url.pathname.startsWith('/watch')) return url.searchParams.get('v');
-                if (url.pathname.startsWith('/embed/')) return url.pathname.split('/')[2];
-                if (url.pathname.startsWith('/shorts/')) return url.pathname.split('/')[2];
+    const Storage = {
+        _prefix: 'sb_',
+        get(key) {
+            try {
+                const raw = localStorage.getItem(this._prefix + key);
+                return raw ? JSON.parse(raw) : null;
+            } catch { return null; }
+        },
+        set(key, value) {
+            try {
+                localStorage.setItem(this._prefix + key, JSON.stringify(value));
+                return true;
+            } catch { return false; }
+        },
+        remove(key) {
+            try { localStorage.removeItem(this._prefix + key); } catch {}
+        },
+        getSegments(videoID) {
+            const entry = this.get('cache_' + videoID);
+            if (!entry) return null;
+            if (Date.now() - entry.timestamp > 86400000) { // 24h TTL
+                this.remove('cache_' + videoID);
                 return null;
             }
-
-            function formatTime(seconds) {
-                const m = Math.floor(seconds / 60);
-                const s = Math.floor(seconds % 60);
-                return m +
-                    ':' + (s < 10 ? '0' : '') + s;
+            return entry.segments;
+        },
+        setSegments(videoID, segments) {
+            this.set('cache_' + videoID, { segments, timestamp: Date.now() });
+            this._trackEntry(videoID);
+        },
+        _trackEntry(videoID) {
+            let index = this.get('cache_index') || [];
+            index = index.filter(id => id !== videoID);
+            index.push(videoID);
+            if (index.length > 500) {
+                const removed = index.splice(0, index.length - 500);
+                removed.forEach(id => this.remove('cache_' + id));
             }
+            this.set('cache_index', index);
+        },
+    };
 
-            const UI = {
-                overlayContainer: null,
-                _poiHandler: null,
-                init() {
-                    this.injectStyles();
-                    this.waitForPlayer();
-                },
-                injectStyles() {
-                    if (document.getElementById('sb-injected-styles')) return;
-                    const style = document.createElement('style');
-                    style.id = 'sb-injected-styles';
-                    style.textContent =
-                        `.sb-segment-marker{position:absolute;top:0;height:100%;opacity:.65;pointer-events:none;z-index:31;border-radius:1px;transition:opacity .15s}.sb-segment-marker:hover{opacity:.9}.sb-segment-marker.mute{opacity:.4;border:2px dashed rgba(255,255,255,.5);box-sizing:border-box}.sb-overlay-container{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:30}.sb-full-label{display:inline-flex;align-items:center;padding:3px 8px;border-radius:4px;font-size:.75rem;font-weight:600;margin-left:8px;vertical-align:middle;white-space:nowrap}.sb-poi-indicator{position:absolute;bottom:100%;width:2px;height:8px;pointer-events:none;z-index:32}`;
-                    document.head.appendChild(style);
-                },
-                waitForPlayer(retries = 0) {
-                    const progressBar = document.querySelector('.ytp-progress-bar');
-                    if (progressBar) {
-                        this.attachOverlay(progressBar);
-                        this.attachLabels();
-                        return;
+    const API = {
+        fetchSegments(videoID, callback) {
+            const endpoint = CONFIG.serverEndpoint;
+            const categories = JSON.stringify(CONFIG.categories);
+            const actionTypes = JSON.stringify(CONFIG.actionTypes);
+            const url =
+                `${endpoint}/api/skipSegments?videoID=${encodeURIComponent(videoID)}&categories=${encodeURIComponent(categories)}&actionTypes=${encodeURIComponent(actionTypes)}`;
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.timeout = 10000;
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    try { callback(null, JSON.parse(xhr.responseText)); } catch (e) { callback('Parse error', null); }
+                } else if (xhr.status === 404) {
+                    callback(null, []);
+                } else {
+                    callback('HTTP ' + xhr.status, null);
+                }
+            };
+            xhr.onerror = function() { callback('Network error', null); };
+            xhr.ontimeout = function() { callback('Timeout', null); };
+            xhr.send();
+        },
+        trackSkip(uuid) {
+            if (!CONFIG.skipTracking || !uuid) return;
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', `${CONFIG.serverEndpoint}/api/viewedVideoSponsorTime?UUID=${encodeURIComponent(uuid)}`, true);
+            xhr.timeout = 5000;
+            xhr.send();
+        },
+    };
+
+    const SegmentManager = {
+        skipSegments: new Map(),
+        muteSegments: new Map(),
+        fullVideoLabels: [],
+        poiLabels: [],
+        currentVideoID: null,
+        reset() {
+            this.skipSegments.clear();
+            this.muteSegments.clear();
+            this.fullVideoLabels = [];
+            this.poiLabels = [];
+            this.currentVideoID = null;
+        },
+        loadSegments(videoID, segments) {
+            this.reset();
+            this.currentVideoID = videoID;
+            if (!segments || !segments.length) return;
+            segments.forEach(seg => {
+                const s = seg.segment;
+                const start = s[0],
+                    end = s[1],
+                    uuid = seg.UUID;
+                const actionType = seg.actionType || seg.category;
+                if (actionType === 'mute') {
+                    this.muteSegments.set(start, { end, uuid, category: seg.category });
+                } else if (actionType === 'full') {
+                    this.fullVideoLabels.push({ category: seg.category, uuid });
+                } else if (actionType === 'poi' || actionType === 'poi_highlight') {
+                    this.poiLabels.push({ time: start, uuid, category: seg.category });
+                } else {
+                    this.skipSegments.set(start, { end, uuid, category: seg.category });
+                }
+            });
+        },
+        getSkipEnd(currentTime) {
+            const [thresholdStart, thresholdEnd] = CONFIG.skipThreshold;
+            for (const [startTime, data] of this.skipSegments) {
+                if (currentTime + thresholdStart >= startTime && currentTime - startTime <= thresholdEnd) {
+                    let endTime = data.end;
+                    const uuid = data.uuid;
+                    this.skipSegments.delete(startTime);
+                    for (const [overlapStart, overlapData] of this.skipSegments) {
+                        if (endTime >= overlapStart && overlapStart >= currentTime) {
+                            endTime = overlapData.end;
+                            if (overlapData.uuid) API.trackSkip(overlapData.uuid);
+                            this.skipSegments.delete(overlapStart);
+                        }
                     }
-                    if (retries < 50) setTimeout(() => this.waitForPlayer(retries + 1), 400);
-                },
-                attachOverlay(progressBar) {
-                    if (this.overlayContainer) this.overlayContainer.remove();
-                    const container = document.createElement('div');
-                    container.className = 'sb-overlay-container';
-                    progressBar.style.position = 'relative';
-                    progressBar.appendChild(container);
-                    this.overlayContainer = container;
-                    this.renderMarkers();
-                },
-                attachLabels() {
-                    const titleEl = document.querySelector('#title h1') || document.querySelector(
-                        'h1.title.ytd-video-primary-info-renderer') || document.querySelector(
-                        'ytd-watch-metadata h1');
-                    if (titleEl && SegmentManager.fullVideoLabels.length > 0) this.renderFullLabels(titleEl);
-                    if (SegmentManager.poiLabels.length > 0) this.setupPOIListener();
-                },
-                renderMarkers() {
-                    if (!this.overlayContainer) return;
-                    this.overlayContainer.innerHTML = '';
+                    if (uuid) API.trackSkip(uuid);
+                    return endTime;
+                }
+            }
+            return null;
+        },
+        getMuteEnd(currentTime) {
+            const [thresholdStart, thresholdEnd] = CONFIG.skipThreshold;
+            for (const [startTime, data] of this.muteSegments) {
+                if (currentTime + thresholdStart >= startTime && currentTime - startTime <= thresholdEnd) {
+                    const endTime = data.end;
+                    const uuid = data.uuid;
+                    this.muteSegments.delete(startTime);
+                    if (uuid) API.trackSkip(uuid);
+                    return endTime;
+                }
+            }
+            return null;
+        },
+        getAllSegmentsForUI() {
+            const all = [];
+            this.skipSegments.forEach((data, start) => {
+                all.push({ start, end: data.end, category: data.category });
+            });
+            this.muteSegments.forEach((data, start) => {
+                all.push({ start, end: data.end, category: data.category, isMute: true });
+            });
+            return all;
+        },
+    };
+
+    function getVideoID() {
+        const url = new URL(window.location.href);
+        if (url.pathname === '/watch' || url.pathname.startsWith('/watch')) return url.searchParams.get('v');
+        if (url.pathname.startsWith('/embed/')) return url.pathname.split('/')[2];
+        if (url.pathname.startsWith('/shorts/')) return url.pathname.split('/')[2];
+        return null;
+    }
+
+    function formatTime(seconds) {
+        const m = Math.floor(seconds / 60);
+        const s = Math.floor(seconds % 60);
+        return m + ':' + (s < 10 ? '0' : '') + s;
+    }
+
+    const UI = {
+        overlayContainer: null,
+        _poiHandler: null,
+        init() {
+            this.injectStyles();
+            this.waitForPlayer();
+        },
+        injectStyles() {
+            if (document.getElementById('sb-injected-styles')) return;
+            const style = document.createElement('style');
+            style.id = 'sb-injected-styles';
+            style.textContent =
+                `.sb-segment-marker{position:absolute;top:0;height:100%;opacity:.65;pointer-events:none;z-index:31;border-radius:1px;transition:opacity .15s}.sb-segment-marker:hover{opacity:.9}.sb-segment-marker.mute{opacity:.4;border:2px dashed rgba(255,255,255,.5);box-sizing:border-box}.sb-overlay-container{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:30}.sb-full-label{display:inline-flex;align-items:center;padding:3px 8px;border-radius:4px;font-size:.75rem;font-weight:600;margin-left:8px;vertical-align:middle;white-space:nowrap}.sb-poi-indicator{position:absolute;bottom:100%;width:2px;height:8px;pointer-events:none;z-index:32}`;
+            document.head.appendChild(style);
+        },
+        waitForPlayer(retries = 0) {
+            const progressBar = document.querySelector('.ytp-progress-bar');
+            if (progressBar) {
+                this.attachOverlay(progressBar);
+                this.attachLabels();
+                return;
+            }
+            if (retries < 50) setTimeout(() => this.waitForPlayer(retries + 1), 400);
+        },
+        attachOverlay(progressBar) {
+            if (this.overlayContainer) this.overlayContainer.remove();
+            const container = document.createElement('div');
+            container.className = 'sb-overlay-container';
+            progressBar.style.position = 'relative';
+            progressBar.appendChild(container);
+            this.overlayContainer = container;
+            this.renderMarkers();
+        },
+        attachLabels() {
+            const titleEl = document.querySelector('#title h1') || document.querySelector('h1.title.ytd-video-primary-info-renderer') || document.querySelector('ytd-watch-metadata h1');
+            if (titleEl && SegmentManager.fullVideoLabels.length > 0) this.renderFullLabels(titleEl);
+            if (SegmentManager.poiLabels.length > 0) this.setupPOIListener();
+        },
+        renderMarkers() {
+            if (!this.overlayContainer) return;
+            this.overlayContainer.innerHTML = '';
+            const video = document.querySelector('.html5-main-video');
+            if (!video || !video.duration || !isFinite(video.duration)) return;
+            const duration = video.duration;
+            const segments = SegmentManager.getAllSegmentsForUI();
+            segments.forEach(seg => {
+                const leftPercent = (seg.start / duration) * 100;
+                const widthPercent = ((seg.end - seg.start) / duration) * 100;
+                if (widthPercent < 0.05) return;
+                const marker = document.createElement('div');
+                marker.className = 'sb-segment-marker' + (seg.isMute ? ' mute' : '');
+                marker.style.left = leftPercent + '%';
+                marker.style.width = widthPercent + '%';
+                marker.style.backgroundColor = CATEGORY_COLORS[seg.category] || '#00d400';
+                marker.title = `${seg.category} [${formatTime(seg.start)} - ${formatTime(seg.end)}]${seg.isMute ? ' (mute)' : ''}`;
+                this.overlayContainer.appendChild(marker);
+            });
+            SegmentManager.poiLabels.forEach(poi => {
+                const leftPercent = (poi.time / duration) * 100;
+                const indicator = document.createElement('div');
+                indicator.className = 'sb-poi-indicator';
+                indicator.style.left = leftPercent + '%';
+                indicator.style.backgroundColor = CATEGORY_COLORS['poi_highlight'] || '#ff1684';
+                indicator.title = `Highlight at ${formatTime(poi.time)}`;
+                this.overlayContainer.appendChild(indicator);
+            });
+        },
+        renderFullLabels(titleEl) {
+            document.querySelectorAll('.sb-full-label').forEach(el => el.remove());
+            SegmentManager.fullVideoLabels.forEach(label => {
+                const span = document.createElement('span');
+                span.className = 'sb-full-label';
+                span.textContent = label.category;
+                span.style.backgroundColor = CATEGORY_COLORS[label.category] || '#00d400';
+                span.style.color = ['selfpromo', 'poi_highlight'].includes(label.category) ? '#000' : '#fff';
+                span.title = `This entire video is ${label.category}`;
+                titleEl.style.display = 'flex';
+                titleEl.style.alignItems = 'center';
+                titleEl.style.flexWrap = 'wrap';
+                titleEl.appendChild(span);
+            });
+        },
+        setupPOIListener() {
+            const handler = (e) => {
+                if (e.key === CONFIG.highlightKey && SegmentManager.poiLabels.length > 0 && document.activeElement === document.body) {
+                    const poi = SegmentManager.poiLabels[0];
                     const video = document.querySelector('.html5-main-video');
-                    if (!video || !video.duration || !isFinite(video.duration)) return;
-                    const duration = video.duration;
-                    const segments = SegmentManager.getAllSegmentsForUI();
-                    segments.forEach(seg => {
-                        const leftPercent = (seg.start / duration) * 100;
-                        const widthPercent = ((seg.end - seg.start) / duration) * 100;
-                        if (widthPercent < 0.05) return;
-                        const marker = document.createElement('div');
-                        marker.className = 'sb-segment-marker' + (seg.isMute ? ' mute' : '');
-                        marker.style.left = leftPercent + '%';
-                        marker.style.width = widthPercent + '%';
-                        marker.style.backgroundColor = CATEGORY_COLORS[seg.category] || '#00d400';
-                        marker.title =
-                            `${seg.category} [${formatTime(seg.start)} - ${formatTime(seg.end)}]${seg.isMute ? ' (mute)' : ''}`;
-                        this.overlayContainer.appendChild(marker);
-                    });
-                    SegmentManager.poiLabels.forEach(poi => {
-                        const leftPercent = (poi.time / duration) * 100;
-                        const indicator = document.createElement('div');
-                        indicator.className = 'sb-poi-indicator';
-                        indicator.style.left = leftPercent + '%';
-                        indicator.style.backgroundColor = CATEGORY_COLORS['poi_highlight'] || '#ff1684';
-                        indicator.title = `Highlight at ${formatTime(poi.time)}`;
-                        this.overlayContainer.appendChild(indicator);
-                    });
-                },
-                renderFullLabels(titleEl) {
-                    document.querySelectorAll('.sb-full-label').forEach(el => el.remove());
-                    SegmentManager.fullVideoLabels.forEach(label => {
-                        const span = document.createElement('span');
-                        span.className = 'sb-full-label';
-                        span.textContent = label.category;
-                        span.style.backgroundColor = CATEGORY_COLORS[label.category] || '#00d400';
-                        span.style.color = ['selfpromo', 'poi_highlight'].includes(label.category) ? '#000' :
-                            '#fff';
-                        span.title = `This entire video is ${label.category}`;
-                        titleEl.style.display = 'flex';
-                        titleEl.style.alignItems = 'center';
-                        titleEl.style.flexWrap = 'wrap';
-                        titleEl.appendChild(span);
-                    });
-                },
-                setupPOIListener() {
-                    const handler = (e) => {
-                        if (e.key === DEFAULTS.highlightKey && SegmentManager.poiLabels.length > 0 && document
-                            .activeElement === document.body) {
-                            const poi = SegmentManager.poiLabels[0];
-                            const video = document.querySelector('.html5-main-video');
-                            if (video && poi) {
-                                video.currentTime = poi.time;
-                                if (poi.uuid) API.trackSkip(poi
-                                    .uuid);
-                                SegmentManager.poiLabels.shift();
-                                this.renderMarkers();
-                            }
-                        }
-                    };
-                    document.addEventListener('keydown', handler);
-                    this._poiHandler = handler;
-                },
-                refresh() {
-                    this.waitForPlayer();
-                },
-                destroy() {
-                    if (this.overlayContainer) {
-                        this.overlayContainer.remove();
-                        this.overlayContainer = null;
+                    if (video && poi) {
+                        video.currentTime = poi.time;
+                        if (poi.uuid) API.trackSkip(poi.uuid);
+                        SegmentManager.poiLabels.shift();
+                        this.renderMarkers();
                     }
-                    document.querySelectorAll('.sb-full-label').forEach(el => el.remove());
-                    document.querySelectorAll('.sb-poi-indicator').forEach(el => el.remove());
-                    if (this._poiHandler) {
-                        document.removeEventListener('keydown', this._poiHandler);
-                        this._poiHandler = null;
-                    }
-                },
+                }
             };
+            document.addEventListener('keydown', handler);
+            this._poiHandler = handler;
+        },
+        refresh() { this.waitForPlayer(); },
+        destroy() {
+            if (this.overlayContainer) {
+                this.overlayContainer.remove();
+                this.overlayContainer = null;
+            }
+            document.querySelectorAll('.sb-full-label').forEach(el => el.remove());
+            document.querySelectorAll('.sb-poi-indicator').forEach(el => el.remove());
+            if (this._poiHandler) {
+                document.removeEventListener('keydown', this._poiHandler);
+                this._poiHandler = null;
+            }
+        },
+    };
 
-            const SkipEngine = {
-                video: null,
-                muteEndTime: 0,
-                boundTimeUpdate: null,
-                observer: null,
-                init() {
-                    this.boundTimeUpdate = this.onTimeUpdate.bind(this);
-                    this.findVideo();
-                    this.setupVideoObserver();
-                },
-                findVideo() {
-                    this.video = document.querySelector('.html5-main-video');
-                    if (this.video && this.boundTimeUpdate) {
-                        this.video.removeEventListener('timeupdate', this
-                            .boundTimeUpdate);
-                        this.video.addEventListener('timeupdate', this.boundTimeUpdate);
-                    }
-                },
-                setupVideoObserver() {
-                    if (this.observer) this.observer.disconnect();
-                    this.observer = new MutationObserver(() => {
-                        const newVideo = document.querySelector('.html5-main-video');
-                        if (newVideo && newVideo !== this.video) {
-                            if (this.video && this.boundTimeUpdate) this.video.removeEventListener('timeupdate',
-                                this.boundTimeUpdate);
-                            this.video = newVideo;
-                            if (this.video && this.boundTimeUpdate) this.video.addEventListener('timeupdate',
-                                this.boundTimeUpdate);
-                        }
-                    });
-                    this.observer.observe(document.body, {
-                        childList: true,
-                        subtree: true
-                    });
-                },
-                onTimeUpdate() {
-                    if (!this.video) return;
-                    const currentTime = this.video.currentTime;
-                    if (this.video.muted && currentTime >= this.muteEndTime && this.muteEndTime > 0) {
-                        this.video
-                            .muted = false;
-                        this.muteEndTime = 0;
-                    }
-                    const skipEnd = SegmentManager.getSkipEnd(currentTime);
-                    if (skipEnd !== null && skipEnd > currentTime) {
-                        this.video.currentTime = skipEnd;
-                        setTimeout(
-                            () => UI.renderMarkers(), 100);
-                        return;
-                    }
-                    const muteEnd = SegmentManager.getMuteEnd(currentTime);
-                    if (muteEnd !== null && muteEnd > currentTime) {
-                        this.video.muted = true;
-                        this.muteEndTime = muteEnd;
-                    }
-                    this.updateMarkerHighlight(currentTime);
-                },
-                updateMarkerHighlight(currentTime) {
-                    if (!UI.overlayContainer) return;
-                    const markers = UI.overlayContainer.querySelectorAll('.sb-segment-marker');
-                    markers.forEach(marker => {
-                        const leftPct = parseFloat(marker.style.left);
-                        const widthPct = parseFloat(marker.style.width);
-                        const duration = this.video?.duration || 1;
-                        const segStart = (leftPct / 100) * duration;
-                        const segEnd = ((leftPct + widthPct) / 100) * duration;
-                        if (currentTime >= segStart && currentTime <= segEnd) {
-                            marker.style.opacity =
-                                '0.95';
-                            marker.style.boxShadow = '0 0 6px rgba(255,255,255,0.4)';
-                        } else {
-                            marker.style
-                                .opacity = '0.55';
-                            marker.style.boxShadow = 'none';
-                        }
-                    });
-                },
-                destroy() {
-                    if (this.video && this.boundTimeUpdate) this.video.removeEventListener('timeupdate', this
-                        .boundTimeUpdate);
-                    this.video = null;
-                    this.muteEndTime = 0;
-                    if (this.observer) {
-                        this.observer.disconnect();
-                        this.observer = null;
-                    }
-                },
-            };
+    const SkipEngine = {
+        video: null,
+        muteEndTime: 0,
+        boundTimeUpdate: null,
+        observer: null,
+        init() {
+            this.boundTimeUpdate = this.onTimeUpdate.bind(this);
+            this.findVideo();
+            this.setupVideoObserver();
+        },
+        findVideo() {
+            this.video = document.querySelector('.html5-main-video');
+            if (this.video && this.boundTimeUpdate) {
+                this.video.removeEventListener('timeupdate', this.boundTimeUpdate);
+                this.video.addEventListener('timeupdate', this.boundTimeUpdate);
+            }
+        },
+        setupVideoObserver() {
+            if (this.observer) this.observer.disconnect();
+            this.observer = new MutationObserver(() => {
+                const newVideo = document.querySelector('.html5-main-video');
+                if (newVideo && newVideo !== this.video) {
+                    if (this.video && this.boundTimeUpdate) this.video.removeEventListener('timeupdate', this.boundTimeUpdate);
+                    this.video = newVideo;
+                    if (this.video && this.boundTimeUpdate) this.video.addEventListener('timeupdate', this.boundTimeUpdate);
+                }
+            });
+            this.observer.observe(document.body, { childList: true, subtree: true });
+        },
+        onTimeUpdate() {
+            if (!this.video) return;
+            const currentTime = this.video.currentTime;
+            if (this.video.muted && currentTime >= this.muteEndTime && this.muteEndTime > 0) {
+                this.video.muted = false;
+                this.muteEndTime = 0;
+            }
+            const skipEnd = SegmentManager.getSkipEnd(currentTime);
+            if (skipEnd !== null && skipEnd > currentTime) {
+                this.video.currentTime = skipEnd;
+                setTimeout(() => UI.renderMarkers(), 100);
+                return;
+            }
+            const muteEnd = SegmentManager.getMuteEnd(currentTime);
+            if (muteEnd !== null && muteEnd > currentTime) {
+                this.video.muted = true;
+                this.muteEndTime = muteEnd;
+            }
+            this.updateMarkerHighlight(currentTime);
+        },
+        updateMarkerHighlight(currentTime) {
+            if (!UI.overlayContainer) return;
+            const markers = UI.overlayContainer.querySelectorAll('.sb-segment-marker');
+            markers.forEach(marker => {
+                const leftPct = parseFloat(marker.style.left);
+                const widthPct = parseFloat(marker.style.width);
+                const duration = this.video?.duration || 1;
+                const segStart = (leftPct / 100) * duration;
+                const segEnd = ((leftPct + widthPct) / 100) * duration;
+                if (currentTime >= segStart && currentTime <= segEnd) {
+                    marker.style.opacity = '0.95';
+                    marker.style.boxShadow = '0 0 6px rgba(255,255,255,0.4)';
+                } else {
+                    marker.style.opacity = '0.55';
+                    marker.style.boxShadow = 'none';
+                }
+            });
+        },
+        destroy() {
+            if (this.video && this.boundTimeUpdate) this.video.removeEventListener('timeupdate', this.boundTimeUpdate);
+            this.video = null;
+            this.muteEndTime = 0;
+            if (this.observer) {
+                this.observer.disconnect();
+                this.observer = null;
+            }
+        },
+    };
 
-            const Navigation = {
-                lastVideoID: null,
-                init() {
-                    this.lastVideoID = getVideoID();
-                    this.processVideo();
-                    document.addEventListener('yt-navigate-start', () => {
+    const Navigation = {
+        lastVideoID: null,
+        init() {
+            this.lastVideoID = getVideoID();
+            this.processVideo();
+            document.addEventListener('yt-navigate-start', () => {
+                UI.destroy();
+                SkipEngine.destroy();
+                SegmentManager.reset();
+            });
+            document.addEventListener('yt-navigate-finish', () => {
+                const newID = getVideoID();
+                if (newID && newID !== this.lastVideoID) {
+                    this.lastVideoID = newID;
+                    setTimeout(() => this.processVideo(), 600);
+                } else if (newID) {
+                    setTimeout(() => { UI.init(); SkipEngine.init(); }, 600);
+                }
+            });
+            let lastURL = window.location.href;
+            setInterval(() => {
+                if (window.location.href !== lastURL) {
+                    lastURL = window.location.href;
+                    const newID = getVideoID();
+                    if (newID && newID !== this.lastVideoID) {
                         UI.destroy();
                         SkipEngine.destroy();
                         SegmentManager.reset();
-                    });
-                    document.addEventListener('yt-navigate-finish', () => {
-                        const newID = getVideoID();
-                        if (newID && newID !== this.lastVideoID) {
-                            this.lastVideoID = newID;
-                            setTimeout(() =>
-                                this.processVideo(), 600);
-                        } else if (newID) {
-                            setTimeout(() => {
-                                UI.init();
-                                SkipEngine.init();
-                            }, 600);
-                        }
-                    });
-                    let lastURL = window.location.href;
-                    setInterval(() => {
-                        if (window.location.href !== lastURL) {
-                            lastURL = window.location.href;
-                            const newID =
-                                getVideoID();
-                            if (newID && newID !== this.lastVideoID) {
-                                UI.destroy();
-                                SkipEngine.destroy();
-                                SegmentManager.reset();
-                                this.lastVideoID = newID;
-                                setTimeout(() => this.processVideo(), 600);
-                            }
-                        }
-                    }, 1000);
-                },
-                processVideo() {
-                    const videoID = this.lastVideoID;
-                    if (!videoID) return;
-                    const cached = Storage.getSegments(videoID);
-                    if (cached) {
-                        SegmentManager.loadSegments(videoID, cached);
-                        UI.init();
-                        SkipEngine.init();
-                        return;
+                        this.lastVideoID = newID;
+                        setTimeout(() => this.processVideo(), 600);
                     }
-                    API.fetchSegments(videoID, (err, data) => {
-                        if (!err && data) {
-                            if (data.length > 0) Storage.setSegments(videoID, data);
-                            else Storage
-                                .setSegments(videoID, []);
-                            SegmentManager.loadSegments(videoID, data);
-                        }
-                        UI.init();
-                        SkipEngine.init();
-                    });
-                },
-            };
-
-            function loadConfig() {
-                const saved = Storage.get('config');
-                if (saved) {
-                    Object.keys(saved).forEach(k => {
-                        if (DEFAULTS[k] !== undefined) DEFAULTS[k] = saved[
-                            k];
-                    });
                 }
+            }, 1000);
+        },
+        processVideo() {
+            const videoID = this.lastVideoID;
+            if (!videoID) return;
+            const cached = Storage.getSegments(videoID);
+            if (cached) {
+                SegmentManager.loadSegments(videoID, cached);
+                UI.init();
+                SkipEngine.init();
+                return;
             }
-
-            if (window.location.hostname.includes('youtube.com') && getVideoID()) {
-                if (window._sbLoaded) {
-                    console.log('[SB] Already loaded, skipping duplicate init.');
-                } else {
-                    window._sbLoaded = true;
-                    loadConfig();
-                    Navigation.init();
-                    console.log('%c🎯 SponsorBlock Injected %c v1.0', 'color:#00d400;font-weight:bold;', 'color:#888;');
+            API.fetchSegments(videoID, (err, data) => {
+                if (!err && data) {
+                    if (data.length > 0) Storage.setSegments(videoID, data);
+                    else Storage.setSegments(videoID, []);
+                    SegmentManager.loadSegments(videoID, data);
                 }
-            }
-        })();
-    </script>
+                UI.init();
+                SkipEngine.init();
+            });
+        },
+    };
+
+    if (window.location.hostname.includes('youtube.com') && getVideoID()) {
+        if (window._sbLoaded) {
+            console.log('[SB] Already loaded, skipping duplicate init.');
+        } else {
+            window._sbLoaded = true;
+            Navigation.init();
+            console.log('%c🎯 SponsorBlock (Configurable) Injected', 'color:#00d400;font-weight:bold;');
+        }
+    }
+})();
+</script>
 
 </body>
 
