@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+// ==UserScript==//
 /**
  * Enable JavaScript in Android Chrome & Firefox.
  * Requires: Rooted device + Node.js in Termux.
