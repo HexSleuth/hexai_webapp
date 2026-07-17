@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -4876,119 +4875,6 @@
         #fileInput {
             display: none !important;
         }
-
-        /* ===== SPONSORBLOCK PANEL (overlay) ===== */
-        #sb-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 2147483646;
-            display: none;
-            place-items: center;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(6px);
-            font: 14px var(--md-font);
-            color: var(--md-on-surface);
-        }
-        #sb-overlay.visible {
-            display: grid;
-        }
-        #sb-overlay .sb-panel {
-            width: min(460px, 90vw);
-            max-height: 80vh;
-            background: var(--md-surface);
-            color: var(--md-on-surface);
-            border-radius: var(--md-shape-lg);
-            padding: 20px 24px;
-            box-shadow: var(--md-elevation4);
-            border: 1px solid var(--md-outline-variant);
-            display: flex;
-            flex-direction: column;
-            overflow: auto;
-        }
-        #sb-overlay .sb-panel h2 {
-            margin: 0 0 12px 0;
-            font-size: 1.2rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        #sb-overlay .sb-panel .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-        #sb-overlay .sb-panel .stat-grid .stat-cell {
-            background: var(--md-surface-variant);
-            padding: 8px 12px;
-            border-radius: var(--md-shape-sm);
-            text-align: center;
-        }
-        #sb-overlay .sb-panel .stat-grid .stat-cell .stat-label {
-            font-size: 0.7rem;
-            color: var(--md-on-surface-variant);
-        }
-        #sb-overlay .sb-panel .stat-grid .stat-cell .stat-value {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        #sb-overlay .sb-panel .ctrl-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-        #sb-overlay .sb-panel .ctrl-row label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-        }
-        #sb-overlay .sb-panel .ctrl-row input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--md-primary);
-        }
-        #sb-overlay .sb-panel .status-text {
-            font-size: 0.85rem;
-            color: var(--md-on-surface-variant);
-            margin-bottom: 8px;
-        }
-        #sb-overlay .sb-panel .btn-row {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
-        #sb-overlay .sb-panel .btn-row button {
-            padding: 6px 16px;
-            border-radius: var(--md-shape-full);
-            border: none;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all var(--md-transition);
-            background: var(--md-primary);
-            color: var(--md-on-primary);
-        }
-        #sb-overlay .sb-panel .btn-row button:hover {
-            filter: brightness(1.05);
-        }
-        #sb-overlay .sb-panel .btn-row button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        #sb-overlay .sb-panel .close-btn {
-            background: transparent;
-            border: none;
-            color: var(--md-on-surface-variant);
-            font-size: 1.2rem;
-            cursor: pointer;
-            margin-left: auto;
-        }
-        #sb-overlay .sb-panel .close-btn:hover {
-            color: var(--md-on-surface);
-        }
     </style>
 </head>
 <body>
@@ -5005,9 +4891,6 @@
             </div>
             <button class="md-icon-button" id="themeToggleBtn" onclick="toggleThemeMode()" title="Toggle Dark/Light Mode">
                 <i class="fas fa-moon"></i>
-            </button>
-            <button class="md-icon-button" onclick="toggleSBOverlay()" title="SponsorBlock Panel (Ctrl+Shift+O)">
-                <i class="fas fa-shield-alt"></i>
             </button>
         </div>
     </header>
@@ -5733,32 +5616,6 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <div id="youtubePlayer"></div>
-
-    <!-- SPONSORBLOCK OVERLAY PANEL -->
-    <div id="sb-overlay">
-        <div class="sb-panel">
-            <h2>
-                <i class="fas fa-shield-alt"></i> SponsorBlock
-                <button class="close-btn" onclick="toggleSBOverlay()">✕</button>
-            </h2>
-            <div class="stat-grid">
-                <div class="stat-cell"><div class="stat-label">Sponsor Skips</div><div class="stat-value" id="sb-stat-sponsorSkipped">0</div></div>
-                <div class="stat-cell"><div class="stat-label">Ads Blocked</div><div class="stat-value" id="sb-stat-blocked">0</div></div>
-                <div class="stat-cell"><div class="stat-label">Data Pruned</div><div class="stat-value" id="sb-stat-pruned">0</div></div>
-            </div>
-            <div class="ctrl-row">
-                <label><input type="checkbox" id="sb-overlay-toggle" /> Enable Protection</label>
-            </div>
-            <div class="status-text" id="sb-status-text">SponsorBlock: <span id="sb-status-detail">0 segments loaded</span></div>
-            <div class="status-text">Rule source: <span id="sb-filter-source">built-in</span></div>
-            <div class="btn-row">
-                <button id="sb-refresh-btn"><i class="fas fa-sync"></i> Refresh Rules</button>
-            </div>
-            <div style="margin-top:12px;font-size:0.75rem;color:var(--md-on-surface-variant);border-top:1px solid var(--md-outline-variant);padding-top:8px;">
-                Ctrl+Shift+O to toggle this panel.
-            </div>
-        </div>
-    </div>
 
     <script>
         window.gtranslateSettings = {
@@ -8450,6 +8307,8 @@
                                 if (albumArtDisplayMode === 'video') initializeVideoPlayerInAlbumArt(
                                     videoId);
                                 if (SB.enabled) SB.start(videoId);
+                                // Start ad-block enhancements
+                                startAdBlockEnhancements();
                             },
                             onStateChange: handlePlayerStateChange,
                             onError: handleVideoError
@@ -8833,51 +8692,25 @@
             }
         }
 
-        // =============================================================
-        //  SPONSORBLOCK – UPGRADED ENGINE
-        // =============================================================
+        // ─── SponsorBlock ───
 
         const SB = {
             categories: ["sponsor", "selfpromo", "interaction", "intro", "outro", "preview", "music_offtopic",
                 "exclusive_access", "poi_highlight"
             ],
             actionTypes: ["skip", "mute", "full", "poi"],
-            apiUrl: "https://sponsor.ajay.app/api/skipSegments",
-            enabled: true,
+            skipThreshold: [0.2, 1],
+            serverEndpoint: "https://sponsor.ajay.app",
+            skipTracking: true,
+            highlightKey: "Enter",
             videoId: null,
             skipSegments: new Map(),
             muteSegments: new Map(),
             muteEndTime: 0,
+            enabled: true,
             checkInterval: null,
             skippedSet: new Set(),
-            stats: { blocked: 0, pruned: 0, sponsorSkipped: 0 },
-            filterSource: 'built-in',
-
-            loadState: function() {
-                const saved = localStorage.getItem('sb_stats');
-                if (saved) {
-                    try {
-                        const parsed = JSON.parse(saved);
-                        for (const k of ['blocked', 'pruned', 'sponsorSkipped']) {
-                            if (typeof parsed[k] === 'number') this.stats[k] = parsed[k];
-                        }
-                    } catch {}
-                }
-                const enabled = localStorage.getItem('sb_enabled');
-                if (enabled !== null) this.enabled = enabled === 'true';
-            },
-
-            saveStats: function() {
-                try {
-                    localStorage.setItem('sb_stats', JSON.stringify(this.stats));
-                } catch {}
-            },
-
-            incrementStat: function(key, by = 1) {
-                this.stats[key] = (this.stats[key] || 0) + by;
-                this.saveStats();
-                updateSBOverlay();
-            },
+            labelsAdded: false,
 
             getVideoId: function() {
                 try {
@@ -8889,159 +8722,154 @@
                 return selectedVideoId || null;
             },
 
-            fetchSegments: function(videoId) {
+            fetch: function(videoId) {
                 if (!videoId) return;
-                const cats = encodeURIComponent(JSON.stringify(this.categories));
-                const actions = encodeURIComponent(JSON.stringify(['skip', 'full']));
                 const url =
-                    `${this.apiUrl}/${videoId.slice(0,4)}?categories=${cats}&actionTypes=${actions}`;
-                fetch(url, { signal: AbortSignal.timeout(10000) })
-                    .then(resp => {
-                        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-                        return resp.json();
-                    })
-                    .then(data => {
-                        if (!Array.isArray(data)) return;
-                        const match = data.find(entry => entry && entry.videoID === videoId);
-                        if (!match || !Array.isArray(match.segments)) return;
-                        this.processSegments(match.segments);
-                    })
-                    .catch(err => console.warn('[SB] fetch error:', err));
+                    `${this.serverEndpoint}/api/skipSegments?videoID=${videoId}&categories=${JSON.stringify(this.categories)}&actionTypes=${JSON.stringify(this.actionTypes)}`;
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", url);
+                xhr.responseType = "json";
+                xhr.onload = () => {
+                    if (xhr.status === 200 && xhr.response) {
+                        this.processSegments(xhr.response);
+                    } else console
+                        .log("[SB.js] no segments or error", xhr.status);
+                };
+                xhr.onerror = () => console.error("[SB.js] fetch error");
+                xhr.send();
             },
 
-            processSegments: function(segments) {
+            processSegments: function(data) {
+                if (!data || !Array.isArray(data)) return;
                 this.skipSegments = new Map();
                 this.muteSegments = new Map();
                 this.skippedSet = new Set();
-                for (const s of segments) {
-                    if (!Array.isArray(s.segment) || s.segment.length !== 2) continue;
-                    const start = Number(s.segment[0]);
-                    const end = Number(s.segment[1]);
-                    if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start || start < 0) continue;
-                    if (s.actionType === 'skip') {
-                        this.skipSegments.set(start, { end, uuid: s.UUID, category: s.category });
-                    } else if (s.actionType === 'mute') {
-                        this.muteSegments.set(start, { end, uuid: s.UUID });
-                    } else if (s.actionType === 'full') {
-                        this.createLabel(s);
-                    } else if (s.actionType === 'poi') {
-                        this.createPOILabel(s);
-                    }
-                }
-                console.log(`[SB] Loaded ${this.skipSegments.size} skip + ${this.muteSegments.size} mute segments`);
-                updateSBOverlay();
+                data.forEach(s => {
+                    if (s.actionType === "skip") this.skipSegments.set(s.segment[0], {
+                        end: s.segment[1],
+                        uuid: s.UUID
+                    });
+                    else if (s.actionType === "mute") this.muteSegments.set(s.segment[0], {
+                        end: s.segment[1],
+                        uuid: s.UUID
+                    });
+                    else if (s.actionType === "full") this.createVideoLabel(s);
+                    else if (s.actionType === "poi") this.createPOILabel(s);
+                });
+                console.log(`[SB.js] Loaded ${this.skipSegments.size} skip + ${this.muteSegments.size} mute segments`);
             },
 
             skipOrMute: function() {
-                if (!player || typeof player.getCurrentTime !== 'function' || !this.enabled) return;
+                if (!player || typeof player.getCurrentTime !== 'function') return;
                 const currentTime = player.getCurrentTime();
-                const muted = typeof player.isMuted === 'function' ? player.isMuted() : false;
-                if (muted && currentTime >= this.muteEndTime) {
+                // FIX: use player.isMuted() instead of player.isMuted
+                if (player.isMuted && typeof player.isMuted === 'function' ?
+                    player.isMuted() :
+                    false && currentTime >= this.muteEndTime) {
                     player.unMute();
                     this.muteEndTime = 0;
                 }
-                const skipEnd = this.findEnd(currentTime, this.skipSegments);
+                const skipEnd = this.findEndTime(currentTime, this.skipSegments);
                 if (skipEnd !== null && typeof player.seekTo === 'function') {
                     player.seekTo(skipEnd);
                     if (window.playerInAlbumArt && typeof window.playerInAlbumArt.seekTo === 'function') {
                         window.playerInAlbumArt.seekTo(skipEnd);
                     }
                 }
-                const muteEnd = this.findEnd(currentTime, this.muteSegments);
+                const muteEnd = this.findEndTime(currentTime, this.muteSegments);
                 if (muteEnd !== null) {
-                    if (!muted) player.mute();
+                    // FIX: use player.isMuted() instead of player.isMuted
+                    if (typeof player.isMuted === 'function' ? !player.isMuted() : true) player.mute();
                     this.muteEndTime = muteEnd;
                 }
             },
 
-            findEnd: function(now, map) {
-                for (const [start, seg] of map) {
-                    const threshold = 0.2;
-                    if (now + threshold >= start && now - start <= 1) {
-                        const end = seg.end;
-                        this.incrementStat('sponsorSkipped');
-                        this.trackSkip(seg.uuid);
-                        map.delete(start);
-                        // clean overlapping
-                        for (const [os, ov] of map) {
-                            if (end >= os && os >= now) {
-                                if (ov.end > end) {
-                                    const newEnd = ov.end;
-                                    this.trackSkip(ov.uuid);
-                                    map.delete(os);
-                                    return newEnd;
-                                }
-                                map.delete(os);
+            findEndTime: function(now, map) {
+                let endTime = null;
+                for (const startTime of map.keys()) {
+                    const threshold = this.skipThreshold;
+                    if (now + threshold[0] >= startTime && now - startTime <= threshold[1]) {
+                        const segment = map.get(startTime);
+                        endTime = segment.end;
+                        this.trackSkip(segment.uuid);
+                        map.delete(startTime);
+                        for (const overlapStart of map.keys()) {
+                            if (endTime >= overlapStart && overlapStart >= now) {
+                                const overSegment = map.get(overlapStart);
+                                if (overSegment.end > endTime) endTime = overSegment.end;
+                                this.trackSkip(overSegment.uuid);
+                                map.delete(overlapStart);
                             }
                         }
-                        return end;
+                        return endTime;
                     }
                 }
                 return null;
             },
 
             trackSkip: function(uuid) {
-                try {
-                    fetch(`https://sponsor.ajay.app/api/viewedVideoSponsorTime?UUID=${encodeURIComponent(uuid)}`, {
-                        method: 'POST',
-                        mode: 'no-cors'
-                    }).catch(() => {});
-                } catch {}
-            },
-
-            createLabel: function(label, type = 'full') {
-                const titleEl = document.querySelector("#nowPlaying .song-title");
-                if (!titleEl) { setTimeout(() => this.createLabel(label, type), 200); return; }
-                const category = label.category || 'sponsor';
-                const colors = {
-                    sponsor: ['#0d0', '#111', 'Sponsor'],
-                    selfpromo: ['#ff0', '#111', 'Self-promotion'],
-                    exclusive_access: ['#085', '#fff', 'Exclusive access'],
-                    poi_highlight: ['#f18', '#fff', 'Point of interest']
-                };
-                const style = colors[category] || colors.sponsor;
-                const el = document.createElement('span');
-                el.id = `sb-label-${type}`;
-                el.style.cssText =
-                    `color:${style[1]};background:${style[0]};display:inline-block;margin:0 6px;padding:0 6px;border-radius:4px;font-size:0.7rem;font-weight:600;text-transform:uppercase;`;
-                el.textContent = category;
-                const parent = titleEl.parentNode;
-                if (parent && !parent.querySelector(`#sb-label-${type}`)) {
-                    titleEl.style.display = 'inline-block';
-                    parent.insertBefore(el, titleEl.nextSibling);
-                }
+                if (!this.skipTracking) return;
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", `${this.serverEndpoint}/api/viewedVideoSponsorTime?UUID=${uuid}`);
+                xhr.send();
             },
 
             createPOILabel: function(label) {
-                this.createLabel(label, 'poi');
+                this.createVideoLabel(label, "poi");
                 const listener = (e) => {
-                    if (e.key === 'Enter') {
-                        if (player && typeof player.seekTo === 'function') {
-                            player.seekTo(label.segment[1]);
-                            this.trackSkip(label.UUID);
-                        }
-                        const el = document.querySelector('#sb-label-poi');
-                        if (el) el.style.display = 'none';
-                        document.removeEventListener('keydown', listener);
+                    if (e.key === this.highlightKey) {
+                        if (player && typeof player.seekTo === 'function') player.seekTo(label.segment[1]);
+                        this.trackSkip(label.UUID);
+                        const el = document.querySelector("#sbjs-label-poi");
+                        if (el) el.style.display = "none";
+                        document.removeEventListener("keydown", listener);
                     }
                 };
-                document.addEventListener('keydown', listener);
+                document.addEventListener("keydown", listener);
+            },
+
+            createVideoLabel: function(label, type = "full") {
+                const titleEl = document.querySelector("#nowPlaying .song-title");
+                if (!titleEl) {
+                    setTimeout(() => this.createVideoLabel(label, type), 200);
+                    return;
+                }
+                const category = label.category;
+                const styles = {
+                    sponsor: ["#0d0", "#111", "The entire video is sponsor content"],
+                    selfpromo: ["#ff0", "#111", "Self-promotion"],
+                    exclusive_access: ["#085", "#fff", "Exclusive access"],
+                    poi_highlight: ["#f18", "#fff", `Press ${this.highlightKey} to skip to highlight`],
+                };
+                const style = styles[category] || styles.sponsor;
+                const labelEl = document.createElement("span");
+                labelEl.title = style[2];
+                labelEl.innerText = category;
+                labelEl.id = `sbjs-label-${type}`;
+                labelEl.style.cssText =
+                    `color: ${style[1]}; background-color: ${style[0]}; display: inline-block; margin: 0 6px; padding: 0 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase;`;
+                const parent = titleEl.parentNode;
+                if (parent && !parent.querySelector(`#sbjs-label-${type}`)) {
+                    titleEl.style.display = "inline-block";
+                    parent.insertBefore(labelEl, titleEl.nextSibling);
+                }
             },
 
             start: function(videoId) {
-                if (!videoId || !this.enabled) return;
-                if (this.videoId === videoId) return;
+                if (!videoId) return;
+                if (this.videoId === videoId && this.enabled) return;
                 this.videoId = videoId;
                 this.skipSegments = new Map();
                 this.muteSegments = new Map();
                 this.muteEndTime = 0;
                 this.skippedSet = new Set();
-                document.querySelectorAll('[id^="sb-label-"]').forEach(el => el.remove());
-                this.fetchSegments(videoId);
+                document.querySelectorAll('[id^="sbjs-label-"]').forEach(el => el.remove());
+                if (!this.enabled) return;
+                this.fetch(videoId);
                 if (this.checkInterval) clearInterval(this.checkInterval);
                 this.checkInterval = setInterval(() => {
-                    const vid = this.getVideoId();
-                    if (vid !== this.videoId) {
+                    const currentVid = this.getVideoId();
+                    if (currentVid !== this.videoId) {
                         clearInterval(this.checkInterval);
                         this.checkInterval = null;
                         return;
@@ -9055,12 +8883,11 @@
                     clearInterval(this.checkInterval);
                     this.checkInterval = null;
                 }
-                document.querySelectorAll('[id^="sb-label-"]').forEach(el => el.remove());
+                document.querySelectorAll('[id^="sbjs-label-"]').forEach(el => el.remove());
             },
 
             toggle: function(enabled) {
                 this.enabled = enabled;
-                localStorage.setItem('sb_enabled', String(enabled));
                 if (enabled) {
                     const vid = this.getVideoId();
                     if (vid) this.start(vid);
@@ -9069,70 +8896,418 @@
                     this.stop();
                     showToast('SponsorBlock disabled', 'info');
                 }
-                updateSBOverlay();
+                localStorage.setItem('sponsorBlockEnabled', JSON.stringify(enabled));
             }
         };
 
-        // Load SB state
-        SB.loadState();
-
         if (sponsorToggle) {
             sponsorToggle.addEventListener('change', function() {
-                SB.toggle(this.checked);
+                const enabled = this.checked;
+                SB.enabled = enabled;
+                if (enabled) {
+                    const vid = SB.getVideoId();
+                    if (vid) SB.start(vid);
+                    showToast('SponsorBlock enabled', 'success');
+                } else {
+                    SB.stop();
+                    showToast('SponsorBlock disabled', 'info');
+                }
+                localStorage.setItem('sponsorBlockEnabled', JSON.stringify(enabled));
             });
-            sponsorToggle.checked = SB.enabled;
         }
 
-        // ===== SPONSORBLOCK OVERLAY UI =====
-        function toggleSBOverlay() {
-            const overlay = document.getElementById('sb-overlay');
-            overlay.classList.toggle('visible');
-            if (overlay.classList.contains('visible')) updateSBOverlay();
+        // =============================================================
+        //  ADDITIONAL AD‑BLOCKING ENHANCEMENTS (from userscript)
+        // =============================================================
+
+        let adBlockInterval = null;
+        let ssapInterval = null;
+        let lastAdBlockState = { muted: false, rate: 1 };
+
+        function startAdBlockEnhancements() {
+            stopAdBlockEnhancements();
+
+            // Video ad fast‑forward (mute & speed up)
+            adBlockInterval = setInterval(() => {
+                if (!player || typeof player.getPlayerState !== 'function') return;
+                try {
+                    const playerEl = document.getElementById('movie_player') || player?.getIframe?.()?.parentElement;
+                    const adShowing = playerEl && playerEl.classList.contains('ad-showing');
+                    if (adShowing) {
+                        if (player.setPlaybackRate && player.getPlaybackRate) {
+                            if (player.getPlaybackRate() < 16) {
+                                player.setPlaybackRate(16);
+                            }
+                        }
+                        if (!lastAdBlockState.muted) {
+                            if (typeof player.isMuted === 'function' && !player.isMuted()) {
+                                player.mute();
+                                lastAdBlockState.muted = true;
+                            }
+                        }
+                    } else {
+                        if (lastAdBlockState.muted) {
+                            if (typeof player.isMuted === 'function' && player.isMuted()) {
+                                player.unMute();
+                                lastAdBlockState.muted = false;
+                            }
+                        }
+                        // restore playback rate if needed
+                        if (player.getPlaybackRate && player.getPlaybackRate() > 2) {
+                            player.setPlaybackRate(1);
+                        }
+                    }
+                } catch (e) {}
+            }, 500);
+
+            // SSAP auto‑skip
+            ssapInterval = setInterval(() => {
+                if (!player || typeof player.getStatsForNerds !== 'function') return;
+                try {
+                    const stats = player.getStatsForNerds();
+                    const debugInfo = stats?.debug_info || '';
+                    if (debugInfo.startsWith('SSAP, AD') || debugInfo.startsWith('SSAP,AD')) {
+                        const progress = player.getProgressState?.();
+                        if (progress && progress.duration > 0) {
+                            if (progress.loaded < progress.duration || progress.duration - progress.current > 1) {
+                                player.seekTo?.(progress.duration);
+                                showToast('⏭️ SSAP ad skipped', 'info');
+                            }
+                        }
+                    }
+                } catch (e) {}
+            }, 2000);
         }
 
-        function updateSBOverlay() {
-            const overlay = document.getElementById('sb-overlay');
-            if (!overlay || !overlay.classList.contains('visible')) return;
-            document.getElementById('sb-stat-sponsorSkipped').textContent = SB.stats.sponsorSkipped || 0;
-            document.getElementById('sb-stat-blocked').textContent = SB.stats.blocked || 0;
-            document.getElementById('sb-stat-pruned').textContent = SB.stats.pruned || 0;
-            document.getElementById('sb-overlay-toggle').checked = SB.enabled;
-            document.getElementById('sb-status-detail').textContent = `${SB.skipSegments.size} skip + ${SB.muteSegments.size} mute segments`;
-            document.getElementById('sb-filter-source').textContent = SB.filterSource || 'built-in';
+        function stopAdBlockEnhancements() {
+            if (adBlockInterval) {
+                clearInterval(adBlockInterval);
+                adBlockInterval = null;
+            }
+            if (ssapInterval) {
+                clearInterval(ssapInterval);
+                ssapInterval = null;
+            }
+            // restore mute/rate if needed
+            if (player && typeof player.isMuted === 'function') {
+                try {
+                    if (player.isMuted()) player.unMute();
+                } catch (e) {}
+            }
+            if (player && typeof player.setPlaybackRate === 'function') {
+                try {
+                    player.setPlaybackRate(1);
+                } catch (e) {}
+            }
+            lastAdBlockState.muted = false;
+            lastAdBlockState.rate = 1;
         }
 
-        document.getElementById('sb-overlay-toggle')?.addEventListener('change', function() {
-            SB.toggle(this.checked);
+        // Ensure ad-block enhancements are started with the player
+        const origOnReady = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = function() {
+            if (origOnReady) origOnReady();
+            startAdBlockEnhancements();
+        };
+
+        // ─── YT Search & Import ───
+
+        const searchCache = JSON.parse(localStorage.getItem('ytSearchCache') || '{}');
+        const CACHE_EXPIRY = 3600000;
+
+        function cacheSearchResults(term, results) {
+            searchCache[term] = {
+                results,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('ytSearchCache', JSON.stringify(searchCache));
+        }
+
+        function getCachedResults(term) {
+            const cached = searchCache[term];
+            if (cached && (Date.now() - cached.timestamp < CACHE_EXPIRY)) return cached.results;
+            return null;
+        }
+
+        async function searchYouTube() {
+            const term = youtubeSearchInput?.value?.trim();
+            if (!term) return;
+            searchResultsList.innerHTML = '';
+            searchError.classList.add('d-none');
+            searchResults.classList.add('d-none');
+            const cached = getCachedResults(term);
+            if (cached) {
+                displaySearchResults(cached);
+                return;
+            }
+            searchLoading.classList.remove('d-none');
+            try {
+                const data = await searchYouTubeViaPaxsenix(term);
+                searchLoading.classList.add('d-none');
+                if (data && data.items && data.items.length > 0) {
+                    cacheSearchResults(term, data);
+                    searchResults.classList.remove('d-none');
+                    displaySearchResults(data);
+                    return;
+                }
+            } catch (e) {
+                console.warn('Paxsenix search failed, falling back to YouTube API:', e);
+            }
+            const YT_KEY = STATE.settings.ytApiKey || '';
+            if (!YT_KEY || YT_KEY.length < 10) {
+                searchError.innerHTML =
+                    `<i class="fas fa-exclamation-circle"></i> YouTube API Key not configured. Please set it in Settings.`;
+                searchError.classList.remove('d-none');
+                searchLoading.classList.add('d-none');
+                return;
+            }
+            try {
+                const url =
+                    `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(term)}&type=video&maxResults=10&key=${YT_KEY}`;
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                cacheSearchResults(term, data);
+                searchLoading.classList.add('d-none');
+                searchResults.classList.remove('d-none');
+                displaySearchResults(data);
+            } catch (e) {
+                searchLoading.classList.add('d-none');
+                searchError.innerHTML = `<i class="fas fa-exclamation-circle"></i> Search failed: ${e.message}`;
+                searchError.classList.remove('d-none');
+            }
+        }
+
+        async function searchYouTubeViaPaxsenix(query) {
+            const url = `${API_BASE}/youtube/search?q=${encodeURIComponent(query)}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`Search HTTP ${res.status}`);
+            const data = await res.json();
+            return data;
+        }
+
+        function displaySearchResults(data) {
+            searchResults.classList.remove('d-none');
+            const items = data.items || data.data || [];
+            if (items && items.length > 0) {
+                items.forEach(item => {
+                    const videoId = item.id?.videoId || item.id || item.videoId;
+                    const title = item.snippet?.title || item.title || item.name || 'Unknown';
+                    const channelTitle = item.snippet?.channelTitle || item.author || item.channel || 'Unknown';
+                    const thumbnail = item.snippet?.thumbnails?.high?.url || item.thumbnail || item.thumb ||
+                        'https://via.placeholder.com/120';
+                    if (!videoId) return;
+                    const div = document.createElement('div');
+                    div.className = 'list-group-item';
+                    div.innerHTML = `
+                  <img src="${thumbnail}" alt="${title}">
+                  <div class="flex-grow-1">
+                    <h6>${title}</h6>
+                    <p><small>${channelTitle}</small></p>
+                  </div>
+                  <button class="add-from-search-btn" data-video-id="${videoId}" 
+                          data-song-title="${title.replace(/"/g, '&quot;')}" 
+                          data-author-name="${channelTitle.replace(/"/g, '&quot;')}" 
+                          data-album-art="${thumbnail}">
+                    <i class="fas fa-plus"></i> Add
+                  </button>
+                `;
+                    searchResultsList.appendChild(div);
+                });
+                searchResultsList.querySelectorAll('.add-from-search-btn').forEach(btn => {
+                    btn.addEventListener('click', addSongFromSearch);
+                });
+            } else {
+                searchResultsList.innerHTML = `<p class="text-center text-muted">No results found.</p>`;
+            }
+        }
+
+        function addSongFromSearch(e) {
+            const btn = e.currentTarget;
+            const vid = btn.dataset.videoId;
+            const title = btn.dataset.songTitle;
+            const author = btn.dataset.authorName;
+            const art = btn.dataset.albumArt;
+            if (STATE.playlist.some(s => s.videoId === vid)) {
+                alert('This song is already in your playlist!');
+                return;
+            }
+            const song = {
+                videoId: vid,
+                songName: title,
+                authorName: author,
+                albumArt: art
+            };
+            STATE.playlist.push(song);
+            savePlaylist();
+            renderPlaylist(STATE.playlist);
+            if (STATE.playlist.length === 1) loadNewVideo(vid, art, song);
+        }
+
+        youtubeSearchBtn?.addEventListener('click', searchYouTube);
+        youtubeSearchInput?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchYouTube();
         });
 
-        document.getElementById('sb-refresh-btn')?.addEventListener('click', async function() {
-            const btn = this;
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            const vid = SB.getVideoId();
-            if (vid) {
-                SB.skipSegments = new Map();
-                SB.muteSegments = new Map();
-                SB.skippedSet = new Set();
-                SB.fetchSegments(vid);
-                await new Promise(r => setTimeout(r, 1500));
+        async function importPlaylistFromUrl(overrideUrl = null) {
+            let input = overrideUrl || playlistImportInput.value.trim();
+            if (!input) {
+                showToast('Please enter a YouTube Music playlist URL or ID.', 'error');
+                return;
             }
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-sync"></i> Refresh Rules';
-            updateSBOverlay();
-            showToast('SponsorBlock segments refreshed', 'success');
+            let playlistId = input;
+            const match = input.match(/[&?]list=([^&]+)/);
+            if (match) playlistId = match[1];
+            else if (input.includes('/playlist?list=')) {
+                const p = input.split('list=')[1]?.split('&')[0];
+                if (p) playlistId = p;
+            }
+            const YT_KEY = STATE.settings.ytApiKey || '';
+            if (!YT_KEY || YT_KEY.length < 10) {
+                showToast('YouTube API Key required. Set it in Settings.', 'error');
+                return;
+            }
+            importPlaylistBtn.disabled = true;
+            importPlaylistBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            try {
+                const url =
+                    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${YT_KEY}`;
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                if (!data.items || data.items.length === 0) {
+                    showToast('No items found in this playlist.', 'error');
+                    return;
+                }
+                let added = 0;
+                for (const item of data.items) {
+                    const vid = item.snippet.resourceId.videoId;
+                    if (!vid) continue;
+                    if (STATE.playlist.some(s => s.videoId === vid)) continue;
+                    const title = item.snippet.title;
+                    const author = item.snippet.videoOwnerChannelTitle || item.snippet.channelTitle || 'Unknown';
+                    const art = item.snippet.thumbnails?.high?.url || item.snippet.thumbnails?.default?.url ||
+                        'https://via.placeholder.com/300';
+                    STATE.playlist.push({
+                        videoId: vid,
+                        songName: title,
+                        authorName: author,
+                        albumArt: art
+                    });
+                    added++;
+                }
+                if (added === 0) {
+                    showToast('All songs already in playlist.', 'info');
+                } else {
+                    savePlaylist();
+                    renderPlaylist(STATE.playlist);
+                    showToast(`Imported ${added} songs!`, 'success');
+                    if (STATE.playlist.length === added && added > 0) {
+                        const first = STATE.playlist[0];
+                        loadNewVideo(first.videoId, first.albumArt, first);
+                    }
+                }
+            } catch (e) {
+                showToast('Import failed: ' + e.message, 'error');
+            } finally {
+                importPlaylistBtn.disabled = false;
+                importPlaylistBtn.innerHTML = '<i class="fas fa-import"></i> Import';
+            }
+        }
+
+        importPlaylistBtn?.addEventListener('click', () => importPlaylistFromUrl());
+
+        async function autoImportDefaultPlaylist() {
+            const defaultUrl = 'https://music.youtube.com/playlist?list=PLw-ydWKI15cpWj-H499Ui_2UdCubVNAcK';
+            if (STATE.playlist.length === 0 && !localStorage.getItem('defaultPlaylistImported')) {
+                showToast('Importing default playlist...', 'info');
+                if (playlistImportInput) playlistImportInput.value = defaultUrl;
+                await importPlaylistFromUrl(defaultUrl);
+            }
+        }
+
+        searchPlaylistInput?.addEventListener('input', function() {
+            const term = this.value.toLowerCase();
+            clearPlaylistSearchBtn?.classList.toggle('d-none', term.trim().length === 0);
+            const filtered = STATE.playlist.filter(s =>
+                s.songName.toLowerCase().includes(term) || s.authorName.toLowerCase().includes(term)
+            );
+            renderPlaylist(filtered);
+        });
+        clearPlaylistSearchBtn?.addEventListener('click', function() {
+            searchPlaylistInput.value = '';
+            this.classList.add('d-none');
+            renderPlaylist(STATE.playlist);
+            searchPlaylistInput.focus();
         });
 
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.shiftKey && (e.key === 'O' || e.key === 'o')) {
-                e.preventDefault();
-                toggleSBOverlay();
+        window.onYouTubeIframeAPIReady = function() {
+            console.log('⬡ YouTube IFrame API ready');
+            if (STATE.playlist.length === 0) return;
+            let videoId = selectedVideoId;
+            if (!videoId) {
+                const first = STATE.playlist[0];
+                videoId = first.videoId;
+                selectedVideoId = videoId;
             }
-            if (e.key === 'Escape') {
-                const overlay = document.getElementById('sb-overlay');
-                if (overlay.classList.contains('visible')) overlay.classList.remove('visible');
+            const song = STATE.playlist.find(s => s.videoId === videoId) || STATE.playlist[0];
+            if (!player) {
+                playerContainer.innerHTML = `<div id="player"></div>`;
+                player = new YT.Player('player', {
+                    videoId: videoId,
+                    playerVars: {
+                        autoplay: 0,
+                        controls: 0,
+                        modestbranding: 1,
+                        showinfo: 0,
+                        rel: 0,
+                        fs: 0,
+                        iv_load_policy: 3,
+                        start: 0
+                    },
+                    events: {
+                        onReady: (e) => {
+                            e.target.setVolume(currentVolume);
+                            updateVolumeUI(currentVolume);
+                            if (song) {
+                                const art = document.getElementById('albumArt');
+                                if (song.albumArt && isValidImageUrl(song.albumArt)) art.src = song
+                                    .albumArt;
+                                const titleEl = document.querySelector("#nowPlaying .song-title");
+                                const authorEl = document.querySelector("#nowPlaying .author-name");
+                                if (titleEl) titleEl.textContent = removeArtistFromTitle(song.songName, song
+                                    .authorName);
+                                if (authorEl) authorEl.textContent = song.authorName;
+                                loadLyricsFor(song.songName, song.authorName, videoId);
+                                if (song.albumArt && song.albumArt !== 'https://via.placeholder.com/300') {
+                                    ThemeEngine.applyVibrantFromUrl(song.albumArt);
+                                }
+                            }
+                            setTimeout(updateProgressBar, 500);
+                            applyAlbumArtDisplayMode();
+                            if (SB.enabled) SB.start(videoId);
+                            if (STATE.bgPlaybackEnabled) ensureBgAudioContext();
+                            // Start ad-block enhancements
+                            startAdBlockEnhancements();
+                        },
+                        onStateChange: handlePlayerStateChange,
+                        onError: handleVideoError
+                    }
+                });
+            } else {
+                if (player.loadVideoById) {
+                    player.loadVideoById(videoId);
+                    player.setVolume(currentVolume);
+                }
+                if (SB.enabled) SB.start(videoId);
+                if (STATE.bgPlaybackEnabled) ensureBgAudioContext();
+                startAdBlockEnhancements();
             }
-        });
+            renderPlaylist(STATE.playlist);
+            document.querySelectorAll('#songList li').forEach(el => {
+                if (el.dataset.video === videoId) el.classList.add('selected');
+            });
+        };
 
         // =============================================================
         //  BACKGROUND PLAYBACK – Enhanced (Userscript-style)
@@ -10804,15 +10979,15 @@
                 currentLang = savedLang;
             }
 
-            const sbEnabled = localStorage.getItem('sb_enabled');
+            const sbEnabled = localStorage.getItem('sponsorBlockEnabled');
             if (sbEnabled !== null) {
-                SB.enabled = sbEnabled === 'true';
-                if (sponsorToggle) sponsorToggle.checked = SB.enabled;
+                SB.enabled = JSON.parse(sbEnabled);
+                if (sponsorToggle) sponsorToggle.checked = SB
+                    .enabled;
             } else {
                 SB.enabled = true;
                 if (sponsorToggle) sponsorToggle.checked = true;
             }
-            SB.loadState();
 
             if (typeof YT !== 'undefined' && YT.Player && !player && STATE.playlist.length > 0) {
                 if (typeof window.onYouTubeIframeAPIReady === 'function') window.onYouTubeIframeAPIReady();
@@ -10896,7 +11071,8 @@
             console.log('🎤 Karaoke mode, LRCLib search, and AI lyrics generation integrated.');
             console.log('📤 Export / Import Playlist ready.');
             console.log('🔁 Offline repeat (all) and shuffle now work correctly with queue system.');
-            console.log('🛡 SponsorBlock upgraded with stats panel (Ctrl+Shift+O).');
+            // Ad-block enhancements are started automatically when player is ready.
+            console.log('🛡️ Ad-block enhancements (fast-forward ads & SSAP skip) enabled.');
         }
 
         document.addEventListener('DOMContentLoaded', init);
@@ -10909,6 +11085,7 @@
             if (SB.checkInterval) clearInterval(SB.checkInterval);
             stopBgAudioContext();
             disableBackgroundPlaybackEnhancement();
+            stopAdBlockEnhancements();
         });
 
         window.switchMusicTab = switchMusicTab;
@@ -10928,8 +11105,6 @@
         window.updateThemeToggleIcon = updateThemeToggleIcon;
         window.exportPlaylist = exportPlaylist;
         window.importPlaylist = importPlaylist;
-        window.toggleSBOverlay = toggleSBOverlay;
-        window.updateSBOverlay = updateSBOverlay;
     </script>
 
     <!-- Background Playback Userscript (standalone) -->
