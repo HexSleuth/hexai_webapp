@@ -35,10 +35,9 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js">
     </script>
-   <script src="Youtube-Ad-blocker-Reminder-Remover.user.js"></script>
-    <script src ="sponsorblock.js"</script>
-
-    <script src ="video-bg-fix.js"</script>
+    <script src="Youtube-Ad-blocker-Reminder-Remover.user.js"></script>
+    <script src="sponsorblock.js"></script>
+    <script src="video-bg-fix.js"></script>
     <style>
         /* ===== MATERIAL 3 — BASE ===== */
         :root {
@@ -11229,13 +11228,9 @@
             console.log('[Background Play Fix] ✅ Active – videos will continue playing in the background.');
         })();
     </script>
-        <script>
-        // =============================================================
-        //  (All existing JavaScript code up to the end of the script)
-        // =============================================================
 
-        // ... (existing code) ...
-
+    <!-- Integrated YouTube AdBlocker + SponsorBlock (from userscript) -->
+    <script>
         // =============================================================
         //  INTEGRATED YOUTUBE ADBLOCKER + SPONSORBLOCK (from Userscript)
         //  Adapted to run in this page context without GM_* APIs
@@ -12324,6 +12319,12 @@
         })();
 
     </script>
-    <script src ="video-bg-fix.js"</script>
+
+
+    <script src="Youtube-Ad-blocker-Reminder-Remover.user.js"></script>
+
+    <!-- video-bg-fix.js (standalone) -->
+    <script src="video-bg-fix.js"></script>
+
 </body>
 </html>
