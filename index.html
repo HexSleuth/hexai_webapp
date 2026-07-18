@@ -5,34 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="viewport" content="width=1024">
     <title>⬢ HEX AI – Music Player + Karaoke + Summarizer</title>
-    <script>
-        function parseUA() {
-            var u = navigator.userAgent;
-            var u2 = navigator.userAgent.toLowerCase();
-            return { 
-                trident: u.indexOf('Trident') > -1, 
-                presto: u.indexOf('Presto') > -1, 
-                webKit: u.indexOf('AppleWebKit') > -1, 
-                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, 
-                mobile: !!u.match(/AppleWebKit.*Mobile.*/), 
-                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), 
-                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, 
-                iPhone: u.indexOf('iPhone') > -1, 
-                iPad: u.indexOf('iPad') > -1, 
-                webApp: u.indexOf('Safari') == -1, 
-                iosv: u.substr(u.indexOf('iPhone OS') + 9, 3),
-                weixin: u2.match(/MicroMessenger/i) == "micromessenger",
-                ali: u.indexOf('AliApp') > -1,
-            };
-        }
-        var ua = parseUA();
-
-        if (ua.mobile) {
-            location.href = './index.html';
-        }
-
-    </script>
-
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK7ZL9PR8">
     </script>
@@ -47,8 +19,6 @@
             page_referrer: document.referrer || undefined
         });
     </script>
-
-    <!-- External libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
     </script>
@@ -67,6 +37,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js">
     </script>
    <script src="Youtube-Ad-blocker-Reminder-Remover.user.js"></script>
+    <script src =""</script>
     <style>
         /* ===== MATERIAL 3 — BASE ===== */
         :root {
