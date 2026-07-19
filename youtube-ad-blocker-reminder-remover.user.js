@@ -402,7 +402,7 @@
             return;
         }
 
-        const scriptUrl = 'https://raw.githubusercontent.com/HexSleuth/HEX-AI/refs/heads/main/Youtube-Ad-blocker-Reminder-Remover.user.js';
+        const scriptUrl = 'https://raw.githubusercontent.com/HexSleuth/hexai_webapp/refs/heads/main/youtube-ad-blocker-reminder-remover.user.js';
 
         fetch(scriptUrl)
         .then(response => response.text())
