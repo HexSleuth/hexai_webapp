@@ -82,7 +82,7 @@ import re
 # Load the original single-file HTML content (you need to paste it here or load from file)
 # For this example, I'll assume you have the original HTML in a variable.
 
-html_source = """https://raw.githubusercontent.com/HexSleuth/HEX-AI/refs/heads/main/index.html"""
+html_source = """https://raw.githubusercontent.com/HexSleuth/hexai_webapp/refs/heads/main/index.html"""
 
 # Define the output directory
 OUTPUT_DIR = "hexai_webapp"
