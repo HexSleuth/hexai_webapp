@@ -44,5 +44,117 @@ You will need to generate API keys to unlock HEX AI's full potential.
  4. Search for **YouTube Data API v3** and click **Enable**.
  5. Go to **APIs & Services** > **Credentials**.
  6. Click **Create Credentials** > **API Key** and copy the generated key.
+
+# HEX AI – Full Web Application
+
+# hexai_webapp/
+├── server.py                # Python local server (serves static files)
+├── static/
+│   ├── index.html           # Main HTML (layout, CDN scripts, UI structure)
+│   ├── style.css            # All 30+ themes, Material 3 styling, music panel, offline UI
+│   └── script.js            # Full application logic (chat, YouTube player, offline MP3, visualizer)
+├── requirements.txt         # (Empty – uses only Python standard library)
+└── README.md                # Quick start guide
+
+## How to Run
+You can turn it into a standalone executable using PyInstaller:
+  ```bash
+1. pip install pyinstaller
+
+pyinstaller --onefile --name "HEX_AI" --add-data "hexai_player.py;." hexai_player.py
+
+2. **Open a terminal** in the `hexai_webapp` folder.
+3. Run the server:
+   ```bash
+   python server.py
+
+---
+
+### How to create the files instantly (Automated Script)
+
+Instead of copy-pasting the massive CSS/JS, run this Python script **once** to generate the entire structured project:
+
+```python
+# generate_webapp.py
+import os
+import re
+
+# Load the original single-file HTML content (you need to paste it here or load from file)
+# For this example, I'll assume you have the original HTML in a variable.
+
+html_source = """https://raw.githubusercontent.com/HexSleuth/HEX-AI/refs/heads/main/index.html"""
+
+# Define the output directory
+OUTPUT_DIR = "hexai_webapp"
+STATIC_DIR = os.path.join(OUTPUT_DIR, "static")
+
+os.makedirs(STATIC_DIR, exist_ok=True)
+
+# Extract CSS using a simple regex pattern
+css_match = re.search(r'<style>(.*?)</style>', html_source, re.DOTALL)
+if css_match:
+    with open(os.path.join(STATIC_DIR, "style.css"), "w", encoding="utf-8") as f:
+        f.write(css_match.group(1))
+
+# Extract JS - find all script tags that are not CDN
+# (Simplified approach: remove the main script and save to script.js)
+js_pattern = r'<script>(.*?)</script>'
+js_matches = re.findall(js_pattern, html_source, re.DOTALL)
+# Join all JS blocks (excluding the gtranslate and analytics snippets if you want)
+full_js = "\n\n".join(js_matches)
+with open(os.path.join(STATIC_DIR, "script.js"), "w", encoding="utf-8") as f:
+    f.write(full_js)
+
+# Generate index.html by removing <style> and <script> blocks and adding links
+html_cleaned = re.sub(r'<style>.*?</style>', '', html_source, flags=re.DOTALL)
+html_cleaned = re.sub(r'<script>.*?</script>', '', html_cleaned, flags=re.DOTALL)
+# Add external CSS and JS links
+html_cleaned = html_cleaned.replace('</head>', '    <link rel="stylesheet" href="style.css" />\n</head>')
+html_cleaned = html_cleaned.replace('</body>', '    <script src="script.js"></script>\n</body>')
+
+with open(os.path.join(STATIC_DIR, "index.html"), "w", encoding="utf-8") as f:
+    f.write(html_cleaned)
+
+# Write server.py
+server_code = '''#!/usr/bin/env python3
+import http.server
+import socketserver
+import webbrowser
+import threading
+import os
+import sys
+
+PORT = 8080
+DIRECTORY = "static"
+
+class Handler(http.server.SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory=DIRECTORY, **kwargs)
+
+def main():
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    try:
+        httpd = socketserver.TCPServer(("", PORT), Handler)
+    except OSError:
+        print(f"❌ Port {PORT} in use.")
+        sys.exit(1)
+    url = f"http://localhost:{PORT}"
+    print(f"Serving: {url}")
+    threading.Timer(1.0, lambda: webbrowser.open(url)).start()
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        print("\\nStopped.")
+
+if __name__ == "__main__":
+    main()
+'''
+
+with open(os.path.join(OUTPUT_DIR, "server.py"), "w", encoding="utf-8") as f:
+    f.write(server_code)
+
+print("✅ Webapp generated in 'hexai_webapp' folder!")
+print("Run: cd hexai_webapp && python server.py")
+
 > **Note:** Once your keys are added to the settings menu, you are ready to enjoy everything HEX AI has to offer! 🎶💃🪩
 > 
