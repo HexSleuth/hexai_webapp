@@ -1,4 +1,3 @@
-Here's a complete, single-file GitHub README for HexSleuth/hexai_webapp, packed with realtime badges that pull live stats (stars, forks, commits, issues, CodeQL status) directly from the GitHub API and shields.io.
 
 ```markdown
 <!--
