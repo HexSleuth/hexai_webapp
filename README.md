@@ -1,20 +1,4 @@
 
-```markdown
-<!--
-═══════════════════════════════════════════════════════════════════════════
-  HEX AI — GitHub Profile README (single file)
-  Repo: https://github.com/HexSleuth/hexai_webapp
-  All badges below are LIVE / REALTIME (shields.io + GitHub REST API).
-═══════════════════════════════════════════════════════════════════════════
--->
-
-<div align="center">
-
-<!-- ─── Animated header ─────────────────────────────────────────────────── -->
-<a href="https://github.com/HexSleuth/hexai_webapp">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=34&duration=2800&pause=900&color=8A2BE2&center=true&vCenter=true&width=720&lines=%F0%9F%94%B1+HEX+AI;Your+All-in-One+AI+Multimedia+Companion;Chat+%E2%80%A2+Create+%E2%80%A2+Listen;100%25+Browser-Based+%2B+PWA" alt="HEX AI" />
-</a>
-
 ### 🔱 HEX AI — Open-Source AI Multimedia Companion (Web App / PWA)
 
 **Chat · Generate Images · Animate Videos · Stream Music — all in one workspace.**
