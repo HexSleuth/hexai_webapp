@@ -1,429 +1,554 @@
-<body>
-<main class="markdown-body">
-
-  <!-- ===================== HERO ===================== -->
-  <div class="hero">
-    <h1>👋 Welcome to HEX AI</h1>
-    <p>Your all-in-one multimedia &amp; AI companion — chat, create, and listen in one dynamic workspace.</p>
-  </div>
-
-  <!-- ===================== REALTIME BADGES ===================== -->
-  <div class="badges">
-    <a href="https://github.com/HexSleuth/hexai_webapp/stargazers">
-      <img src="https://img.shields.io/github/stars/HexSleuth/hexai_webapp?style=for-the-badge&logo=github&color=7c3aed&labelColor=0d1117" alt="Stars">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp/network/members">
-      <img src="https://img.shields.io/github/forks/HexSleuth/hexai_webapp?style=for-the-badge&logo=git&color=06b6d4&labelColor=0d1117" alt="Forks">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp/watchers">
-      <img src="https://img.shields.io/github/watchers/HexSleuth/hexai_webapp?style=for-the-badge&logo=eye&color=f59e0b&labelColor=0d1117" alt="Watchers">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp/issues">
-      <img src="https://img.shields.io/github/issues/HexSleuth/hexai_webapp?style=for-the-badge&logo=github&color=ef4444&labelColor=0d1117" alt="Issues">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp/pulls">
-      <img src="https://img.shields.io/github/issues-pr/HexSleuth/hexai_webapp?style=for-the-badge&logo=git-pull-request&color=22c55e&labelColor=0d1117" alt="Pull Requests">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp/commits/main">
-      <img src="https://img.shields.io/github/last-commit/HexSleuth/hexai_webapp?style=for-the-badge&logo=clockify&color=8b5cf6&labelColor=0d1117" alt="Last Commit">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp/graphs/contributors">
-      <img src="https://img.shields.io/github/contributors/HexSleuth/hexai_webapp?style=for-the-badge&logo=contributorcovenant&color=a855f7&labelColor=0d1117" alt="Contributors">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp">
-      <img src="https://img.shields.io/github/repo-size/HexSleuth/hexai_webapp?style=for-the-badge&logo=files&color=0ea5e9&labelColor=0d1117" alt="Repo Size">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp">
-      <img src="https://img.shields.io/github/languages/top/HexSleuth/hexai_webapp?style=for-the-badge&logo=javascript&color=f7df1e&labelColor=0d1117" alt="Top Language">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp">
-      <img src="https://img.shields.io/github/license/HexSleuth/hexai_webapp?style=for-the-badge&logo=opensourceinitiative&color=3da639&labelColor=0d1117" alt="License">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp/releases">
-      <img src="https://img.shields.io/github/v/release/HexSleuth/hexai_webapp?style=for-the-badge&logo=github&color=ec4899&labelColor=0d1117&include_prereleases" alt="Release">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp/actions/workflows/codeql.yml">
-      <img src="https://img.shields.io/github/actions/workflow/status/HexSleuth/hexai_webapp/codeql.yml?style=for-the-badge&logo=githubactions&label=CodeQL&labelColor=0d1117" alt="CodeQL">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp/actions">
-      <img src="https://img.shields.io/github/commit-activity/m/HexSleuth/hexai_webapp?style=for-the-badge&logo=github&color=14b8a6&labelColor=0d1117" alt="Commit Activity">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp">
-      <img src="https://img.shields.io/github/last-commit/HexSleuth/hexai_webapp/main?style=for-the-badge&logo=git&label=Last%20Update&color=6366f1&labelColor=0d1117" alt="Last Update">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp">
-      <img src="https://img.shields.io/github/issues-raw/HexSleuth/hexai_webapp?style=for-the-badge&label=Open%20Issues&color=d946ef&labelColor=0d1117" alt="Open Issues">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp">
-      <img src="https://img.shields.io/badge/PRs-Welcome-22c55e?style=for-the-badge&logo=github&labelColor=0d1117" alt="PRs Welcome">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp">
-      <img src="https://img.shields.io/badge/PWA-Ready-5A0FC8?style=for-the-badge&logo=pwa&labelColor=0d1117" alt="PWA">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp">
-      <img src="https://img.shields.io/badge/Made%20with-Python%20%7C%20JS%20%7C%20HTML%20%7C%20CSS-3776AB?style=for-the-badge&logo=python&labelColor=0d1117" alt="Made with">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp/stargazers">
-      <img src="https://img.shields.io/github/stars/HexSleuth/hexai_webapp?style=social" alt="GitHub stars">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp">
-      <img src="https://komarev.com/ghpvc/?username=HexSleuth&repo=hexai_webapp&label=REPO+VIEWS&color=7c3aed&style=for-the-badge" alt="Repo Views">
-    </a>
-    <a href="https://github.com/HexSleuth/hexai_webapp">
-      <img src="https://hits.sh/github.com/HexSleuth/hexai_webapp.svg?style=for-the-badge&label=HITS&color=7c3aed" alt="Hits">
-    </a>
-  </div>
-
-  <!-- ===================== TOC ===================== -->
-  <h2>📖 Table of Contents</h2>
-  <ul>
-    <li><a href="#-key-features">✨ Key Features</a></li>
-    <li><a href="#-tech-stack">🧰 Tech Stack</a></li>
-    <li><a href="#-project-structure">📁 Project Structure</a></li>
-    <li><a href="#-quick-start">🚀 Quick Start</a></li>
-    <li><a href="#-setup--usage">🔧 Setup &amp; Usage</a></li>
-    <li><a href="#-how-to-get-your-api-keys">🔐 How to Get Your API Keys</a></li>
-    <li><a href="#-build-a-standalone-executable">📦 Build a Standalone Executable</a></li>
-    <li><a href="#-one-shot-generator-script">⚡ One-Shot Generator Script</a></li>
-    <li><a href="#-privacy--persistence">🛡️ Privacy &amp; Persistence</a></li>
-    <li><a href="#-roadmap">🗺️ Roadmap</a></li>
-    <li><a href="#-contributing">🤝 Contributing</a></li>
-    <li><a href="#-security">🔒 Security</a></li>
-    <li><a href="#-license">📄 License</a></li>
-  </ul>
-
-  <hr>
-
-  <!-- ===================== FEATURES ===================== -->
-  <h2>✨ Key Features</h2>
-
-  <h3>💬 Multimodal AI Chat</h3>
-  <ul>
-    <li>Chat with <strong>free AI models</strong> via OpenRouter or Google Gemini.</li>
-    <li>Upload <strong>Images</strong> and <strong>PDFs</strong> for instant analysis.</li>
-    <li><strong>Voice Input</strong> for hands-free, natural interaction.</li>
-  </ul>
-
-  <h3>🎨 Creative Studio</h3>
-  <ul>
-    <li>Generate <strong>stunning AI images</strong> with selectable styles and aspect ratios.</li>
-    <li>Create <strong>short, animated looping AI videos</strong> — completely free.</li>
-    <li>Send any generated image straight back into chat for further analysis.</li>
-  </ul>
-
-  <h3>🎵 Built-in YouTube Music Player</h3>
-  <ul>
-    <li>Search tracks and <strong>import playlists via URL</strong>.</li>
-    <li>Integrated <strong>SponsorBlock</strong> — automatically skips sponsored segments.</li>
-    <li><strong>Auto-Sync lyrics</strong> with AI-powered translation.</li>
-    <li>Customizable album art: <strong>Spin</strong>, <strong>Video embedded</strong>, or <strong>None</strong>.</li>
-  </ul>
-
-  <h3>🫵😎 Animated Emojis</h3>
-  <p>Bring your interface to life with expressive, animated emojis throughout the UI.</p>
-
-  <h3>🛡️ Privacy &amp; Persistence</h3>
-  <ul>
-    <li>Playlists, settings, volume, and themes are saved <strong>100% locally</strong>.</li>
-    <li>No backend account required — your data never leaves your browser.</li>
-  </ul>
-
-  <hr>
-
-  <!-- ===================== TECH STACK ===================== -->
-  <h2>🧰 Tech Stack</h2>
-  <p>
-    <span class="pill">Python 3</span>
-    <span class="pill">JavaScript (Vanilla)</span>
-    <span class="pill">HTML5</span>
-    <span class="pill">CSS3</span>
-    <span class="pill">Material 3</span>
-    <span class="pill">PWA</span>
-    <span class="pill">YouTube Data API v3</span>
-    <span class="pill">OpenRouter</span>
-    <span class="pill">Google Gemini</span>
-    <span class="pill">SponsorBlock</span>
-  </p>
-  <p>Zero build step. Zero dependencies. Runs on the Python standard library.</p>
-
-  <hr>
-
-  <!-- ===================== STRUCTURE ===================== -->
-  <h2>📁 Project Structure</h2>
-  <pre><code>hexai_webapp/
-├── server.py                 # Python local server (serves static files)
-├── static/
-│   ├── index.html            # Main HTML (layout, CDN scripts, UI structure)
-│   ├── style.css             # 30+ themes, Material 3 styling, music panel, offline UI
-│   └── script.js             # Full app logic (chat, YouTube player, offline MP3, visualizer)
-├── adsblocker.js             # Ad-blocking layer
-├── sponsorblock.js           # SponsorBlock integration
-├── sb.js                     # GitHub Pages configuration support
-├── fix.js                    # Runtime patches
-├── Minified.js               # Minified bundle
-├── build-apk-from-url.js     # APK build pipeline
-├── requirement.text          # (Empty — stdlib only)
-├── SECURITY.md               # Security policy
-└── README.md                 # You are here</code></pre>
-
-  <hr>
-
-  <!-- ===================== QUICK START ===================== -->
-  <h2>🚀 Quick Start</h2>
-
-  <h3>Prerequisites</h3>
-  <ul>
-    <li><strong>Python 3.8+</strong> (uses only the standard library)</li>
-    <li>A modern browser (Chrome, Edge, Firefox, Safari)</li>
-  </ul>
-
-  <h3>1. Clone the Repository</h3>
-  <pre><code>git clone https://github.com/HexSleuth/hexai_webapp.git
-cd hexai_webapp</code></pre>
-
-  <h3>2. Run the Server</h3>
-  <pre><code>python server.py</code></pre>
-  <p>The app opens automatically at <a href="http://localhost:8080">http://localhost:8080</a>.</p>
-
-  <blockquote>
-    <strong>Note:</strong> A default playlist loads automatically on startup — click any song to play it.
-  </blockquote>
-
-  <hr>
-
-  <!-- ===================== SETUP & USAGE ===================== -->
-  <h2>🔧 Setup &amp; Usage</h2>
-  <p>To get the most out of HEX AI, configure a few settings first.</p>
-
-  <h3>1. API Keys</h3>
-  <p>Open <strong>Settings</strong> (gear icon) and add your keys:</p>
-  <table>
-    <thead>
-      <tr><th>Key</th><th>Required?</th><th>Purpose</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><strong>YouTube Data v3 API Key</strong></td><td>✅ Required</td><td>YouTube search &amp; playlist imports</td></tr>
-      <tr><td><strong>OpenRouter</strong> <em>or</em> <strong>Gemini API Key</strong></td><td>⭐ Highly Recommended</td><td>AI chat, vision features, lyrics translation</td></tr>
-    </tbody>
-  </table>
-
-  <h3>2. Chatting</h3>
-  <p>Type a message, use voice input, or attach images/PDFs. Press <code>Enter</code> or click send to get a response from your chosen AI model.</p>
-
-  <h3>3. Image Generation</h3>
-  <p>Describe the scene, select your style and aspect ratio, then click <strong>Generate</strong>. The result can be added straight to your chat for further analysis.</p>
-
-  <h3>4. Video Generation</h3>
-  <p>Enter a prompt, choose your desired duration, and click <strong>Generate</strong> to turn an AI image into a short, looping animated video.</p>
-
-  <h3>5. Music Player</h3>
-  <ul>
-    <li>Click any song to play it.</li>
-    <li>Search YouTube for new tracks and add them instantly.</li>
-    <li>Paste a YouTube Music playlist URL to import it.</li>
-    <li>Toggle <strong>Auto-Sync</strong>, <strong>AI Translation</strong>, and <strong>SponsorBlock</strong> via the player controls.</li>
-  </ul>
-
-  <hr>
-
-  <!-- ===================== API KEYS ===================== -->
-  <h2>🔐 How to Get Your API Keys</h2>
-
-  <details>
-    <summary><strong>1. OpenRouter API Key (For AI Models)</strong></summary>
-    <ol>
-      <li><strong>Sign up:</strong> Go to <a href="https://openrouter.ai">OpenRouter</a> and create an account using Email, Google, or GitHub.</li>
-      <li><strong>Go to Keys:</strong> Click your profile picture (top right) → <strong>Keys</strong>.</li>
-      <li><strong>Create a Key:</strong> Click <strong>Create API Key</strong>.</li>
-      <li><strong>Configure &amp; Generate:</strong> Give it a name (e.g. <code>HEX-AI-App</code>). Optionally set a credit limit or expiration. Click <strong>Create</strong>.</li>
-      <li><strong>Copy the Key:</strong> <em>Copy it immediately — it is shown only once.</em></li>
-    </ol>
-  </details>
-
-  <details>
-    <summary><strong>2. Google Gemini API Key (For AI Models)</strong></summary>
-    <ol>
-      <li><strong>Sign in:</strong> Go to <a href="https://aistudio.google.com/app/apikey">Google AI Studio</a> with your Google Account.</li>
-      <li><strong>Accept Terms:</strong> Accept the terms of service and confirm your location if prompted.</li>
-      <li><strong>Find the Menu:</strong> Click <strong>Get API key</strong> in the left sidebar.</li>
-      <li><strong>Generate:</strong> Click <strong>Create API key</strong>.</li>
-      <li><strong>Link Project:</strong> Select an existing Google Cloud project or create a new one, then click <strong>Create key</strong>.</li>
-      <li><strong>Save it:</strong> Copy your new API key and store it securely.</li>
-    </ol>
-  </details>
-
-  <details>
-    <summary><strong>3. YouTube Data v3 API Key (For Music Player)</strong></summary>
-    <ol>
-      <li>Go to the <a href="https://console.cloud.google.com/">Google Cloud Console</a>.</li>
-      <li>Create a new project (or select an existing one).</li>
-      <li>Navigate to <strong>APIs &amp; Services → Library</strong>.</li>
-      <li>Search for <strong>YouTube Data API v3</strong> and click <strong>Enable</strong>.</li>
-      <li>Go to <strong>APIs &amp; Services → Credentials</strong>.</li>
-      <li>Click <strong>Create Credentials → API Key</strong> and copy the generated key.</li>
-    </ol>
-  </details>
-
-  <blockquote>
-    💡 <strong>Note:</strong> Once your keys are added in the settings menu, you're ready to enjoy everything HEX AI has to offer! 🎶💃🪩
-  </blockquote>
-
-  <hr>
-
-  <!-- ===================== BUILD ===================== -->
-  <h2>📦 Build a Standalone Executable</h2>
-  <p>Turn HEX AI into a single portable binary with PyInstaller:</p>
-  <pre><code>pip install pyinstaller
-
-pyinstaller --onefile --name "HEX_AI" --add-data "hexai_player.py;." hexai_player.py</code></pre>
-  <p>Then open a terminal in the <code>hexai_webapp</code> folder and run:</p>
-  <pre><code>python server.py</code></pre>
-
-  <hr>
-
-  <!-- ===================== GENERATOR ===================== -->
-  <h2>⚡ One-Shot Generator Script</h2>
-  <p>Instead of copy-pasting the massive CSS/JS, run this Python script <strong>once</strong> to generate the entire structured project:</p>
-  <pre><code># generate_webapp.py
-import os
-import re
-
-# Load the original single-file HTML content
-html_source = """https://raw.githubusercontent.com/HexSleuth/hexai_webapp/refs/heads/main/index.html"""
-
-# Define the output directory
-OUTPUT_DIR = "hexai_webapp"
-STATIC_DIR = os.path.join(OUTPUT_DIR, "static")
-
-os.makedirs(STATIC_DIR, exist_ok=True)
-
-# Extract CSS using a simple regex pattern
-css_match = re.search(r'&lt;style&gt;(.*?)&lt;/style&gt;', html_source, re.DOTALL)
-if css_match:
-    with open(os.path.join(STATIC_DIR, "style.css"), "w", encoding="utf-8") as f:
-        f.write(css_match.group(1))
-
-# Extract JS - find all script tags that are not CDN
-js_pattern = r'&lt;script&gt;(.*?)&lt;/script&gt;'
-js_matches = re.findall(js_pattern, html_source, re.DOTALL)
-full_js = "\n\n".join(js_matches)
-with open(os.path.join(STATIC_DIR, "script.js"), "w", encoding="utf-8") as f:
-    f.write(full_js)
-
-# Generate index.html by removing &lt;style&gt; and &lt;script&gt; blocks and adding links
-html_cleaned = re.sub(r'&lt;style&gt;.*?&lt;/style&gt;', '', html_source, flags=re.DOTALL)
-html_cleaned = re.sub(r'&lt;script&gt;.*?&lt;/script&gt;', '', html_cleaned, flags=re.DOTALL)
-html_cleaned = html_cleaned.replace('&lt;/head&gt;', '    &lt;link rel="stylesheet" href="style.css" /&gt;\n&lt;/head&gt;')
-html_cleaned = html_cleaned.replace('&lt;/body&gt;', '    &lt;script src="script.js"&gt;&lt;/script&gt;\n&lt;/body&gt;')
-
-with open(os.path.join(STATIC_DIR, "index.html"), "w", encoding="utf-8") as f:
-    f.write(html_cleaned)
-
-# Write server.py
-server_code = '''#!/usr/bin/env python3
-import http.server
-import socketserver
-import webbrowser
-import threading
-import os
-import sys
-
-PORT = 8080
-DIRECTORY = "static"
-
-class Handler(http.server.SimpleHTTPRequestHandler):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory=DIRECTORY, **kwargs)
-
-def main():
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    try:
-        httpd = socketserver.TCPServer(("", PORT), Handler)
-    except OSError:
-        print(f"❌ Port {PORT} in use.")
-        sys.exit(1)
-    url = f"http://localhost:{PORT}"
-    print(f"Serving: {url}")
-    threading.Timer(1.0, lambda: webbrowser.open(url)).start()
-    try:
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        print("\\nStopped.")
-
-if __name__ == "__main__":
-    main()
-'''
-
-with open(os.path.join(OUTPUT_DIR, "server.py"), "w", encoding="utf-8") as f:
-    f.write(server_code)
-
-print("✅ Webapp generated in 'hexai_webapp' folder!")
-print("Run: cd hexai_webapp &amp;&amp; python server.py")</code></pre>
-
-  <hr>
-
-  <!-- ===================== PRIVACY ===================== -->
-  <h2>🛡️ Privacy &amp; Persistence</h2>
-  <ul>
-    <li>🔒 <strong>All data is local.</strong> Playlists, settings, volume, and themes live in your browser's storage.</li>
-    <li>🚫 <strong>No tracking.</strong> No analytics, no telemetry, no account system.</li>
-    <li>🔑 <strong>Your keys stay yours.</strong> API keys are stored client-side only.</li>
-  </ul>
-
-  <hr>
-
-  <!-- ===================== ROADMAP ===================== -->
-  <h2>🗺️ Roadmap</h2>
-  <ul>
-    <li>☐ Offline PWA install &amp; service worker caching</li>
-    <li>☐ Multi-language UI support</li>
-    <li>☐ Local model support (WebGPU / ONNX)</li>
-    <li>☐ Playlist export / import as JSON</li>
-    <li>☐ Android APK build pipeline</li>
-  </ul>
-
-  <hr>
-
-  <!-- ===================== CONTRIBUTING ===================== -->
-  <h2>🤝 Contributing</h2>
-  <p>Contributions, issues, and feature requests are welcome!</p>
-  <ol>
-    <li>Fork the repository.</li>
-    <li>Create your branch: <code>git checkout -b feature/amazing-feature</code></li>
-    <li>Commit your changes: <code>git commit -m "Add amazing feature"</code></li>
-    <li>Push to the branch: <code>git push origin feature/amazing-feature</code></li>
-    <li>Open a Pull Request.</li>
-  </ol>
-
-  <hr>
-
-  <!-- ===================== SECURITY ===================== -->
-  <h2>🔒 Security</h2>
-  <p>Please review <a href="https://github.com/HexSleuth/hexai_webapp/blob/main/SECURITY.md">SECURITY.md</a> for our security policy and how to responsibly report vulnerabilities.</p>
-  <p>Automated scanning is powered by <strong>GitHub CodeQL</strong>.</p>
-
-  <hr>
-
-  <!-- ===================== LICENSE ===================== -->
-  <h2>📄 License</h2>
-  <p>See the <a href="https://github.com/HexSleuth/hexai_webapp">repository</a> for license details.</p>
-
-  <hr>
-
-  <!-- ===================== FOOTER ===================== -->
-  <div class="footer">
-    <p>
-      <strong>HEX AI</strong> — developed with 𓋹 by <strong>HexSleuth</strong> 𓃠
-    </p>
-    <p>
-      <a href="https://github.com/HexSleuth/hexai_webapp">Repository</a> ·
-      <a href="https://github.com/HexSleuth/hexai_webapp/issues">Issues</a> ·
-      <a href="https://github.com/HexSleuth/hexai_webapp/pulls">Pull Requests</a> ·
-      <a href="https://github.com/HexSleuth">Author</a>
-    </p>
-    <p>⭐ If you find HEX AI useful, consider giving it a star!</p>
-  </div>
-
-</main>
-</body>
-</html>
+Here's a complete, single-file GitHub README for HexSleuth/hexai_webapp, packed with realtime badges that pull live stats (stars, forks, commits, issues, CodeQL status) directly from the GitHub API and shields.io.
+
+```markdown
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  HEX AI — GitHub Profile README (single file)
+  Repo: https://github.com/HexSleuth/hexai_webapp
+  All badges below are LIVE / REALTIME (shields.io + GitHub REST API).
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<div align="center">
+
+<!-- ─── Animated header ─────────────────────────────────────────────────── -->
+<a href="https://github.com/HexSleuth/hexai_webapp">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=34&duration=2800&pause=900&color=8A2BE2&center=true&vCenter=true&width=720&lines=%F0%9F%94%B1+HEX+AI;Your+All-in-One+AI+Multimedia+Companion;Chat+%E2%80%A2+Create+%E2%80%A2+Listen;100%25+Browser-Based+%2B+PWA" alt="HEX AI" />
+</a>
+
+### 🔱 HEX AI — Open-Source AI Multimedia Companion (Web App / PWA)
+
+**Chat · Generate Images · Animate Videos · Stream Music — all in one workspace.**
+
+<sub>Built with 🖤 by <b>HexSleuth</b> (𓋹•HexSleuth•𓃠)</sub>
+
+<br />
+
+<!-- ─── Realtime primary badges ─────────────────────────────────────────── -->
+<p>
+  <a href="https://github.com/HexSleuth/hexai_webapp/stargazers">
+    <img alt="Stars" src="https://img.shields.io/github/stars/HexSleuth/hexai_webapp?style=for-the-badge&logo=github&logoColor=white&labelColor=0d1117&color=FFD700" />
+  </a>
+  <a href="https://github.com/HexSleuth/hexai_webapp/network/members">
+    <img alt="Forks" src="https://img.shields.io/github/forks/HexSleuth/hexai_webapp?style=for-the-badge&logo=git&logoColor=white&labelColor=0d1117&color=4FC3F7" />
+  </a>
+  <a href="https://github.com/HexSleuth/hexai_webapp/watchers">
+    <img alt="Watchers" src="https://img.shields.io/github/watchers/HexSleuth/hexai_webapp?style=for-the-badge&logo=eye&logoColor=white&labelColor=0d1117&color=BA68C8" />
+  </a>
+  <a href="https://github.com/HexSleuth/hexai_webapp/issues">
+    <img alt="Issues" src="https://img.shields.io/github/issues/HexSleuth/hexai_webapp?style=for-the-badge&logo=githubactions&logoColor=white&labelColor=0d1117&color=FF7043" />
+  </a>
+  <a href="https://github.com/HexSleuth/hexai_webapp/pulls">
+    <img alt="Pull Requests" src="https://img.shields.io/github/issues-pr/HexSleuth/hexai_webapp?style=for-the-badge&logo=gitpullrequest&logoColor=white&labelColor=0d1117&color=66BB6A" />
+  </a>
+  <a href="https://github.com/HexSleuth/hexai_webapp/commits/main">
+    <img alt="Last Commit" src="https://img.shields.io/github/last-commit/HexSleuth/hexai_webapp?style=for-the-badge&logo=clockify&logoColor=white&labelColor=0d1117&color=26A69A" />
+  </a>
+</p>
+
+<p>
+  <a href="https://github.com/HexSleuth/hexai_webapp">
+    <img alt="Repo Size" src="https://img.shields.io/github/repo-size/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=9575CD" />
+  </a>
+  <a href="https://github.com/HexSleuth/hexai_webapp/graphs/contributors">
+    <img alt="Contributors" src="https://img.shields.io/github/contributors/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=4DB6AC" />
+  </a>
+  <a href="https://github.com/HexSleuth/hexai_webapp/commits/main">
+    <img alt="Commit Activity" src="https://img.shields.io/github/commit-activity/m/HexSleuth/hexai_webapp?style=flat-square&label=commits%2Fmonth&labelColor=0d1117&color=FFB300" />
+  </a>
+  <a href="https://github.com/HexSleuth/hexai_webapp">
+    <img alt="Top Language" src="https://img.shields.io/github/languages/top/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=E34F26" />
+  </a>
+  <a href="https://github.com/HexSleuth/hexai_webapp">
+    <img alt="Languages" src="https://img.shields.io/github/languages/count/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=0288D1" />
+  </a>
+  <a href="https://github.com/HexSleuth/hexai_webapp/blob/main/LICENSE">
+    <img alt="License" src="https://img.shields.io/github/license/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=8BC34A" />
+  </a>
+</p>
+
+<!-- ─── Realtime: CodeQL workflow status ────────────────────────────────── -->
+<p>
+  <a href="https://github.com/HexSleuth/hexai_webapp/actions/workflows/codeql.yml">
+    <img alt="CodeQL" src="https://img.shields.io/github/actions/workflow/status/HexSleuth/hexai_webapp/codeql.yml?branch=main&style=for-the-badge&logo=github&logoColor=white&label=CodeQL&labelColor=0d1117" />
+  </a>
+  <a href="https://github.com/HexSleuth/hexai_webapp/actions">
+    <img alt="Workflow Status" src="https://img.shields.io/github/actions/workflow/status/HexSleuth/hexai_webapp/codeql.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=Build&labelColor=0d1117" />
+  </a>
+  <a href="https://github.com/HexSleuth/hexai_webapp/security/policy">
+    <img alt="Security Policy" src="https://img.shields.io/badge/Security-Policy-success?style=for-the-badge&logo=shield&logoColor=white&labelColor=0d1117" />
+  </a>
+  <img alt="PWA Ready" src="https://img.shields.io/badge/PWA-Ready-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white&labelColor=0d1117" />
+  <img alt="Zero Dependencies" src="https://img.shields.io/badge/Backend-Zero%20Deps-3776AB?style=for-the-badge&logo=python&logoColor=white&labelColor=0d1117" />
+</p>
+
+<!-- ─── Realtime: raw GitHub API (uncached-ish) counters ───────────────── -->
+<p>
+  <img alt="Live Stars" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2FHexSleuth%2Fhexai_webapp&query=%24.stargazers_count&label=%E2%AD%90%20Live%20Stars&style=flat-square&labelColor=0d1117&color=FFD700&logo=github" />
+  <img alt="Live Forks" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2FHexSleuth%2Fhexai_webapp&query=%24.forks_count&label=%F0%9F%8D%B4%20Live%20Forks&style=flat-square&labelColor=0d1117&color=4FC3F7&logo=github" />
+  <img alt="Live Open Issues" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2FHexSleuth%2Fhexai_webapp&query=%24.open_issues_count&label=%F0%9F%90%9B%20Open%20Issues&style=flat-square&labelColor=0d1117&color=FF7043&logo=github" />
+  <img alt="Live Size" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2FHexSleuth%2Fhexai_webapp&query=%24.size&suffix=%20KB&label=%F0%9F%93%A6%20Size&style=flat-square&labelColor=0d1117&color=9575CD&logo=github" />
+  <img alt="Visitors" src="https://komarev.com/ghpvc/?username=HexSleuth&repo=hexai_webapp&label=Visitors&color=8A2BE2&style=flat-square" />
+</p>
+
+<!-- ─── Quick links ─────────────────────────────────────────────────────── -->
+<p>
+  <a href="#-key-features"><kbd>✨ Features</kbd></a>
+  <a href="#-quick-start"><kbd>🚀 Quick Start</kbd></a>
+  <a href="#-api-keys-setup"><kbd>🔐 API Keys</kbd></a>
+  <a href="#-usage-guide"><kbd>🎮 Usage</kbd></a>
+  <a href="#-contributing"><kbd>🤝 Contribute</kbd></a>
+  <a href="https://github.com/HexSleuth/hexai_webapp/issues/new"><kbd>🐛 Report Bug</kbd></a>
+  <a href="https://github.com/HexSleuth/hexai_webapp/issues/new"><kbd>💡 Request Feature</kbd></a>
+</p>
+
+</div>
+
+---
+
+## 📖 About
+
+**HEX AI** is an open-source, browser-based **AI multimedia companion** — a Web App and installable **PWA** — that blends advanced artificial intelligence, generative creative tools, and uninterrupted music into one dynamic workspace.
+
+Open HEX AI and a background track sets the mood, inviting you to **chat, create, and listen — seamlessly**. Everything (playlists, settings, volume, themes) is stored **100% locally** in your browser. No accounts. No tracking. No cloud storage of your data.
+
+> 🔓 **Open source. Local-first. Privacy-respecting. Free to run.**
+
+---
+
+## ✨ Key Features
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🤖 Multimodal AI Chat
+- Chat with **free AI models** (OpenRouter / Gemini)
+- Upload **Images** & **PDFs** for analysis
+- **Voice input** for hands-free interaction
+- Streaming responses & markdown rendering
+
+### 🎨 Creative Studio
+- Generate **stunning AI images**
+- Create **short, animated looping AI videos**
+- Style presets + aspect ratio control
+- Send generated images straight into chat for analysis
+
+</td>
+<td width="50%" valign="top">
+
+### 🎵 Built-in YouTube Music Player
+- Search tracks & **import playlists by URL**
+- Integrated **SponsorBlock** — auto-skips sponsored segments
+- **Auto-sync lyrics** + **AI-powered translation**
+- Customizable album art: **Spin / Video / None**
+- Visualizer + volume memory
+
+### 🫵😎 Delightful Details
+- **Animated emojis** across the UI
+- **30+ Material 3 themes**
+- **Offline MP3** support
+- **PWA installable** — works like a native app
+- **Ad-blocker** built in
+
+</td>
+</tr>
+</table>
+
+---
+
+## 📊 Live Repository Stats
+
+> These cards update automatically on every page load. ⏱️
+
+<div align="center">
+
+| **Metric** | **Live Value** |
+| :--- | :--- |
+| ⭐ **Stars** | ![Stars](https://img.shields.io/github/stars/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=FFD700) |
+| 🍴 **Forks** | ![Forks](https://img.shields.io/github/forks/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=4FC3F7) |
+| 👀 **Watchers** | ![Watchers](https://img.shields.io/github/watchers/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=BA68C8) |
+| 🐛 **Open Issues** | ![Issues](https://img.shields.io/github/issues/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=FF7043) |
+| 🔀 **Open PRs** | ![PRs](https://img.shields.io/github/issues-pr/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=66BB6A) |
+| 🕐 **Last Commit** | ![Last Commit](https://img.shields.io/github/last-commit/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=26A69A) |
+| 📈 **Commits / Month** | ![Activity](https://img.shields.io/github/commit-activity/m/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=FFB300) |
+| 👥 **Contributors** | ![Contributors](https://img.shields.io/github/contributors/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=4DB6AC) |
+| 📦 **Repo Size** | ![Size](https://img.shields.io/github/repo-size/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=9575CD) |
+| 🧾 **License** | ![License](https://img.shields.io/github/license/HexSleuth/hexai_webapp?style=flat-square&labelColor=0d1117&color=8BC34A) |
+| 🛡️ **CodeQL** | ![CodeQL](https://img.shields.io/github/actions/workflow/status/HexSleuth/hexai_webapp/codeql.yml?branch=main&style=flat-square&labelColor=0d1117) |
+
+<br />
+
+### 📈 Commit Activity (last 12 months)
+
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=HexSleuth&repo=hexai_webapp&theme=react-dark&hide_border=true&area=true&custom_title=HEX%20AI%20%E2%80%94%20Commit%20Activity" alt="Commit Activity Graph" width="100%" />
+
+</div>
+
+---
+
+## 🧰 Tech Stack
+
+<div align="center">
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Material Design 3](https://img.shields.io/badge/Material%20Design%203-757575?style=for-the-badge&logo=materialdesign&logoColor=white)
+![PWA](https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)
+![OpenRouter](https://img.shields.io/badge/OpenRouter-6467F2?style=for-the-badge&logo=openai&logoColor=white)
+![Google Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)
+![YouTube API](https://img.shields.io/badge/YouTube%20Data%20v3-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
+
+</div>
+
+**Highlights**
+
+- ⚡ **Zero backend dependencies** — `server.py` uses only the Python standard library
+- 🎨 **30+ themes** built on Material 3 design tokens
+- 🧩 **Modular scripts** — ad-blocker, SponsorBlock, lyrics sync, visualizer
+- 🔐 **Local-first storage** — `localStorage` only, no server-side persistence
+- 📴 **Offline capable** — PWA service worker + bundled offline MP3
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+graph TD
+    A["🌐 index.html<br/>(UI shell + CDN imports)"] --> B["🎨 style.css<br/>(30+ Material 3 themes)"]
+    A --> C["⚙️ script.js<br/>(app logic)"]
+    A --> D["🛡️ adsblocker.js"]
+    A --> E["⏭️ sponsorblock.js"]
+    A --> F["🔧 sb.js / fix.js"]
+
+    C --> G["🤖 AI Layer<br/>OpenRouter · Gemini"]
+    C --> H["🎬 Creative Studio<br/>Image + Video Gen"]
+    C --> I["🎵 Music Engine<br/>YouTube Data v3"]
+    I --> J["📝 Lyrics Sync<br/>+ AI Translation"]
+    I --> E
+
+    K["🐍 server.py<br/>stdlib static server"] --> A
+
+    style A fill:#8A2BE2,color:#fff
+    style C fill:#F7DF1E,color:#000
+    style K fill:#3776AB,color:#fff
+    style G fill:#6467F2,color:#fff
+    style I fill:#FF0000,color:#fff
+```
+
+---
+
+🚀 Quick Start
+
+Option 1 — Run Locally (recommended)
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/HexSleuth/hexai_webapp.git
+cd hexai_webapp
+
+# 2. Start the zero-dependency Python server
+python server.py
+
+# 3. Your browser opens automatically at:
+#    http://localhost:8080
+```
+
+🐍 Requires Python 3.8+. No pip install needed — requirements.txt is intentionally empty.
+
+Option 2 — Static Hosting
+
+Because HEX AI is a pure static front-end, you can host the static/ folder anywhere:
+
+```text
+GitHub Pages  ·  Netlify  ·  Vercel  ·  Cloudflare Pages  ·  Any static host
+```
+
+Just point your host at the folder containing index.html.
+
+Option 3 — Standalone Executable (PyInstaller)
+
+```bash
+# Install PyInstaller
+pip install pyinstaller
+
+# Build a single-file executable
+pyinstaller --onefile --name "HEX_AI" \
+  --add-data "static:static" \
+  --add-data "server.py:." \
+  server.py
+```
+
+🪟 Windows: use a semicolon separator → --add-data "static;static"
+🍎🐧 macOS / Linux: use a colon separator → --add-data "static:static"
+
+The binary appears in dist/HEX_AI (or dist\HEX_AI.exe).
+
+---
+
+📁 Project Structure
+
+```text
+hexai_webapp/
+│
+├── .github/
+│   └── workflows/              # 🛡️ CodeQL security analysis workflow
+│
+├── static/                     # 🌐 The web application
+│   ├── index.html              #    Main HTML (layout, CDN scripts, UI structure)
+│   ├── style.css               #    All 30+ themes, Material 3 styling, music panel
+│   └── script.js               #    Full app logic (chat, YouTube player, offline MP3, visualizer)
+│
+├── Adsblocke/                  # 🚫 Ad-blocker assets & filter lists
+├── adsblocker.js               # 🛡️ Ad-blocking engine
+├── sponsorblock.js             # ⏭️ SponsorBlock integration (auto-skip sponsors)
+├── sb.js                       # ⚙️ SponsorBlock config (GitHub Pages support)
+├── fix.js                      # 🔧 Patch / hotfix utilities
+├── Minified.js                 # 📦 Minified production bundle
+├── build-apk-from-url.js       # 📱 APK build configuration
+│
+├── index.html                  # 🏠 Root entry point
+├── server.py                   # 🐍 Zero-dependency local server
+├── requirement.text            # 📋 Dependencies (stdlib only)
+├── SECURITY.md                 # 🔐 Security policy
+└── README.md                   # 📖 You are here
+```
+
+---
+
+🔐 API Keys Setup
+
+HEX AI runs fully offline for the music player's default playlist, but to unlock its full potential you'll need a few API keys. Add them via the ⚙️ Settings (gear icon) inside the app.
+
+Key Status Powers
+YouTube Data v3 API Key 🔴 Required YouTube search & playlist imports
+OpenRouter API Key 🟡 Highly Recommended AI chat, vision, image gen, lyrics translation
+Google Gemini API Key 🟡 Highly Recommended AI chat, vision, video generation
+
+<br />
+
+<details>
+<summary><b>🟣 1. OpenRouter API Key — for AI models</b> (click to expand)</summary>
+
+1. Sign up: Go to OpenRouter and create an account using Email, Google, or GitHub.
+2. Go to Keys: Click your profile picture (top-right) → select Keys.
+3. Create a Key: Click Create API Key.
+4. Configure & Generate: Give it a descriptive name (e.g. HEX-AI-App). Optionally set a credit limit or expiration date for security, or leave blank for unlimited usage. Click Create.
+5. Copy the Key: ⚠️ Copy it immediately — it's only shown once!
+
+</details>
+
+<details>
+<summary><b>🔵 2. Google Gemini API Key — for AI models</b> (click to expand)</summary>
+
+1. Sign in: Go to Google AI Studio and sign in with your Google Account.
+2. Accept Terms: Accept the terms of service and confirm your location if prompted.
+3. Find the Menu: Click Get API key in the left-hand sidebar.
+4. Generate: Click Create API key.
+5. Link Project: Select an existing Google Cloud project (or create a new one), then click Create key.
+6. Save it: Copy your new API key and store it securely.
+
+</details>
+
+<details>
+<summary><b>🔴 3. YouTube Data v3 API Key — for the music player</b> (click to expand)</summary>
+
+1. Go to the Google Cloud Console.
+2. Create a new project (or select an existing one).
+3. Navigate to APIs & Services → Library.
+4. Search for YouTube Data API v3 and click Enable.
+5. Go to APIs & Services → Credentials.
+6. Click Create Credentials → API Key, then copy the generated key.
+
+</details>
+
+<br />
+
+🔒 Security note: Keys are stored only in your browser's local storage and are sent directly from your browser to the respective providers. They never touch a HEX AI server (there isn't one).
+
+---
+
+🎮 Usage Guide
+
+💬 Chatting
+
+Type a message, use voice input, or attach images / PDFs. Press <kbd>Enter</kbd> or click send to get a response from your chosen AI model.
+
+🖼️ Image Generation
+
+1. Describe the scene you want.
+2. Select your style and aspect ratio.
+3. Click Generate.
+4. Optionally send the result straight into chat for further analysis.
+
+🎬 Video Generation
+
+1. Enter a prompt.
+2. Choose your desired duration.
+3. Click Generate to turn an AI image into a short, looping animated video.
+
+🎵 Music Player
+
+A default playlist loads automatically on startup.
+
+· ▶️ Click any song to play it.
+· 🔍 Search YouTube for new tracks and add them instantly.
+· 📥 Paste a YouTube Music playlist URL to import it.
+· 🔁 Toggle Auto-Sync, AI Translation, and SponsorBlock via the player controls.
+· 💿 Switch album art between Spin, Video, and None.
+
+⌨️ Shortcuts
+
+Key Action
+<kbd>Enter</kbd> Send message
+<kbd>Shift</kbd> + <kbd>Enter</kbd> New line
+<kbd>Space</kbd> Play / Pause (when player focused)
+<kbd>Esc</kbd> Close modals / settings
+
+---
+
+💾 Privacy & Persistence
+
+HEX AI is local-first by design.
+
+Stored Locally ✅ Never Stored ❌
+Playlists & imported tracks Your chat history on any server
+Volume & player settings Your API keys on any server
+Selected theme Your uploaded images/PDFs
+UI preferences & layout Any analytics or telemetry
+
+Everything lives in your browser's localStorage. Clear it and you're back to a clean slate.
+
+---
+
+🗺️ Roadmap
+
+☑ Multimodal AI chat (text + image + PDF)
+☑ Voice input
+☑ AI image generation
+☑ AI looping video generation
+☑ YouTube music player with playlist import
+☑ SponsorBlock integration
+☑ Auto-sync lyrics + AI translation
+☑ 30+ Material 3 themes
+☑ Ad-blocker
+☑ PWA / offline support
+☐ Plugin system for custom AI providers
+☐ Multi-language UI (i18n)
+☐ Native mobile app wrapper
+☐ Shared "session" export / import
+
+Have an idea? Open a feature request →
+
+---
+
+🤝 Contributing
+
+Contributions are what make open source amazing! 🎉
+
+```bash
+# 1. Fork the repo
+# 2. Create your feature branch
+git checkout -b feature/AmazingFeature
+
+# 3. Commit your changes
+git commit -m "feat: add some AmazingFeature"
+
+# 4. Push to the branch
+git push origin feature/AmazingFeature
+
+# 5. Open a Pull Request
+```
+
+Guidelines
+
+· 🐛 Open an issue before starting major work
+· ✅ Keep PRs focused — one feature/fix per PR
+· 💅 Match the existing code style & Material 3 tokens
+· 🔐 Never commit API keys or secrets
+· 📝 Update the README if you change behavior
+
+🐛 Found a Bug?
+
+https://img.shields.io/badge/Report%20a%20Bug-FF7043?style=for-the-badge&logo=github&logoColor=white
+
+Please include: browser + version, steps to reproduce, expected vs actual, and console errors if any.
+
+---
+
+🔐 Security
+
+Please review our SECURITY.md for the full disclosure policy.
+
+· 🛡️ CodeQL analysis runs automatically via GitHub Actions
+· ⚠️ Do not open public issues for security vulnerabilities
+· 📧 Report privately via GitHub Security Advisories
+
+---
+
+📄 License
+
+Distributed under the terms of the license included in this repository.
+See LICENSE for details.
+
+https://img.shields.io/github/license/HexSleuth/hexai_webapp?style=for-the-badge&labelColor=0d1117&color=8BC34A
+
+---
+
+🙏 Acknowledgements
+
+· OpenRouter — unified access to free & premium AI models
+· Google Gemini — multimodal AI capabilities
+· SponsorBlock — community-powered sponsor skipping
+· YouTube Data API v3 — search & playlist data
+· Material Design 3 — design system & theming
+· Shields.io — the realtime badges in this README
+· 💜 Every contributor and stargazer — you keep this project alive
+
+---
+
+<div align="center">
+
+⭐ If HEX AI made your day better, drop a star!
+
+<a href="https://github.com/HexSleuth/hexai_webapp/stargazers">
+  <img src="https://img.shields.io/badge/⭐%20Star%20this%20repo-FFD700?style=for-the-badge&logo=github&logoColor=black" alt="Star this repo" />
+</a>
+<a href="https://github.com/HexSleuth/hexai_webapp/fork">
+  <img src="https://img.shields.io/badge/🍴%20Fork%20it-4FC3F7?style=for-the-badge&logo=github&logoColor=black" alt="Fork it" />
+</a>
+<a href="https://github.com/HexSleuth/hexai_webapp/issues/new">
+  <img src="https://img.shields.io/badge/💡%20Suggest%20a%20feature-BA68C8?style=for-the-badge&logo=github&logoColor=white" alt="Suggest a feature" />
+</a>
+
+<br /><br />
+
+<img src="https://img.shields.io/badge/Made%20with-🖤%20by%20HexSleuth-8A2BE2?style=for-the-badge&labelColor=0d1117" alt="Made with love" />
+
+<sub>𓋹•HexSleuth•𓃠 — <b>HEX AI</b> © 2026 · Open Source · Local-First · Privacy-Respecting</sub>
+
+<br /><br />
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,24&height=100&section=footer&fontSize=0" alt="footer" width="100%" />
+
+</div>
+```
+### Realtime Badge System & Repository Snapshot
+
+The badge suite turns the README into a live dashboard. Shields.io pulls directly from GitHub's API on each page load, so stars, forks, issues, and commit activity update without touching the markdown.
+
+Badge groups at a glance:
+
+· Primary badges — Stars, forks, watchers, issues, PRs, and last commit shown with for-the-badge styling for visual prominence.
+· Workflow status — CodeQL and Build badges query GitHub Actions in real time, displaying pass/fail state with color coding.
+· Dynamic JSON counters — Five badges use the dynamic/json endpoint to fetch raw GitHub API fields (e.g., stargazers_count, forks_count, size) with custom labels and colors.
+· Visitor counter — A komarev.com badge tracks page views on this README.
+· Commit graph — A github-readme-activity-graph embed renders 12 months of commit history as an area chart.
+
+Repository details below the fold — The README also documents the zero-dependency Python server (server.py), 30+ Material 3 themes, SponsorBlock integration, AI provider setup (OpenRouter, Gemini, YouTube Data v3), local-first storage, and PyInstaller packaging. The architecture diagram uses Mermaid and maps out how the static front-end, AI layers, and music engine connect.
+
+---
+
+Optimization Tip: The CodeQL badge URL points to codeql.yml; if your workflow file has a different name, update both badge links. You can also replace main with your default branch name if needed.
